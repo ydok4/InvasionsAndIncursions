@@ -1,0 +1,1273 @@
+--[[
+            Early = {
+
+            },
+            Mid = {
+
+            },
+            Late = {
+
+            },
+]]
+
+SubCultureArmyPoolData = {
+    -- Vampire Coast
+    wh2_dlc11_sc_cst_vampire_coast = {
+        Zombies = {
+            Early = {
+                wh2_dlc11_cst_inf_zombie_deckhands_mob_0 = 3,
+                wh2_dlc11_cst_inf_zombie_deckhands_mob_1 = 3,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_0 = 3,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_1 = 5,
+            },
+            Mid = {
+                wh2_dlc11_cst_inf_zombie_deckhands_mob_0 = 3,
+                wh2_dlc11_cst_inf_zombie_deckhands_mob_1 = 3,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_0 = 2,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_1 = 4,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_2 = 2,
+            },
+            Late = {
+                wh2_dlc11_cst_inf_zombie_deckhands_mob_0 = 1,
+                wh2_dlc11_cst_inf_zombie_deckhands_mob_1 = 3,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_1 = 1,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_2 = 2,
+                wh2_dlc11_cst_inf_zombie_gunnery_mob_3 = 3,
+            },
+        },
+        DeckDroppers = {
+            Early = {
+                wh2_dlc11_cst_cav_deck_droppers_0 = 3,
+            },
+            Mid = {
+                wh2_dlc11_cst_cav_deck_droppers_0 = 2,
+                wh2_dlc11_cst_cav_deck_droppers_1 = 1,
+            },
+            Late = {
+                wh2_dlc11_cst_cav_deck_droppers_0 = 1,
+                wh2_dlc11_cst_cav_deck_droppers_1 = 2,
+                wh2_dlc11_cst_cav_deck_droppers_2 = 2,
+            },
+        },
+        Artillery = {
+            Early = {
+                wh2_dlc11_cst_art_carronade = 1,
+                wh2_dlc11_cst_art_mortar = 1,
+            },
+            Mid = {
+                wh2_dlc11_cst_art_carronade = 1,
+                wh2_dlc11_cst_art_mortar = 2,
+            },
+            Late = {
+                wh2_dlc11_cst_art_carronade = 2,
+                wh2_dlc11_cst_art_mortar = 1,
+            },
+        },
+        Syreens = {
+            Early = {
+
+            },
+            Mid = {
+                wh2_dlc11_cst_inf_syreens = 1,
+            },
+            Late = {
+                wh2_dlc11_cst_inf_syreens = 2,
+            },
+        },
+        Beasts = {
+            Early = {
+                wh2_dlc11_cst_mon_fell_bats = 2,
+                wh2_dlc11_cst_mon_scurvy_dogs = 1,
+                wh2_dlc11_cst_mon_bloated_corpse_0 = 1,
+            },
+            Mid = {
+                wh2_dlc11_cst_mon_fell_bats = 3,
+                wh2_dlc11_cst_mon_scurvy_dogs = 3,
+                wh2_dlc11_cst_mon_bloated_corpse_0 = 1,
+            },
+            Late = {
+                wh2_dlc11_cst_mon_terrorgheist = 1,
+            },
+        },
+        DepthGuard = {
+            Early = {
+                wh2_dlc11_cst_inf_depth_guard_0 = 1,
+            },
+            Mid = {
+                wh2_dlc11_cst_inf_depth_guard_0 = 3,
+                wh2_dlc11_cst_inf_depth_guard_1 = 2,
+            },
+            Late = {
+                wh2_dlc11_cst_inf_depth_guard_0 = 4,
+                wh2_dlc11_cst_inf_depth_guard_1 = 3,
+            },
+        },
+        Monsters = {
+            Early = {
+                wh2_dlc11_cst_mon_animated_hulks_0 = 1,
+            },
+            Mid = {
+                wh2_dlc11_cst_mon_mournguls_0 = 1,
+                wh2_dlc11_cst_mon_rotting_prometheans_0 = 2,
+                wh2_dlc11_cst_mon_rotting_prometheans_gunnery_mob_0 = 1,
+                wh2_dlc11_cst_mon_animated_hulks_0 = 3,
+            },
+            Late = {
+                wh2_dlc11_cst_mon_mournguls_0 = 2,
+                wh2_dlc11_cst_mon_rotting_leviathan_0 = 1,
+                wh2_dlc11_cst_mon_necrofex_colossus_0 = 1,
+            },
+        },
+    },
+
+    -- Norsca
+    wh_main_sc_nor_norsca = {
+        Warriors = {
+            Early = {
+                wh_dlc08_nor_inf_marauder_spearman_0 = 3,
+                wh_main_nor_inf_chaos_marauders_0 = 5,
+                wh_main_nor_inf_chaos_marauders_1 = 2,
+                wh_dlc08_nor_inf_marauder_hunters_0 = 3,
+                wh_dlc08_nor_inf_marauder_hunters_1 = 2,
+                wh_dlc08_nor_inf_marauder_berserkers_0 = 1,
+            },
+            Mid = {
+                wh_dlc08_nor_inf_marauder_spearman_0 = 2,
+                wh_main_nor_inf_chaos_marauders_0 = 4,
+                wh_main_nor_inf_chaos_marauders_1 = 2,
+                wh_dlc08_nor_inf_marauder_hunters_0 = 2,
+                wh_dlc08_nor_inf_marauder_hunters_1 = 2,
+                wh_dlc08_nor_inf_marauder_berserkers_0 = 2,
+                wh_dlc08_nor_inf_marauder_champions_0 = 1,
+            },
+            Late = {
+                wh_dlc08_nor_inf_marauder_spearman_0 = 2,
+                wh_main_nor_inf_chaos_marauders_0 = 3,
+                wh_main_nor_inf_chaos_marauders_1 = 2,
+                wh_dlc08_nor_inf_marauder_hunters_1 = 2,
+                wh_dlc08_nor_inf_marauder_berserkers_0 = 2,
+                wh_dlc08_nor_inf_marauder_champions_0 = 2,
+                wh_dlc08_nor_inf_marauder_champions_1 = 1,
+            },
+        },
+        Fimir = {
+            Early = {
+                wh_dlc08_nor_mon_fimir_0 = 1,
+            },
+            Mid = {
+                wh_dlc08_nor_mon_fimir_0 = 1,
+                wh_dlc08_nor_mon_fimir_1 = 1,
+            },
+            Late = {
+                wh_dlc08_nor_mon_fimir_0 = 1,
+                wh_dlc08_nor_mon_fimir_1 = 2,
+            },
+        },
+        Horsemen = {
+            Early = {
+                wh_main_nor_cav_marauder_horsemen_0 = 2,
+                wh_main_nor_cav_marauder_horsemen_1 = 1,
+            },
+            Mid = {
+                wh_main_nor_cav_marauder_horsemen_0 = 1,
+                wh_main_nor_cav_marauder_horsemen_1 = 2,
+                wh_dlc08_nor_cav_marauder_horsemasters_0 = 1,
+                wh_main_nor_cav_chaos_chariot = 1,
+            },
+            Late = {
+                wh_main_nor_cav_marauder_horsemen_1 = 2,
+                wh_dlc08_nor_cav_marauder_horsemasters_0 = 2,
+                wh_main_nor_cav_chaos_chariot = 1,
+            },
+        },
+        WarBeasts = {
+            Early = {
+                wh_main_nor_mon_chaos_warhounds_0 = 2,
+                wh_main_nor_mon_chaos_warhounds_1 = 1,
+            },
+            Mid = {
+                wh_main_nor_mon_chaos_warhounds_1 = 2,
+                wh_dlc08_nor_mon_warwolves_0 = 2,
+                wh_dlc08_nor_mon_war_mammoth_0 = 1,
+            },
+            Late = {
+                wh_dlc08_nor_mon_war_mammoth_0 = 2,
+                wh_dlc08_nor_mon_war_mammoth_1 = 2,
+                wh_dlc08_nor_mon_frost_wyrm_0 = 1,
+                wh_dlc08_nor_mon_norscan_giant_0 = 1,
+            },
+        },
+        SkinWolves = {
+            Early = {
+                wh_dlc08_nor_mon_skinwolves_0 = 1,
+            },
+            Mid = {
+                wh_dlc08_nor_mon_skinwolves_0 = 1,
+                wh_dlc08_nor_mon_skinwolves_1 = 1,
+            },
+            Late = {
+                wh_dlc08_nor_mon_skinwolves_0 = 1,
+                wh_dlc08_nor_mon_skinwolves_1 = 2,
+            },
+        },
+        Trolls = {
+            Early = {
+                wh_main_nor_mon_chaos_trolls = 1,
+            },
+            Mid = {
+                wh_main_nor_mon_chaos_trolls = 1,
+                wh_dlc08_nor_mon_norscan_ice_trolls_0 = 1,
+            },
+            Late = {
+                wh_main_nor_mon_chaos_trolls = 1,
+                wh_dlc08_nor_mon_norscan_ice_trolls_0 = 2,
+            },
+        },
+    },
+
+    -- Beastmen
+    wh_dlc03_sc_bst_beastmen = {
+        Gors = {
+            Early = {
+                wh_dlc03_bst_inf_ungor_spearmen_0 = 2,
+                wh_dlc03_bst_inf_ungor_spearmen_1 = 1,
+                wh_dlc03_bst_inf_ungor_raiders_0 = 2,
+                wh_dlc03_bst_inf_ungor_herd_1 = 3,
+                wh_dlc03_bst_inf_gor_herd_0 = 1,
+                wh_dlc03_bst_inf_gor_herd_1 = 1,
+            },
+            Mid = {
+                wh_dlc03_bst_inf_ungor_spearmen_1 = 2,
+                wh_dlc03_bst_inf_ungor_raiders_0 = 3,
+                wh_dlc03_bst_inf_gor_herd_0 = 2,
+                wh_dlc03_bst_inf_gor_herd_1 = 2,
+                wh_dlc03_bst_inf_bestigor_herd_0 = 1,
+            },
+            Late = {
+                wh_dlc03_bst_inf_ungor_raiders_0 = 2,
+                wh_dlc03_bst_inf_gor_herd_0 = 1,
+                wh_dlc03_bst_inf_gor_herd_1 = 2,
+                wh_dlc03_bst_inf_bestigor_herd_0 = 3,
+            },
+        },
+        Minotaurs = {
+            Early = {
+                wh_dlc03_bst_inf_minotaurs_0 = 1,
+            },
+            Mid = {
+                wh_dlc03_bst_inf_minotaurs_0 = 1,
+                wh_dlc03_bst_inf_minotaurs_1 = 1,
+            },
+            Late = {
+                wh_dlc03_bst_inf_minotaurs_0 = 1,
+                wh_dlc03_bst_inf_minotaurs_1 = 1,
+                wh_dlc03_bst_inf_minotaurs_2 = 1,
+            },
+        },
+        WarBeasts = {
+            Early = {
+                wh_dlc03_bst_inf_chaos_warhounds_0 = 1,
+                wh_dlc03_bst_inf_chaos_warhounds_1 = 1,
+                wh_dlc05_bst_mon_harpies_0 = 2,
+            },
+            Mid = {
+                wh_dlc05_bst_mon_harpies_0 = 1,
+                wh_dlc03_bst_inf_chaos_warhounds_1 = 1,
+                wh_dlc03_bst_cav_razorgor_chariot_0 = 1,
+            },
+            Late = {
+                wh_dlc03_bst_inf_razorgor_herd_0 = 2,
+                wh_dlc03_bst_feral_manticore = 2,
+                wh_dlc03_bst_mon_giant_0 = 1,
+            },
+        },
+        Centigors = {
+            Early = {
+                wh_dlc03_bst_inf_centigors_0 = 1,
+            },
+            Mid = {
+                wh_dlc03_bst_inf_centigors_0 = 1,
+                wh_dlc03_bst_inf_centigors_1 = 1,
+            },
+            Late = {
+                wh_dlc03_bst_inf_centigors_0 = 1,
+                wh_dlc03_bst_inf_centigors_1 = 1,
+                wh_dlc03_bst_inf_centigors_2 = 1,
+            },
+        },
+        Monsters = {
+            Early = {
+                wh_dlc03_bst_mon_chaos_spawn_0 = 2,
+            },
+            Mid = {
+                wh_dlc03_bst_mon_chaos_spawn_0 = 2,
+                wh_dlc03_bst_mon_giant_0 = 1,
+            },
+            Late = {
+                wh_dlc03_bst_mon_chaos_spawn_0 = 2,
+                wh_dlc03_bst_mon_giant_0 = 1,
+                wh_dlc03_bst_inf_cygor_0 = 1,
+            },
+        },
+    },
+    -- Orcs
+    wh_main_sc_grn_greenskins = {
+        Orcs = {
+            Early = {
+                wh_main_grn_inf_orc_boyz = 3,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_orc_big_uns = 1,
+                wh_main_grn_cav_orc_boar_boyz = 1,
+            },
+            Mid = {
+                wh_main_grn_inf_orc_boyz = 3,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 3,
+                wh_main_grn_inf_orc_big_uns = 2,
+                wh_main_grn_cav_orc_boar_boyz = 2,
+                wh_main_grn_inf_black_orcs = 1,
+            },
+            Late = {
+                wh_main_grn_inf_orc_boyz = 1,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_black_orcs = 2,
+                wh_main_grn_inf_orc_big_uns = 1,
+                wh_main_grn_cav_orc_boar_boyz = 2,
+                wh_main_grn_cav_orc_boar_boy_big_uns = 1,
+                wh_main_grn_cav_orc_boar_chariot = 1,
+            },
+        },
+        SavageOrcs = {
+            Early = {
+                wh_main_grn_inf_savage_orcs = 3,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_savage_orc_big_uns = 1,
+                wh_main_grn_cav_savage_orc_boar_boyz = 1,
+            },
+            Mid = {
+                wh_main_grn_inf_savage_orcs = 2,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_savage_orc_big_uns = 2,
+                wh_main_grn_cav_savage_orc_boar_boyz = 2,
+                wh_main_grn_cav_savage_orc_boar_boy_big_uns = 1,
+            },
+            Late = {
+                wh_main_grn_inf_savage_orcs = 2,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_savage_orc_big_uns = 2,
+                wh_main_grn_cav_savage_orc_boar_boyz = 1,
+                wh_main_grn_cav_savage_orc_boar_boy_big_uns = 2,
+            },
+        },
+        Goblins = {
+            Early = {
+                wh_main_grn_inf_goblin_archers = 2,
+                wh_main_grn_inf_goblin_spearmen = 3,
+                wh_main_grn_cav_goblin_wolf_riders_0 = 2,
+            },
+            Mid = {
+                wh_main_grn_inf_goblin_archers = 1,
+                wh_main_grn_inf_goblin_spearmen = 2,
+                wh_main_grn_cav_goblin_wolf_riders_0 = 2,
+                wh_main_grn_cav_goblin_wolf_riders_1 = 2,
+            },
+            Late = {
+                wh_main_grn_cav_goblin_wolf_chariot = 1,
+                wh_main_grn_cav_goblin_wolf_riders_1 = 2,
+            },
+        },
+        ForestGoblins = {
+            Early = {
+                wh_main_grn_cav_forest_goblin_spider_riders_0 = 1,
+            },
+            Mid = {
+                wh_main_grn_cav_forest_goblin_spider_riders_0 = 2,
+                wh_main_grn_cav_forest_goblin_spider_riders_1 = 1,
+            },
+            Late = {
+                wh_main_grn_cav_forest_goblin_spider_riders_0 = 2,
+                wh_main_grn_cav_forest_goblin_spider_riders_1 = 2,
+            },
+        },
+        NightGoblins = {
+            Early = {
+                wh_main_grn_inf_night_goblins = 3,
+                wh_main_grn_inf_night_goblin_archers = 2,
+            },
+            Mid = {
+                wh_main_grn_inf_night_goblins = 2,
+                wh_main_grn_inf_night_goblin_archers = 2,
+                wh_main_grn_inf_night_goblin_fanatics = 1,
+            },
+            Late = {
+                wh_main_grn_inf_night_goblins = 2,
+                wh_main_grn_inf_night_goblin_archers = 2,
+                wh_main_grn_inf_night_goblin_fanatics = 2,
+                wh_main_grn_inf_night_goblin_fanatics_1 = 2,
+            },
+        },
+        Squigs = {
+            Early = {
+                wh_dlc06_grn_inf_squig_herd_0 = 2,
+            },
+            Mid = {
+                wh_dlc06_grn_inf_squig_herd_0 = 2,
+                wh_dlc06_grn_cav_squig_hoppers_0 = 1,
+            },
+            Late = {
+                wh_dlc06_grn_inf_squig_herd_0 = 1,
+                wh_dlc06_grn_cav_squig_hoppers_0 = 2,
+            },
+        },
+        Monsters = {
+            Early = {
+                wh_main_grn_mon_trolls = 2,
+            },
+            Mid = {
+                wh_main_grn_mon_trolls = 2,
+                wh_main_grn_mon_giant = 1,
+            },
+            Late = {
+                wh_main_grn_mon_trolls = 2,
+                wh_main_grn_mon_giant = 2,
+                wh_main_grn_mon_arachnarok_spider_0 = 1,
+            },
+        },
+        Artillery = {
+            Early = {
+                wh_main_grn_art_goblin_rock_lobber = 1,
+            },
+            Mid = {
+                wh_main_grn_art_goblin_rock_lobber = 2,
+                wh_main_grn_art_doom_diver_catapult = 1,
+            },
+            Late = {
+                wh_main_grn_art_goblin_rock_lobber = 1,
+                wh_main_grn_art_doom_diver_catapult = 2,
+            },
+        },
+    },
+
+    -- Savage Orcs
+    wh_main_sc_grn_savage_orcs = {
+        SavageOrcs = {
+            Early = {
+                wh_main_grn_inf_savage_orcs = 3,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_savage_orc_big_uns = 1,
+                wh_main_grn_cav_savage_orc_boar_boyz = 1,
+            },
+            Mid = {
+                wh_main_grn_inf_savage_orcs = 2,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_savage_orc_big_uns = 2,
+                wh_main_grn_cav_savage_orc_boar_boyz = 2,
+                wh_main_grn_cav_savage_orc_boar_boy_big_uns = 1,
+            },
+            Late = {
+                wh_main_grn_inf_savage_orcs = 2,
+                wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                wh_main_grn_inf_savage_orc_big_uns = 2,
+                wh_main_grn_cav_savage_orc_boar_boyz = 1,
+                wh_main_grn_cav_savage_orc_boar_boy_big_uns = 2,
+            },
+        },
+    },
+
+    -- Dark Elves
+    wh2_main_sc_def_dark_elves = {
+        Warriors = {
+            Early = {
+                wh2_main_def_inf_bleakswords_0 = 3,
+                wh2_main_def_inf_dreadspears_0 = 3,
+                wh2_main_def_inf_darkshards_0 = 2,
+                wh2_main_def_inf_darkshards_1 = 2,
+            },
+            Mid = {
+                wh2_main_def_inf_bleakswords_0 = 2,
+                wh2_main_def_inf_dreadspears_0 = 2,
+                wh2_main_def_inf_darkshards_0 = 1,
+                wh2_main_def_inf_darkshards_1 = 2,
+                wh2_main_def_art_reaper_bolt_thrower = 1,
+            },
+            Late = {
+                wh2_main_def_inf_bleakswords_0 = 2,
+                wh2_main_def_inf_dreadspears_0 = 2,
+                wh2_main_def_inf_darkshards_1 = 2,
+                wh2_main_def_inf_black_guard_0 = 1,
+                wh2_main_def_art_reaper_bolt_thrower = 2,
+            },
+        },
+        Khainite = {
+            Early = {
+                wh2_main_def_inf_witch_elves_0 = 1,
+            },
+            Mid = {
+                wh2_main_def_inf_witch_elves_0 = 2,
+                wh2_dlc10_def_inf_sisters_of_slaughter = 1,
+                wh2_main_def_inf_har_ganeth_executioners_0 = 1,
+            },
+            Late = {
+                wh2_main_def_inf_witch_elves_0 = 3,
+                wh2_dlc10_def_inf_sisters_of_slaughter = 2,
+                wh2_main_def_inf_har_ganeth_executioners_0 = 2,
+            },
+        },
+        Cavalry = {
+            Early = {
+                wh2_main_def_cav_dark_riders_0 = 2,
+                wh2_main_def_cav_dark_riders_1 = 1,
+                wh2_main_def_cav_dark_riders_2 = 1,
+            },
+            Mid = {
+                wh2_dlc10_def_cav_doomfire_warlocks_0 = 1,
+                wh2_main_def_cav_cold_one_knights_0 = 1,
+            },
+            Late = {
+                wh2_main_def_cav_cold_one_knights_0 = 1,
+                wh2_main_def_cav_cold_one_chariot = 1,
+                wh2_main_def_cav_cold_one_knights_1 = 1,
+            },
+        },
+        Corsairs = {
+            Early = {
+                wh2_main_def_inf_black_ark_corsairs_0 = 3,
+                wh2_main_def_inf_black_ark_corsairs_1 = 1,
+            },
+            Mid = {
+                wh2_main_def_inf_black_ark_corsairs_0 = 2,
+                wh2_main_def_inf_black_ark_corsairs_1 = 2,
+            },
+            Late = {
+                wh2_main_def_inf_black_ark_corsairs_0 = 2,
+                wh2_main_def_inf_black_ark_corsairs_1 = 2,
+            },
+        },
+        Shades = {
+            Early = {
+                wh2_main_def_inf_shades_0 = 1,
+                wh2_main_def_inf_shades_1 = 1,
+            },
+            Mid = {
+                wh2_main_def_inf_shades_0 = 2,
+                wh2_main_def_inf_shades_1 = 1,
+                wh2_main_def_inf_shades_2 = 1,
+            },
+            Late = {
+                wh2_main_def_inf_shades_0 = 1,
+                wh2_main_def_inf_shades_1 = 2,
+                wh2_main_def_inf_shades_2 = 2,
+            },
+        },
+        Beasts = {
+            Early = {
+                wh2_main_def_inf_harpies = 2,
+                wh2_dlc10_def_mon_feral_manticore_0 = 1,
+            },
+            Mid = {
+                wh2_main_def_inf_harpies = 1,
+                wh2_main_def_mon_war_hydra = 1,
+                wh2_dlc10_def_mon_feral_manticore_0 = 1,
+            },
+            Late = {
+                wh2_dlc10_def_mon_kharibdyss_0 = 1,
+                wh2_main_def_mon_war_hydra = 1,
+                wh2_main_def_mon_black_dragon = 1,
+            },
+        },
+    },
+    -- High Elves
+    wh2_main_sc_hef_high_elves = {
+        Militia = {
+            Early = {
+                wh2_main_hef_inf_spearmen_0 = 2,
+                wh2_main_hef_inf_archers_0 = 3,
+                wh2_main_hef_inf_archers_1 = 1,
+            },
+            Mid = {
+                wh2_main_hef_inf_spearmen_0 = 3,
+                wh2_main_hef_inf_archers_0 = 2,
+                wh2_main_hef_inf_archers_1 = 2,
+                wh2_main_hef_art_eagle_claw_bolt_thrower = 1,
+            },
+            Late = {
+                wh2_main_hef_inf_spearmen_0 = 3,
+                wh2_main_hef_inf_archers_0 = 1,
+                wh2_main_hef_inf_archers_1 = 3,
+                wh2_main_hef_art_eagle_claw_bolt_thrower = 2,
+            },
+        },
+        Cavalry = {
+            Early = {
+                wh2_main_hef_cav_silver_helms_0 = 2,
+                wh2_main_hef_cav_silver_helms_1 = 1,
+            },
+            Mid = {
+                wh2_main_hef_cav_silver_helms_0 = 2,
+                wh2_main_hef_cav_silver_helms_1 = 2,
+                wh2_main_hef_cav_tiranoc_chariot = 1,
+            },
+            Late = {
+                wh2_main_hef_cav_silver_helms_1 = 2,
+                wh2_main_hef_cav_tiranoc_chariot = 1,
+                wh2_main_hef_cav_ithilmar_chariot = 1,
+            },
+        },
+        Ellyrion = {
+            Early = {
+                wh2_main_hef_cav_ellyrian_reavers_0 = 2,
+            },
+            Mid = {
+                wh2_main_hef_cav_ellyrian_reavers_0 = 2,
+                wh2_main_hef_cav_ellyrian_reavers_1 = 1,
+            },
+            Late = {
+                wh2_main_hef_cav_ellyrian_reavers_0 = 2,
+                wh2_main_hef_cav_ellyrian_reavers_1 = 2,
+            },
+        },
+        Caledor = {
+            Early = {
+                wh2_main_hef_cav_dragon_princes = 0,
+            },
+            Mid = {
+                wh2_main_hef_cav_dragon_princes = 0,
+            },
+            Late = {
+                wh2_main_hef_cav_dragon_princes = 1,
+                wh2_main_hef_mon_sun_dragon = 1,
+            },
+        },
+        ShadowWarriors = {
+            Early = {
+                wh2_dlc10_hef_inf_shadow_warriors_0 = 2,
+            },
+            Mid = {
+                wh2_dlc10_hef_inf_shadow_warriors_0 = 2,
+                wh2_dlc10_hef_inf_shadow_walkers_0 = 1,
+            },
+            Late = {
+                wh2_dlc10_hef_inf_shadow_warriors_0 = 2,
+                wh2_dlc10_hef_inf_shadow_walkers_0 = 2,
+            },
+        },
+        Chracian = {
+            Early = {
+                wh2_main_hef_inf_white_lions_of_chrace_0 = 1,
+                wh2_main_hef_mon_great_eagle = 1,
+            },
+            Mid = {
+                wh2_main_hef_inf_white_lions_of_chrace_0 = 1,
+                wh2_main_hef_mon_great_eagle = 2,
+            },
+            Late = {
+                wh2_main_hef_inf_white_lions_of_chrace_0 = 2,
+                wh2_main_hef_mon_great_eagle = 1,
+            },
+        },
+        Beasts = {
+            Early = {
+                wh2_main_hef_mon_great_eagle = 1,
+            },
+            Mid = {
+                wh2_main_hef_mon_sun_dragon = 1,
+                wh2_main_hef_mon_moon_dragon = 1,
+            },
+            Late = {
+                wh2_main_hef_mon_moon_dragon = 1,
+                wh2_main_hef_mon_star_dragon = 1,
+            },
+        },
+        Asuryan = {
+            Early = {
+                wh2_main_hef_inf_phoenix_guard = 0,
+            },
+            Mid = {
+                wh2_main_hef_inf_phoenix_guard = 1,
+                wh2_main_hef_mon_phoenix_flamespyre = 1,
+            },
+            Late = {
+                wh2_main_hef_mon_phoenix_flamespyre = 1,
+                wh2_main_hef_inf_phoenix_guard = 2,
+                wh2_main_hef_mon_phoenix_frostheart = 1,
+            },
+        },
+        Avelorn = {
+            Early = {
+                wh2_dlc10_hef_inf_sisters_of_avelorn_0 = 0,
+            },
+            Mid = {
+                wh2_dlc10_hef_inf_sisters_of_avelorn_0 = 1,
+            },
+            Late = {
+                wh2_dlc10_hef_inf_sisters_of_avelorn_0 = 2,
+            },
+        },
+        Lothern = {
+            Early = {
+                wh2_main_hef_inf_lothern_sea_guard_0 = 2,
+            },
+            Mid = {
+                wh2_main_hef_inf_lothern_sea_guard_0 = 2,
+                wh2_main_hef_inf_lothern_sea_guard_1 = 1,
+            },
+            Late = {
+                wh2_main_hef_inf_lothern_sea_guard_0 = 2,
+                wh2_main_hef_inf_lothern_sea_guard_1 = 2,
+            },
+        },
+        Saphery = {
+            Early = {
+                wh2_main_hef_inf_swordmasters_of_hoeth_0 = 0,
+            },
+            Mid = {
+                wh2_main_hef_inf_swordmasters_of_hoeth_0 = 1,
+            },
+            Late = {
+                wh2_main_hef_inf_swordmasters_of_hoeth_0 = 2,
+            },
+        },
+    },
+
+    -- Skaven
+    wh2_main_sc_skv_skaven = {
+        Skavenslaves = {
+            Early = {
+                wh2_main_skv_inf_skavenslaves_0 = 3,
+                wh2_main_skv_inf_skavenslave_spearmen_0 = 3,
+                wh2_main_skv_inf_skavenslave_slingers_0 = 3,
+            },
+            Mid = {
+                wh2_main_skv_inf_skavenslaves_0 = 3,
+                wh2_main_skv_inf_skavenslave_spearmen_0 = 3,
+                wh2_main_skv_inf_skavenslave_slingers_0 = 3,
+            },
+            Late = {
+                wh2_main_skv_inf_skavenslaves_0 = 3,
+                wh2_main_skv_inf_skavenslave_spearmen_0 = 3,
+                wh2_main_skv_inf_skavenslave_slingers_0 = 3,
+            },
+        },
+        Warriors = {
+            Early = {
+                wh2_main_skv_inf_clanrats_0 = 2,
+                wh2_main_skv_inf_clanrats_1 = 2,
+                wh2_main_skv_inf_clanrat_spearmen_0 = 2,
+                wh2_main_skv_inf_clanrat_spearmen_1 = 2,
+            },
+            Mid = {
+                wh2_main_skv_inf_clanrats_0 = 1,
+                wh2_main_skv_inf_clanrats_1 = 2,
+                wh2_main_skv_inf_clanrat_spearmen_0 = 1,
+                wh2_main_skv_inf_clanrat_spearmen_1 = 2,
+                wh2_main_skv_inf_stormvermin_0 = 1,
+                wh2_main_skv_inf_stormvermin_1 = 1,
+            },
+            Late = {
+                wh2_main_skv_inf_clanrats_0 = 1,
+                wh2_main_skv_inf_clanrats_1 = 2,
+                wh2_main_skv_inf_clanrat_spearmen_0 = 1,
+                wh2_main_skv_inf_clanrat_spearmen_1 = 2,
+                wh2_main_skv_inf_stormvermin_0 = 2,
+                wh2_main_skv_inf_stormvermin_1 = 2,
+            },
+        },
+        ClanPestilens = {
+            Early = {
+                wh2_main_skv_inf_plague_monks = 3,
+            },
+            Mid = {
+                wh2_main_skv_inf_plague_monks = 2,
+                wh2_main_skv_inf_plague_monk_censer_bearer = 1,
+                wh2_main_skv_art_plagueclaw_catapult = 1,
+            },
+            Late = {
+                wh2_main_skv_inf_plague_monks = 2,
+                wh2_main_skv_inf_plague_monk_censer_bearer = 1,
+                wh2_main_skv_art_plagueclaw_catapult = 2,
+            },
+        },
+        ClanMoulder = {
+            Early = {
+                wh2_main_skv_mon_rat_ogres = 1,
+            },
+            Mid = {
+                wh2_main_skv_mon_rat_ogres = 2,
+            },
+            Late = {
+                wh2_main_skv_mon_rat_ogres = 2,
+                wh2_main_skv_mon_hell_pit_abomination = 1,
+            },
+        },
+        ClanSkyre = {
+            Early = {
+                wh2_main_skv_inf_warpfire_thrower = 1,
+                wh2_main_skv_inf_poison_wind_globadiers = 1,
+            },
+            Mid = {
+                wh2_main_skv_inf_warpfire_thrower = 2,
+                wh2_main_skv_inf_poison_wind_globadiers = 1,
+                wh2_main_skv_inf_death_globe_bombardiers = 1,
+            },
+            Late = {
+                wh2_main_skv_veh_doomwheel = 1,
+                wh2_main_skv_inf_warpfire_thrower = 1,
+                wh2_main_skv_inf_death_globe_bombardiers = 2,
+                wh2_main_skv_art_warp_lightning_cannon = 1,
+            },
+        },
+        ClanEshin = {
+            Early = {
+                wh2_main_skv_inf_night_runners_0 = 1,
+                wh2_main_skv_inf_night_runners_1 = 1,
+            },
+            Mid = {
+                wh2_main_skv_inf_gutter_runners_0 = 1,
+                wh2_main_skv_inf_gutter_runners_1 = 1,
+                wh2_main_skv_inf_gutter_runner_slingers_0 = 1,
+                wh2_main_skv_inf_gutter_runner_slingers_1 = 1,
+            },
+            Late = {
+                wh2_main_skv_inf_gutter_runners_1 = 1,
+                wh2_main_skv_inf_gutter_runner_slingers_1 = 1,
+                wh2_main_skv_inf_death_runners_0 = 1,
+            },
+        },
+    },
+
+    -- Lizardmen
+    wh2_main_sc_lzd_lizardmen = {
+        Skinks = {
+            Early = {
+                wh2_main_lzd_inf_skink_cohort_0 = 2,
+                wh2_main_lzd_inf_skink_cohort_1 = 1,
+                wh2_main_lzd_inf_skink_skirmishers_0 = 1,
+            },
+            Mid = {
+                wh2_main_lzd_inf_skink_cohort_1 = 2,
+                wh2_main_lzd_inf_skink_skirmishers_0 = 2,
+                wh2_main_lzd_inf_chameleon_skinks_0 = 1,
+                wh2_main_lzd_cav_terradon_riders_0 = 1,
+            },
+            Late = {
+                wh2_main_lzd_cav_terradon_riders_0 = 2,
+                wh2_main_lzd_cav_terradon_riders_1 = 1,
+                wh2_main_lzd_inf_chameleon_skinks_0 = 2,
+                wh2_main_lzd_inf_chameleon_skinks_blessed_0 = 1,
+            },
+        },
+        Saurus = {
+            Early = {
+                wh2_main_lzd_inf_saurus_spearmen_0 = 3,
+                wh2_main_lzd_inf_saurus_spearmen_1 = 1,
+                wh2_main_lzd_inf_saurus_warriors_0 = 3,
+                wh2_main_lzd_inf_saurus_warriors_1 = 1,
+            },
+            Mid = {
+                wh2_main_lzd_inf_saurus_spearmen_0 = 2,
+                wh2_main_lzd_inf_saurus_spearmen_1 = 2,
+                wh2_main_lzd_inf_saurus_warriors_0 = 2,
+                wh2_main_lzd_inf_saurus_warriors_1 = 2,
+                wh2_main_lzd_inf_temple_guards = 1,
+            },
+            Late = {
+                wh2_main_lzd_inf_saurus_spearmen_0 = 1,
+                wh2_main_lzd_inf_saurus_spearmen_1 = 3,
+                wh2_main_lzd_inf_saurus_warriors_0 = 1,
+                wh2_main_lzd_inf_saurus_warriors_1 = 3,
+                wh2_main_lzd_inf_temple_guards = 2,
+                wh2_main_lzd_inf_saurus_warriors_blessed_1 = 1,
+            },
+        },
+        Kroxigors = {
+            Early = {
+                wh2_main_lzd_mon_kroxigors = 1,
+            },
+            Mid = {
+                wh2_main_lzd_mon_kroxigors = 2,
+            },
+            Late = {
+                wh2_main_lzd_mon_kroxigors = 2,
+                wh2_main_lzd_mon_kroxigors_blessed = 1,
+            },
+        },
+        ColdOnes = {
+            Early = {
+                wh2_main_lzd_cav_cold_ones_feral_0 = 1,
+                wh2_main_lzd_cav_cold_ones_1 = 1,
+            },
+            Mid = {
+                wh2_main_lzd_cav_cold_ones_1 = 1,
+                wh2_main_lzd_cav_cold_one_spearmen_1 = 1,
+            },
+            Late = {
+                wh2_main_lzd_cav_cold_ones_1 = 1,
+                wh2_main_lzd_cav_cold_one_spearmen_1 = 2,
+                wh2_main_lzd_cav_horned_ones_0 = 1,
+            },
+        },
+        FeralBeasts = {
+            Early = {
+                wh2_main_lzd_cav_cold_ones_feral_0 = 2,
+            },
+            Mid = {
+                wh2_main_lzd_mon_bastiladon_0 = 1,
+                wh2_main_lzd_mon_stegadon_0 = 1,
+            },
+            Late = {
+                wh2_main_lzd_mon_bastiladon_0 = 1,
+                wh2_main_lzd_mon_stegadon_0 = 1,
+                wh2_main_lzd_mon_carnosaur_0 = 1,
+            },
+        },
+        TamedBeasts = {
+            Early = {
+
+            },
+            Mid = {
+                wh2_main_lzd_mon_bastiladon_1 = 1,
+                wh2_main_lzd_mon_stegadon_1 = 1,
+            },
+            Late = {
+                wh2_main_lzd_mon_bastiladon_2 = 1,
+                wh2_main_lzd_mon_ancient_stegadon = 1,
+            },
+        },
+    },
+
+    -- Vampire Counts
+    wh_main_sc_vmp_vampire_counts = {
+        Chaff = {
+            Early = {
+                wh_main_vmp_inf_zombie = 3,
+                wh_main_vmp_inf_skeleton_warriors_0 = 2,
+                wh_dlc04_vmp_veh_corpse_cart_0 = 1,
+            },
+            Mid = {
+                wh_main_vmp_inf_zombie = 2,
+                wh_main_vmp_inf_skeleton_warriors_0 = 2,
+                wh_main_vmp_inf_skeleton_warriors_1 = 1,
+                wh_dlc04_vmp_veh_corpse_cart_1 = 1,
+            },
+            Late = {
+                wh_main_vmp_inf_skeleton_warriors_0 = 3,
+                wh_main_vmp_inf_skeleton_warriors_1 = 2,
+                wh_dlc04_vmp_veh_corpse_cart_2 = 1,
+                wh_dlc04_vmp_veh_mortis_engine_0 = 1,
+            },
+        },
+        GraveGuard = {
+            Early = {
+                wh_main_vmp_inf_grave_guard_0 = 1,
+            },
+            Mid = {
+                wh_main_vmp_inf_grave_guard_0 = 2,
+                wh_main_vmp_inf_grave_guard_1 = 1,
+                wh_main_vmp_cav_black_knights_0 = 1,
+            },
+            Late = {
+                wh_main_vmp_inf_grave_guard_0 = 2,
+                wh_main_vmp_inf_grave_guard_1 = 2,
+                wh_main_vmp_cav_black_knights_0 = 1,
+                wh_main_vmp_cav_black_knights_3 = 1,
+            },
+        },
+        Beasts = {
+            Early = {
+                wh_main_vmp_mon_fell_bats = 2,
+                wh_main_vmp_mon_dire_wolves = 1,
+            },
+            Mid = {
+                wh_main_vmp_mon_fell_bats = 2,
+                wh_main_vmp_mon_dire_wolves = 2,
+            },
+            Late = {
+                wh_main_vmp_mon_fell_bats = 2,
+                wh_main_vmp_mon_terrorgheist = 1,
+            },
+        },
+        VampiricBeasts = {
+            Early = {
+                wh_main_vmp_mon_vargheists = 1,
+            },
+            Mid = {
+                wh_main_vmp_mon_varghulf = 1,
+                wh_main_vmp_mon_vargheists = 2,
+            },
+            Late = {
+                wh_main_vmp_mon_varghulf = 1,
+                wh_main_vmp_mon_vargheists = 2,
+            },
+        },
+        Ghouls = {
+            Early = {
+                wh_main_vmp_inf_crypt_ghouls = 3,
+            },
+            Mid = {
+                wh_main_vmp_inf_crypt_ghouls = 2,
+                wh_main_vmp_mon_crypt_horrors = 1,
+            },
+            Late = {
+                wh_main_vmp_inf_crypt_ghouls = 2,
+                wh_main_vmp_mon_crypt_horrors = 2,
+            },
+        },
+        Spirits = {
+            Early = {
+                wh_main_vmp_inf_cairn_wraiths = 1,
+            },
+            Mid = {
+                wh_main_vmp_inf_cairn_wraiths = 2,
+                wh_main_vmp_cav_hexwraiths = 1,
+            },
+            Late = {
+                wh_main_vmp_inf_cairn_wraiths = 2,
+                wh_main_vmp_cav_hexwraiths = 1,
+                wh_main_vmp_veh_black_coach = 1,
+            },
+        },
+        BloodKnights = {
+            Early = {
+                wh_dlc02_vmp_cav_blood_knights_0 = 0,
+            },
+            Mid = {
+                wh_dlc02_vmp_cav_blood_knights_0 = 0,
+            },
+            Late = {
+                wh_dlc02_vmp_cav_blood_knights_0 = 1,
+            },
+        },
+    },
+
+    -- Tomb Kings
+    wh2_dlc09_sc_tmb_tomb_kings = {
+        SkeletonWarriors = {
+            Early = {
+                wh2_dlc09_tmb_inf_skeleton_spearmen_0 = 3,
+                wh2_dlc09_tmb_inf_skeleton_warriors_0 = 3,
+                wh2_dlc09_tmb_inf_skeleton_archers_0 = 2,
+                wh2_dlc09_tmb_mon_carrion_0 = 1,
+            },
+            Mid = {
+                wh2_dlc09_tmb_inf_skeleton_spearmen_0 = 3,
+                wh2_dlc09_tmb_inf_skeleton_warriors_0 = 2,
+                wh2_dlc09_tmb_inf_nehekhara_warriors_0 = 1,
+                wh2_dlc09_tmb_inf_skeleton_archers_0 = 2,
+                wh2_dlc09_tmb_mon_carrion_0 = 1,
+            },
+            Late = {
+                wh2_dlc09_tmb_inf_skeleton_spearmen_0 = 2,
+                wh2_dlc09_tmb_inf_skeleton_warriors_0 = 2,
+                wh2_dlc09_tmb_inf_nehekhara_warriors_0 = 2,
+                wh2_dlc09_tmb_inf_skeleton_archers_0 = 2,
+                wh2_dlc09_tmb_mon_carrion_0 = 1,
+            },
+        },
+        SkeletonCavalry = {
+            Early = {
+                wh2_dlc09_tmb_cav_skeleton_horsemen_0 = 2,
+                wh2_dlc09_tmb_cav_skeleton_horsemen_archers_0 = 1,
+                wh2_dlc09_tmb_cav_nehekhara_horsemen_0 = 1,
+                wh2_dlc09_tmb_veh_skeleton_chariot_0 = 1,
+            },
+            Mid = {
+                 wh2_dlc09_tmb_cav_skeleton_horsemen_archers_0 = 1,
+                wh2_dlc09_tmb_cav_nehekhara_horsemen_0 = 1,
+                wh2_dlc09_tmb_veh_skeleton_chariot_0 = 2,
+                wh2_dlc09_tmb_veh_skeleton_archer_chariot_0 = 1,
+            },
+            Late = {
+                wh2_dlc09_tmb_veh_skeleton_chariot_0 = 2,
+                wh2_dlc09_tmb_veh_skeleton_archer_chariot_0 = 2,
+            },
+        },
+        TombGuard = {
+            Early = {
+                wh2_dlc09_tmb_inf_tomb_guard_0 = 1,
+            },
+            Mid = {
+                wh2_dlc09_tmb_inf_tomb_guard_0 = 2,
+                wh2_dlc09_tmb_inf_tomb_guard_1 = 1,
+            },
+            Late = {
+                wh2_dlc09_tmb_inf_tomb_guard_0 = 2,
+                wh2_dlc09_tmb_inf_tomb_guard_1 = 2,
+            },
+        },
+        Constructs = {
+            Early = {
+                wh2_dlc09_tmb_mon_ushabti_0 = 1,
+            },
+            Mid = {
+                wh2_dlc09_tmb_mon_ushabti_0 = 1,
+                wh2_dlc09_tmb_mon_ushabti_1 = 1,
+            },
+            Late = {
+                wh2_dlc09_tmb_mon_ushabti_0 = 2,
+                wh2_dlc09_tmb_mon_ushabti_1 = 1,
+            },
+        },
+        ConstructCavalry = {
+            Early = {
+                wh2_dlc09_tmb_mon_sepulchral_stalkers_0 = 1,
+            },
+            Mid = {
+                wh2_dlc09_tmb_mon_sepulchral_stalkers_0 = 2,
+                wh2_dlc09_tmb_cav_necropolis_knights_0 = 1,
+            },
+            Late = {
+                wh2_dlc09_tmb_mon_sepulchral_stalkers_0 = 1,
+                wh2_dlc09_tmb_cav_necropolis_knights_0 = 1,
+                wh2_dlc09_tmb_cav_necropolis_knights_1 = 1,
+            },
+        },
+        ConstructMonsters = {
+            Early = {
+
+            },
+            Mid = {
+                wh2_dlc09_tmb_mon_tomb_scorpion_0 = 1,
+                wh2_pro06_tmb_mon_bone_giant_0 = 1,
+            },
+            Late = {
+                wh2_dlc09_tmb_mon_heirotitan_0 = 1,
+                wh2_dlc09_tmb_veh_khemrian_warsphinx_0 = 1,
+                wh2_dlc09_tmb_mon_necrosphinx_0 = 1,
+            },
+        },
+        Artillery = {
+            Early = {
+
+            },
+            Mid = {
+                wh2_dlc09_tmb_art_screaming_skull_catapult_0 = 1,
+            },
+            Late = {
+                wh2_dlc09_tmb_art_screaming_skull_catapult_0 = 2,
+                wh2_dlc09_tmb_art_casket_of_souls_0 = 1,
+            },
+        },
+    },
+
+    -- Dwarfs
+    wh_main_sc_dwf_dwarfs = {
+        Miners = {
+            Early = {
+                wh_main_dwf_inf_miners_0 = 2,
+            },
+            Mid = {
+                wh_main_dwf_inf_miners_0 = 2,
+                wh_main_dwf_inf_miners_1 = 1,
+            },
+            Late = {
+                wh_main_dwf_inf_miners_0 = 1,
+                wh_main_dwf_inf_miners_2 = 2,
+            },
+        },
+        Warriors = {
+            Early = {
+                wh_main_dwf_inf_dwarf_warrior_0 = 2,
+                wh_main_dwf_inf_dwarf_warrior_1 = 1,
+            },
+            Mid = {
+                wh_main_dwf_inf_dwarf_warrior_0 = 2,
+                wh_main_dwf_inf_dwarf_warrior_1 = 2,
+                wh_main_dwf_inf_longbeards = 1,
+            },
+            Late = {
+                wh_main_dwf_inf_dwarf_warrior_0 = 2,
+                wh_main_dwf_inf_dwarf_warrior_1 = 1,
+                wh_main_dwf_inf_longbeards = 2,
+                wh_main_dwf_inf_longbeards_1 = 1,
+            },
+        },
+        RangedInfantry = {
+            Early = {
+                wh_main_dwf_inf_quarrellers_0 = 2,
+                wh_main_dwf_inf_quarrellers_1 = 1,
+            },
+            Mid = {
+                wh_main_dwf_inf_quarrellers_0 = 1,
+                wh_main_dwf_inf_quarrellers_1 = 1,
+                wh_main_dwf_inf_thunderers_0 = 1,
+                wh_main_dwf_inf_irondrakes_0 = 1,
+            },
+            Late = {
+                wh_main_dwf_inf_quarrellers_1 = 1,
+                wh_main_dwf_inf_thunderers_0 = 2,
+                wh_main_dwf_inf_irondrakes_0 = 1,
+                wh_main_dwf_inf_irondrakes_2 = 1,
+            },
+        },
+        Slayers = {
+            Early = {
+                wh_main_dwf_inf_slayers = 1,
+            },
+            Mid = {
+                wh_main_dwf_inf_slayers = 2,
+                wh2_dlc10_dwf_inf_giant_slayers = 1,
+            },
+            Late = {
+                wh_main_dwf_inf_slayers = 2,
+                wh2_dlc10_dwf_inf_giant_slayers = 2,
+            },
+        },
+        Elites = {
+            Early = {
+                wh_main_dwf_inf_longbeards = 1,
+            },
+            Mid = {
+                wh_main_dwf_inf_longbeards = 1,
+                wh_main_dwf_inf_hammerers = 1,
+            },
+            Late = {
+                wh_main_dwf_inf_hammerers = 2,
+                wh_main_dwf_inf_ironbreakers = 1,
+            },
+        },
+        Artillery = {
+            Early = {
+                wh_dlc06_dwf_art_bolt_thrower_0 = 2,
+                wh_main_dwf_art_grudge_thrower = 1,
+            },
+            Mid = {
+                wh_dlc06_dwf_art_bolt_thrower_0 = 1,
+                wh_main_dwf_art_grudge_thrower = 2,
+                wh_main_dwf_art_cannon = 1,
+            },
+            Late = {
+                wh_main_dwf_art_grudge_thrower = 1,
+                wh_main_dwf_art_cannon = 1,
+                wh_main_dwf_art_organ_gun = 1,
+                wh_main_dwf_art_flame_cannon = 1,
+            },
+        },
+        Rangers = {
+            Early = {
+                wh_dlc06_dwf_inf_rangers_0 = 1,
+            },
+            Mid = {
+                wh_dlc06_dwf_inf_rangers_0 = 1,
+                wh_dlc06_dwf_inf_rangers_1 = 1,
+            },
+            Late = {
+                wh_dlc06_dwf_inf_rangers_0 = 2,
+                wh_dlc06_dwf_inf_rangers_1 = 1,
+                wh_dlc06_dwf_inf_bugmans_rangers_0 = 1,
+            },
+        },
+        Aircraft = {
+            Early = {
+
+            },
+            Mid = {
+                wh_main_dwf_veh_gyrocopter_0 = 2,
+                wh_main_dwf_veh_gyrocopter_1 = 1,
+            },
+            Late = {
+                wh_main_dwf_veh_gyrocopter_0 = 1,
+                wh_main_dwf_veh_gyrocopter_1 = 1,
+                wh_main_dwf_veh_gyrobomber = 1,
+            },
+        },
+    },
+}

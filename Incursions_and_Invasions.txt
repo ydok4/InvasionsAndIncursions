@@ -1,0 +1,150 @@
+I&I:  InitialiseIandIListenerData   : [17, 03 2019 13:45:31]
+I&I:  FINISHED
+
+I&I:  Loading Crynsos Data   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  FINISHED
+
+I&I:  Main mod function   : [17, 03 2019 13:45:32]
+I&I:  Got human faction wh2_dlc11_cst_rogue_grey_point_scuttlers   : [17, 03 2019 13:45:32]
+I&I:  New game   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  DelayedStartSetup   : [17, 03 2019 13:45:32]
+I&I:  Removing faction wh2_dlc11_cst_the_drowned   : [17, 03 2019 13:45:32]
+I&I:  Giving faction regions to wh2_main_grn_blue_vipers   : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh2_dlc11_cst_the_drowned   : [17, 03 2019 13:45:32]
+I&I:  Setting up: CylostraDirefan   : [17, 03 2019 13:45:32]
+I&I:  Event: CylostraDirefan will start at turnNumber: 37   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh2_main_hef_nagarythe   : [17, 03 2019 13:45:32]
+I&I:  Giving faction regions to wh2_main_def_bleak_holds   : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh2_main_hef_nagarythe   : [17, 03 2019 13:45:32]
+I&I:  Setting up: AlithAnar   : [17, 03 2019 13:45:32]
+I&I:  Event: AlithAnar will start at turnNumber: 92   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh_dlc03_bst_jagged_horn   : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh_dlc03_bst_jagged_horn   : [17, 03 2019 13:45:32]
+I&I:  Setting up: Malagor   : [17, 03 2019 13:45:32]
+I&I:  Event: Malagor will start at turnNumber: 153   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh_dlc03_bst_redhorn   : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh_dlc03_bst_redhorn   : [17, 03 2019 13:45:32]
+I&I:  Setting up: Morghur   : [17, 03 2019 13:45:32]
+I&I:  Event: Morghur will start at turnNumber: 1   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh2_main_skv_clan_pestilens   : [17, 03 2019 13:45:32]
+I&I:  Giving faction regions to    : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh2_main_skv_clan_pestilens   : [17, 03 2019 13:45:32]
+I&I:  Setting up: LordSkrolk   : [17, 03 2019 13:45:32]
+I&I:  Event: LordSkrolk will start at turnNumber: 156   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh2_dlc11_def_the_blessed_dread   : [17, 03 2019 13:45:32]
+I&I:  Giving faction regions to    : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh2_dlc11_def_the_blessed_dread   : [17, 03 2019 13:45:32]
+I&I:  Setting up: LokhirFellheart   : [17, 03 2019 13:45:32]
+I&I:  Event: LokhirFellheart will start at turnNumber: 180   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh2_dlc11_vmp_the_barrow_legion   : [17, 03 2019 13:45:32]
+I&I:  Giving faction regions to wh_main_dwf_karak_ziflin   : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh2_dlc11_vmp_the_barrow_legion   : [17, 03 2019 13:45:32]
+I&I:  Setting up: HeinrichKemmler   : [17, 03 2019 13:45:32]
+I&I:  Event: HeinrichKemmler will start at turnNumber: 124   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh_dlc03_bst_beastmen   : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh_dlc03_bst_beastmen   : [17, 03 2019 13:45:32]
+I&I:  Setting up: Khazrak   : [17, 03 2019 13:45:32]
+I&I:  Event: Khazrak will start at turnNumber: 134   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Removing faction wh2_dlc09_skv_clan_rictus   : [17, 03 2019 13:45:32]
+I&I:  Giving faction regions to wh2_main_def_the_forgebound   : [17, 03 2019 13:45:32]
+I&I:  Killing all characters for faction wh2_dlc09_skv_clan_rictus   : [17, 03 2019 13:45:32]
+I&I:  Setting up: TretchCraventail   : [17, 03 2019 13:45:32]
+I&I:  Event: TretchCraventail will start at turnNumber: 42   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Completed delayed start   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  InvasionStartSetup   : [17, 03 2019 13:45:32]
+I&I:  Targeting subculture: wh_main_sc_brt_bretonnia   : [17, 03 2019 13:45:32]
+I&I:  Setting up: EarlyNorscaInvasion   : [17, 03 2019 13:45:32]
+I&I:  Event: EarlyNorscaInvasion will start at turnNumber: 39   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Targeting subculture: wh2_main_sc_hef_high_elves   : [17, 03 2019 13:45:32]
+I&I:  Setting up: EarlyNorscaInvasion   : [17, 03 2019 13:45:32]
+I&I:  Event: EarlyNorscaInvasion will start at turnNumber: 43   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Targeting subculture: wh2_main_sc_def_dark_elves   : [17, 03 2019 13:45:32]
+I&I:  Setting up: EarlyNorscaInvasion   : [17, 03 2019 13:45:32]
+I&I:  Event: EarlyNorscaInvasion will start at turnNumber: 58   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Targeting subculture: wh_main_sc_emp_empire   : [17, 03 2019 13:45:32]
+I&I:  Setting up: EarlyNorscaInvasion   : [17, 03 2019 13:45:32]
+I&I:  Event: EarlyNorscaInvasion will start at turnNumber: 36   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  Initialising listeners   : [17, 03 2019 13:45:32]
+I&I:  Initialising post UI listeners   : [17, 03 2019 13:45:32]
+I&I:  Error: core is not defined   : [17, 03 2019 13:45:32]
+I&I:  FINISHED
+
+I&I:  RegisterActiveEventListeners START   : [17, 03 2019 13:45:32]
+I&I:  Finished loading active events   : [17, 03 2019 13:45:32]
+I&I:  Starting event Morghur   : [17, 03 2019 13:45:33]
+I&I:  Got event data   : [17, 03 2019 13:45:33]
+I&I:  Generting force: Morghur   : [17, 03 2019 13:45:33]
+I&I:  ForceKey: Morghur__default   : [17, 03 2019 13:45:33]
+I&I:  GenerateForceForEvent   : [17, 03 2019 13:45:33]
+I&I:  Getting mandatory units   : [17, 03 2019 13:45:33]
+I&I:  Got mandatory unit count: 4   : [17, 03 2019 13:45:33]
+I&I:  Getting subculture units   : [17, 03 2019 13:45:33]
+I&I:  Generating force string   : [17, 03 2019 13:45:33]
+I&I:  Got unit list for invasion:    : [17, 03 2019 13:45:33]
+I&I:  Starting invasion   : [17, 03 2019 13:45:33]
+I&I:  Spawn location X: 417 Spawn location y: 291   : [17, 03 2019 13:45:33]
+I&I:  Forename is Direfan   : [17, 03 2019 13:45:33]
+I&I:  Surname is Cylostra   : [17, 03 2019 13:45:33]
+I&I:  Subtype is wh2_dlc11_cst_cylostra   : [17, 03 2019 13:45:33]
+I&I:  Assigned faction leader as general   : [17, 03 2019 13:45:33]
+I&I:  Region owner faction name: wh2_dlc11_cst_the_drowned   : [17, 03 2019 13:45:33]
+I&I:  Setting invasion target. Type: REGION Region: wh_main_athel_loren_vauls_anvil   : [17, 03 2019 13:45:33]
+I&I:  Set characters starting level to 15   : [17, 03 2019 13:45:33]
+I&I:  Finished starting invasion   : [17, 03 2019 13:45:33]
+I&I:  Started invasion   : [17, 03 2019 13:45:33]
+I&I:  FINISHED
+
+I&I:  Generting force: SecondaryForce   : [17, 03 2019 13:45:33]
+I&I:  ForceKey: SecondaryForce__default   : [17, 03 2019 13:45:33]
+I&I:  GenerateForceForEvent   : [17, 03 2019 13:45:33]
+I&I:  Getting mandatory units   : [17, 03 2019 13:45:33]
+I&I:  Got mandatory unit count: 2   : [17, 03 2019 13:45:33]
+I&I:  Getting subculture units   : [17, 03 2019 13:45:33]
+I&I:  Generating force string   : [17, 03 2019 13:45:33]
+I&I:  Got unit list for invasion:    : [17, 03 2019 13:45:33]
+I&I:  Starting invasion   : [17, 03 2019 13:45:33]
+I&I:  Spawn location X: 414 Spawn location y: 286   : [17, 03 2019 13:45:33]
+I&I:  Region owner faction name: wh2_dlc11_cst_the_drowned   : [17, 03 2019 13:45:33]
+I&I:  Setting invasion target. Type: REGION Region: wh_main_athel_loren_vauls_anvil   : [17, 03 2019 13:45:33]
+I&I:  Set characters starting level to 10   : [17, 03 2019 13:45:33]
+I&I:  Finished starting invasion   : [17, 03 2019 13:45:33]
+I&I:  Started invasion   : [17, 03 2019 13:45:33]
+I&I:  FINISHED
+
+I&I:  Added event to the ActiveEventsStack   : [17, 03 2019 13:45:33]
+I&I:  Cleared event from the UpcomingEventsStack   : [17, 03 2019 13:45:33]
+I&I:  FINISHED
+
+I&I:  There is no event for this turn. Next event is: 36   : [17, 03 2019 13:45:33]
