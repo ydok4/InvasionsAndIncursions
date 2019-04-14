@@ -1,6 +1,8 @@
+require 'script/_lib/pooldata/AreaPoolData'
 require 'script/_lib/pooldata/DelayedStartPoolData'
 require 'script/_lib/pooldata/IncursionPoolData'
 require 'script/_lib/pooldata/InvasionPoolData'
+require 'script/_lib/pooldata/SpawnLocationPoolData'
 require 'script/_lib/pooldata/SubCultureArmyPoolData'
 
 require 'script/_lib/dbexports/NameGroupResources'
@@ -11,9 +13,11 @@ IandI_Log("Loading Core Data");
 out("I&I: Loading Core Data");
 
 _G.I_I_Data = {
+    Areas = AreaPoolData,
     DelayedStart = DelayedStartPoolData,
-    Incursion = IncursionPoolData,
-    Invasion = InvasionPoolData,
+    Incursions = IncursionPoolData,
+    Invasions = InvasionPoolData,
+    SpawnLocations = SpawnLocationPoolData,
 
     SubCultureArmyPoolData = SubCultureArmyPoolData,
     AddAdditionalDBResources = function(dbResourceKey, resourceData)

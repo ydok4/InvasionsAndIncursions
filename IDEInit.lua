@@ -4,6 +4,42 @@ testCharacter = {
     get_forename = function() return "Direfan"; end,
     get_surname = function() return "Cylostra"; end,
     character_subtype_key = function() return "wh2_dlc11_cst_cylostra"; end,
+    command_queue_index = function() end,
+}
+
+humanFaction = {
+    name = function()
+        return "wh_main_emp_empire";
+    end,
+    subculture = function()
+        return "wh_main_sc_emp_empire";
+    end,
+    character_list = function()
+        return {
+            num_items = function()
+                return 0;
+            end
+        };
+    end,
+    region_list = function()
+        return {
+            num_items = function()
+                return 0;
+            end
+        };
+    end,
+    home_region = function ()
+        return {
+            name = function()
+                return "";
+            end,
+            is_null_interface = function()
+                return false;
+            end,
+        }
+    end,
+    faction_leader = function() return testCharacter; end,
+    is_quest_battle_faction = function() return false; end,
 }
 
 testFaction = {
@@ -11,7 +47,7 @@ testFaction = {
         return "wh2_dlc11_cst_the_drowned";
     end,
     subculture = function()
-        return "wh2_main_sc_def_dark_elves";
+        return "wh_main_sc_grn_greenskins";
     end,
     character_list = function()
         return {
@@ -38,6 +74,7 @@ testFaction = {
         }
     end,
     faction_leader = function() return testCharacter; end,
+    is_quest_battle_faction = function() return false; end,
 }
 
 testFaction2 = {
@@ -45,7 +82,7 @@ testFaction2 = {
         return "wh2_dlc11_cst_rogue_grey_point_scuttlers";
     end,
     subculture = function()
-        return "wh2_main_sc_def_dark_elves";
+        return "wh_main_sc_nor_norsca";
     end,
     character_list = function()
         return {
@@ -72,6 +109,7 @@ testFaction2 = {
         }
     end,
     faction_leader = function() return testCharacter; end,
+    is_quest_battle_faction = function() return false; end,
 }
 
 effect = {
@@ -80,6 +118,9 @@ effect = {
     end,
 }
 
+-- This can be modified in the testing driver
+-- so we can simulate turns changing easily
+local turn_number = 1;
 -- Mock functions
 function get_cm()
     return   {
@@ -88,15 +129,36 @@ function get_cm()
             return;
         end,
         get_human_factions = function()
-            return {testFaction2};
+            return {humanFaction};
         end,
         disable_event_feed_events = function() end,
         model = function ()
             return {
+                turn_number = function() return turn_number; end,
                 world = function()
                     return {
                         faction_by_key = function ()
-                            return testFaction2;
+                            return humanFaction;
+                        end,
+                        faction_list = function ()
+                            return {
+                                item_at = function(self, i)
+                                    if i == 0 then
+                                        return testFaction;
+                                    elseif i == 1 then
+                                        return humanFaction;
+                                    elseif i == 2 then
+                                        return testFaction2;
+                                    elseif i == 3 then
+                                        return testFaction2
+                                    else
+                                        return nil;
+                                    end
+                                end,
+                                num_items = function()
+                                    return 3;
+                                end,
+                            }
                         end
                     }
                 end
@@ -115,10 +177,34 @@ function get_cm()
         get_region = function()
             return {
                 owning_faction = function() return testFaction; end,
+                name = function() return "region_name"; end,
+                is_province_capital = function() return false; end,
+                adjacent_region_list = function()
+                    return {
+                        item_at = function(self, i)
+                            if i == 0 then
+                                return get_cm():get_region();
+                            elseif i == 1 then
+                                return get_cm():get_region();
+                            elseif i == 2 then
+                                return get_cm():get_region();
+                            elseif i == 3 then
+                                return get_cm():get_region();
+                            else
+                                return nil;
+                            end
+                        end,
+                        num_items = function()
+                            return 3;
+                        end,
+                    }
+                end
             }
         end,
         set_character_immortality = function() end,
         get_campaign_name = function() return "main_warhammer"; end,
+        apply_effect_bundle_to_characters_force = function() end,
+        kill_character = function() end,
     };
 end
 
@@ -146,6 +232,7 @@ invasion_manager = {
             create_general = function() end,
         }
     end,
+    get_invasion = function() return true; end,
 }
 out = function(text)
   print(text)
@@ -167,17 +254,104 @@ math.randomseed(os.time())
 incursions_and_invasions();
 IandI:RegisterActiveEventListeners();
 IandI = _G.IandI;
-IandI:StartEvent(IandI.UpcomingEventsStack[1]);
-if not IandI.UpcomingEventsStack[1] then
-    IandI_Log("There is no upcoming event");
-else
-    local nextEvent = IandI.UpcomingEventsStack[1];
-    if nextEvent ~= nil and nextEvent.TurnNumber ~= 1 then
-        IandI_Log("There is no event for this turn. Next event is: "..nextEvent.TurnNumber);
-    end
-    while nextEvent ~= nil and nextEvent.TurnNumber == 1 do
-        IandI_Log("Spawning event for "..nextEvent.Type.." Key: "..nextEvent.Key);
-        IandI:StartEvent(nextEvent);
-        nextEvent = IandI.UpcomingEventsStack[1];
+turn_number = 1;
+StartEventsForTurn(IandI);
+turn_number = 2;
+StartEventsForTurn(IandI);
+
+local serialisedActiveEvents = {};
+for areaKey, areaEvents in pairs(IandI.ActiveEventsStack) do
+    for eventKey, events in pairs(areaEvents) do
+        for index, data in pairs(events) do
+            out("I&I: Saving active event "..data.ForceKey);
+            local serialisedEvent = {};
+            if data.InvasionLeader ~= nil then
+                out("I&I: Force key is "..data.ForceKey);
+                serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.FactionKey, data.ForceKey, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
+            else
+                serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.FactionKey, data.ForceKey,};
+            end
+            serialisedActiveEvents[data.AreaKey..data.ForceKey] = serialisedEvent;
+        end
     end
 end
+IandI.ActiveEventsStack = {};
+
+local activeEvents = serialisedActiveEvents;
+for index, data in pairs(activeEvents) do
+    out("I&I: Loading active event "..data[1]);
+    local eventData = {
+        Key = data[1],
+        Type = data[2],
+        AreaKey = data[3],
+        TurnNumber = data[4],
+        TargetRegionKey = data[5],
+        SpawnLocationKey = data[6],
+        FactionKey = data[7],
+        ForceKey = data[8],
+    };
+    if data[9] ~= nil then
+        eventData.InvasionLeader = {
+            cqi = data[9],
+            surname = data[10],
+            forename = data[11],
+            subtype = data[12],
+        };
+    end
+    if IandI.ActiveEventsStack[eventData.AreaKey] == nil then
+        IandI.ActiveEventsStack[eventData.AreaKey] = {};
+    end
+    if IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key] == nil then
+        IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key] = {};
+    end
+    IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key][eventData.ForceKey] = eventData;
+end
+
+local serialisedPreviousEvents = {};
+for areaKey, eventsInArea in pairs(IandI.PreviousEventsStack) do
+    for eventKey, turnsCompleted in pairs(eventsInArea) do
+        for index, turnCompleted in pairs(turnsCompleted) do
+            out("I&I: Saving previous event "..eventKey.." in turn "..turnCompleted);
+            local serialisedEvent = { eventKey, turnCompleted, areaKey, };
+            serialisedPreviousEvents[eventKey..areaKey..turnCompleted] = serialisedEvent;
+        end
+    end
+end
+
+local previousSavedEvents = serialisedPreviousEvents;
+for index, data in pairs(previousSavedEvents) do
+    out("I&I: Loading previous event "..data[1].." for area "..data[3]);
+    local eventData = {
+        EventKey = data[1],
+        TurnCompleted = data[2],
+        AreaKey = data[3],
+    };
+
+    if IandI.PreviousEventsStack[eventData.AreaKey] == nil then
+        IandI.PreviousEventsStack[eventData.AreaKey] = {};
+    end
+    if IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey] == nil then
+        IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey] = {};
+    end
+    local previousEvents = IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey];
+    previousEvents[#previousEvents + 1] = eventData.TurnCompleted;
+end
+
+IandI:RegisterActiveEventListeners();
+
+if IandI.ActiveEventsStack ~= nil then
+    for areaKey, eventsInArea in pairs(IandI.ActiveEventsStack) do
+        IandI_Log("Checking area "..areaKey);
+        for eventKey, events in pairs(eventsInArea) do
+            for forceKey, event in pairs(events) do
+                local eventData = IandI:GetEventData(event.Key, event.Type);
+                IandI:CleanUpActiveForce(event);
+            end
+        end
+    end
+else
+    IandI_Log("No active events to load");
+end
+
+turn_number = 3;
+StartEventsForTurn(IandI);

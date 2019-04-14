@@ -21,8 +21,9 @@ function incursions_and_invasions()
         invasion_manager = invasion_manager,
         ActiveEventsStack = IandI.ActiveEventsStack,
         UpcomingEventsStack = IandI.UpcomingEventsStack,
+        PreviousEventsStack = IandI.PreviousEventsStack,
     });
-
+    IandI:Initialise();
     IandI_Log("Got human faction "..IandI.HumanFaction:name());
     if cm:is_new_game() then
         IandI_Log("New game");
@@ -48,34 +49,55 @@ cm:add_saving_game_callback(
         IandI_Log("Saving callback");
         out("I&I: Saving callback");
 
-        out("I&I: Saving upcoming events");
         -- Save the upcoming events in the game save
+        out("I&I: Saving upcoming events");
         local serialisedUpcomingEvents = {};
         for index, data in pairs(IandI.UpcomingEventsStack) do
             out("I&I: Saving upcoming event "..data.Key);
             local serialisedEvent = {};
             if data.InvasionLeader ~= nil then
-                serialisedEvent = { data.Key, data.Type, data.SubcultureTarget, data.TurnNumber, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
+                serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
             else
-                serialisedEvent = { data.Key, data.Type, data.SubcultureTarget, data.TurnNumber, };
+                serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, };
             end
             serialisedUpcomingEvents[#serialisedUpcomingEvents + 1] = serialisedEvent;
         end
         cm:save_named_value("iandi_upcomingevents", serialisedUpcomingEvents, context);
-        out("I&I: Saving active events");
+
         -- Save the active events into the game save
+        out("I&I: Saving active events");
         local serialisedActiveEvents = {};
-        for index, data in pairs(IandI.ActiveEventsStack) do
-            out("I&I: Saving active event "..data.Key);
-            local serialisedEvent = {}
-            if data.InvasionLeader ~= nil then
-                serialisedEvent = { data.Key, data.Type, data.SubcultureTarget, data.TurnNumber, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
-            else
-                serialisedEvent = { data.Key, data.Type, data.SubcultureTarget, data.TurnNumber, };
+        for areaKey, areaEvents in pairs(IandI.ActiveEventsStack) do
+            for eventKey, events in pairs(areaEvents) do
+                for index, data in pairs(events) do
+                    out("I&I: Saving active event "..data.ForceKey);
+                    local serialisedEvent = {};
+                    if data.InvasionLeader ~= nil then
+                        out("I&I: Force key is "..data.ForceKey);
+                        serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.FactionKey, data.ForceKey, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
+                    else
+                        serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.FactionKey, data.ForceKey,};
+                    end
+                    serialisedActiveEvents[data.AreaKey..data.ForceKey] = serialisedEvent;
+                end
             end
-            serialisedActiveEvents[data.Key] = serialisedEvent;
         end
         cm:save_named_value("iandi_activeevents", serialisedActiveEvents, context);
+
+        -- Save the previous events to the game save
+        out("I&I: Saving previous events");
+        local serialisedPreviousEvents = {};
+        for areaKey, eventsInArea in pairs(IandI.PreviousEventsStack) do
+            for eventKey, turnsCompleted in pairs(eventsInArea) do
+                for index, turnCompleted in pairs(turnsCompleted) do
+                    out("I&I: Saving previous event "..eventKey.." in turn "..turnCompleted);
+                    local serialisedEvent = { eventKey, turnCompleted, areaKey, };
+                    serialisedPreviousEvents[eventKey..areaKey..turnCompleted] = serialisedEvent;
+                end
+            end
+        end
+        cm:save_named_value("iandi_previousevents", serialisedPreviousEvents, context);
+
         -- Add model to save
         IandI_Log_Finished();
         out("I&I: Finished saving events");
@@ -91,19 +113,21 @@ cm:add_loading_game_callback(
         out("I&I: Loading upcoming events");
         local upcomingEvents = cm:load_named_value("iandi_upcomingevents", {}, context);
         for index, data in pairs(upcomingEvents) do
-            out("I&I: Loading upcoming event "..data[1]);
+            out("I&I: Loading upcoming event "..data[2]);
             local eventData = {
                 Key = data[1],
                 Type = data[2],
-                SubcultureTarget = data[3],
+                AreaKey = data[3],
                 TurnNumber = data[4],
+                TargetRegionKey = data[5],
+                SpawnLocationKey = data[6],
             }
-            if data[5] ~= nil then
+            if data[7] ~= nil then
                 eventData.InvasionLeader = {
-                    cqi = data[5],
-                    surname = data[6],
-                    forename = data[7],
-                    subtype = data[8],
+                    cqi = data[7],
+                    surname = data[8],
+                    forename = data[9],
+                    subtype = data[10],
                 }
             end
             IandI.UpcomingEventsStack[index] = eventData;
@@ -112,24 +136,56 @@ cm:add_loading_game_callback(
         -- Loading the Active Events
         IandI.ActiveEventsStack = {};
         out("I&I: Loading active events");
-        local upcomingEvents = cm:load_named_value("iandi_activeevents", {}, context);
-        for index, data in pairs(upcomingEvents) do
+        local activeEvents = cm:load_named_value("iandi_activeevents", {}, context);
+        for index, data in pairs(activeEvents) do
             out("I&I: Loading active event "..data[1]);
             local eventData = {
                 Key = data[1],
                 Type = data[2],
-                SubcultureTarget = data[3],
+                AreaKey = data[3],
                 TurnNumber = data[4],
-            }
-            if data[5] ~= nil then
+                TargetRegionKey = data[5],
+                SpawnLocationKey = data[6],
+                FactionKey = data[7],
+                ForceKey = data[8],
+            };
+            if data[9] ~= nil then
                 eventData.InvasionLeader = {
-                    cqi = data[5],
-                    surname = data[6],
-                    forename = data[7],
-                    subtype = data[8],
-                }
+                    cqi = data[9],
+                    surname = data[10],
+                    forename = data[11],
+                    subtype = data[12],
+                };
             end
-            IandI.ActiveEventsStack[eventData.Key] = eventData;
+            if IandI.ActiveEventsStack[eventData.AreaKey] == nil then
+                IandI.ActiveEventsStack[eventData.AreaKey] = {};
+            end
+            if IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key] == nil then
+                IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key] = {};
+            end
+            IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key][eventData.ForceKey] = eventData;
+        end
+
+        -- Loading the Previous Events
+        out("I&I: Loading previous events");
+        IandI.PreviousEventsStack = {};
+        local previousSavedEvents = cm:load_named_value("iandi_previousevents", {}, context);
+        for index, data in pairs(previousSavedEvents) do
+            out("I&I: Loading previous event "..data[1].." for area "..data[3]);
+            local eventData = {
+                EventKey = data[1],
+                TurnCompleted = data[2],
+                AreaKey = data[3],
+            };
+
+            if IandI.PreviousEventsStack[eventData.AreaKey] == nil then
+                IandI.PreviousEventsStack[eventData.AreaKey] = {};
+            end
+            if IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey] == nil then
+                IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey] = {};
+            end
+            local previousEvents = IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey];
+            previousEvents[#previousEvents + 1] = eventData.TurnCompleted;
         end
         out("I&I: Finished loading");
 	end
