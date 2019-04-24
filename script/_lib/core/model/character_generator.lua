@@ -16,11 +16,11 @@ function CharacterGenerator:Initialise(crpLords)
 end
 
 function CharacterGenerator:GetArtSetForSubType(subType)
-    if not _G.CRPResources then
+    if not _G.CG_NameResources then
         return;
     end
     Custom_Log("Getting art set for sub type: "..subType);
-    local subTypeData = _G.CRPResources.DBResources.campaign_character_data[subType];
+    local subTypeData = _G.CG_NameResources.campaign_character_data[subType];
     if subTypeData == nil then
         Custom_Log("ERROR: Missing SubTypeData");
         return nil;
@@ -112,13 +112,13 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
 
         nameKey = clan_name_object.Text..forename_object.Text;
         nameKey = CreateValidLuaTableKey(nameKey);
-        Custom_Log("Generated name key is "..nameKey);
+        IandI_Log("Generated name key is "..nameKey);
         doOnce = true;
         if factionLords == nil and nameKey ~= "" then
-            Custom_Log("No tracked lords. Using first generated name.");
+            IandI_Log("No tracked lords. Using first generated name.");
             break;
         elseif failSafe == 5 then
-            Custom_Log("ERROR: Not able to generate name");
+            IandI_Log("ERROR: Not able to generate name");
             return nil;
         else
             failSafe = failSafe + 1;
@@ -129,7 +129,7 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
         clan_name = clan_name_object.Id,
         forename = forename_object.Id,
     };
-    --Custom_Log("Got generated name");
+    --IandI_Log("Got generated name");
     return generatedName;
 end
 
@@ -190,7 +190,7 @@ function CharacterGenerator:GetValidNameForType(namePool, canUseFemaleNames, nam
 end
 
 function CharacterGenerator:GetGenderForAgentSubType(agentSubType)
-    local agentResources = _G.CRPResources.DBResources.campaign_character_data[agentSubType];
+    local agentResources = _G.CG_NameResources.campaign_character_data[agentSubType];
     if agentResources ~= nil then
         return agentResources.IsFemale == "true";
     end

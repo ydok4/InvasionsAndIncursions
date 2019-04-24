@@ -91,7 +91,7 @@ SubCultureArmyPoolData = {
         },
         DepthGuard = {
             Early = {
-                wh2_dlc11_cst_inf_depth_guard_0 = 1,
+                wh2_dlc11_cst_inf_depth_guard_0 = 2,
             },
             Mid = {
                 wh2_dlc11_cst_inf_depth_guard_0 = 3,
@@ -407,7 +407,7 @@ SubCultureArmyPoolData = {
         },
         Squigs = {
             Early = {
-                wh_dlc06_grn_inf_squig_herd_0 = 2,
+                wh_dlc06_grn_inf_squig_herd_0 = 1,
             },
             Mid = {
                 wh_dlc06_grn_inf_squig_herd_0 = 2,
@@ -802,16 +802,19 @@ SubCultureArmyPoolData = {
             Early = {
                 wh2_main_skv_inf_warpfire_thrower = 1,
                 wh2_main_skv_inf_poison_wind_globadiers = 1,
+                wh2_dlc12_skv_veh_doom_flayer_0 = 1,
             },
             Mid = {
+                wh2_dlc12_skv_veh_doom_flayer_0 = 2,
                 wh2_main_skv_inf_warpfire_thrower = 2,
                 wh2_main_skv_inf_poison_wind_globadiers = 1,
-                wh2_main_skv_inf_death_globe_bombardiers = 1,
+                wh2_dlc12_skv_inf_warplock_jezzails_0 = 1,
             },
             Late = {
                 wh2_main_skv_veh_doomwheel = 1,
-                wh2_main_skv_inf_warpfire_thrower = 1,
+                wh2_dlc12_skv_inf_ratling_gun_0 = 2,
                 wh2_main_skv_inf_death_globe_bombardiers = 2,
+                wh2_dlc12_skv_inf_warplock_jezzails_0 = 2,
                 wh2_main_skv_art_warp_lightning_cannon = 1,
             },
         },
@@ -846,13 +849,26 @@ SubCultureArmyPoolData = {
                 wh2_main_lzd_inf_skink_cohort_1 = 2,
                 wh2_main_lzd_inf_skink_skirmishers_0 = 2,
                 wh2_main_lzd_inf_chameleon_skinks_0 = 1,
-                wh2_main_lzd_cav_terradon_riders_0 = 1,
+                wh2_dlc12_lzd_inf_skink_red_crested_0 = 1,
             },
             Late = {
-                wh2_main_lzd_cav_terradon_riders_0 = 2,
-                wh2_main_lzd_cav_terradon_riders_1 = 1,
+                wh2_dlc12_lzd_inf_skink_red_crested_0 = 2,
                 wh2_main_lzd_inf_chameleon_skinks_0 = 2,
                 wh2_main_lzd_inf_chameleon_skinks_blessed_0 = 1,
+            },
+        },
+        FlyingUnits = {
+            Early = {
+                wh2_main_lzd_cav_terradon_riders_0 = 2,
+            },
+            Mid = {
+                wh2_main_lzd_cav_terradon_riders_0 = 1,
+                wh2_main_lzd_cav_terradon_riders_1 = 1,
+                wh2_dlc12_lzd_cav_ripperdactyl_riders_0 = 1,
+            },
+            Late = {
+                wh2_main_lzd_cav_terradon_riders_1 = 2,
+                wh2_dlc12_lzd_cav_ripperdactyl_riders_1 = 2,
             },
         },
         Saurus = {
@@ -921,15 +937,20 @@ SubCultureArmyPoolData = {
         },
         TamedBeasts = {
             Early = {
-
-            },
-            Mid = {
+                wh2_dlc12_lzd_mon_salamander_pack_0 = 1,
                 wh2_main_lzd_mon_bastiladon_1 = 1,
                 wh2_main_lzd_mon_stegadon_1 = 1,
+                
             },
-            Late = {
+            Mid = {
+                wh2_dlc12_lzd_mon_salamander_pack_0 = 2,
                 wh2_main_lzd_mon_bastiladon_2 = 1,
                 wh2_main_lzd_mon_ancient_stegadon = 1,
+            },
+            Late = {
+                wh2_dlc12_lzd_mon_ancient_salamander_0 = 1,
+                wh2_dlc12_lzd_mon_bastiladon_3 = 1,
+                wh2_dlc12_lzd_mon_ancient_stegadon_1 = 1,
             },
         },
     },
@@ -1082,15 +1103,15 @@ SubCultureArmyPoolData = {
         },
         TombGuard = {
             Early = {
-                wh2_dlc09_tmb_inf_tomb_guard_0 = 1,
+                wh2_dlc09_tmb_inf_tomb_guard_0 = 2,
             },
             Mid = {
-                wh2_dlc09_tmb_inf_tomb_guard_0 = 2,
-                wh2_dlc09_tmb_inf_tomb_guard_1 = 1,
+                wh2_dlc09_tmb_inf_tomb_guard_0 = 3,
+                wh2_dlc09_tmb_inf_tomb_guard_1 = 2,
             },
             Late = {
-                wh2_dlc09_tmb_inf_tomb_guard_0 = 2,
-                wh2_dlc09_tmb_inf_tomb_guard_1 = 2,
+                wh2_dlc09_tmb_inf_tomb_guard_0 = 3,
+                wh2_dlc09_tmb_inf_tomb_guard_1 = 3,
             },
         },
         Constructs = {

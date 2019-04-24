@@ -1,27 +1,44 @@
 IncursionPoolData = {
-    GoblinIncursion = {
+    default = {
         SpawningData = {
             StartingTurnNumbers = {
-                Minimum = 3,
-                Maximum = 3,
+                Minimum = 10,
+                Maximum = 10,
             },
             NextEventKey = nil,
-            NumberOfTurnsBeforeOccurrence = {
+            NumberOfTurnsBeforeReoccurrence = {
+                Minimum = 0,
+                Maximum = 10,
+            },
+            DisableDiplomacy = nil,
+        },
+        RAMData = nil,
+        IMData = nil,
+    },
+    goblins = {
+        SpawningData = {
+            StartingTurnNumbers = {
+                Minimum = 15,
+                Maximum = 30,
+            },
+            NextEventKey = nil,
+            NumberOfTurnsBeforeReoccurrence = {
                 Minimum = 10,
                 Maximum = 15,
             },
+            DisableDiplomacy = true,
         },
         RAMData = {
             PrimaryForce = {
-                Key = "GoblinIncursion_Main",
+                Key = "goblins_main",
                 IsFactionLeader = false,
+                Subtypes = {"grn_goblin_great_shaman", },
                 MandatoryUnits = {
-                    wh_dlc08_nor_inf_marauder_champions_1 = 1,
-                    wh_dlc08_nor_mon_norscan_giant_0 = 1,
+
                 },
                 UnitTags = {"Goblins", "ForestGoblins", "Orcs", },
-                ArmySize = 12,
-                XPLevel = 5,
+                ArmySize = nil,
+                XPLevel = nil,
                 SkillsToUnlock = {
                 },
             },
@@ -30,13 +47,13 @@ IncursionPoolData = {
             AreaOverrideKey = nil,
             FactionData = {
                 SubcultureKey = "wh_main_sc_grn_greenskins",
-                FactionKey = nil,
+                FactionKey = "wh_main_grn_greenskins_qb1",
             },
             TargetData = {
                 Type = "REGION",
                 NumberOfTargets = 1,
                 CanTargetAdjacentRegions = true,
-                CanTargetProvinceCapital = true,
+                CanTargetProvinceCapital = false,
                 TargetRegionOverride = nil,
             },
         },
@@ -44,172 +61,234 @@ IncursionPoolData = {
 
         },
     },
-    -- Orcs, Massif Orcal
-    --[[OrcsMassifOrcal = {
-        SubcultureKey = "wh_main_sc_grn_greenskins",
-        EmergeData = {
-            TurnNumbers = {
-                Minimum = 20,
-                Maximum = 25,
+    beastmen_basic = {
+        SpawningData = {
+            StartingTurnNumbers = {
+                Minimum = 15,
+                Maximum = 30,
             },
-            RAMData = {
-                Warboss = {
-                    Key = "Warboss",
-                    FactionLeaderIsForceCommander = false,
-                    MandatoryUnits = {
-
-                    },
-                    UnitTags = {"Goblins", "ForestGoblins", "Orcs"},
-                    ArmySize = 12,
-                    XPLevel = 5,
-                    SkillsToUnlock = {
-                    },
+            NextEventKey = nil,
+            NumberOfTurnsBeforeReoccurrence = {
+                Minimum = 10,
+                Maximum = 15,
+            },
+            DisableDiplomacy = true,
+        },
+        RAMData = {
+            PrimaryForce = {
+                Key = "beastmen_main",
+                IsFactionLeader = false,
+                Subtypes = {"dlc03_bst_beastlord", },
+                MandatoryUnits = {
+                    wh_dlc03_bst_inf_bestigor_herd_0 = 1,
                 },
-            },
-            IMData = {
-                Target = {
-                    default = {
-                        Type = "REGION",
-                        FactionKey = "wh_main_grn_broken_nose_waaagh",
-                        TargetData = {
-                            main_warhammer = {
-                                Regions = {"wh_main_bordeleaux_et_aquitaine_bordeleaux", "wh_main_bordeleaux_et_aquitaine_aquitaine", "wh_main_parravon_et_quenelles_parravon", "wh_main_parravon_et_quenelles_quenelles",
-                                    "wh_main_carcassone_et_brionne_brionne", "wh_main_bastonne_et_montfort_castle_bastonne",
-                                },
-                                SpawnCoordinates = {
-                                    "MassifOrcal",
-                                },
-                            },
-                        },
-                    },
+                UnitTags = {"Gors", "WarBeasts", },
+                ArmySize = nil,
+                XPLevel = nil,
+                SkillsToUnlock = {
                 },
             },
         },
-    },
-    -- Skaven, BlackChasm
-    SkavenBlackChasm = {
-        SubcultureKey = "wh2_main_sc_skv_skaven",
-        EmergeData = {
-            TurnNumbers = {
-                Minimum = 100,
-                Maximum = 125,
+        IMData = {
+            AreaOverrideKey = nil,
+            FactionData = {
+                SubcultureKey = "wh_dlc03_sc_bst_beastmen",
+                FactionKey = "wh_dlc03_bst_beastmen_qb1",
             },
-            RAMData = {
-                Warlord = {
-                    Key = "Warlord",
-                    FactionLeaderIsForceCommander = false,
-                    MandatoryUnits = {
+            TargetData = {
+                Type = "REGION",
+                NumberOfTargets = 1,
+                CanTargetAdjacentRegions = true,
+                CanTargetProvinceCapital = false,
+                TargetRegionOverride = nil,
+            },
+        },
+        MMData = {
 
-                    },
-                    UnitTags = {"ClanEshin", "ClanPestilens", "Skavenslaves", "Warriors"},
-                    ArmySize = 12,
-                    XPLevel = 5,
-                    SkillsToUnlock = {
-                    },
-                },
+        },
+    },
+    necromancer_basic = {
+        SpawningData = {
+            StartingTurnNumbers = {
+                Minimum = 15,
+                Maximum = 30,
             },
-            IMData = {
-                Target = {
-                    default = {
-                        Type = "REGION",
-                        FactionKey = "wh2_main_skv_clan_eshin",
-                        TargetData = {
-                            main_warhammer = {
-                                Regions = {"wh_main_bordeleaux_et_aquitaine_bordeleaux", "wh_main_bordeleaux_et_aquitaine_aquitaine", "wh_main_parravon_et_quenelles_parravon", "wh_main_bastonne_et_montfort_castle_bastonne",
-                                },
-                                SpawnCoordinates = {
-                                    "BlackChasm",
-                                },
-                            },
-                        },
-                    },
+            NextEventKey = nil,
+            NumberOfTurnsBeforeReoccurrence = {
+                Minimum = 10,
+                Maximum = 15,
+            },
+            DisableDiplomacy = true,
+        },
+        RAMData = {
+            PrimaryForce = {
+                Key = "necromancer_main",
+                IsFactionLeader = false,
+                Subtypes = {"vmp_master_necromancer", },
+                MandatoryUnits = {
+                    wh_main_vmp_inf_grave_guard_0 = 2,
+                    wh_main_vmp_inf_grave_guard_1 = 1,
+                },
+                UnitTags = {"Chaff", "Beasts", "Spirits",},
+                ArmySize = nil,
+                XPLevel = nil,
+                SkillsToUnlock = {
                 },
             },
         },
+        IMData = {
+            AreaOverrideKey = nil,
+            FactionData = {
+                SubcultureKey = "wh_main_sc_vmp_vampire_counts",
+                FactionKey = "wh_main_vmp_vampire_counts_qb2",
+            },
+            TargetData = {
+                Type = "REGION",
+                NumberOfTargets = 1,
+                CanTargetAdjacentRegions = true,
+                CanTargetProvinceCapital = false,
+                TargetRegionOverride = nil,
+            },
+        },
+        MMData = {
+
+        },
     },
-    -- Beastmen, ForestOfArden
-    BeastmenForestOfArden = {
-        SubcultureKey = "wh_dlc03_sc_bst_beastmen",
-        EmergeData = {
-            TurnNumbers = {
+    ghoul_king = {
+        SpawningData = {
+            StartingTurnNumbers = {
+                Minimum = 25,
+                Maximum = 40,
+            },
+            NextEventKey = nil,
+            NumberOfTurnsBeforeReoccurrence = {
+                Minimum = 10,
+                Maximum = 15,
+            },
+            DisableDiplomacy = true,
+        },
+        RAMData = {
+            PrimaryForce = {
+                Key = "ghoul_king",
+                IsFactionLeader = false,
+                Subtypes = {"dlc04_vmp_strigoi_ghoul_king", },
+                MandatoryUnits = {
+                    wh_main_vmp_mon_crypt_horrors = 2,
+                },
+                UnitTags = {"Ghouls", "Beasts", },
+                ArmySize = nil,
+                XPLevel = nil,
+                SkillsToUnlock = {
+                },
+            },
+        },
+        IMData = {
+            AreaOverrideKey = nil,
+            FactionData = {
+                SubcultureKey = "wh_main_sc_vmp_vampire_counts",
+                FactionKey = "wh_main_vmp_vampire_counts_qb2",
+            },
+            TargetData = {
+                Type = "REGION",
+                NumberOfTargets = 1,
+                CanTargetAdjacentRegions = true,
+                CanTargetProvinceCapital = false,
+                TargetRegionOverride = nil,
+            },
+        },
+        MMData = {
+
+        },
+    },
+    dark_elf_raiders = {
+        SpawningData = {
+            StartingTurnNumbers = {
+                Minimum = 25,
+                Maximum = 40,
+            },
+            NextEventKey = nil,
+            NumberOfTurnsBeforeReoccurrence = {
+                Minimum = 10,
+                Maximum = 15,
+            },
+            DisableDiplomacy = true,
+        },
+        RAMData = {
+            PrimaryForce = {
+                Key = "dark_elf_raiders",
+                IsFactionLeader = false,
+                Subtypes = {"wh2_main_def_dreadlord", "wh2_main_def_dreadlord_fem" },
+                MandatoryUnits = {
+                },
+                UnitTags = {"Warriors", "Corsairs", },
+                ArmySize = nil,
+                XPLevel = nil,
+                SkillsToUnlock = {
+                },
+            },
+        },
+        IMData = {
+            AreaOverrideKey = nil,
+            FactionData = {
+                SubcultureKey = "wh2_main_sc_def_dark_elves",
+                FactionKey = "wh2_main_def_dark_elves_qb2",
+            },
+            TargetData = {
+                Type = "REGION",
+                NumberOfTargets = 1,
+                CanTargetAdjacentRegions = true,
+                CanTargetProvinceCapital = false,
+                TargetRegionOverride = nil,
+            },
+        },
+        MMData = {
+
+        },
+    },
+    feral_beasts = {
+        SpawningData = {
+            StartingTurnNumbers = {
+                Minimum = 40,
+                Maximum = 60,
+            },
+            NextEventKey = nil,
+            NumberOfTurnsBeforeReoccurrence = {
                 Minimum = 30,
                 Maximum = 50,
             },
-            RAMData = {
-                BeastLord = {
-                    Key = "BeastLord",
-                    FactionLeaderIsForceCommander = false,
-                    MandatoryUnits = {
+            DisableDiplomacy = true,
+        },
+        RAMData = {
+            PrimaryForce = {
+                Key = "feral_beasts",
+                IsFactionLeader = true,
+                Subtypes = {"wh2_dlc10_lzd_mon_carnosaur_boss", },
+                MandatoryUnits = {
+                    wh_main_vmp_mon_crypt_horrors = 2,
+                },
+                UnitTags = {"FeralBeasts", "TamedBeasts", },
+                ArmySize = nil,
+                XPLevel = nil,
+                SkillsToUnlock = {
+                },
+            },
+        },
+        IMData = {
+            AreaOverrideKey = nil,
+            FactionData = {
+                SubcultureKey = "wh2_main_sc_lzd_lizardmen",
+                FactionKey = "wh2_main_lzd_lizardmen_qb2",
+            },
+            TargetData = {
+                Type = "REGION",
+                NumberOfTargets = 1,
+                CanTargetAdjacentRegions = true,
+                CanTargetProvinceCapital = false,
+                TargetRegionOverride = nil,
+            },
+        },
+        MMData = {
 
-                    },
-                    UnitTags = {"Gors", "WarBeasts",},
-                    ArmySize = 15,
-                    XPLevel = 8,
-                    SkillsToUnlock = {
-                    },
-                },
-            },
-            IMData = {
-                Target = {
-                    default = {
-                        Type = "REGION",
-                        FactionKey = "wh_dlc03_bst_beastmen",
-                        TargetData = {
-                            main_warhammer = {
-                                Regions = {"wh_main_forest_of_arden_castle_artois", "wh_main_forest_of_arden_gisoreux", "wh_main_bastonne_et_montfort_castle_bastonne", "wh_main_bastonne_et_montfort_montfort",
-                                "wh_main_couronne_et_languille_languille",
-                            }   ,
-                                SpawnCoordinates = {
-                                    "ForestOfArden",
-                                },
-                            },
-                        },
-                    },
-                },
-            },
         },
     },
-
-    -- Beastmen, ForestOfChalons
-    BeastmenForestOfChalons = {
-        SubcultureKey = "wh_dlc03_sc_bst_beastmen",
-        EmergeData = {
-            TurnNumbers = {
-                Minimum = 30,
-                Maximum = 50,
-            },
-            RAMData = {
-                BeastLord = {
-                    Key = "BeastLord",
-                    FactionLeaderIsForceCommander = false,
-                    MandatoryUnits = {
-
-                    },
-                    UnitTags = {"Gors", "WarBeasts",},
-                    ArmySize = 14,
-                    XPLevel = 8,
-                    SkillsToUnlock = {
-                    },
-                },
-            },
-            IMData = {
-                Target = {
-                    default = {
-                        Type = "REGION",
-                        FactionKey = "wh_dlc03_bst_beastmen",
-                        TargetData = {
-                            main_warhammer = {
-                                Regions = {"wh_main_bordeleaux_et_aquitaine_bordeleaux", "wh_main_bordeleaux_et_aquitaine_aquitaine", "wh_main_parravon_et_quenelles_parravon", "wh_main_parravon_et_quenelles_quenelles",
-                                "wh_main_carcassone_et_brionne_brionne", "wh_main_bastonne_et_montfort_castle_bastonne",
-                                },
-                                SpawnCoordinates = {
-                                    "ForestOfChalons",
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-        },
-    },--]]
 }

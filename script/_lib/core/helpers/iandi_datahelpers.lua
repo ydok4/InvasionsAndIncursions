@@ -47,6 +47,31 @@ function GetRandomObjectKeyFromList(objectList)
     return index;
 end
 
+function GetRandomItemFromWeightedList(items, returnKey)
+    local validItems = {};
+    local sumOfWeight = 0;
+    for key, data in pairs(items) do
+        if data["Weighting"] ~= nil then
+            sumOfWeight = sumOfWeight + data["Weighting"];
+            validItems[key] = data;
+        end
+    end
+
+    local weightingSeed = Random(sumOfWeight);
+    for key, data in pairs(validItems) do
+        if weightingSeed < data["Weighting"] then
+            if returnKey == true then
+                return key;
+            else
+                return data;
+            end
+        end
+        weightingSeed = weightingSeed - data["Weighting"];
+    end
+    --IandI_Log("Should never have come here...");
+    return nil;
+end
+
 function FindTableObjectByKeyPartial(objectList, partialValue)
     for key, value in pairs(objectList) do
         if string.match(key, partialValue) then
@@ -83,6 +108,30 @@ function GetMatchingKeyMatchingLocalisedString(keys, stringToMatch, keyPrefix)
         end
     end
     return nil;
+end
+
+function GetStringifiedUnitList(character)
+    if character:has_military_force() == false then
+        IandI_Log("Character does not have military force");
+        return "";
+    end
+    local unitList = character:military_force():unit_list();
+
+    local unitString = "";
+    -- This starts at one so it skips the first unit, which is the general
+    for i = 0, unitList:num_items() - 1 do
+        -- If this is the last unit we should not add a comma to the end
+        local unitKey = unitList:item_at(i):unit_key();
+        if i ~= 0 then
+            if i == unitList:num_items() - 1 then
+                unitString = unitString..unitKey;
+            else
+                unitString = unitString..unitKey..",";
+            end
+        end
+    end
+    IandI_Log("Built Unit string: "..unitString);
+    return unitString;
 end
 
 function IandI_Log_Start()

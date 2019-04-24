@@ -44,30 +44,35 @@ function StartEventsForTurn(IandI)
         return;
     end
 
-    local nextEvent = IandI:GetNextEvent();
+    local nextEvent = IandI:GetNextEvent(0);
     if not nextEvent then
         IandI_Log("There is no upcoming event");
     else
-        if nextEvent.TurnNumber ~= turnNumber then
+        if nextEvent.TurnNumber > turnNumber then
             IandI_Log("There is no event for this turn. Next event is: "..nextEvent.TurnNumber);
         else
             -- First we start any delayed start events on this turn
-            IandI:StartEventTypeOnTurn(turnNumber, "DelayedStart");
+            IandI:PerformEventActionsForTurnNumber(turnNumber, "DelayedStart");
             -- Then we start any invasions due on this turn
-            IandI:StartEventTypeOnTurn(turnNumber, "Invasions");
+            IandI:PerformEventActionsForTurnNumber(turnNumber, "Invasions");
             -- Then we start any incursions on this turn
-            IandI:StartEventTypeOnTurn(turnNumber, "Incursions");
+            IandI:PerformEventActionsForTurnNumber(turnNumber, "Incursions");
             -- NOTE: The above orders are important because if an Incursion triggers in an
             -- area which already has an invasion it will trigger reinforcements.
             -- Similarly, delayed start events can be flagged as an Invasion or Incursion and
             -- we want to prioritse those over generic Invasion and Incursions
+
+            -- The following event actions are incidents/dilemmas/missions
+            IandI:PerformEventActionsForTurnNumber(turnNumber, "Incidents");
+            IandI:PerformEventActionsForTurnNumber(turnNumber, "Dilemmas");
+            IandI:PerformEventActionsForTurnNumber(turnNumber, "Missions");
         end
     end
     IandI:CleanUpActiveEventForces();
     IandI_Log_Finished();
 end
 
-function SetupEventCompleteListers(IandI, event, factionKey, eventData)
+function SetupEventCompleteListeners(IandI, event, factionKey, eventData)
     IandI_Log("SetupEventCompleteListeners");
     if not core then
         IandI_Log("Error: core is not defined");
@@ -81,23 +86,30 @@ function SetupEventCompleteListers(IandI, event, factionKey, eventData)
             return context:character():faction():name() == factionKey;
         end,
         function(context)
-            IandI_Log("Getting invasion by forceKey: "..event.ForceKey);
             if not IandI then
                 IandI_Log("IandI is not defined");
             end
             if not IandI.invasion_manager then
                 IandI_Log("Invasion manager is not defined");
             end
-            local eventInvasion = IandI.invasion_manager:get_invasion(event.ForceKey);
-            if not eventInvasion then
-                IandI_Log("Missing event invasion, not releasing AI because it can't be found");
-            end
 
             -- Release the ai, be free!
-            IandI_Log("Releasing invasion for faction "..factionKey);
-            eventInvasion:release();
-            IandI_Log("Released faction");
-            IandI:CleanUpActiveForce(event);
+            -- We need to clean up any forces which share the same objective
+            local otherEventForces = IandI.ActiveEventsStack[event.AreaKey][event.Key];
+            for eventKey, forceEvent in pairs(otherEventForces) do
+                IandI_Log("Getting invasion by forceKey: "..forceEvent.ForceKey);
+                local eventInvasion = IandI.invasion_manager:get_invasion(event.ForceKey);
+                if not eventInvasion then
+                    IandI_Log("Missing event invasion, not releasing AI because it can't be found");
+                    IandI:CleanUpActiveForce(forceEvent);
+                end
+                if event.TargetRegionKey == forceEvent.TargetRegionKey then
+                    IandI_Log("Releasing invasion for force "..forceEvent.ForceKey);
+                    eventInvasion:release();
+                    IandI_Log("Released faction");
+                    IandI:CleanUpActiveForce(forceEvent);
+                end
+            end
             IandI_Log_Finished();
         end,
         false

@@ -4,6 +4,7 @@ _G.IandI = IandI;
 require 'script/_lib/core/helpers/iandi_datahelpers';
 require 'script/_lib/core/listeners/iandi_listeners';
 require 'script/_lib/core/model/iandi_controller';
+require 'script/_lib/core/model/character_generator';
 
 require 'script/_lib/core/loaders/iandi_core_resource_loader';
 

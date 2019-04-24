@@ -5,6 +5,12 @@ testCharacter = {
     get_surname = function() return "Cylostra"; end,
     character_subtype_key = function() return "wh2_dlc11_cst_cylostra"; end,
     command_queue_index = function() end,
+    has_military_force = function() return false end,
+    faction = function() return humanFaction; end,
+    region = function() return get_cm():get_region(); end,
+    logical_position_x = function() return 100; end,
+    logical_position_y = function() return 110; end,
+    command_queue_index = function() return 10; end,
 }
 
 humanFaction = {
@@ -40,6 +46,7 @@ humanFaction = {
     end,
     faction_leader = function() return testCharacter; end,
     is_quest_battle_faction = function() return false; end,
+    is_null_interface = function() return false; end,
 }
 
 testFaction = {
@@ -75,6 +82,7 @@ testFaction = {
     end,
     faction_leader = function() return testCharacter; end,
     is_quest_battle_faction = function() return false; end,
+    is_null_interface = function() return false; end,
 }
 
 testFaction2 = {
@@ -110,6 +118,7 @@ testFaction2 = {
     end,
     faction_leader = function() return testCharacter; end,
     is_quest_battle_faction = function() return false; end,
+    is_null_interface = function() return false; end,
 }
 
 effect = {
@@ -198,13 +207,21 @@ function get_cm()
                             return 3;
                         end,
                     }
-                end
+                end,
+                is_null_interface = function() return false; end,
             }
         end,
         set_character_immortality = function() end,
         get_campaign_name = function() return "main_warhammer"; end,
         apply_effect_bundle_to_characters_force = function() end,
         kill_character = function() end,
+        trigger_incident = function() end,
+        trigger_dilemma = function() end,
+        trigger_mission = function() end,
+        create_force_with_general = function() end,
+        force_add_trait = function() end,
+        force_remove_trait = function() end,
+        get_character_by_cqi = function() end,
     };
 end
 
@@ -232,14 +249,17 @@ invasion_manager = {
             create_general = function() end,
         }
     end,
-    get_invasion = function() return true; end,
+    get_invasion = function() return {
+        release = function() return end,
+    }; end,
 }
 out = function(text)
   print(text)
 end
 
 require 'script/campaign/mod/incursions_and_invasions'
-require "script/campaign/mod/z_iandi_crynsos_patch"
+require 'script/campaign/mod/z_iandi_crynsos_patch'
+require 'script/campaign/mod/z_iandi_mixu_patch'
 
 
 
@@ -258,6 +278,43 @@ turn_number = 1;
 StartEventsForTurn(IandI);
 turn_number = 2;
 StartEventsForTurn(IandI);
+
+out("I&I: Saving upcoming events");
+local serialisedUpcomingEvents = {};
+for index, data in pairs(IandI.UpcomingEventsStack) do
+    out("I&I: Saving upcoming event "..data.Key);
+    local serialisedEvent = {};
+    if data.InvasionLeader ~= nil then
+        serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
+    else
+        serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, };
+    end
+    serialisedUpcomingEvents[#serialisedUpcomingEvents + 1] = serialisedEvent;
+end
+IandI.UpcomingEventsStack = {};
+
+out("I&I: Loading upcoming events");
+local upcomingEvents = serialisedUpcomingEvents;
+for index, data in pairs(upcomingEvents) do
+    out("I&I: Loading upcoming event "..data[2]);
+    local eventData = {
+        Key = data[1],
+        Type = data[2],
+        AreaKey = data[3],
+        TurnNumber = data[4],
+        TargetRegionKey = data[5],
+        SpawnLocationKey = data[6],
+    }
+    if data[7] ~= nil then
+        eventData.InvasionLeader = {
+            cqi = data[7],
+            surname = data[8],
+            forename = data[9],
+            subtype = data[10],
+        }
+    end
+    IandI.UpcomingEventsStack[index] = eventData;
+end
 
 local serialisedActiveEvents = {};
 for areaKey, areaEvents in pairs(IandI.ActiveEventsStack) do
@@ -344,8 +401,21 @@ if IandI.ActiveEventsStack ~= nil then
         IandI_Log("Checking area "..areaKey);
         for eventKey, events in pairs(eventsInArea) do
             for forceKey, event in pairs(events) do
-                local eventData = IandI:GetEventData(event.Key, event.Type);
-                IandI:CleanUpActiveForce(event);
+                local otherEventForces = IandI.ActiveEventsStack[event.AreaKey][event.Key];
+                for eventKey, forceEvent in pairs(otherEventForces) do
+                    IandI_Log("Getting invasion by forceKey: "..forceEvent.ForceKey);
+                    local eventInvasion = IandI.invasion_manager:get_invasion(event.ForceKey);
+                    if not eventInvasion then
+                        IandI_Log("Missing event invasion, not releasing AI because it can't be found");
+                        IandI:CleanUpActiveForce(forceEvent);
+                    end
+                    if event.TargetRegionKey == forceEvent.TargetRegionKey then
+                        IandI_Log("Releasing invasion for force "..forceEvent.ForceKey);
+                        eventInvasion:release();
+                        IandI_Log("Released faction");
+                        IandI:CleanUpActiveForce(forceEvent);
+                    end
+                end
             end
         end
     end
@@ -355,3 +425,4 @@ end
 
 turn_number = 3;
 StartEventsForTurn(IandI);
+

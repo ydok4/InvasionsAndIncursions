@@ -2,6 +2,8 @@ IandI_Controller = {
     HumanFaction = {},
     CampaignName = "",
     SubculturesToFactions = {},
+    -- Character generator objects
+    character_generator = {};
     -- 'Active' data
     UpcomingEventsStack = {
 
@@ -44,17 +46,14 @@ function IandI_Controller:Initialise()
             self.SubculturesToFactions[faction:subculture()][#self.SubculturesToFactions[faction:subculture()] + 1] = faction:name();
         end
     end
+    self.character_generator = CharacterGenerator:new({});
 end
 
 function IandI_Controller:NewGame()
     -- Delayed Start Functionality
     self:DelayedStartSetup();
-    --
+    -- Generate the first event for each area
     self:AreaSetup();
-    -- Incursion Functionality
-    --[[self:IncursionSetup();
-    -- Invasion Functionality
-    self:InvasionSetup();--]]
 end
 
 function IandI_Controller:DelayedStartSetup()
@@ -71,6 +70,7 @@ function IandI_Controller:DelayedStartSetup()
             if not faction then
                 IandI_Log("Faction is not present. Might not be in this campaign");
             else
+                local factionLeader = faction:faction_leader();
                 local region_list = faction:region_list();
                 -- Give territory to another faction
                 if delayedStartData.GrantTerritoryTo ~= nil and delayedStartData.GrantTerritoryTo[self.CampaignName] ~= nil then
@@ -86,24 +86,63 @@ function IandI_Controller:DelayedStartSetup()
                     end
                 end
 
-                local factionLeader = faction:faction_leader();
                 local invasionLeader = {
                         cqi = factionLeader:cqi(),
                         forename = factionLeader:get_forename(),
                         surname = factionLeader:get_surname(),
                         subtype = factionLeader:character_subtype_key(),
                 };
-                if not delayedStartData.OnlyWoundFactionLeader then
-                    IandI_Log("Killing all characters for faction "..forceFactionKey);
-                    -- Workaround for testing
-                    cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
-
-                    -- Kill existing characters
-                    cm:kill_all_armies_for_faction(faction);
+                if delayedStartData.SpawningData.ReplacementData ~= nil then
+                    IandI_Log("Replacing character for faction "..forceFactionKey);
+                    local unitList = GetStringifiedUnitList(factionLeader);
+                    local generatedName = self.character_generator:GetCharacterNameForSubculture(factionLeader:faction(), delayedStartData.SpawningData.ReplacementData.ReplacementSubType);
+                    local regionName = "";
+                    if factionLeader:region():is_null_interface() then
+                        if self.CampaignName == "main_warhammer" then
+                            regionName = "wh_main_athel_loren_crag_halls";
+                        else -- Vortex
+                            regionName = "wh2_main_albion_albion";
+                        end
+                    else
+                        regionName = factionLeader:region():name();
+                    end
+                    IandI_Log("Unit list is "..unitList);
+                    cm:disable_event_feed_events(true, "wh_event_category_diplomacy", "", "");
+                    cm:create_force_with_general(
+                        factionLeader:faction():name(),
+                        unitList,
+                        regionName,
+                        -- X and Y coordinates are used as identifiers in the callback.
+                        -- So we offset by a little bit to make it unique. This might
+                        -- cause issues if the position is invalid but an offset of 1
+                        -- is very small.
+                        factionLeader:logical_position_x() + 1,
+                        factionLeader:logical_position_y(),
+                        "general",
+                        delayedStartData.SpawningData.ReplacementData.ReplacementSubType,
+                        generatedName.clan_name,
+                        "",
+                        generatedName.forename,
+                        "",
+                        false,
+                        function(cqi)
+                            IandI_Log("Created replacement");
+                        end
+                    );
+                    if delayedStartData.SpawningData.ReplacementData.OnlyWoundFactionLeader == true then
+                        IandI_Log("Wounding character for faction "..forceFactionKey);
+                        cm:force_add_trait("character_cqi:"..factionLeader:command_queue_index(),"wh_main_trait_all_increase_wound_recovery_999", true);
+                        cm:kill_character(factionLeader:command_queue_index(), true, true);
+                        IandI_Log("Wounded faction leader");
+                    else
+                        IandI_Log("Killing all characters for faction "..forceFactionKey);
+                        cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
+                        cm:kill_all_armies_for_faction(faction);
+                    end
                 else
-                    cm:apply_effect_bundle_to_characters_force("wh_main_increase_wound_recovery_"..delayedStartData.WoundTime, factionLeader:cqi(), delayedStartData.WoundTime, true);
-                    IandI_Log("Wounding factionleader for  "..delayedStartData.WoundTime);
-                    cm:kill_character(factionLeader:command_queue_index(), true, true);
+                    IandI_Log("Killing all characters for faction "..forceFactionKey);
+                    cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
+                    cm:kill_all_armies_for_faction(faction);
                 end
                 local turnNumber = Random(delayedStartData.SpawningData.StartingTurnNumbers.Maximum, delayedStartData.SpawningData.StartingTurnNumbers.Minimum);
                 local mappedDelayedStart = {
@@ -133,7 +172,6 @@ function IandI_Controller:AreaSetup()
         -- Then generate any incurions, respecting any rules put in place by
         -- Delayed Start events and invasion events
         local incursionEventData = self:GetEventForArea(areaData, "Incursions");
-        --local incursionTargetRegion = 
         if incursionEventData ~= nil then
             local turnNumber = Random(incursionEventData.EventData.SpawningData.StartingTurnNumbers.Maximum, incursionEventData.EventData.SpawningData.StartingTurnNumbers.Minimum);
             self:SetupEvent("Incursions", areaKey, incursionEventData, turnNumber, nil);
@@ -143,8 +181,11 @@ end
 
 function IandI_Controller:GetEventForArea(areaData, type, eventKey)
     if areaData.Events[type] ~= nil then
-        if eventKey == nil then 
-            eventKey = GetRandomObjectKeyFromList(areaData.Events[type]);
+        if eventKey == nil then
+            eventKey = GetRandomItemFromWeightedList(areaData.Events[type], true);
+            if eventKey == nil then
+                eventKey = "default";
+            end
         end
         local eventAreaData = {};
         if areaData ~= nil then
@@ -161,26 +202,62 @@ function IandI_Controller:GetEventForArea(areaData, type, eventKey)
 end
 
 function IandI_Controller:SetupEvent(type, areaKey, eventData, spawnTurn, invasionLeader)
-    IandI_Log("Event: "..eventData.EventKey.." will start at turnNumber: "..spawnTurn);
+    IandI_Log("Event: "..eventData.EventKey.." will start at turnNumber: "..spawnTurn.." in area "..areaKey);
+    -- Save event start data
+    local spawnIndex = self:GetUpcomingEventsIndexForTurnNumber(spawnTurn);
+    local eventSaveData = self:MapEventSaveData(type, areaKey, eventData, spawnTurn, invasionLeader);
+    -- Add it into the sorted list
+    table.insert(self.UpcomingEventsStack, spawnIndex, eventSaveData);
+
+    -- Save Narrative incidents/dilemmas/missions
+    if areaKey ~= nil then
+        if eventData.EventData.NarrativeData ~= nil then
+            self:AddNarrativeDataToUpcomingEvents("Incidents", eventData.EventData.NarrativeData, spawnTurn);
+            self:AddNarrativeDataToUpcomingEvents("Dilemmas", eventData.EventData.NarrativeData, spawnTurn);
+            self:AddNarrativeDataToUpcomingEvents("Missions", eventData.EventData.NarrativeData, spawnTurn);
+        end
+    end
+end
+
+function IandI_Controller:GetUpcomingEventsIndexForTurnNumber(turnNumber)
     local index = 1;
     while(true) do
         if self.UpcomingEventsStack[index] == nil then
             break;
-        elseif self.UpcomingEventsStack[index].TurnNumber > spawnTurn then
+        elseif self.UpcomingEventsStack[index].TurnNumber > turnNumber then
             break;
         end
         index = index + 1;
     end
 
-    local eventSaveData = self:MapEventSaveData(type, areaKey, eventData, spawnTurn, invasionLeader);
+    return index;
+end
 
-    -- Add it into the sorted list
-    table.insert(self.UpcomingEventsStack, index, eventSaveData);
+function IandI_Controller:AddNarrativeDataToUpcomingEvents(type, narrativeData, spawnTurn)
+    local narrativeTypeData = narrativeData[type];
+    if narrativeTypeData == nil then
+        return;
+    end
+    for index, data in pairs(narrativeTypeData) do
+        local eventData = {
+            EventKey = data.Key,
+        };
+        local narrativeTurn = spawnTurn + (data.Delay);
+        local stackIndex = self:GetUpcomingEventsIndexForTurnNumber(narrativeTurn);
+        local eventSaveData = self:MapEventSaveData(type, "", eventData, narrativeTurn, nil);
+        -- Add it into the sorted list
+        table.insert(self.UpcomingEventsStack, stackIndex, eventSaveData);
+    end
 end
 
 function IandI_Controller:MapEventSaveData(type, areaKey, eventData, spawnTurn, invasionLeader)
-    local spawnData = self:GetSpawnAndTargetData(eventData.EventData, eventData.EventAreaData);
-
+    local spawnData = {
+        TargetRegion = "",
+        SpawnCoordinates = {0,0},
+    };
+    if eventData.EventData ~= nil then
+        spawnData = self:GetSpawnAndTargetData(eventData.EventData, eventData.EventAreaData);
+    end
     local eventSaveData = {
         Key = eventData.EventKey,
         AreaKey = areaKey,
@@ -194,19 +271,22 @@ function IandI_Controller:MapEventSaveData(type, areaKey, eventData, spawnTurn, 
 end
 
 function IandI_Controller:GetSpawnAndTargetData(eventData, eventAreaData)
-    local imData = eventData.IMData;
+    local spawnLocationData = "";
+    local targetRegionData = "";
 
-    local spawnLocationData = {};
-    local targetRegionData = {};
-    if eventAreaData ~= nil and (imData.TargetData.TargetRegionOverride == nil or imData.TargetData.TargetRegionOverride[self.CampaignName] == nil) then
-        spawnLocationData = GetRandomObjectFromList(eventAreaData.SpawnLocations);
-        targetRegionData = GetRandomObjectFromList(eventAreaData.TargetRegions);
-    elseif imData.TargetData.TargetRegionOverride ~= nil and imData.TargetData.TargetRegionOverride[self.CampaignName] ~= nil then
-        local campaignSpecificData = imData.TargetData.TargetRegionOverride[self.CampaignName];
-        spawnLocationData = GetRandomObjectFromList(campaignSpecificData.SpawnCoordinates);
-        targetRegionData = GetRandomObjectFromList(campaignSpecificData.Regions);
+    if eventData ~= nil and eventData.IMData ~= nil then
+        local imData = eventData.IMData;
+        if eventAreaData ~= nil and (imData.TargetData.TargetRegionOverride == nil or imData.TargetData.TargetRegionOverride[self.CampaignName] == nil) then
+            spawnLocationData = GetRandomObjectFromList(eventAreaData.SpawnLocations);
+            targetRegionData = GetRandomObjectFromList(eventAreaData.TargetRegions);
+        elseif imData.TargetData.TargetRegionOverride ~= nil and imData.TargetData.TargetRegionOverride[self.CampaignName] ~= nil then
+            local campaignSpecificData = imData.TargetData.TargetRegionOverride[self.CampaignName];
+            spawnLocationData = GetRandomObjectFromList(campaignSpecificData.SpawnCoordinates);
+            if campaignSpecificData.Regions ~= nil then
+                targetRegionData = GetRandomObjectFromList(campaignSpecificData.Regions);
+            end
+        end
     end
-
     return {
         SpawnCoordinates = spawnLocationData,
         TargetRegion =  targetRegionData,
@@ -242,41 +322,84 @@ function IandI_Controller:GetGamePeriod(turnNumber)
     end
 end
 
-function IandI_Controller:GetNextEvent()
-    return self.UpcomingEventsStack[1];
+function IandI_Controller:GetNextEvent(skippedEventCount)
+    return self.UpcomingEventsStack[1 + skippedEventCount];
 end
 
-function IandI_Controller:StartEventTypeOnTurn(turnNumber, type)
-    local nextEvent = self:GetNextEvent();
-    while nextEvent ~= nil and nextEvent.TurnNumber == turnNumber and nextEvent.Type == type do
-        IandI_Log("Spawning "..type.." event for "..nextEvent.Type.." Key: "..nextEvent.Key);
-        self:StartEvent(nextEvent);
-        nextEvent = self.UpcomingEventsStack[1];
+function IandI_Controller:PerformEventActionsForTurnNumber(turnNumber, type)
+    local skippedEventCount = 0;
+    local nextEvent = self:GetNextEvent(skippedEventCount);
+
+    while nextEvent ~= nil and nextEvent.TurnNumber <= turnNumber do
+        if nextEvent.Type == type then
+            if nextEvent.Type == "Incidents" then
+                self:StartIncident(nextEvent);
+            elseif nextEvent.Type == "Dilemmas" then
+                self:StartDilemma(nextEvent);
+            elseif nextEvent.Type == "Missions" then
+                self:StartMission(nextEvent);
+            else
+                IandI_Log("Spawning "..type.." event for "..nextEvent.Type.." Key: "..nextEvent.Key);
+                self:StartEvent(nextEvent);
+            end
+            table.remove(self.UpcomingEventsStack, skippedEventCount + 1);
+        else
+            skippedEventCount = skippedEventCount + 1;
+        end
+        nextEvent = self:GetNextEvent(skippedEventCount);
     end
+end
+
+function IandI_Controller:StartIncident(event)
+    IandI_Log("Triggering incident "..event.Key);
+    cm:trigger_incident(self.HumanFaction:name(), event.Key, true);
+end
+
+function IandI_Controller:StartDilemma(event)
+    IandI_Log("Triggering dilemma "..event.Key);
+    cm:trigger_dilemma(self.HumanFaction:name(), event.Key, true);
+end
+
+function IandI_Controller:StartMission(event)
+    IandI_Log("Triggering mission "..event.Key);
+    cm:trigger_mission(self.HumanFaction:name(), event.Key, true);
 end
 
 function IandI_Controller:StartEvent(event, reinforcementData)
     IandI_Log("Attempting to start event: "..event.Key);
-    if event.Type == "DelayedStart" or not self:IsActiveEventInArea(event) then
+    if event.Key == "default" then
+        local eventData = self:GetEventData(event.Key, event.Type);
+        self:SetupNewEventForArea(event, eventData);
+    elseif event.Type == "DelayedStart" or not self:IsActiveEventInArea(event) then
         local eventData = self:GetEventData(event.Key, event.Type);
         -- Get the faction that all armies will be spawned for
         local spawnableFaction = self:GetSpawnableFaction(event, eventData);
         IandI_Log("Invasion will spawn with faction "..spawnableFaction);
         -- This is used to offset the spawn coordinates in the case of multiple armies
         local forceIndex = 0;
+        local targetedRegions = {};
         if eventData.RAMData.PrimaryForce ~= nil then
+            if eventData.IMData.TargetData.Type == "REGION" then
+                local selectedRegion = self:GetTargetRegion(event, eventData, targetedRegions);
+                targetedRegions[#targetedRegions + 1] = selectedRegion;
+                event.TargetRegionKey = selectedRegion:name();
+            end
             self:CreateInvasionForce(event, eventData, eventData.RAMData.PrimaryForce, spawnableFaction, forceIndex);
             forceIndex = forceIndex + 1;
         end
 
         if eventData.RAMData.SecondaryForces ~= nil then
             for forceKey, forceData in pairs(eventData.RAMData.SecondaryForces) do
+                if eventData.IMData.TargetData.Type == "REGION" then
+                    local selectedRegion = self:GetTargetRegion(event, eventData, targetedRegions);
+                    targetedRegions[#targetedRegions + 1] = selectedRegion;
+                    event.TargetRegionKey = selectedRegion:name();
+                end
                 self:CreateInvasionForce(event, eventData, forceData, spawnableFaction, forceIndex);
                 forceIndex = forceIndex + 1;
             end
         end
-        -- Remove the event from the Upcoming Event Stack
-        table.remove(self.UpcomingEventsStack, 1);
+
         IandI_Log("Cleared event from the UpcomingEventsStack");
     elseif reinforcementData ~= nil then
         local eventData = self:GetEventData(event.Key, event.Type);
@@ -305,21 +428,25 @@ function IandI_Controller:StartEvent(event, reinforcementData)
             -- without adding it to the stack
             local existingEventAreaData = self:GetAreaData(event.AreaKey);
             local eventAreaData = self:GetEventForArea(existingEventAreaData, "Invasions", existingEventKey);
-            local eventSaveData = self:MapEventSaveData("Invasions", event.AreaKey, eventAreaData, event.TurnNumber, nil);
-            -- Then we need to determine a reinforcement to trigger from the SecondaryForces
-            local existingEventData = self:GetEventData(existingEventKey, "Invasions");
-            -- Add the reinforcement specific fields
-            local ramKey = GetRandomObjectKeyFromList(existingEventData.RAMData.SecondaryForces);
-            local mappedReinforcementData = {
-                RAMKey = ramKey,
-                FactionKey = existingEventFaction,
-                ForceIndex = forceIndex,
-            };
-            -- Then we can start the event by the calling the function again with the reinforcement key
-            -- and the newly setup event data
-            self:StartEvent(eventSaveData, mappedReinforcementData);
+            if eventAreaData ~= nil then
+                local eventSaveData = self:MapEventSaveData("Invasions", event.AreaKey, eventAreaData, event.TurnNumber, nil);
+                -- Then we need to determine a reinforcement to trigger from the SecondaryForces
+                local existingEventData = self:GetEventData(existingEventKey, "Invasions");
+                -- Add the reinforcement specific fields
+                local ramKey = GetRandomObjectKeyFromList(existingEventData.RAMData.SecondaryForces);
+                local mappedReinforcementData = {
+                    RAMKey = ramKey,
+                    FactionKey = existingEventFaction,
+                    ForceIndex = forceIndex,
+                };
+                -- Then we can start the event by the calling the function again with the reinforcement key
+                -- and the newly setup event data
+                self:StartEvent(eventSaveData, mappedReinforcementData);
+            else
+                IandI_Log("No reinforcement event data found");
+            end
         end
-        table.remove(self.UpcomingEventsStack, 1);
+
         IandI_Log("Cleared event from the UpcomingEventsStack");
     end
     IandI_Log_Finished();
@@ -406,8 +533,24 @@ function IandI_Controller:GenerateForceForEvent(event, eventData, ramData, force
             self.random_army_manager:add_unit(forceKey, unitKey, unitData.Weighting);
         end
     end
+
+    local armySize = 20 - mandatoryUnitCount;
+    if ramData.ArmySize == nil then
+        local turnNumber = cm:model():turn_number();
+        local gamePeriod = self:GetGamePeriod(turnNumber);
+        if gamePeriod == "Early" then
+            armySize = Random(14, 8) - mandatoryUnitCount;
+        elseif gamePeriod == "Mid" then
+            armySize = Random(20, 14) - mandatoryUnitCount;
+        else
+            armySize = 20 - mandatoryUnitCount;
+        end
+    else
+        armySize = ramData.ArmySize - mandatoryUnitCount;
+    end
+    IandI_Log("Force size is "..armySize);
     --IandI_Log("Generating force string");
-    return self.random_army_manager:generate_force(forceKey, ramData.ArmySize - mandatoryUnitCount, false);
+    return self.random_army_manager:generate_force(forceKey, armySize, false);
 end
 
 function IandI_Controller:GetOtherUnits(event, SubcultureKey, ramData)
@@ -437,31 +580,46 @@ end
 
 function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ramData, factionKey, unitList, forceIndex)
     IandI_Log("Starting invasion for force "..event.ForceKey);
+    local faction = cm:get_faction(factionKey);
     local imData = eventData.IMData;
     local spawnCoordinates = self:GetSpawnCoordinatesForTriggeredEvent(event, eventData, forceIndex);
     -- Registers the invasion in the invasion manager
     local eventInvasion = self.invasion_manager:new_invasion(event.ForceKey, factionKey, unitList, spawnCoordinates);
 
-    local invasionLeader = {
-        forename = "",
-        surname = "",
-        subtype = "",
-    }
-
     -- Assign the event general if applicable
-    if ramData.IsFactionLeader == true then
-        invasionLeader = event.InvasionLeader;
-        IandI_Log("Forename is "..invasionLeader.forename);
-        IandI_Log("Surname is "..invasionLeader.surname);
-        IandI_Log("Subtype is "..invasionLeader.subtype);
+    if ramData.IsFactionLeader == true and event.InvasionLeader ~= nil then
+        IandI_Log("RAM leader is faction leader");
+        local invasionLeader = event.InvasionLeader;
+        if eventData.SpawningData.ReplacementData ~= nil and eventData.SpawningData.ReplacementData.OnlyWoundFactionLeader == true then
+            local factionLeader = faction:faction_leader();
+            cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
+            cm:kill_character(factionLeader:command_queue_index(), true, true);
+        end
+        if invasionLeader ~= nil then
+            IandI_Log("Forename is "..invasionLeader.forename);
+            IandI_Log("Surname is "..invasionLeader.surname);
+            IandI_Log("Subtype is "..invasionLeader.subtype);
+            eventInvasion:create_general(true, invasionLeader.subtype, invasionLeader.forename, "", invasionLeader.surname, "");
+        end
 
-        eventInvasion:create_general(true, invasionLeader.subtype, invasionLeader.forename, "", invasionLeader.surname, "");
         IandI_Log("Assigned faction leader as general");
+    elseif ramData.Subtypes ~= nil then
+        local subType = GetRandomObjectFromList(ramData.Subtypes);
+        if type(subType) == "table"then
+            subType = GetRandomObjectFromList(subType);
+        end
+        local generatedName = self.character_generator:GetCharacterNameForSubculture(faction, subType);
+        eventInvasion:create_general(ramData.IsFactionLeader, subType, generatedName.clan_name, "", generatedName.forename, "");
+        IandI_Log("Created general with subtype "..subType);
+    else
+        IandI_Log("Error missing replacement subtype or invasion leader");
+        return;
     end
 
+    local regionOwnerName;
     if imData.TargetData.Type == "REGION" then
-        local selectedRegion = self:GetTargetRegion(event, eventData);
-        local regionOwnerName = selectedRegion:owning_faction():name();
+        local selectedRegion = cm:get_region(event.TargetRegionKey);
+        regionOwnerName = selectedRegion:owning_faction():name();
 
         IandI_Log("Region owner faction name: "..regionOwnerName);
         IandI_Log("Setting invasion target. Type: "..imData.TargetData.Type.." Region: "..selectedRegion:name());
@@ -471,16 +629,49 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
     -- Add attrition immunity, this is to get rid of regionless attrition mainly
     eventInvasion:apply_effect("wh_main_attrition_immunity", 20);
     -- Set character to specified level
-    eventInvasion:add_character_experience(ramData.XPLevel, true);
-    IandI_Log("Set characters starting level to "..ramData.XPLevel);
+    local characterExperience = 0;
+    if ramData.XPLevel == nil then
+        local turnNumber = cm:model():turn_number();
+        local gamePeriod = self:GetGamePeriod(turnNumber);
+        if gamePeriod == "Early" then
+            characterExperience = Random(6, 2);
+        elseif gamePeriod == "Mid" then
+            characterExperience = Random(12, 6);
+        else
+            characterExperience = Random(18, 12);
+        end
+    else
+        characterExperience = ramData.XPLevel;
+    end
+    IandI_Log("Character xp level is "..characterExperience);
+    eventInvasion:add_character_experience(characterExperience, true);
+    IandI_Log("Set characters starting level to "..characterExperience);
     -- Trigger invasion
     eventInvasion:start_invasion(
         function(context)
             IandI_Log("Invasion character spawned for key: "..event.ForceKey);
             local character = context:get_general();
+            local factionName = character:faction():name();
             if ramData.IsFactionLeader == true then
                 IandI_Log("Giving character immortality");
                 cm:set_character_immortality("character_cqi:"..character:cqi(), true);
+            end
+
+            if ramData.ModelOverride ~= nil then
+                IandI_Log("Setting model override "..ramData.ModelOverride);
+                cm:add_unit_model_overrides("character_cqi:"..character:cqi(), ramData.ModelOverride);
+            end
+
+            if eventData.SpawningData.DisableDiplomacy == true then
+                -- Disable all diplomatic options
+                cm:force_diplomacy("faction:"..factionName, "all", "all", false, false, true);
+                -- Then we need to enable the war option, disable payments as well, just cause
+                cm:force_diplomacy("faction:"..factionName, "all", "war", true, true, true, true);
+            end
+
+            -- We need to stop the target faction from able to make peace because it screws with the ai
+            if regionOwnerName ~= nil then
+                cm:force_diplomacy("faction:"..factionName, "faction:"..regionOwnerName, "peace", false, false, true);
             end
             -- Remove upkeep. This needs to be done here because only one bundle can be with apply_effect.
             -- This lasts for 20 turns
@@ -507,7 +698,7 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
                 eventInvasion:release();
                 IandI_Log("Released character from invasion manager");
             else
-                SetupEventCompleteListers(self, event, factionKey, eventData);
+                SetupEventCompleteListeners(self, event, factionKey, eventData);
             end
             IandI_Log_Finished();
 		end
@@ -517,33 +708,69 @@ end
 function IandI_Controller:GetSpawnCoordinatesForTriggeredEvent(event, eventData, forceIndex)
     local spawnCoordinates = self:GetSpawnLocationData(self.CampaignName, event.SpawnLocationKey);
     spawnCoordinates[1] = spawnCoordinates[1] + forceIndex;
-
+    IandI_Log("Spawn coordinates are X: "..spawnCoordinates[1].." Y: "..spawnCoordinates[2]);
     return spawnCoordinates;
 end
 
-function IandI_Controller:GetTargetRegion(event, eventData)
+function IandI_Controller:GetTargetRegion(event, eventData, targetedRegions)
     local imData = eventData.IMData;
-
+    local areaData = self:GetAreaData(event.AreaKey);
+    local areaEventData = nil;
+    if areaData ~= nil then
+        areaEventData = areaData.Events[event.Type][event.Key];
+    end
     if imData.TargetData.CanTargetAdjacentRegions == false then
         if imData.TargetData.TargetRegionOverride ~= nil and imData.TargetData.TargetRegionOverride[self.CampaignName] ~= nil then
-            local selectedOverrideRegionKey = GetRandomObjectFromList(imData.TargetData.TargetRegionOverride[self.CampaignName].Regions);
+            local targetRegionKeys = imData.TargetData.TargetRegionOverride[self.CampaignName].Regions;
+            if areaEventData ~= nil and areaEventData.SubcultureTargets ~= nil then
+                local validRegions = nil;
+                for index, regionKey in pairs(targetRegionKeys) do
+                    local region = cm:get_region(regionKey);
+                    if not region:is_null_interface() then
+                        for index, cultureKey in pairs(areaEventData.SubcultureTargets) do
+                            if not region:owning_faction():is_null_interface() and region:owning_faction():subculture() == cultureKey and targetedRegions[regionKey] == nil then
+                                if validRegions == nil then
+                                    validRegions = {};
+                                end
+                                validRegions[regionKey] = regionKey;
+                            end
+                        end
+                    end
+                end
+                if validRegions ~= nil then
+                    targetRegionKeys = validRegions;
+                end
+            end
+            local selectedOverrideRegionKey = GetRandomObjectFromList(targetRegionKeys);
             return cm:get_region(selectedOverrideRegionKey);
         end
         return cm:get_region(event.TargetRegionKey);
     end
     local mainRegion = cm:get_region(event.TargetRegionKey);
     IandI_Log("Main target region is: "..mainRegion:name());
-    local adjacentRegions = {};
-    adjacentRegions[#adjacentRegions + 1] = mainRegion;
+    local validAdjacentRegions = {};
+    if mainRegion:is_province_capital() == false or (mainRegion:is_province_capital() == true and imData.CanTargetProvinceCapital == true) and targetedRegions[mainRegion:name()] == nil then
+        validAdjacentRegions[#validAdjacentRegions + 1] = mainRegion;
+    end
     for i = 0, mainRegion:adjacent_region_list():num_items() - 1 do
         local adjacentRegion = mainRegion:adjacent_region_list():item_at(i);
-		if adjacentRegion:is_province_capital() == false or (adjacentRegion:is_province_capital() == true and imData.CanTargetProvinceCapital == true) then
-            adjacentRegions[#adjacentRegions + 1] = adjacentRegion;
+        if adjacentRegion:is_province_capital() == false or (adjacentRegion:is_province_capital() == true and imData.CanTargetProvinceCapital == true) and targetedRegions[adjacentRegion:name()] == nil then
+            if areaEventData ~= nil and areaEventData.SubcultureTargets ~= nil then
+                if not adjacentRegion:is_null_interface() then
+                    for index, cultureKey in pairs(areaEventData.SubcultureTargets) do
+                        if not adjacentRegion:owning_faction():is_null_interface() and adjacentRegion:owning_faction():subculture() == cultureKey then
+                            validAdjacentRegions[#validAdjacentRegions + 1] = adjacentRegion;
+                        end
+                    end
+                end
+            else
+                validAdjacentRegions[#validAdjacentRegions + 1] = adjacentRegion;
+            end
             IandI_Log("Potential adjacent region target is: "..adjacentRegion:name());
 		end
     end
 
-    return GetRandomObjectFromList(adjacentRegions);
+    return GetRandomObjectFromList(validAdjacentRegions);
 end
 
 function IandI_Controller:GetSpawnableFaction(event, eventData)
@@ -566,11 +793,10 @@ function IandI_Controller:RegisterActiveEventListeners()
             IandI_Log("Checking area "..areaKey);
             for eventKey, events in pairs(eventsInArea) do
                 for forceKey, event in pairs(events) do
-                    IandI_Log("Attempting to load "..event.ForceKey);
                     if self.invasion_manager:get_invasion(event.ForceKey) then
                         IandI_Log("Registering completion listener for active event: "..event.ForceKey);
                         local eventData = self:GetEventData(event.Key, event.Type);
-                        SetupEventCompleteListers(self, event, event.FactionKey, eventData);
+                        SetupEventCompleteListeners(self, event, event.FactionKey, eventData);
                     else
                         IandI_Log("Invasion missing from manager. Not loading listener. It is probably destroyed.");
                         self:CleanUpActiveForce(event);
@@ -627,8 +853,8 @@ function IandI_Controller:SetupNewEventForArea(event, eventData)
         local areaData = self:GetAreaData(event.AreaKey);
         if areaData ~= nil then
             nextEventData = self:GetEventForArea(areaData, event.Type);
-            if eventData.SpawningData.NumberOfTurnsBeforeOccurrence ~= nil then
-                eventTimeout = Random(eventData.SpawningData.NumberOfTurnsBeforeOccurrence.Maximum, eventData.SpawningData.NumberOfTurnsBeforeOccurrence.Minimum) + 50;
+            if eventData.SpawningData.NumberOfTurnsBeforeReoccurrence ~= nil then
+                eventTimeout = Random(eventData.SpawningData.NumberOfTurnsBeforeReoccurrence.Maximum, eventData.SpawningData.NumberOfTurnsBeforeReoccurrence.Minimum) + 50;
             else
                 eventTimeout = 50;
             end
@@ -637,8 +863,8 @@ function IandI_Controller:SetupNewEventForArea(event, eventData)
         local areaData = self:GetAreaData(event.AreaKey);
         if areaData ~= nil then
             nextEventData = self:GetEventForArea(areaData, event.Type);
-            if eventData.SpawningData.NumberOfTurnsBeforeOccurrence ~= nil then
-                eventTimeout = Random(eventData.SpawningData.NumberOfTurnsBeforeOccurrence.Maximum, eventData.SpawningData.NumberOfTurnsBeforeOccurrence.Minimum) + 10;
+            if eventData.SpawningData.NumberOfTurnsBeforeReoccurrence ~= nil then
+                eventTimeout = Random(eventData.SpawningData.NumberOfTurnsBeforeReoccurrence.Maximum, eventData.SpawningData.NumberOfTurnsBeforeReoccurrence.Minimum) + 10;
             else
                 eventTimeout = 10;
             end
@@ -646,8 +872,8 @@ function IandI_Controller:SetupNewEventForArea(event, eventData)
     elseif event.Type == "DelayedStart" then
         if eventData.SpawningData.NextEventKey ~= nil then
             nextEventData = self:GetEventData(eventData.SpawningData.NextEventKey, event.Type);
-            if eventData.SpawningData.NumberOfTurnsBeforeOccurrence ~= nil then
-                eventTimeout = Random(eventData.SpawningData.NumberOfTurnsBeforeOccurrence.Maximum, eventData.SpawningData.NumberOfTurnsBeforeOccurrence.Minimum);
+            if eventData.SpawningData.NumberOfTurnsBeforeReoccurrence ~= nil then
+                eventTimeout = Random(eventData.SpawningData.NumberOfTurnsBeforeReoccurrence.Maximum, eventData.SpawningData.NumberOfTurnsBeforeReoccurrence.Minimum);
             else
                 eventTimeout = 0;
             end
@@ -655,7 +881,7 @@ function IandI_Controller:SetupNewEventForArea(event, eventData)
     end
     if nextEventData ~= nil then
         IandI_Log("Event timeout is "..eventTimeout);
-        self:SetupEvent(event.Type, event.AreaKey, nextEventData, eventTimeout, nil);
+        self:SetupEvent(event.Type, event.AreaKey, nextEventData, cm:model():turn_number() + eventTimeout, nil);
     else
         IandI_Log("There is no next event after event "..event.ForceKey);
     end
@@ -692,7 +918,6 @@ function IandI_Controller:CleanUpActiveEventForces()
             IandI_Log("Checking area "..areaKey);
             for eventKey, events in pairs(eventsInArea) do
                 for forceKey, event in pairs(events) do
-                    IandI_Log("Attempting to load "..event.ForceKey);
                     if not self.invasion_manager:get_invasion(event.ForceKey) then
                         IandI_Log("Invasion "..event.ForceKey.." missing from invasion manager. Removing from active events stack.");
                         self:CleanUpActiveForce(event);
