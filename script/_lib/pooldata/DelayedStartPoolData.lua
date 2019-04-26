@@ -13,6 +13,10 @@ DelayedStartPoolData = {
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
             ReplacementData = nil,
+            GiveRegions = {
+                main_warhammer = {"wh2_main_southern_jungle_of_pahualaxa_monument_of_the_moon",},
+                wh2_main_great_vortex = {"wh2_main_vor_grey_guardians_grey_rock_point",},
+            },
         },
         RAMData = {
             PrimaryForce = {
@@ -39,30 +43,36 @@ DelayedStartPoolData = {
                 FactionKey = "wh2_dlc11_cst_the_drowned",
             },
             TargetData = {
-                Type = "REGION",
+                Type = "RELEASE",
                 NumberOfTargets = 1,
                 CanTargetAdjacentRegions = false,
                 TargetRegionOverride = {
                     main_warhammer = {
-                        Regions = {"wh2_main_southern_jungle_of_pahualaxa_monument_of_the_moon"},
+                        Regions = nil,
                         SpawnCoordinates = {"SeaOfSerpents",},
                     },
                     wh2_main_great_vortex = {
-                        Regions = {"wh2_main_vor_grey_guardians_grey_rock_point"},
+                        Regions = nil,
                         SpawnCoordinates = {"SeaOfSerpents",},
                     },
                 },
             },
         },
         NarrativeData = {
-            Incidents = {
-                {
-                    Delay = -1,
-                    Key = "wh_main_iandi_cylostra_direfan",
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_cylostra_direfan",},
                 },
+                Dilemmas = nil,
+                Missions = nil,
             },
-            Dilemmas = nil,
-            Missions = nil,
+            wh2_dlc11_sc_cst_vampire_coast = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_cylostra_direfan_vmp_cst",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
         },
     },
 
@@ -120,14 +130,36 @@ DelayedStartPoolData = {
             },
         },
         NarrativeData = {
-            Incidents = {
-                {
-                    Delay = 0,
-                    Key = "wh_main_iandi_count_noctilus",
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_count_noctilus",},
                 },
+                Dilemmas = nil,
+                Missions = nil,
             },
-            Dilemmas = nil,
-            Missions = nil,
+            wh_main_sc_teb_teb = {
+                Incidents = {
+                    { Delay = -5, Key = "wh_main_iandi_count_noctilus_target_prelude",},
+                    { Delay = 0, Key = "wh_main_iandi_count_noctilus_target",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh_main_brt_carcassonne = {
+                Incidents = {
+                    { Delay = -5, Key = "wh_main_iandi_count_noctilus_target_prelude",},
+                    { Delay = 0, Key = "wh_main_iandi_count_noctilus_target",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_dlc11_sc_cst_vampire_coast = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_count_noctilus_vmp_cst",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
         },
     },
 
@@ -187,14 +219,28 @@ DelayedStartPoolData = {
             },
         },
         NarrativeData = {
-            Incidents = {
-                {
-                    Delay = 0,
-                    Key = "wh_main_iandi_settra",
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_settra",},
                 },
+                Dilemmas = nil,
+                Missions = nil,
             },
-            Dilemmas = nil,
-            Missions = nil,
+            wh2_dlc09_sc_tmb_tomb_kings = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_settra_tmb_kings",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_dlc09_tmb_followers_of_nagash = {
+                Incidents = {
+                    { Delay = -5, Key = "wh_main_iandi_settra_arkhan_prelude",},
+                    { Delay = 0, Key = "wh_main_iandi_settra_arkhan",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
         },
     },
     -- Delayed Beastmen
@@ -230,8 +276,21 @@ DelayedStartPoolData = {
                     MandatoryUnits = {
 
                     },
+                    Subtypes = {"dlc03_bst_beastlord", },
                     UnitTags = {"Gors", "WarBeasts", },
-                    ArmySize = 10,
+                    ArmySize = nil,
+                    XPLevel = 10,
+                    SkillsToUnlock = {
+                    },
+                },
+                ThirdForce = {
+                    Key = "Key",
+                    MandatoryUnits = {
+
+                    },
+                    Subtypes = {"dlc03_bst_beastlord", },
+                    UnitTags = {"Gors", "WarBeasts", },
+                    ArmySize = nil,
                     XPLevel = 10,
                     SkillsToUnlock = {
                     },
@@ -256,6 +315,23 @@ DelayedStartPoolData = {
                 },
             },
         },
+        NarrativeData = {
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_khazrak",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh_main_emp_middenland = {
+                Incidents = {
+                    { Delay = -5, Key = "wh_main_iandi_khazrak_middenland_prelude",},
+                    { Delay = 0, Key = "wh_main_iandi_khazrak_middenland",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+        },
     },
     -- Delayed High Elves
     AlithAnar = {
@@ -271,6 +347,10 @@ DelayedStartPoolData = {
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
             ReplacementData = nil,
+            GiveRegions = {
+                main_warhammer = {"wh2_main_the_black_coast_arnheim",},
+                wh2_main_great_vortex = {"wh2_main_vor_the_broken_land_black_creek_spire",},
+            },
         },
         RAMData = {
             PrimaryForce = {
@@ -297,23 +377,56 @@ DelayedStartPoolData = {
                 FactionKey = "wh2_main_hef_nagarythe",
             },
             TargetData = {
-                Type = "REGION",
+                Type = "RELEASE",
                 NumberOfTargets = nil,
                 CanTargetAdjacentRegions = false,
                 TargetRegionOverride = {
                     main_warhammer = {
-                        Regions = {"wh2_main_the_black_coast_arnheim"},
+                        Regions = nil,
                         SpawnCoordinates = {
                             "BleakCoast",
                         },
                     },
                     wh2_main_great_vortex = {
-                        Regions = {"wh2_main_vor_the_broken_land_black_creek_spire"},
+                        Regions = nil,
                         SpawnCoordinates = {
                             "ClarondKar",
                         },
                     },
                 },
+            },
+        },
+        NarrativeData = {
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_alith_anar",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_def_dark_elves = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_alith_anar_dark_elves",},
+                },
+                Dilemmas = nil,
+                --[[Dilemmas = {
+                    { Delay = 1, Key = "wh_main_iandi_alith_anar_dark_elves_join_war", IncludeIfTarget = false,},
+                },--]]
+                Missions = nil,
+            },
+            wh2_main_def_naggarond = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_alith_anar_naggarond",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_hef_high_elves = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_alith_anar_high_elves",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
             },
         },
     },
@@ -331,6 +444,10 @@ DelayedStartPoolData = {
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
             ReplacementData = nil,
+            GiveRegions = {
+                main_warhammer = {"wh2_main_headhunters_jungle_chupayotl",},
+                wh2_main_great_vortex = {"wh2_main_vor_culchan_plains_chupayotl",},
+            },
         },
         RAMData = {
             PrimaryForce = {
@@ -357,23 +474,53 @@ DelayedStartPoolData = {
                 FactionKey = "wh2_dlc11_def_the_blessed_dread",
             },
             TargetData = {
-                Type = "REGION",
+                Type = "RELEASE",
                 NumberOfTargets = nil,
                 CanTargetAdjacentRegions = false,
                 TargetRegionOverride = {
                     main_warhammer = {
-                        Regions = {"wh2_main_headhunters_jungle_chupayotl"},
+                        Regions = nil,
                         SpawnCoordinates = {
                             "SouthernOcean"
                         },
                     },
                     wh2_main_great_vortex = {
-                        Regions = {"wh2_main_vor_culchan_plains_chupayotl"},
+                        Regions = nil,
                         SpawnCoordinates = {
                             "SouthernOcean",
                         },
                     },
                 },
+            },
+        },
+        NarrativeData = {
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_lokhir_fellheart",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_lzd_lizardmen = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_lokhir_fellheart_lzd",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_def_dark_elves = {
+                Incidents = {
+                    { Delay = 5, Key = "wh_main_iandi_lokhir_fellheart_def",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_dlc11_sc_cst_vampire_coast = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_lokhir_fellheart_vmp_cst",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
             },
         },
     },
@@ -391,6 +538,10 @@ DelayedStartPoolData = {
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
             ReplacementData = nil,
+            GiveRegions = {
+                main_warhammer = {"wh2_main_headhunters_jungle_oyxl",},
+                wh2_main_great_vortex = {"wh2_main_vor_the_lost_valleys_oyxl",},
+            },
         },
         RAMData = {
             PrimaryForce = {
@@ -401,14 +552,44 @@ DelayedStartPoolData = {
                     wh2_main_skv_inf_plague_monk_censer_bearer = 1,
                     wh2_main_skv_art_plagueclaw_catapult = 1,
                 },
-                UnitTags = {"ClanPestilens", "Warriors", "Slaves",},
+                UnitTags = {"ClanPestilens", "Warriors", "SkavenSlaves",},
                 ArmySize = 19,
-                XPLevel = 15,
+                XPLevel = 25,
                 SkillsToUnlock = {
                 },
                 ModelOverride = nil,
             },
-            SecondaryForces = nil,
+            SecondaryForces = {
+                SecondForce = {
+                    Key = "SecondForce",
+                    IsFactionLeader = false,
+                    MandatoryUnits = {
+                        wh2_main_skv_inf_plague_monks = 2,
+                        wh2_main_skv_art_plagueclaw_catapult = 1,
+                    },
+                    Subtypes = {"wh2_main_skv_warlord",},
+                    UnitTags = {"ClanPestilens", "Warriors", "SkavenSlaves",},
+                    ArmySize = nil,
+                    XPLevel = 10,
+                    SkillsToUnlock = {
+                    },
+                    ModelOverride = nil,
+                },
+                ThirdForce = {
+                    Key = "ThirdForce",
+                    IsFactionLeader = false,
+                    MandatoryUnits = {
+                        wh2_main_skv_inf_plague_monks = 2,
+                    },
+                    Subtypes = {"wh2_main_skv_warlord",},
+                    UnitTags = {"ClanPestilens", "Warriors", "SkavenSlaves",},
+                    ArmySize = nil,
+                    XPLevel = 10,
+                    SkillsToUnlock = {
+                    },
+                    ModelOverride = nil,
+                },
+            },
         },
         IMData = {
             AreaOverrideKey = "LordSkrolk",
@@ -417,23 +598,47 @@ DelayedStartPoolData = {
                 FactionKey = "wh2_main_skv_clan_pestilens",
             },
             TargetData = {
-                Type = "REGION",
+                Type = "RELEASE",
                 NumberOfTargets = nil,
-                CanTargetAdjacentRegions = false,
+                CanTargetAdjacentRegions = true,
                 TargetRegionOverride = {
                     main_warhammer = {
-                        Regions = {"wh2_main_headhunters_jungle_oyxl"},
+                        Regions = nil,
                         SpawnCoordinates = {
                             "SouthernLustriaSkrolk"
                         },
                     },
                     wh2_main_great_vortex = {
-                        Regions = {"wh2_main_vor_the_lost_valleys_oyxl"},
+                        Regions = nil,
                         SpawnCoordinates = {
                            "SouthernLustriaSkrolk"
                         },
                     },
                 },
+            },
+        },
+        NarrativeData = {
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_skrolk",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_lzd_lizardmen = {
+                Incidents = {
+                    { Delay = -5, Key = "wh_main_iandi_skrolk_lzd_prelude",},
+                    { Delay = 0, Key = "wh_main_iandi_skrolk_lzd",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_skv_skaven = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_skrolk_skv",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
             },
         },
     },
@@ -451,6 +656,10 @@ DelayedStartPoolData = {
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
             ReplacementData = nil,
+            GiveRegions = {
+                main_warhammer = {"wh2_main_the_clawed_coast_hoteks_column",},
+                wh2_main_great_vortex = {"wh2_main_vor_the_clawed_coast_hoteks_column",},
+            },
         },
         RAMData = {
             PrimaryForce = {
@@ -461,7 +670,7 @@ DelayedStartPoolData = {
                     wh2_main_skv_inf_stormvermin_1 = 1,
                     wh2_main_skv_veh_doomwheel = 1,
                 },
-                UnitTags = {"Warriors", "Slaves",},
+                UnitTags = {"Warriors", "SkavenSlaves",},
                 ArmySize = 19,
                 XPLevel = 15,
                 SkillsToUnlock = {
@@ -477,71 +686,122 @@ DelayedStartPoolData = {
                 FactionKey = "wh2_dlc09_skv_clan_rictus",
             },
             TargetData = {
-                Type = "REGION",
+                Type = "RELEASE",
                 NumberOfTargets = nil,
                 CanTargetAdjacentRegions = false,
                 TargetRegionOverride = {
                     main_warhammer = {
-                        Regions = {"wh2_main_the_clawed_coast_hoteks_column"},
+                        Regions = nil,
                         SpawnCoordinates = {
-                            {150, 529},
+                           "CentralNaggarothTretch",
                         },
                     },
                     wh2_main_great_vortex = {
-                        Regions = {"wh2_main_vor_the_clawed_coast_hoteks_column"},
+                        Regions = nil,
                         SpawnCoordinates = {
-                            {263, 581},
+                            "CentralNaggarothTretch",
                         },
                     },
                 },
+            },
+        },
+        NarrativeData = {
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_tretch",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_def_dark_elves = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_tretch_def",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh2_main_sc_skv_skaven = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_tretch_skv",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
             },
         },
     },
 
-    -- Vampires
-    --[[HeinrichKemmler = {
+    -- Vampire Counts
+    HeinrichKemmler = {
         GrantTerritoryTo = {
             main_warhammer = "wh_main_dwf_karak_ziflin",
         },
-        SubcultureKey = "wh_main_sc_vmp_vampire_counts",
-        EmergeData = {
-            TurnNumbers = {
-                Minimum = 100,
-                Maximum = 150,
+        SpawningData = {
+            StartingTurnNumbers = {
+                Minimum = 25,
+                Maximum = 80,
             },
-            RAMData = {
-                HeinrichKemmler = {
-                    Key = "HeinrichKemmler",
-                    IsFactionLeader = true,
-                    MandatoryUnits = {
-
-                    },
-                    UnitTags = {"Chaff", "Spirits",},
-                    ArmySize = 19,
-                    XPLevel = 15,
-                    SkillsToUnlock = {
-                    },
+            NextEventKey = nil,
+            NumberOfTurnsBeforeReoccurrence = nil,
+            ReplacementData = nil,
+            GiveRegions = {
+                main_warhammer = {"wh_main_northern_grey_mountains_blackstone_post",},
+                wh2_main_great_vortex = nil,
+            },
+        },
+        RAMData = {
+            PrimaryForce = {
+                Key = "HeinrichKemmler",
+                IsFactionLeader = true,
+                MandatoryUnits = {
+                    wh_main_vmp_cav_hexwraiths = 1,
+                    wh_dlc04_vmp_veh_mortis_engine_0 = 1,
                 },
+                UnitTags = {"Chaff", "Spirits",},
+                ArmySize = 19,
+                XPLevel = 15,
+                SkillsToUnlock = {
+                },
+                ModelOverride = nil,
             },
-            IMData = {
-                Target = {
-                    default = {
-                        Type = "REGION",
-                        FactionKey = "wh2_dlc11_vmp_the_barrow_legion",
-                        TargetData = {
-                            main_warhammer = {
-                                Regions = {"wh_main_northern_grey_mountains_blackstone_post"},
-                                SpawnCoordinates = {
-                                    {410, 430},
-                                },
-                            },
+            SecondaryForces = nil,
+        },
+        IMData = {
+            AreaOverrideKey = "HeinrichKemmler",
+            FactionData = {
+                SubcultureKey = "wh_main_sc_vmp_vampire_counts",
+                FactionKey = "wh2_dlc11_vmp_the_barrow_legion",
+            },
+            TargetData = {
+                Type = "RELEASE",
+                NumberOfTargets = nil,
+                CanTargetAdjacentRegions = false,
+                TargetRegionOverride = {
+                    main_warhammer = {
+                        Regions = nil,
+                        SpawnCoordinates = {
+                            "BlackStonePost",
                         },
                     },
                 },
             },
         },
-    },--]]
-
+        NarrativeData = {
+            default = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_kemmler",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+            wh_main_sc_brt_bretonnia = {
+                Incidents = {
+                    { Delay = 0, Key = "wh_main_iandi_kemmler_brt",},
+                },
+                Dilemmas = nil,
+                Missions = nil,
+            },
+        },
+    },
     --[[wh_main_vmp_mousillon = {
         GrantTerritoryTo = "wh_main_brt_lyonesse",
         LordsToWound = {

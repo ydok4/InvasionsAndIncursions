@@ -57,6 +57,11 @@ SpawnLocationPoolData = {
         },
     },
 
+    -- Grey Mountains
+    ME_BlackStonePost = {
+        Coordinates = {{150, 529},},
+    },
+
     -- Southern Realms
     ME_TileanSea = {
         Coordinates = {

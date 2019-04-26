@@ -14,6 +14,7 @@ InvasionPoolData = {
         },
         RAMData = nil,
         IMData = nil,
+        NarrativeData = nil,
     },
     norsca_minor = {
         SpawningData = {
@@ -129,15 +130,15 @@ InvasionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },
     savage_orcs = {
         SpawningData = {
             StartingTurnNumbers = {
-                Minimum = 1,
-                Maximum = 1,
+                Minimum = 40,
+                Maximum = 60,
             },
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = {
@@ -154,7 +155,7 @@ InvasionPoolData = {
                     wh_dlc08_nor_inf_marauder_champions_1 = 1,
                     wh_dlc08_nor_mon_norscan_giant_0 = 1,
                 },
-                UnitTags = {"SavageOrcs", },
+                UnitTags = {"SavageOrcs", {"ForestGoblins", "Monsters",},},
                 ArmySize = nil,
                 XPLevel = nil,
                 SkillsToUnlock = {
@@ -199,7 +200,7 @@ InvasionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },
@@ -258,7 +259,7 @@ InvasionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },

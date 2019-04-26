@@ -14,6 +14,7 @@ IncursionPoolData = {
         },
         RAMData = nil,
         IMData = nil,
+        NarrativeData - nil,
     },
     goblins = {
         SpawningData = {
@@ -36,7 +37,7 @@ IncursionPoolData = {
                 MandatoryUnits = {
 
                 },
-                UnitTags = {"Goblins", "ForestGoblins", "Orcs", },
+                UnitTags = {"Goblins", "ForestGoblins", "Monsters", },
                 ArmySize = nil,
                 XPLevel = nil,
                 SkillsToUnlock = {
@@ -57,7 +58,7 @@ IncursionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },
@@ -103,7 +104,7 @@ IncursionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },
@@ -150,7 +151,7 @@ IncursionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },
@@ -196,7 +197,7 @@ IncursionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },
@@ -241,7 +242,7 @@ IncursionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },
@@ -287,7 +288,7 @@ IncursionPoolData = {
                 TargetRegionOverride = nil,
             },
         },
-        MMData = {
+        NarrativeData = {
 
         },
     },

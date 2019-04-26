@@ -15,10 +15,10 @@ testCharacter = {
 
 humanFaction = {
     name = function()
-        return "wh_main_emp_empire";
+        return "wh2_main_def_naggarond";
     end,
     subculture = function()
-        return "wh_main_sc_emp_empire";
+        return "wh2_dlc11_sc_cst_vampire_coast";
     end,
     character_list = function()
         return {
@@ -222,6 +222,7 @@ function get_cm()
         force_add_trait = function() end,
         force_remove_trait = function() end,
         get_character_by_cqi = function() end,
+        char_is_mobile_general_with_army = function() return false; end,
     };
 end
 

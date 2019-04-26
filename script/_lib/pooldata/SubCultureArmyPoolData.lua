@@ -471,6 +471,33 @@ SubCultureArmyPoolData = {
                 wh_main_grn_cav_savage_orc_boar_boy_big_uns = 2,
             },
         },
+        Monsters = {
+            Early = {
+                wh_main_grn_mon_trolls = 2,
+            },
+            Mid = {
+                wh_main_grn_mon_trolls = 2,
+                wh_main_grn_mon_giant = 1,
+            },
+            Late = {
+                wh_main_grn_mon_trolls = 2,
+                wh_main_grn_mon_giant = 2,
+                wh_main_grn_mon_arachnarok_spider_0 = 1,
+            },
+        },
+        ForestGoblins = {
+            Early = {
+                wh_main_grn_cav_forest_goblin_spider_riders_0 = 1,
+            },
+            Mid = {
+                wh_main_grn_cav_forest_goblin_spider_riders_0 = 2,
+                wh_main_grn_cav_forest_goblin_spider_riders_1 = 1,
+            },
+            Late = {
+                wh_main_grn_cav_forest_goblin_spider_riders_0 = 2,
+                wh_main_grn_cav_forest_goblin_spider_riders_1 = 2,
+            },
+        },
     },
 
     -- Dark Elves
@@ -730,7 +757,7 @@ SubCultureArmyPoolData = {
 
     -- Skaven
     wh2_main_sc_skv_skaven = {
-        Skavenslaves = {
+        SkavenSlaves = {
             Early = {
                 wh2_main_skv_inf_skavenslaves_0 = 3,
                 wh2_main_skv_inf_skavenslave_spearmen_0 = 3,

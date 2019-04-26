@@ -212,9 +212,9 @@ function IandI_Controller:SetupEvent(type, areaKey, eventData, spawnTurn, invasi
     -- Save Narrative incidents/dilemmas/missions
     if areaKey ~= nil then
         if eventData.EventData.NarrativeData ~= nil then
-            self:AddNarrativeDataToUpcomingEvents("Incidents", eventData.EventData.NarrativeData, spawnTurn);
-            self:AddNarrativeDataToUpcomingEvents("Dilemmas", eventData.EventData.NarrativeData, spawnTurn);
-            self:AddNarrativeDataToUpcomingEvents("Missions", eventData.EventData.NarrativeData, spawnTurn);
+            self:AddNarrativeDataToUpcomingEvents("Incidents", eventData.EventData.NarrativeData, eventSaveData);
+            self:AddNarrativeDataToUpcomingEvents("Dilemmas", eventData.EventData.NarrativeData, eventSaveData);
+            self:AddNarrativeDataToUpcomingEvents("Missions", eventData.EventData.NarrativeData, eventSaveData);
         end
     end
 end
@@ -233,20 +233,44 @@ function IandI_Controller:GetUpcomingEventsIndexForTurnNumber(turnNumber)
     return index;
 end
 
-function IandI_Controller:AddNarrativeDataToUpcomingEvents(type, narrativeData, spawnTurn)
-    local narrativeTypeData = narrativeData[type];
-    if narrativeTypeData == nil then
-        return;
-    end
-    for index, data in pairs(narrativeTypeData) do
-        local eventData = {
-            EventKey = data.Key,
-        };
-        local narrativeTurn = spawnTurn + (data.Delay);
-        local stackIndex = self:GetUpcomingEventsIndexForTurnNumber(narrativeTurn);
-        local eventSaveData = self:MapEventSaveData(type, "", eventData, narrativeTurn, nil);
-        -- Add it into the sorted list
-        table.insert(self.UpcomingEventsStack, stackIndex, eventSaveData);
+function IandI_Controller:AddNarrativeDataToUpcomingEvents(type, narrativeData, eventSaveData)
+    if narrativeData[self.HumanFaction:name()] ~= nil and narrativeData[self.HumanFaction:name()][type] ~= nil then
+        local narrativeTypeData = narrativeData[self.HumanFaction:name()][type];
+        for index, data in pairs(narrativeTypeData) do
+            local eventData = {
+                EventKey = data.Key,
+            };
+            local narrativeTurn = eventSaveData.TurnNumber + (data.Delay);
+            local stackIndex = self:GetUpcomingEventsIndexForTurnNumber(narrativeTurn);
+            local eventSaveData = self:MapEventSaveData(type, self.HumanFaction:name(), eventData, narrativeTurn, nil);
+            -- Add it into the sorted list
+            table.insert(self.UpcomingEventsStack, stackIndex, eventSaveData);
+        end
+    elseif narrativeData[self.HumanFaction:subculture()] ~= nil and narrativeData[self.HumanFaction:subculture()][type] then
+        local narrativeTypeData = narrativeData[self.HumanFaction:subculture()][type];
+        for index, data in pairs(narrativeTypeData) do
+            local eventData = {
+                EventKey = data.Key,
+            };
+            local narrativeTurn = eventSaveData.TurnNumber + (data.Delay);
+            local stackIndex = self:GetUpcomingEventsIndexForTurnNumber(narrativeTurn);
+            local eventSaveData = self:MapEventSaveData(type, self.HumanFaction:subculture(), eventData, narrativeTurn, nil);
+            -- Add it into the sorted list
+            table.insert(self.UpcomingEventsStack, stackIndex, eventSaveData);
+        end
+    elseif narrativeData["default"][type] ~= nil then
+        local narrativeTypeData = narrativeData["default"][type];
+        for index, data in pairs(narrativeTypeData) do
+            local eventData = {
+                EventKey = data.Key,
+            };
+            local narrativeTurn = eventSaveData.TurnNumber + (data.Delay);
+            local stackIndex = self:GetUpcomingEventsIndexForTurnNumber(narrativeTurn);
+            local narrativeEventSaveData = self:MapEventSaveData(type, "default", eventData, narrativeTurn, nil);
+            narrativeEventSaveData.TargetRegionKey = eventSaveData.TargetRegionKey;
+            -- Add it into the sorted list
+            table.insert(self.UpcomingEventsStack, stackIndex, narrativeEventSaveData);
+        end
     end
 end
 
@@ -351,8 +375,30 @@ function IandI_Controller:PerformEventActionsForTurnNumber(turnNumber, type)
 end
 
 function IandI_Controller:StartIncident(event)
-    IandI_Log("Triggering incident "..event.Key);
-    cm:trigger_incident(self.HumanFaction:name(), event.Key, true);
+    local triggerIncident = false;
+    if event.AreaKey == "default" then
+        IandI_Log("This is a default incident, only triggering for localised player faction");
+        local mainRegion = cm:get_region(event.TargetRegionKey);
+        IandI_Log("Target region is "..mainRegion:name().." owner by faction "..mainRegion:owning_faction():name());
+        if mainRegion:owning_faction():name() == self.HumanFaction:name() then
+            IandI_Log()
+            triggerIncident = true;
+        end
+        for i = 0, mainRegion:adjacent_region_list():num_items() - 1 do
+            local adjacentRegion = mainRegion:adjacent_region_list():item_at(i);
+            IandI_Log("Adjacent region is "..adjacentRegion:name().." owner by faction "..adjacentRegion:owning_faction():name());
+            if adjacentRegion:owning_faction():name() == self.HumanFaction:name() then
+                triggerIncident = true;
+            end
+        end
+    else
+        triggerIncident = true;
+    end
+    if triggerIncident == true then
+        IandI_Log("Triggering incident "..event.Key);
+        local humanCQI = self.HumanFaction:command_queue_index();
+        cm:trigger_incident_with_targets(humanCQI, event.Key, humanCQI, 0, 0, 0, 0, 0);
+    end
 end
 
 function IandI_Controller:StartDilemma(event)
@@ -625,9 +671,8 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
         IandI_Log("Setting invasion target. Type: "..imData.TargetData.Type.." Region: "..selectedRegion:name());
         eventInvasion:set_target(imData.TargetData.Type, selectedRegion:name(), regionOwnerName);
     end
-
     -- Add attrition immunity, this is to get rid of regionless attrition mainly
-    eventInvasion:apply_effect("wh_main_attrition_immunity", 20);
+    --eventInvasion:apply_effect("wh_main_attrition_immunity", 20);
     -- Set character to specified level
     local characterExperience = 0;
     if ramData.XPLevel == nil then
@@ -646,63 +691,78 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
     IandI_Log("Character xp level is "..characterExperience);
     eventInvasion:add_character_experience(characterExperience, true);
     IandI_Log("Set characters starting level to "..characterExperience);
-    -- Trigger invasion
-    eventInvasion:start_invasion(
-        function(context)
-            IandI_Log("Invasion character spawned for key: "..event.ForceKey);
-            local character = context:get_general();
-            local factionName = character:faction():name();
-            if ramData.IsFactionLeader == true then
-                IandI_Log("Giving character immortality");
-                cm:set_character_immortality("character_cqi:"..character:cqi(), true);
-            end
+    cm:callback(function()
+        -- Trigger invasion
+        eventInvasion:start_invasion(
+            function(context)
+                IandI_Log("Invasion character spawned for key: "..event.ForceKey);
+                local character = context:get_general();
+                local factionName = character:faction():name();
+                if ramData.IsFactionLeader == true then
+                    IandI_Log("Giving character immortality");
+                    cm:set_character_immortality("character_cqi:"..character:cqi(), true);
+                end
 
-            if ramData.ModelOverride ~= nil then
-                IandI_Log("Setting model override "..ramData.ModelOverride);
-                cm:add_unit_model_overrides("character_cqi:"..character:cqi(), ramData.ModelOverride);
-            end
+                if ramData.ModelOverride ~= nil then
+                    IandI_Log("Setting model override "..ramData.ModelOverride);
+                    cm:add_unit_model_overrides("character_cqi:"..character:cqi(), ramData.ModelOverride);
+                end
 
-            if eventData.SpawningData.DisableDiplomacy == true then
-                -- Disable all diplomatic options
-                cm:force_diplomacy("faction:"..factionName, "all", "all", false, false, true);
-                -- Then we need to enable the war option, disable payments as well, just cause
-                cm:force_diplomacy("faction:"..factionName, "all", "war", true, true, true, true);
-            end
+                if eventData.SpawningData.DisableDiplomacy == true then
+                    -- Disable all diplomatic options
+                    cm:force_diplomacy("faction:"..factionName, "all", "all", false, false, true);
+                    -- Then we need to enable the war option, disable payments as well, just cause
+                    cm:force_diplomacy("faction:"..factionName, "all", "war", true, true, true, true);
+                end
 
-            -- We need to stop the target faction from able to make peace because it screws with the ai
-            if regionOwnerName ~= nil then
-                cm:force_diplomacy("faction:"..factionName, "faction:"..regionOwnerName, "peace", false, false, true);
-            end
-            -- Remove upkeep. This needs to be done here because only one bundle can be with apply_effect.
-            -- This lasts for 20 turns
-            cm:apply_effect_bundle_to_characters_force("wh_main_bundle_military_upkeep_free_force", character:cqi(), 20, true);
-            -- Grant the new force any mandatory units
-            if ramData.MandatoryUnits ~= nil then
-                for unitKey, amount in pairs(ramData.MandatoryUnits) do
-                    for i = 1, amount do
-                        IandI_Log("Granting mandatory unit to invasion: "..unitKey);
-                        cm:grant_unit_to_character("character_cqi:"..character:cqi(), unitKey);
+                -- We need to stop the target faction from able to make peace because it screws with the ai
+                if regionOwnerName ~= nil then
+                    cm:force_diplomacy("faction:"..factionName, "faction:"..regionOwnerName, "peace", false, false, true);
+                end
+                -- Remove upkeep. This needs to be done here because only one bundle can be with apply_effect.
+                -- This lasts for 20 turns
+                cm:apply_effect_bundle_to_characters_force("wh_main_bundle_military_upkeep_free_force", character:cqi(), 20, true);
+
+                -- Grant the new force any mandatory units
+                if ramData.MandatoryUnits ~= nil then
+                    for unitKey, amount in pairs(ramData.MandatoryUnits) do
+                        for i = 1, amount do
+                            IandI_Log("Granting mandatory unit to invasion: "..unitKey);
+                            cm:grant_unit_to_character("character_cqi:"..character:cqi(), unitKey);
+                        end
+                    end
+                else
+                    IandI_Log("No mandatory units to add");
+                end
+
+                if eventData.SpawningData.GiveRegions ~= nil and eventData.SpawningData.GiveRegions[self.CampaignName] ~= nil then
+                    IandI_Log("Giving the following regions to faction "..factionKey);
+                    for index, regionKey in pairs(eventData.SpawningData.GiveRegions[self.CampaignName]) do
+                        local region = cm:get_region(regionKey);
+                        if not region:owning_faction():is_null_interface() then
+                            cm:force_declare_war(factionKey, region:owning_faction():name(), false, false);
+                        end
+                        IandI_Log("Transferring region: "..regionKey);
+                        cm:transfer_region_to_faction(regionKey, factionKey);
                     end
                 end
-            else
-                IandI_Log("No mandatory units to add");
+                -- This is to fix cases where LLs spawn with agents and they end up inside them, so they manually need to move.
+                -- The chosen spawn coordinates should enough room to accommodate moving them by - 1 X coodinate.
+                cm:teleport_to("character_cqi:"..character:cqi(), character:logical_position_x() - 1, character:logical_position_y(), true);
+                if imData.TargetData.Type == "RELEASE" then
+                    local eventInvasion = self.invasion_manager:get_invasion(event.ForceKey);
+                    local general = eventInvasion:get_general();
+                    IandI_Log("Invasion subtype is "..general:character_subtype_key());
+                    eventInvasion:release();
+                    IandI_Log("Released character from invasion manager");
+                else
+                    SetupEventCompleteListeners(self, event, factionKey, eventData);
+                end
+                IandI_Log_Finished();
             end
-
-            -- This is to fix cases where LLs spawn with agents and they end up inside them, so they manually need to move.
-            -- The chosen spawn coordinates should enough room to accommodate moving them by - 1 X coodinate.
-            cm:teleport_to("character_cqi:"..character:cqi(), character:logical_position_x() - 1, character:logical_position_y(), true);
-            if imData.TargetData.Type == "RELEASE" then
-                local eventInvasion = self.invasion_manager:get_invasion(event.ForceKey);
-                local general = eventInvasion:get_general();
-                IandI_Log("Invasion subtype is "..general:character_subtype_key());
-                eventInvasion:release();
-                IandI_Log("Released character from invasion manager");
-            else
-                SetupEventCompleteListeners(self, event, factionKey, eventData);
-            end
-            IandI_Log_Finished();
-		end
-    );
+        );
+    end,
+    0);
 end
 
 function IandI_Controller:GetSpawnCoordinatesForTriggeredEvent(event, eventData, forceIndex)
