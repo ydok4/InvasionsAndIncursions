@@ -129,7 +129,7 @@ function IandI_Controller:DelayedStartSetup()
                             IandI_Log("Created replacement");
                         end
                     );
-                    if delayedStartData.SpawningData.ReplacementData.OnlyWoundFactionLeader == true then
+                    if delayedStartData.SpawningData.OnlyWoundFactionLeader == true then
                         IandI_Log("Wounding character for faction "..forceFactionKey);
                         cm:force_add_trait("character_cqi:"..factionLeader:command_queue_index(),"wh_main_trait_all_increase_wound_recovery_999", true);
                         cm:kill_character(factionLeader:command_queue_index(), true, true);
@@ -141,7 +141,10 @@ function IandI_Controller:DelayedStartSetup()
                     end
                 else
                     IandI_Log("Killing all characters for faction "..forceFactionKey);
-                    cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
+                    if not delayedStartData.SpawningData.OnlyWoundFactionLeader then
+                        IandI_Log("Except faction leader");
+                        cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
+                    end
                     cm:kill_all_armies_for_faction(faction);
                 end
                 local turnNumber = Random(delayedStartData.SpawningData.StartingTurnNumbers.Maximum, delayedStartData.SpawningData.StartingTurnNumbers.Minimum);
@@ -234,6 +237,7 @@ function IandI_Controller:GetUpcomingEventsIndexForTurnNumber(turnNumber)
 end
 
 function IandI_Controller:AddNarrativeDataToUpcomingEvents(type, narrativeData, eventSaveData)
+    local eventPoolData = self:GetEventData(eventSaveData.Key, eventSaveData.Type);
     if narrativeData[self.HumanFaction:name()] ~= nil and narrativeData[self.HumanFaction:name()][type] ~= nil then
         local narrativeTypeData = narrativeData[self.HumanFaction:name()][type];
         for index, data in pairs(narrativeTypeData) do
@@ -258,7 +262,7 @@ function IandI_Controller:AddNarrativeDataToUpcomingEvents(type, narrativeData, 
             -- Add it into the sorted list
             table.insert(self.UpcomingEventsStack, stackIndex, eventSaveData);
         end
-    elseif narrativeData["default"][type] ~= nil then
+    elseif narrativeData["default"] ~= nil and narrativeData["default"][type] ~= nil then
         local narrativeTypeData = narrativeData["default"][type];
         for index, data in pairs(narrativeTypeData) do
             local eventData = {
@@ -267,7 +271,11 @@ function IandI_Controller:AddNarrativeDataToUpcomingEvents(type, narrativeData, 
             local narrativeTurn = eventSaveData.TurnNumber + (data.Delay);
             local stackIndex = self:GetUpcomingEventsIndexForTurnNumber(narrativeTurn);
             local narrativeEventSaveData = self:MapEventSaveData(type, "default", eventData, narrativeTurn, nil);
-            narrativeEventSaveData.TargetRegionKey = eventSaveData.TargetRegionKey;
+            if narrativeEventSaveData.TargetRegionKey == '' and eventPoolData.SpawningData.GiveRegions ~= nil and eventPoolData.SpawningData.GiveRegions[self.CampaignName] ~= nil then
+                narrativeEventSaveData.TargetRegionKey = GetRandomObjectFromList(eventPoolData.SpawningData.GiveRegions[self.CampaignName]);
+            else
+                narrativeEventSaveData.TargetRegionKey = eventSaveData.TargetRegionKey;
+            end
             -- Add it into the sorted list
             table.insert(self.UpcomingEventsStack, stackIndex, narrativeEventSaveData);
         end
@@ -633,19 +641,36 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
     local eventInvasion = self.invasion_manager:new_invasion(event.ForceKey, factionKey, unitList, spawnCoordinates);
 
     -- Assign the event general if applicable
-    if ramData.IsFactionLeader == true and event.InvasionLeader ~= nil then
+    if event.InvasionLeader ~= nil and ramData.Subtypes == nil then
         IandI_Log("RAM leader is faction leader");
         local invasionLeader = event.InvasionLeader;
-        if eventData.SpawningData.ReplacementData ~= nil and eventData.SpawningData.ReplacementData.OnlyWoundFactionLeader == true then
-            local factionLeader = faction:faction_leader();
-            cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
-            cm:kill_character(factionLeader:command_queue_index(), true, true);
+        if faction:is_null_interface() then
+            IandI_Log("Faction is null interface");
+        end
+        local factionLeader = faction:faction_leader();
+        IandI_Log("Got faction leader");
+        if eventData.SpawningData.ReplacementData ~= nil and eventData.SpawningData.OnlyWoundFactionLeader == true then
+            IandI_Log("Killing existing faction leader");
+            if factionLeader:is_null_interface() then
+                IandI_Log("Faction leader is null interface");
+            else
+                cm:set_character_immortality("character_cqi:"..factionLeader:cqi(), false);
+                IandI_Log("Removed Immortality");
+                cm:kill_character(factionLeader:command_queue_index(), true, true);
+                IandI_Log("Killed character");
+            end
         end
         if invasionLeader ~= nil then
             IandI_Log("Forename is "..invasionLeader.forename);
             IandI_Log("Surname is "..invasionLeader.surname);
             IandI_Log("Subtype is "..invasionLeader.subtype);
-            eventInvasion:create_general(true, invasionLeader.subtype, invasionLeader.forename, "", invasionLeader.surname, "");
+            if not factionLeader:is_null_interface() and eventData.SpawningData.OnlyWoundFactionLeader == false then
+                IandI_Log("Setting existing faction leadear as force general");
+                eventInvasion:assign_general(factionLeader);
+            else
+                IandI_Log("Creating a new faction leader");
+                eventInvasion:create_general(ramData.IsFactionLeader, invasionLeader.subtype, invasionLeader.forename, "", invasionLeader.surname, "");
+            end
         end
 
         IandI_Log("Assigned faction leader as general");
@@ -691,7 +716,7 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
     IandI_Log("Character xp level is "..characterExperience);
     eventInvasion:add_character_experience(characterExperience, true);
     IandI_Log("Set characters starting level to "..characterExperience);
-    cm:callback(function()
+    --cm:callback(function()
         -- Trigger invasion
         eventInvasion:start_invasion(
             function(context)
@@ -723,6 +748,20 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
                 -- This lasts for 20 turns
                 cm:apply_effect_bundle_to_characters_force("wh_main_bundle_military_upkeep_free_force", character:cqi(), 20, true);
 
+                -- Assign any territory
+                if eventData.SpawningData.GiveRegions ~= nil and eventData.SpawningData.GiveRegions[self.CampaignName] ~= nil then
+                    IandI_Log("Giving the following regions to faction "..factionKey);
+                    for index, regionKey in pairs(eventData.SpawningData.GiveRegions[self.CampaignName]) do
+                        local region = cm:get_region(regionKey);
+                        IandI_Log("Transferring region: "..regionKey);
+                        cm:transfer_region_to_faction(regionKey, factionKey);
+                        if not region:owning_faction():is_null_interface() and region:owning_faction():name() ~= factionKey then
+                            IandI_Log("Declaring war with "..region:owning_faction():name());
+                            cm:force_declare_war(factionKey, region:owning_faction():name(), false, false);
+                        end
+                    end
+                end
+
                 -- Grant the new force any mandatory units
                 if ramData.MandatoryUnits ~= nil then
                     for unitKey, amount in pairs(ramData.MandatoryUnits) do
@@ -735,17 +774,6 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
                     IandI_Log("No mandatory units to add");
                 end
 
-                if eventData.SpawningData.GiveRegions ~= nil and eventData.SpawningData.GiveRegions[self.CampaignName] ~= nil then
-                    IandI_Log("Giving the following regions to faction "..factionKey);
-                    for index, regionKey in pairs(eventData.SpawningData.GiveRegions[self.CampaignName]) do
-                        local region = cm:get_region(regionKey);
-                        if not region:owning_faction():is_null_interface() then
-                            cm:force_declare_war(factionKey, region:owning_faction():name(), false, false);
-                        end
-                        IandI_Log("Transferring region: "..regionKey);
-                        cm:transfer_region_to_faction(regionKey, factionKey);
-                    end
-                end
                 -- This is to fix cases where LLs spawn with agents and they end up inside them, so they manually need to move.
                 -- The chosen spawn coordinates should enough room to accommodate moving them by - 1 X coodinate.
                 cm:teleport_to("character_cqi:"..character:cqi(), character:logical_position_x() - 1, character:logical_position_y(), true);
@@ -761,8 +789,8 @@ function IandI_Controller:StartEventThroughInvasionManager(event, eventData, ram
                 IandI_Log_Finished();
             end
         );
-    end,
-    0);
+    --end,
+    --0);
 end
 
 function IandI_Controller:GetSpawnCoordinatesForTriggeredEvent(event, eventData, forceIndex)

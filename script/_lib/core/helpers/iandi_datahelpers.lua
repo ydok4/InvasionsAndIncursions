@@ -130,7 +130,7 @@ function GetStringifiedUnitList(character)
             end
         end
     end
-    IandI_Log("Built Unit string: "..unitString);
+    --IandI_Log("Built Unit string: "..unitString);
     return unitString;
 end
 

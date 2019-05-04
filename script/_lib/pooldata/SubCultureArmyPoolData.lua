@@ -987,7 +987,7 @@ SubCultureArmyPoolData = {
         Chaff = {
             Early = {
                 wh_main_vmp_inf_zombie = 3,
-                wh_main_vmp_inf_skeleton_warriors_0 = 2,
+                wh_main_vmp_inf_skeleton_warriors_0 = 3,
                 wh_dlc04_vmp_veh_corpse_cart_0 = 1,
             },
             Mid = {
@@ -1061,7 +1061,7 @@ SubCultureArmyPoolData = {
         },
         Spirits = {
             Early = {
-                wh_main_vmp_inf_cairn_wraiths = 1,
+                wh_main_vmp_inf_cairn_wraiths = 2,
             },
             Mid = {
                 wh_main_vmp_inf_cairn_wraiths = 2,

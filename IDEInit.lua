@@ -11,6 +11,7 @@ testCharacter = {
     logical_position_x = function() return 100; end,
     logical_position_y = function() return 110; end,
     command_queue_index = function() return 10; end,
+    is_null_interface = function() return false; end,
 }
 
 humanFaction = {
@@ -18,7 +19,7 @@ humanFaction = {
         return "wh2_main_def_naggarond";
     end,
     subculture = function()
-        return "wh2_dlc11_sc_cst_vampire_coast";
+        return "wh2_main_sc_def_dark_elves";
     end,
     character_list = function()
         return {
@@ -47,14 +48,15 @@ humanFaction = {
     faction_leader = function() return testCharacter; end,
     is_quest_battle_faction = function() return false; end,
     is_null_interface = function() return false; end,
+    command_queue_index = function() return 0; end,
 }
 
 testFaction = {
     name = function()
-        return "wh2_dlc11_cst_the_drowned";
+        return "wh2_dlc11_cst_noctilus";
     end,
     subculture = function()
-        return "wh_main_sc_grn_greenskins";
+        return "wh2_dlc11_sc_cst_vampire_coast";
     end,
     character_list = function()
         return {
@@ -223,6 +225,8 @@ function get_cm()
         force_remove_trait = function() end,
         get_character_by_cqi = function() end,
         char_is_mobile_general_with_army = function() return false; end,
+        force_declare_war = function() end,
+        trigger_incident_with_targets = function() end,
     };
 end
 

@@ -59,7 +59,9 @@ SpawnLocationPoolData = {
 
     -- Grey Mountains
     ME_BlackStonePost = {
-        Coordinates = {{150, 529},},
+        Coordinates = {
+            {416, 424},
+        },
     },
 
     -- Southern Realms

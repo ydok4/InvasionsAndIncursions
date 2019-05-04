@@ -1,171 +1,24 @@
-I&I:  InitialiseIandIListenerData   : [25, 04 2019 13:51:22]
+I&I:  InitialiseIandIListenerData   : [04, 05 2019 11:21:53]
 I&I:  FINISHED
 
-I&I:  Loading Crynsos Data   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  FINISHED
-
-I&I:  Loading Mixu Data   : [25, 04 2019 13:51:23]
+I&I:  Loading Crynsos Data   : [04, 05 2019 11:21:53]
 I&I:  FINISHED
 
 I&I:  FINISHED
 
-I&I:  Main mod function   : [25, 04 2019 13:51:23]
-I&I:  Got human faction wh2_main_def_naggarond   : [25, 04 2019 13:51:23]
-I&I:  New game   : [25, 04 2019 13:51:23]
+I&I:  Loading Mixu Data   : [04, 05 2019 11:21:53]
 I&I:  FINISHED
 
-I&I:  DelayedStartSetup   : [25, 04 2019 13:51:23]
-I&I:  Removing faction wh2_dlc11_cst_the_drowned   : [25, 04 2019 13:51:23]
-I&I:  Giving faction regions to wh2_main_grn_blue_vipers   : [25, 04 2019 13:51:23]
-I&I:  Killing all characters for faction wh2_dlc11_cst_the_drowned   : [25, 04 2019 13:51:23]
-I&I:  Event: CylostraDirefan will start at turnNumber: 41 in area CylostraDirefan   : [25, 04 2019 13:51:23]
 I&I:  FINISHED
 
-I&I:  Removing faction wh2_main_skv_clan_pestilens   : [25, 04 2019 13:51:23]
-I&I:  Giving faction regions to    : [25, 04 2019 13:51:23]
-I&I:  Killing all characters for faction wh2_main_skv_clan_pestilens   : [25, 04 2019 13:51:23]
-I&I:  Event: LordSkrolk will start at turnNumber: 147 in area LordSkrolk   : [25, 04 2019 13:51:23]
+I&I:  Main mod function   : [04, 05 2019 11:21:53]
+I&I:  Got human faction wh2_main_def_naggarond   : [04, 05 2019 11:21:53]
+I&I:  New game   : [04, 05 2019 11:21:53]
 I&I:  FINISHED
 
-I&I:  Removing faction wh2_main_hef_nagarythe   : [25, 04 2019 13:51:23]
-I&I:  Giving faction regions to wh2_main_def_bleak_holds   : [25, 04 2019 13:51:23]
-I&I:  Killing all characters for faction wh2_main_hef_nagarythe   : [25, 04 2019 13:51:23]
-I&I:  Event: AlithAnar will start at turnNumber: 1 in area AlithAnar   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Removing faction wh2_dlc11_cst_noctilus   : [25, 04 2019 13:51:23]
-I&I:  Replacing character for faction wh2_dlc11_cst_noctilus   : [25, 04 2019 13:51:23]
-I&I:  Character does not have military force   : [25, 04 2019 13:51:23]
-I&I:  Generated name key is Bel_Nenya   : [25, 04 2019 13:51:23]
-I&I:  No tracked lords. Using first generated name.   : [25, 04 2019 13:51:23]
-I&I:  Unit list is    : [25, 04 2019 13:51:23]
-I&I:  Wounding character for faction wh2_dlc11_cst_noctilus   : [25, 04 2019 13:51:23]
-I&I:  Wounded faction leader   : [25, 04 2019 13:51:23]
-I&I:  Event: CountNoctilus will start at turnNumber: 54 in area CountNoctilus   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Removing faction wh2_dlc11_vmp_the_barrow_legion   : [25, 04 2019 13:51:23]
-I&I:  Giving faction regions to wh_main_dwf_karak_ziflin   : [25, 04 2019 13:51:23]
-I&I:  Killing all characters for faction wh2_dlc11_vmp_the_barrow_legion   : [25, 04 2019 13:51:23]
-I&I:  Event: HeinrichKemmler will start at turnNumber: 34 in area HeinrichKemmler   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Removing faction wh2_dlc09_tmb_khemri   : [25, 04 2019 13:51:23]
-I&I:  Replacing character for faction wh2_dlc09_tmb_khemri   : [25, 04 2019 13:51:23]
-I&I:  Character does not have military force   : [25, 04 2019 13:51:23]
-I&I:  Generated name key is Exarian   : [25, 04 2019 13:51:23]
-I&I:  No tracked lords. Using first generated name.   : [25, 04 2019 13:51:23]
-I&I:  Unit list is    : [25, 04 2019 13:51:23]
-I&I:  Wounding character for faction wh2_dlc09_tmb_khemri   : [25, 04 2019 13:51:23]
-I&I:  Wounded faction leader   : [25, 04 2019 13:51:23]
-I&I:  Event: Settra will start at turnNumber: 74 in area Settra   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Removing faction wh2_dlc09_skv_clan_rictus   : [25, 04 2019 13:51:23]
-I&I:  Giving faction regions to wh2_main_def_the_forgebound   : [25, 04 2019 13:51:23]
-I&I:  Killing all characters for faction wh2_dlc09_skv_clan_rictus   : [25, 04 2019 13:51:23]
-I&I:  Event: TretchCraventail will start at turnNumber: 45 in area TretchCraventail   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Removing faction wh_dlc03_bst_beastmen   : [25, 04 2019 13:51:23]
-I&I:  Killing all characters for faction wh_dlc03_bst_beastmen   : [25, 04 2019 13:51:23]
-I&I:  Event: Khazrak will start at turnNumber: 132 in area Khazrak   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Removing faction wh2_dlc11_def_the_blessed_dread   : [25, 04 2019 13:51:23]
-I&I:  Giving faction regions to    : [25, 04 2019 13:51:23]
-I&I:  Killing all characters for faction wh2_dlc11_def_the_blessed_dread   : [25, 04 2019 13:51:23]
-I&I:  Event: LokhirFellheart will start at turnNumber: 161 in area LokhirFellheart   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Completed delayed start   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  Event: greenskin_minor will start at turnNumber: 26 in area SouthernBretonnia   : [25, 04 2019 13:51:23]
-I&I:  Event: beastmen_basic will start at turnNumber: 21 in area SouthernBretonnia   : [25, 04 2019 13:51:23]
-I&I:  Event: goblins will start at turnNumber: 24 in area ForestOfShadowsKislev   : [25, 04 2019 13:51:23]
-I&I:  Event: beastmen_basic will start at turnNumber: 23 in area ForestOfShadowsEmpire   : [25, 04 2019 13:51:23]
-I&I:  Event: norsca_minor will start at turnNumber: 43 in area NorthernBretonnia   : [25, 04 2019 13:51:23]
-I&I:  Event: goblins will start at turnNumber: 17 in area NorthernBretonnia   : [25, 04 2019 13:51:23]
-I&I:  Event: savage_orcs will start at turnNumber: 54 in area CentralLustria   : [25, 04 2019 13:51:23]
-I&I:  Event: default will start at turnNumber: 10 in area CentralLustria   : [25, 04 2019 13:51:23]
-I&I:  Event: goblins will start at turnNumber: 30 in area ReikwaldForest   : [25, 04 2019 13:51:23]
-I&I:  Event: beastmen_basic will start at turnNumber: 24 in area MountainsOfNaggaroth   : [25, 04 2019 13:51:23]
-I&I:  Event: goblins will start at turnNumber: 27 in area DrakwaldForest   : [25, 04 2019 13:51:23]
-I&I:  Event: goblins will start at turnNumber: 17 in area TheGreatForest   : [25, 04 2019 13:51:23]
-I&I:  Event: savage_orcs will start at turnNumber: 40 in area EasternSouthlandsJungles   : [25, 04 2019 13:51:23]
-I&I:  Event: norsca_minor will start at turnNumber: 49 in area NaggarothChaosWastes   : [25, 04 2019 13:51:23]
-I&I:  Event: norsca_minor will start at turnNumber: 34 in area TheWasteland   : [25, 04 2019 13:51:23]
-I&I:  Event: beastmen_basic will start at turnNumber: 16 in area TheWasteland   : [25, 04 2019 13:51:23]
-I&I:  Initialising listeners   : [25, 04 2019 13:51:23]
-I&I:  Initialising post UI listeners   : [25, 04 2019 13:51:23]
-I&I:  Error: core is not defined   : [25, 04 2019 13:51:23]
-I&I:  FINISHED
-
-I&I:  RegisterActiveEventListeners START   : [25, 04 2019 13:51:23]
-I&I:  Finished loading active events   : [25, 04 2019 13:51:23]
-I&I:  Checking upcoming events for turn 1   : [25, 04 2019 13:51:23]
-I&I:  Spawning DelayedStart event for DelayedStart Key: AlithAnar   : [25, 04 2019 13:51:23]
-I&I:  Attempting to start event: AlithAnar   : [25, 04 2019 13:51:23]
-I&I:  Invasion will spawn with faction wh2_main_hef_nagarythe   : [25, 04 2019 13:51:23]
-I&I:  Generating force: 0   : [25, 04 2019 13:51:23]
-I&I:  ForceKey: AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:23]
-I&I:  Force size is 13   : [25, 04 2019 13:51:23]
-I&I:  Got unit list for invasion:    : [25, 04 2019 13:51:23]
-I&I:  Starting invasion for force AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:23]
-I&I:  Spawn coordinates are X: 96 Y: 392   : [25, 04 2019 13:51:23]
-I&I:  RAM leader is faction leader   : [25, 04 2019 13:51:23]
-I&I:  Forename is Direfan   : [25, 04 2019 13:51:23]
-I&I:  Surname is Cylostra   : [25, 04 2019 13:51:23]
-I&I:  Subtype is wh2_dlc11_cst_cylostra   : [25, 04 2019 13:51:23]
-I&I:  Assigned faction leader as general   : [25, 04 2019 13:51:23]
-I&I:  Character xp level is 15   : [25, 04 2019 13:51:23]
-I&I:  Set characters starting level to 15   : [25, 04 2019 13:51:24]
-I&I:  Started invasion AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:25]
-I&I:  FINISHED
-
-I&I:  Cleared event from the UpcomingEventsStack   : [25, 04 2019 13:51:25]
-I&I:  FINISHED
-
-I&I:  Triggering incident wh_main_iandi_alith_anar_naggarond   : [25, 04 2019 13:51:25]
-I&I:  Cleaning up active event forces.   : [25, 04 2019 13:51:25]
-I&I:  Checking area AlithAnar   : [25, 04 2019 13:51:25]
-I&I:  Found AlithAnar__AlithAnar__1__0 in invasion manager   : [25, 04 2019 13:51:25]
-I&I:  Finished checking active events   : [25, 04 2019 13:51:25]
-I&I:  FINISHED
-
-I&I:  Checking upcoming events for turn 2   : [25, 04 2019 13:51:25]
-I&I:  There is no event for this turn. Next event is: 10   : [25, 04 2019 13:51:25]
-I&I:  Cleaning up active event forces.   : [25, 04 2019 13:51:25]
-I&I:  Checking area AlithAnar   : [25, 04 2019 13:51:25]
-I&I:  Found AlithAnar__AlithAnar__1__0 in invasion manager   : [25, 04 2019 13:51:25]
-I&I:  Finished checking active events   : [25, 04 2019 13:51:25]
-I&I:  FINISHED
-
-I&I:  RegisterActiveEventListeners START   : [25, 04 2019 13:51:25]
-I&I:  Checking area AlithAnar   : [25, 04 2019 13:51:25]
-I&I:  Registering completion listener for active event: AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:25]
-I&I:  SetupEventCompleteListeners   : [25, 04 2019 13:51:25]
-I&I:  Error: core is not defined   : [25, 04 2019 13:51:25]
-I&I:  Finished loading active events   : [25, 04 2019 13:51:25]
-I&I:  Checking area AlithAnar   : [25, 04 2019 13:51:25]
-I&I:  Getting invasion by forceKey: AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:25]
-I&I:  Releasing invasion for force AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:25]
-I&I:  Released faction   : [25, 04 2019 13:51:25]
-I&I:  Cleaning up active force AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:25]
-I&I:  Removing force from stack with key AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:25]
-I&I:  Successfully removed event from Active events stack   : [25, 04 2019 13:51:25]
-I&I:  There are no more forces active for event AlithAnar in area AlithAnar   : [25, 04 2019 13:51:25]
-I&I:  Event AlithAnar is completed   : [25, 04 2019 13:51:25]
-I&I:  Adding event AlithAnar to the previous events stack   : [25, 04 2019 13:51:25]
-I&I:  Getting next event   : [25, 04 2019 13:51:25]
-I&I:  There is no next event after event AlithAnar__AlithAnar__1__0   : [25, 04 2019 13:51:25]
-I&I:  Checking upcoming events for turn 3   : [25, 04 2019 13:51:25]
-I&I:  There is no event for this turn. Next event is: 10   : [25, 04 2019 13:51:25]
-I&I:  Cleaning up active event forces.   : [25, 04 2019 13:51:25]
-I&I:  Checking area AlithAnar   : [25, 04 2019 13:51:25]
-I&I:  Finished checking active events   : [25, 04 2019 13:51:25]
-I&I:  FINISHED
-
+I&I:  DelayedStartSetup   : [04, 05 2019 11:21:53]
+I&I:  Removing faction wh2_main_skv_clan_pestilens   : [04, 05 2019 11:21:53]
+I&I:  Giving faction regions to    : [04, 05 2019 11:21:53]
+I&I:  Killing all characters for faction wh2_main_skv_clan_pestilens   : [04, 05 2019 11:21:53]
+I&I:  Except faction leader   : [04, 05 2019 11:21:53]
+I&I:  Event: LordSkrolk will start at turnNumber: 104 in area LordSkrolk   : [04, 05 2019 11:21:53]

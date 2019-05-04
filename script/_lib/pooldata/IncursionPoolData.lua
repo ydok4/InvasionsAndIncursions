@@ -14,7 +14,7 @@ IncursionPoolData = {
         },
         RAMData = nil,
         IMData = nil,
-        NarrativeData - nil,
+        NarrativeData = nil,
     },
     goblins = {
         SpawningData = {

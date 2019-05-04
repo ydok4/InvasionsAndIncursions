@@ -77,7 +77,10 @@ DelayedStartPoolData = {
     },
 
     CountNoctilus = {
-        GrantTerritoryTo = nil,
+        GrantTerritoryTo = {
+            main_warhammer = "",
+            wh2_main_great_vortex = "",
+        },
         SpawningData = {
             StartingTurnNumbers = {
                 Minimum = 40,
@@ -85,9 +88,9 @@ DelayedStartPoolData = {
             },
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
-            ReplacementData = {
-                OnlyWoundFactionLeader = true,
-                ReplacementSubType = "wh2_dlc11_cst_admiral",
+            GiveRegions = {
+                main_warhammer = {"wh2_main_the_galleons_graveyard",},
+                wh2_main_great_vortex = {"wh2_main_vor_the_galleons_graveyard",},
             },
         },
         RAMData = {
@@ -174,8 +177,12 @@ DelayedStartPoolData = {
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
             ReplacementData = {
-                OnlyWoundFactionLeader = true,
                 ReplacementSubType = "wh2_dlc09_tmb_tomb_king",
+            },
+            OnlyWoundFactionLeader = true,
+            GiveRegions = {
+                main_warhammer = {"wh2_main_land_of_the_dead_khemri",},
+                wh2_main_great_vortex = {"wh2_main_vor_land_of_the_dead_khemri",},
             },
         },
         RAMData = {
@@ -737,12 +744,13 @@ DelayedStartPoolData = {
         },
         SpawningData = {
             StartingTurnNumbers = {
-                Minimum = 25,
-                Maximum = 80,
+                Minimum = 40,
+                Maximum = 100,
             },
             NextEventKey = nil,
             NumberOfTurnsBeforeReoccurrence = nil,
             ReplacementData = nil,
+            OnlyWoundFactionLeader = true,
             GiveRegions = {
                 main_warhammer = {"wh_main_northern_grey_mountains_blackstone_post",},
                 wh2_main_great_vortex = nil,
@@ -751,14 +759,20 @@ DelayedStartPoolData = {
         RAMData = {
             PrimaryForce = {
                 Key = "HeinrichKemmler",
-                IsFactionLeader = true,
+                IsFactionLeader = false,
                 MandatoryUnits = {
                     wh_main_vmp_cav_hexwraiths = 1,
                     wh_dlc04_vmp_veh_mortis_engine_0 = 1,
+                    wh_main_vmp_inf_cairn_wraiths = 1,
                 },
+                -- Kemmler has a weird problem where I can't spawn him in without his model
+                -- looking like an amber wizard
+                -- So I spawn him as a master necromancer and the AI immediately replaces him on the next
+                -- turn. Main downside to this is that he doesn't get any bonus xp
+                Subtypes = {"vmp_master_necromancer", },
                 UnitTags = {"Chaff", "Spirits",},
                 ArmySize = 19,
-                XPLevel = 15,
+                XPLevel = 0,
                 SkillsToUnlock = {
                 },
                 ModelOverride = nil,
