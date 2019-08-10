@@ -3,20 +3,89 @@ testCharacter = {
     cqi = function() return 123 end,
     get_forename = function() return "Direfan"; end,
     get_surname = function() return "Cylostra"; end,
-    character_subtype_key = function() return "wh2_dlc11_cst_cylostra"; end,
+    character_subtype_key = function() return "chs_egrimm_van_horstmann"; end,
     command_queue_index = function() end,
-    has_military_force = function() return false end,
-    faction = function() return humanFaction; end,
+    has_military_force = function() return true end,
+    military_force = function() return testMilitaryForce; end,
+    faction = function() return testFaction; end,
     region = function() return get_cm():get_region(); end,
     logical_position_x = function() return 100; end,
     logical_position_y = function() return 110; end,
     command_queue_index = function() return 10; end,
+    character_type = function() return false; end,
     is_null_interface = function() return false; end,
+    is_wounded = function() return false; end,
+}
+
+testMilitaryForce = {
+    is_null_interface = function() return false; end,
+    command_queue_index = function() return 10; end,
+    is_armed_citizenry = function () return false; end,
+    general_character = function() return testCharacter; end,
+    unit_list = function() return {
+        num_items = function() return 2; end,
+        item_at = function(self, index)
+            return test_unit;
+        end,
+    }
+    end,
 }
 
 humanFaction = {
     name = function()
-        return "wh2_main_def_naggarond";
+        return "wh2_main_hef_nagarythe";
+    end,
+    culture = function()
+        return "wh2_main_hef_high_elves";
+    end,
+    subculture = function()
+        return "wh2_main_sc_hef_high_elves";
+    end,
+    character_list = function()
+        return {
+            num_items = function()
+                return 1;
+            end,
+            item_at = function(self, index)
+                return testCharacter;
+            end,
+        };
+    end,
+    region_list = function()
+        return {
+            num_items = function()
+                return 1;
+            end,
+            item_at = function(self, index)
+                return cm:get_region(index);
+            end,
+        };
+    end,
+    home_region = function ()
+        return {
+            name = function()
+                return "";
+            end,
+            is_null_interface = function()
+                return false;
+            end,
+        }
+    end,
+    faction_leader = function() return testCharacter; end,
+    is_quest_battle_faction = function() return false; end,
+    is_null_interface = function() return false; end,
+    is_human = function() return true; end,
+    has_effect_bundle = function() return true; end,
+    is_horde = function() return false; end,
+    can_be_horde = function() return false; end,
+}
+
+testFaction = {
+    name = function()
+        return "wh2_main_def_dark_elves_qb1";
+    end,
+    culture = function()
+        return "wh2_main_def_dark_elves";
     end,
     subculture = function()
         return "wh2_main_sc_def_dark_elves";
@@ -24,15 +93,21 @@ humanFaction = {
     character_list = function()
         return {
             num_items = function()
-                return 0;
+                return 1;
+            end,
+            item_at = function()
+                return testCharacter;
             end
         };
     end,
     region_list = function()
         return {
             num_items = function()
-                return 0;
-            end
+                return 1;
+            end,
+            item_at = function(self, index)
+                return cm:get_region(index);
+            end,
         };
     end,
     home_region = function ()
@@ -48,43 +123,9 @@ humanFaction = {
     faction_leader = function() return testCharacter; end,
     is_quest_battle_faction = function() return false; end,
     is_null_interface = function() return false; end,
-    command_queue_index = function() return 0; end,
-}
-
-testFaction = {
-    name = function()
-        return "wh2_dlc11_cst_noctilus";
-    end,
-    subculture = function()
-        return "wh2_dlc11_sc_cst_vampire_coast";
-    end,
-    character_list = function()
-        return {
-            num_items = function()
-                return 0;
-            end
-        };
-    end,
-    region_list = function()
-        return {
-            num_items = function()
-                return 0;
-            end
-        };
-    end,
-    home_region = function ()
-        return {
-            name = function()
-                return "";
-            end,
-            is_null_interface = function()
-                return false;
-            end,
-        }
-    end,
-    faction_leader = function() return testCharacter; end,
-    is_quest_battle_faction = function() return false; end,
-    is_null_interface = function() return false; end,
+    is_human = function() return false; end,
+    has_effect_bundle = function() return true; end,
+    command_queue_index = function() return 10; end,
 }
 
 testFaction2 = {
@@ -121,18 +162,61 @@ testFaction2 = {
     faction_leader = function() return testCharacter; end,
     is_quest_battle_faction = function() return false; end,
     is_null_interface = function() return false; end,
+    is_human = function() return false; end,
+    has_effect_bundle = function() return true; end,
+    command_queue_index = function() return 10; end,
+}
+
+test_unit = {
+    unit_key = function() return "wh2_main_hef_inf_archers_1"; end,
+    force_commander = function() return testCharacter; end,
+    faction = function() return testFaction; end,
+    percentage_proportion_of_full_strength = function() return 80; end,
 }
 
 effect = {
     get_localised_string = function()
-        return "[test]";
+        return "Murdredesa";
     end,
 }
 
 -- This can be modified in the testing driver
 -- so we can simulate turns changing easily
 local turn_number = 1;
+
 -- Mock functions
+mock_listeners = {
+    listeners = {},
+    trigger_listener = function(self, mockListenerObject)
+        local listener = self.listeners[mockListenerObject.Key];
+        if listener and listener.Condition(mockListenerObject.Context) then
+            listener.Callback(mockListenerObject.Context);
+        end
+    end,
+}
+
+-- Mock save structures
+mockSaveData = {
+
+}
+
+-- slot (building) data
+slot_1 = {
+    has_building = function() return true; end,
+    building = function() return {
+        name = function() return "wh_msl_barracks_1"; end,
+    }
+    end,
+}
+
+slot_2 = {
+    has_building = function() return true; end,
+    building = function() return {
+        name = function() return "wh_main_vmp_cemetary_2"; end,
+    }
+    end,
+}
+
 function get_cm()
     return   {
         is_new_game = function() return true; end,
@@ -143,8 +227,10 @@ function get_cm()
             return {humanFaction};
         end,
         disable_event_feed_events = function() end,
+        turn_number = function() return turn_number; end,
         model = function ()
             return {
+                military_force_for_command_queue_index = function() return nil; end,
                 turn_number = function() return turn_number; end,
                 world = function()
                     return {
@@ -176,20 +262,24 @@ function get_cm()
             }
         end,
         first_tick_callbacks = {},
-        add_listener = function () end,
         add_saving_game_callback = function() end,
         add_loading_game_callback = function() end,
         spawn_character_to_pool = function() end,
-        callback = function() end,
+        callback = function(self, callbackFunction, delay) callbackFunction() end,
         transfer_region_to_faction = function() end,
-        get_faction = function() return testFaction2; end,
+        get_faction = function() return testFaction; end,
         lift_all_shroud = function() end,
         kill_all_armies_for_faction = function() end,
         get_region = function()
             return {
+                province_name = function() return "wh_main_couronne_et_languille"; end,
+                religion_proportion = function() return 0; end,
+                public_order = function() return -100; end,
                 owning_faction = function() return testFaction; end,
                 name = function() return "region_name"; end,
                 is_province_capital = function() return false; end,
+                is_abandoned = function() return false; end,
+                command_queue_index = function() return 10; end,
                 adjacent_region_list = function()
                     return {
                         item_at = function(self, i)
@@ -211,6 +301,25 @@ function get_cm()
                     }
                 end,
                 is_null_interface = function() return false; end,
+                garrison_residence = function() return {
+                    army = function() return {
+                        strength = function() return 50; end,
+                    } end ,
+                } end,
+                settlement = function() return {
+                    slot_list = function() return {
+                        num_items = function () return 2; end,
+                        item_at = function(index)
+                            if index == 1 then
+                                return slot_1;
+                            else
+                                return slot_2;
+                            end
+                        end
+                    }
+                    end,
+                }
+                end
             }
         end,
         set_character_immortality = function() end,
@@ -220,20 +329,125 @@ function get_cm()
         trigger_incident = function() end,
         trigger_dilemma = function() end,
         trigger_mission = function() end,
-        create_force_with_general = function() end,
+        create_force_with_general = function(self, factionKey, forceString, regionKey, spawnX, spawnY, generalType, agentSubTypeKey, clanNameKey, dummyName1, foreNameKey, dummayName2, umm, callbackFunction)
+            callbackFunction(123);
+        end,
         force_add_trait = function() end,
         force_remove_trait = function() end,
-        get_character_by_cqi = function() end,
-        char_is_mobile_general_with_army = function() return false; end,
+        get_character_by_cqi = function() return testCharacter; end,
+        char_is_mobile_general_with_army = function() return true; end,
+        restrict_units_for_faction = function() end,
+        save_named_value = function(self, saveKey, data, context)
+            mockSaveData[saveKey] = data;
+        end,
+        load_named_value = function(self, saveKey, datastructure, context)
+            if mockSaveData[saveKey] == nil then
+                return nil;
+            end
+            return mockSaveData[saveKey];
+        end,
+        remove_effect_bundle = function() end,
+        apply_effect_bundle = function() end,
+        char_is_agent = function() return false end,
+        steal_user_input = function() end,
+        disable_rebellions_worldwide = function() end,
+        find_valid_spawn_location_for_character_from_settlement = function() return 1, 1; end,
+        force_diplomacy = function() end,
+        apply_effect_bundle_to_force = function() end,
         force_declare_war = function() end,
+        cai_enable_movement_for_character = function() end,
+        cai_disable_movement_for_character = function() end,
+        add_unit_model_overrides = function() end,
+        force_character_force_into_stance = function() end,
+        attack_region = function() end,
+        char_lookup_str = function() end,
+        suppress_all_event_feed_messages = function() end,
+        grant_unit_to_character = function() end,
+        show_message_event = function() end,
+        show_message_event_located = function() end,
         trigger_incident_with_targets = function() end,
     };
 end
 
 cm = get_cm();
+mock_max_unit_ui_component = {
+    Id = function() return "wh2_dlc10_hef_inf_shadow_walkers_0_recruitable" end,
+    ChildCount = function() return 1; end,
+    Find = function() return mock_unit_ui_component; end,
+    SetVisible = function() end,
+    MoveTo = function() end,
+    SetStateText = function() end,
+    SetInteractive = function() end,
+    Visible = function() return true; end,
+    Position = function() return 0, 1 end,
+    Bounds = function() return 0, 1 end,
+    Width = function() return 1; end,
+    Resize = function() return; end,
+    SetCanResizeWidth = function() return; end,
+    SimulateMouseOn = function() return; end,
+    GetStateText = function() return "/unit/wh_main_vmp_inf_zombie]]"; end,
+    --GetStateText = function() return "Unlocks recruitment of:"; end,
+    SetCanResizeHeight = function() end;
+    SetCanResizeWidth = function() end;
+}
+
+mock_unit_ui_component = {
+    Id = function() return "wh_main_vmp_inf_zombie_mercenary" end,
+    --Id = function() return "building_info_recruitment_effects" end,
+    ChildCount = function() return 1; end,
+    Find = function() return mock_max_unit_ui_component; end,
+    SetVisible = function() end,
+    MoveTo = function() end,
+    SetStateText = function() end,
+    SetInteractive = function() end,
+    Visible = function() return true; end,
+    Position = function() return 0, 1 end,
+    Bounds = function() return 0, 1 end,
+    Width = function() return 1; end,
+    Resize = function() return; end,
+    SetCanResizeWidth = function() return; end,
+    SimulateMouseOn = function() return; end,
+    GetStateText = function() return "/unit/wh_main_vmp_inf_zombie]]"; end,
+    SetCanResizeHeight = function() end;
+    SetCanResizeWidth = function() end;
+}
+
+mock_unit_ui_list_component = {
+    Id = function() return "mock_list" end,
+    ChildCount = function() return 1; end,
+    Find = function() return mock_unit_ui_component; end,
+    SetVisible = function() end,
+    MoveTo = function() end,
+    SetStateText = function() end,
+    SetInteractive = function() end,
+    Visible = function() return true; end,
+    Position = function() return 0, 1 end,
+    Bounds = function() return 0, 1 end,
+    Width = function() return 1; end,
+    Resize = function() return; end,
+    SetCanResizeWidth = function() return; end,
+    SimulateMouseOn = function() return; end,
+    GetStateText = function() return "/unit/wh_main_vmp_inf_zombie]]"; end,
+    --GetStateText = function() return "Unlocks recruitment of:"; end,
+    SetCanResizeHeight = function() end;
+    SetCanResizeWidth = function() end;
+}
+
+find_uicomponent = function()
+    return mock_unit_ui_list_component;
+end
+
+UIComponent = function(mock_ui_find) return mock_ui_find; end
 
 core = {
-    add_listener = function() end,
+    add_listener = function (self, key, eventKey, condition, callback)
+        mock_listeners.listeners[key] = {
+            Condition = condition,
+            Callback = callback,
+        }
+    end,
+    get_ui_root = function() end,
+    get_screen_resolution = function() return 0, 1 end;
 }
 
 random_army_manager = {
@@ -259,175 +473,43 @@ invasion_manager = {
     }; end,
 }
 out = function(text)
-  print(text)
+  print(text);
 end
 
-require 'script/campaign/mod/incursions_and_invasions'
-require 'script/campaign/mod/z_iandi_crynsos_patch'
-require 'script/campaign/mod/z_iandi_mixu_patch'
-
-
-
-
+require 'script/campaign/mod/a_er_core_resource_loader'
+require 'script/campaign/mod/z_er_mixu_patch'
+require 'script/campaign/mod/z_er_wez_speshul_patch'
+require 'script/campaign/mod/zz_enhanced_rebellions'
 
 math.randomseed(os.time())
 
 -- This is used in game by Warhammer but we have it hear so it won't throw errors when running
 -- in ZeroBrane IDE
+zz_enhanced_rebellions();
 
+local ER = _G.ER;
 
-incursions_and_invasions();
-IandI:RegisterActiveEventListeners();
-IandI = _G.IandI;
-turn_number = 1;
-StartEventsForTurn(IandI);
+local MockContext_ER_CheckFactionRebellions = {
+    Key = "ER_CheckFactionRebellions",
+    Context = {
+        faction = function() return humanFaction end,
+    },
+}
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
+ER_InitialiseSaveHelpers(cm, context);
+ER_SaveActiveRebellions(ER);
+ER_SaveActiveRebelForces(ER);
+ER_SavePastRebellions(ER);
+
+ER_InitialiseLoadHelpers(cm, context);
+ER_LoadActiveRebellions(ER);
+ER_LoadRebelForces(ER);
+ER_LoadPastRebellions(ER);
+
+zz_enhanced_rebellions();
+
 turn_number = 2;
-StartEventsForTurn(IandI);
-
-out("I&I: Saving upcoming events");
-local serialisedUpcomingEvents = {};
-for index, data in pairs(IandI.UpcomingEventsStack) do
-    out("I&I: Saving upcoming event "..data.Key);
-    local serialisedEvent = {};
-    if data.InvasionLeader ~= nil then
-        serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
-    else
-        serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, };
-    end
-    serialisedUpcomingEvents[#serialisedUpcomingEvents + 1] = serialisedEvent;
-end
-IandI.UpcomingEventsStack = {};
-
-out("I&I: Loading upcoming events");
-local upcomingEvents = serialisedUpcomingEvents;
-for index, data in pairs(upcomingEvents) do
-    out("I&I: Loading upcoming event "..data[2]);
-    local eventData = {
-        Key = data[1],
-        Type = data[2],
-        AreaKey = data[3],
-        TurnNumber = data[4],
-        TargetRegionKey = data[5],
-        SpawnLocationKey = data[6],
-    }
-    if data[7] ~= nil then
-        eventData.InvasionLeader = {
-            cqi = data[7],
-            surname = data[8],
-            forename = data[9],
-            subtype = data[10],
-        }
-    end
-    IandI.UpcomingEventsStack[index] = eventData;
-end
-
-local serialisedActiveEvents = {};
-for areaKey, areaEvents in pairs(IandI.ActiveEventsStack) do
-    for eventKey, events in pairs(areaEvents) do
-        for index, data in pairs(events) do
-            out("I&I: Saving active event "..data.ForceKey);
-            local serialisedEvent = {};
-            if data.InvasionLeader ~= nil then
-                out("I&I: Force key is "..data.ForceKey);
-                serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.FactionKey, data.ForceKey, data.InvasionLeader.cqi, data.InvasionLeader.surname, data.InvasionLeader.forename, data.InvasionLeader.subtype };
-            else
-                serialisedEvent = { data.Key, data.Type, data.AreaKey, data.TurnNumber, data.TargetRegionKey, data.SpawnLocationKey, data.FactionKey, data.ForceKey,};
-            end
-            serialisedActiveEvents[data.AreaKey..data.ForceKey] = serialisedEvent;
-        end
-    end
-end
-IandI.ActiveEventsStack = {};
-
-local activeEvents = serialisedActiveEvents;
-for index, data in pairs(activeEvents) do
-    out("I&I: Loading active event "..data[1]);
-    local eventData = {
-        Key = data[1],
-        Type = data[2],
-        AreaKey = data[3],
-        TurnNumber = data[4],
-        TargetRegionKey = data[5],
-        SpawnLocationKey = data[6],
-        FactionKey = data[7],
-        ForceKey = data[8],
-    };
-    if data[9] ~= nil then
-        eventData.InvasionLeader = {
-            cqi = data[9],
-            surname = data[10],
-            forename = data[11],
-            subtype = data[12],
-        };
-    end
-    if IandI.ActiveEventsStack[eventData.AreaKey] == nil then
-        IandI.ActiveEventsStack[eventData.AreaKey] = {};
-    end
-    if IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key] == nil then
-        IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key] = {};
-    end
-    IandI.ActiveEventsStack[eventData.AreaKey][eventData.Key][eventData.ForceKey] = eventData;
-end
-
-local serialisedPreviousEvents = {};
-for areaKey, eventsInArea in pairs(IandI.PreviousEventsStack) do
-    for eventKey, turnsCompleted in pairs(eventsInArea) do
-        for index, turnCompleted in pairs(turnsCompleted) do
-            out("I&I: Saving previous event "..eventKey.." in turn "..turnCompleted);
-            local serialisedEvent = { eventKey, turnCompleted, areaKey, };
-            serialisedPreviousEvents[eventKey..areaKey..turnCompleted] = serialisedEvent;
-        end
-    end
-end
-
-local previousSavedEvents = serialisedPreviousEvents;
-for index, data in pairs(previousSavedEvents) do
-    out("I&I: Loading previous event "..data[1].." for area "..data[3]);
-    local eventData = {
-        EventKey = data[1],
-        TurnCompleted = data[2],
-        AreaKey = data[3],
-    };
-
-    if IandI.PreviousEventsStack[eventData.AreaKey] == nil then
-        IandI.PreviousEventsStack[eventData.AreaKey] = {};
-    end
-    if IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey] == nil then
-        IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey] = {};
-    end
-    local previousEvents = IandI.PreviousEventsStack[eventData.AreaKey][eventData.EventKey];
-    previousEvents[#previousEvents + 1] = eventData.TurnCompleted;
-end
-
-IandI:RegisterActiveEventListeners();
-
-if IandI.ActiveEventsStack ~= nil then
-    for areaKey, eventsInArea in pairs(IandI.ActiveEventsStack) do
-        IandI_Log("Checking area "..areaKey);
-        for eventKey, events in pairs(eventsInArea) do
-            for forceKey, event in pairs(events) do
-                local otherEventForces = IandI.ActiveEventsStack[event.AreaKey][event.Key];
-                for eventKey, forceEvent in pairs(otherEventForces) do
-                    IandI_Log("Getting invasion by forceKey: "..forceEvent.ForceKey);
-                    local eventInvasion = IandI.invasion_manager:get_invasion(event.ForceKey);
-                    if not eventInvasion then
-                        IandI_Log("Missing event invasion, not releasing AI because it can't be found");
-                        IandI:CleanUpActiveForce(forceEvent);
-                    end
-                    if event.TargetRegionKey == forceEvent.TargetRegionKey then
-                        IandI_Log("Releasing invasion for force "..forceEvent.ForceKey);
-                        eventInvasion:release();
-                        IandI_Log("Released faction");
-                        IandI:CleanUpActiveForce(forceEvent);
-                    end
-                end
-            end
-        end
-    end
-else
-    IandI_Log("No active events to load");
-end
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
 turn_number = 3;
-StartEventsForTurn(IandI);
-
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);

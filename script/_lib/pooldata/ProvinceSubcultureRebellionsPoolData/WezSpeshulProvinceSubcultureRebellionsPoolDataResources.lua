@@ -1,0 +1,5 @@
+function GetWezSpeshulProvinceSubcultureRebellionsPoolDataResources()
+    return {
+
+    };
+end
