@@ -7,7 +7,7 @@ function GetMixuBeastmenRebelArmyArchetypesPoolDataResources()
                     wh_dlc03_bst_inf_minotaurs_2 = 1,
                 },
                 UnitTags = {"Gors", "WarBeasts", "Minotaurs" },
-                Weighting = 1,
+                Weighting = 0,
             },
         },
     };

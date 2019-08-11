@@ -16,12 +16,18 @@ _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_nor_norsca"
 _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_grn_savage_orcs", GetMixuSavageOrcRebelArmyArchetypesPoolDataResources(), false);
 _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc05_sc_wef_wood_elves", GetMixuWoodElfRebelArmyArchetypesPoolDataResources(), false);
 
+require 'script/_lib/pooldata/RebelCorruptionArmyArchetypesPoolData/MixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources'
+require 'script/_lib/pooldata/RebelCorruptionArmyArchetypesPoolData/MixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources'
+
+_G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc03_sc_bst_beastmen_corruption", GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources(), true);
+_G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_chs_chaos_corruption", GetMixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources(), true);
+
 require 'script/_lib/pooldata/ProvinceSubcultureRebellionsPoolData/MixuProvinceSubcultureRebellionsPoolDataResources'
 
 _G.ERResources.AddAdditionalProvinceRebellionResources(GetMixuProvinceSubcultureRebellionsPoolDataResources());
 
 
-require 'script/_lib/dbexports/MixuDataResources'
+require 'script/_lib/dbexports/ERMixuDataResources'
 
 out("EnR: Loading Mixu Data");
 -- Load the name resources

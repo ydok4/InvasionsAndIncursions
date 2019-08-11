@@ -27,7 +27,7 @@ function ERController:Initialise(random_army_manager, enableLogging)
     });
     self.CharacterGenerator:Initialise(enableLogging);
     self.Logger = Logger:new({});
-    self.Logger:Initialise("EnhancedRebellions.txt", true);
+    self.Logger:Initialise("EnhancedRebellions.txt", enableLogging);
     self.Logger:Log_Start();
 end
 
@@ -419,7 +419,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
     local spawnX, spawnY = -1, -1;
     if rebellionData.SpawnOnSea == true then
         self.Logger:Log("Attempting to spawn army on sea...");
-        local spawnDistance = 5;
+        local spawnDistance = 10;
         repeat
             spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
                 factionKey,
@@ -430,9 +430,10 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
                 true,
                 spawnDistance
             );
-            spawnDistance = spawnDistance + 5;
-        until((spawnX ~= -1 and spawnY ~= -1) or spawnDistance == 100);
-    else
+            spawnDistance = spawnDistance + 10;
+        until((spawnX ~= -1 and spawnY ~= -1) or spawnDistance == 150);
+    end
+    if spawnX == -1 or spawnY == -1 then
         spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
             factionKey,
             region:name(),
@@ -482,8 +483,10 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             cm:force_declare_war(rebellionData.FactionKey, self.HumanFaction:name(), false, false);
             -- We gave the army free upkeep so it won't take attrition
             cm:apply_effect_bundle_to_force("wh_main_bundle_military_upkeep_free_force", militaryForceCqi, -1);
-            -- Disable movement so they won't run away
-            cm:cai_disable_movement_for_character(characterLookupString);
+            -- Disable movement so they won't run away but only for non-sea spawns
+            if rebellionData.SpawnOnSea == false then
+                cm:cai_disable_movement_for_character(characterLookupString);
+            end
             -- Force them into raiding stance so they take some money from the faction but only on land
             if rebellionData.SpawnOnSea == false then
                 cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");

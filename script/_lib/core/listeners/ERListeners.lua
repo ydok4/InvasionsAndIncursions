@@ -1,4 +1,5 @@
 function ER_SetupPostUIListeners(er)
+    -- Doesn't seem to work...
     core:add_listener(
         "ER_DisableRebellions",
         "FactionTurnStart",
@@ -114,8 +115,25 @@ function ER_SetupPostUIListeners(er)
                                     er.Logger:Log("Enabling attack for sea rebellion in: "..rebelForceTargetRegionKey);
                                     local character = militaryForce:general_character();
                                     local characterLookupString = "character_cqi:"..character:command_queue_index();
-                                    cm:cai_enable_movement_for_character(characterLookupString);
-                                    cm:attack_region(characterLookupString, rebelForceTarget:name(), true);
+                                    if character:region():is_null_interface() then
+                                        er.Logger:Log("Character is in sea still");
+                                        local owningFactionKey = rebelForceTarget:owning_faction():name();
+                                        local interimX, interimY = cm:find_valid_spawn_location_for_character_from_settlement(
+                                            owningFactionKey,
+                                            rebelForceTargetRegionKey,
+                                            -- Rebellion spawn
+                                            true,
+                                            -- Spawn on sea
+                                            false,
+                                            -- Spawn distance (optional).
+                                            -- Note: 9 is the distance which is also used for Skaven
+                                            -- under city incursions
+                                            9
+                                        );
+                                        cm:move_to(characterLookupString, interimX, interimY, false);
+                                    else
+                                        cm:attack_region(characterLookupString, rebelForceTarget:name(), true);
+                                    end
                                 elseif rebelForceData.SpawnTurn + 2 > turnNumber then
                                 --and militaryForce:strength() < rebelForceTarget:garrison_residence():army():strength() then
                                     er.Logger:Log("Granting units to rebellion in region: "..rebelForceTargetRegionKey);
@@ -165,4 +183,44 @@ function ER_SetupPostUIListeners(er)
         end,
         true
     );
+
+    -- We remove the vanilla listener because we need to tweak the condition
+    core:remove_listener("character_completed_battle_norsca_confederation_dilemma");
+    core:add_listener(
+	"character_completed_battle_norsca_confederation_dilemma",
+	"CharacterCompletedBattle",
+	true,
+	function(context)
+		local character = context:character();
+		
+		if character:won_battle() == true and character:faction():subculture() == NORSCA_SUBCULTURE then
+			local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
+			local enemy_count = #enemies;
+			
+			if context:pending_battle():night_battle() == true or context:pending_battle():ambush_battle() == true then
+				enemy_count = 1;
+			end
+			
+			for i = 1, enemy_count do
+				local enemy = enemies[i];
+				
+				if enemy ~= nil and enemy:is_null_interface() == false and enemy:is_faction_leader() == true and enemy:faction():subculture() == NORSCA_SUBCULTURE and enemy:faction():is_quest_battle_faction() == false then
+					if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
+						if character:faction():is_human() == true and enemy:faction():is_human() == false and enemy:faction():is_dead() == false then
+							-- Trigger dilemma to offer confederation
+							NORSCA_CONFEDERATION_PLAYER = character:faction():name();
+							cm:trigger_dilemma(NORSCA_CONFEDERATION_PLAYER, NORSCA_CONFEDERATION_DILEMMA..enemy:faction():name(), true);
+							Play_Norsca_Advice("dlc08.camp.advice.nor.confederation.001", norsca_info_text_confederation);
+                        elseif character:faction():is_human() == false
+                        and enemy:faction():is_human() == false then
+							-- AI confederation
+							cm:force_confederation(character:faction():name(), enemy:faction():name());
+						end
+					end
+				end
+			end
+		end
+	end,
+	true
+);
 end

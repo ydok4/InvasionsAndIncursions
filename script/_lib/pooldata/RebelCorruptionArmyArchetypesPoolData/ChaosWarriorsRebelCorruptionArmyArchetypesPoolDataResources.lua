@@ -30,7 +30,7 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_main_chs_inf_chosen_0 = 1,
                 },
                 UnitTags = {"Marauders", "ChaosWarriors", "Beasts", },
-                ArmySize = 13,
+                ArmySize = 17,
                 Weighting = 3,
             },
             ChaosLordHigh = {
@@ -41,7 +41,7 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_dlc01_chs_mon_dragon_ogre_shaggoth = 1,
                 },
                 UnitTags = {"Marauders", "ChaosWarriors", "Beasts", },
-                ArmySize = 13,
+                ArmySize = 20,
                 Weighting = 3,
             },
         },

@@ -438,11 +438,10 @@ function GetSubcultureArmyPoolDataResources()
                     wh_main_grn_art_goblin_rock_lobber = 1,
                 },
                 Mid = {
-                    wh_main_grn_art_goblin_rock_lobber = 2,
+                    wh_main_grn_art_goblin_rock_lobber = 1,
                     wh_main_grn_art_doom_diver_catapult = 1,
                 },
                 Late = {
-                    wh_main_grn_art_goblin_rock_lobber = 1,
                     wh_main_grn_art_doom_diver_catapult = 2,
                 },
             },
@@ -1061,16 +1060,15 @@ function GetSubcultureArmyPoolDataResources()
             },
             Spirits = {
                 Early = {
-                    wh_main_vmp_inf_cairn_wraiths = 2,
+                    wh_main_vmp_inf_cairn_wraiths = 1,
                 },
                 Mid = {
-                    wh_main_vmp_inf_cairn_wraiths = 2,
+                    wh_main_vmp_inf_cairn_wraiths = 1,
                     wh_main_vmp_cav_hexwraiths = 1,
                 },
                 Late = {
                     wh_main_vmp_inf_cairn_wraiths = 2,
                     wh_main_vmp_cav_hexwraiths = 1,
-                    wh_main_vmp_veh_black_coach = 1,
                 },
             },
             BloodKnights = {

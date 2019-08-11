@@ -64,7 +64,7 @@ function ER_LoadRebelForces(er)
         out("Enr: No rebel forces to load");
         return;
     else
-        out("Enr: Loading "..er_rebellion_forces_header["TotalRebelForces"].." active rebellions");
+        out("Enr: Loading "..er_rebellion_forces_header["TotalRebelForces"].." rebel forces");
     end
 
     local serialised_save_table_units = {};
@@ -92,7 +92,7 @@ function ER_LoadRebelForces(er)
         };
     end
 
-    out("URP: Finished loading active rebel forces tables");
+    out("EnR: Finished loading active rebel forces tables");
 end
 
 function ER_LoadPastRebellions(er)
@@ -136,5 +136,5 @@ function ER_LoadPastRebellions(er)
         };
     end
 
-    out("URP: Finished loading past rebellion tables");
+    out("EnR: Finished loading past rebellion tables");
 end

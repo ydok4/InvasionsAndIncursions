@@ -12,7 +12,7 @@ function GetBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 Weighting = 3,
             },
             BeastLordLow = {
-                CorruptionThreshold = 20,
+                CorruptionThreshold = 15,
                 AgentSubtypes = {"dlc03_bst_beastlord", },
                 MandatoryUnits = {
                     wh_dlc03_bst_inf_bestigor_herd_0 = 1,
@@ -22,7 +22,7 @@ function GetBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 Weighting = 3,
             },
             BeastLordMed = {
-                CorruptionThreshold = 40,
+                CorruptionThreshold = 30,
                 AgentSubtypes = {"dlc03_bst_beastlord", },
                 MandatoryUnits = {
                     wh_dlc03_bst_inf_bestigor_herd_0 = 1,
@@ -32,7 +32,7 @@ function GetBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 Weighting = 3,
             },
             BeastLordHigh = {
-                CorruptionThreshold = 60,
+                CorruptionThreshold = 45,
                 AgentSubtypes = {"dlc03_bst_beastlord", },
                 MandatoryUnits = {
                     wh_dlc03_bst_inf_bestigor_herd_0 = 2,

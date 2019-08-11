@@ -49,16 +49,19 @@ _G.ERResources = {
                         if subcultureData.Weighting ~= nil then
                             existingSubcultureData.Weighting = subcultureData.Weighting;
                         end
-                        for armyArchetypeKey, armyArchetypeData in pairs(subcultureData.ArmyArchetypes) do
-                            local existingArmyArchetype = existingSubcultureData.ArmyArchetypes[armyArchetypeKey];
-                            if existingArmyArchetype == nil then
-                                existingArmyArchetype[armyArchetypeKey] = armyArchetypeData;
-                            else
-                                if armyArchetypeData == false then
-                                    existingArmyArchetype[armyArchetypeKey] = nil;
+                        if subcultureData.ArmyArchetypes ~= nil then
+                            for armyArchetypeKey, armyArchetypeData in pairs(subcultureData.ArmyArchetypes) do
+                                local existingArmyArchetype = existingSubcultureData.ArmyArchetypes[armyArchetypeKey];
+                                if existingArmyArchetype == nil then
+                                    existingArmyArchetype = {};
+                                    existingArmyArchetype[armyArchetypeKey] = armyArchetypeData;
                                 else
-                                    if armyArchetypeData.Weighting ~= nil then
-                                        existingArmyArchetype[armyArchetypeKey] = armyArchetypeData.Weighting;
+                                    if armyArchetypeData == false then
+                                        existingArmyArchetype[armyArchetypeKey] = nil;
+                                    else
+                                        if armyArchetypeData.Weighting ~= nil then
+                                            existingArmyArchetype[armyArchetypeKey] = armyArchetypeData.Weighting;
+                                        end
                                     end
                                 end
                             end

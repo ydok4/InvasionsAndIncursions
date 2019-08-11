@@ -440,6 +440,7 @@ end
 UIComponent = function(mock_ui_find) return mock_ui_find; end
 
 core = {
+    remove_listener = function() end,
     add_listener = function (self, key, eventKey, condition, callback)
         mock_listeners.listeners[key] = {
             Condition = condition,

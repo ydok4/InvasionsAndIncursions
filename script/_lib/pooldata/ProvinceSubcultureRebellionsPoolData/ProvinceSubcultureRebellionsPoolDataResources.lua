@@ -352,7 +352,12 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh2_main_vor_southern_badlands = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 3,
+                },
+            },
         },
         wh2_main_vor_southern_great_jungle = {
 
@@ -445,7 +450,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_averland = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
         },
         wh_main_bastonne_et_montfort = {
 
@@ -454,7 +470,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_blightwater = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_savage_orcs = {
+                    Weighting = 2,
+                    ArmyArchetypes = {
+                        SavageOrcGreatShaman = {
+                            Weighting = 2,
+                        },
+                    },
+                },
+            },
         },
         wh_main_blood_river_valley = {
 
@@ -513,7 +542,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     },
                 },
                 wh2_main_sc_def_dark_elves = {
-                    Weighting = 100,
+                    Weighting = 1,
                     ArmyArchetypes = {
                         Corsairs = {
                             Weighting = 3,
@@ -529,13 +558,29 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_eastern_badlands = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 3,
+                },
+            },
         },
         wh_main_eastern_border_princes = {
 
         },
         wh_main_eastern_oblast = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_nor_norsca = {
+                    Weighting = 3,
+                },
+            },
         },
         wh_main_eastern_sylvania = {
 
@@ -556,7 +601,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_hochland = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 3,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
         },
         wh_main_ice_tooth_mountains = {
 
@@ -586,7 +642,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_middenland = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 4,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 2,
+                },
+            },
         },
         wh_main_mountains_of_hel = {
 
@@ -595,7 +662,21 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_nordland = {
-
+            IsAdjacentToSea = true,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 2,
+                },
+                wh_main_sc_nor_norsca = {
+                    Weighting = 2,
+                },
+            },
         },
         wh_main_northern_grey_mountains = {
 
@@ -607,10 +688,35 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_ostermark = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 2,
+                },
+            },
         },
         wh_main_ostland = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+                wh_main_sc_nor_norsca = {
+                    Weighting = 2,
+                },
+            },
         },
         wh_main_parravon_et_quenelles = {
 
@@ -626,31 +732,9 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_grn_greenskins = {
                     Weighting = 3,
-                    ArmyArchetypes = {
-                        NightGoblinWarboss = {
-                            Weighting = 2,
-                        },
-                        GoblinGreatShaman = {
-                            Weighting = 2,
-                        },
-                        OrcWarboss = {
-                            Weighting = 1,
-                        },
-                    },
                 },
                 wh_main_sc_vmp_vampire_counts = {
-                    Weighting = 3,
-                    ArmyArchetypes = {
-                        MasterNecromancer = {
-                            Weighting = 3,
-                        },
-                        StrigoiGhoulKing = {
-                            Weighting = 1,
-                        },
-                        VampireLord = {
-                            Weighting = 2,
-                        },
-                    },
+                    Weighting = 1,
                 },
             },
         },
@@ -658,19 +742,60 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_southern_badlands = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 3,
+                },
+            },
         },
         wh_main_southern_grey_mountains = {
 
         },
         wh_main_southern_oblast = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+                wh_main_sc_nor_norsca = {
+                    Weighting = 3,
+                },
+            },
         },
         wh_main_stirland = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 2,
+                },
+            },
         },
         wh_main_talabecland = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 3,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
         },
         wh_main_talsyn = {
 
@@ -709,7 +834,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_troll_country = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_nor_norsca = {
+                    Weighting = 3,
+                },
+            },
         },
         wh_main_trollheim_mountains = {
 
@@ -718,7 +854,12 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_western_badlands = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 3,
+                },
+            },
         },
         wh_main_western_border_princes = {
 
@@ -727,7 +868,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
 
         },
         wh_main_wissenland = {
-
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 3,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
         },
         wh_main_wydrioth = {
 

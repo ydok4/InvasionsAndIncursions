@@ -4,7 +4,7 @@ function GetNorscaRebelArmyArchetypesPoolDataResources()
             Saurus = {
                 AgentSubtypes = {"nor_marauder_chieftain",  },
                 UnitTags = {"Warriors", "Horsemen", "WarBeasts", },
-                Weighting = 3,
+                Weighting = 4,
             },
         },
     };

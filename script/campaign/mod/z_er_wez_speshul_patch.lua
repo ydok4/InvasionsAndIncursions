@@ -7,7 +7,7 @@ require 'script/_lib/pooldata/ProvinceSubcultureRebellionsPoolData/WezSpeshulPro
 _G.ERResources.AddAdditionalProvinceRebellionResources(GetWezSpeshulProvinceSubcultureRebellionsPoolDataResources());
 
 
-require 'script/_lib/dbexports/WezSpeshulDataResources'
+require 'script/_lib/dbexports/ERWezSpeshulDataResources'
 
 out("EnR: Loading Wez Speshul Data");
 -- Load the name resources

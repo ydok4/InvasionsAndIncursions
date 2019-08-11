@@ -8,7 +8,7 @@ function GetMixuDarkElfRebelArmyArchetypesPoolDataResources()
                     wh2_dlc10_def_mon_kharibdyss_0 = 1,
                 },
                 UnitTags = {"Warriors", "Cavalry", "Beasts", },
-                Weighting = 1,
+                Weighting = 0,
             },
         },
     };
