@@ -18,12 +18,14 @@ function ER_SetupPostUIListeners(er)
         "ER_PendingBattle",
         "PendingBattle",
         function(context)
-            return IsQuestBattleFactionInvolvedInBattle();
+            return true;
         end,
         function(context)
-            er.Logger:Log("QB Faction pending battle");
-            cm:disable_event_feed_events(true, "", "", "diplomacy_faction_destroyed");
-            er.Logger:Log_Finished();
+            if IsQuestBattleFactionInvolvedInBattle(er) then
+                er.Logger:Log("QB Faction pending battle");
+                cm:disable_event_feed_events(true, "", "", "diplomacy_faction_destroyed");
+                er.Logger:Log_Finished();
+            end
         end,
         true
     );
@@ -32,12 +34,14 @@ function ER_SetupPostUIListeners(er)
         "ER_BattleCompleted",
         "BattleCompleted",
         function(context)
-            return IsQuestBattleFactionInvolvedInBattle();
+            return true;
         end,
         function(context)
-            er.Logger:Log("QB Faction completed battle");
-            cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed"); end, 0);
-            er.Logger:Log_Finished();
+            if IsQuestBattleFactionInvolvedInBattle(er) then
+                er.Logger:Log("QB Faction completed battle");
+                cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed"); end, 0);
+                er.Logger:Log_Finished();
+            end
         end,
         true
     );
@@ -313,10 +317,11 @@ function ER_SetupPostUIListeners(er)
 	);
 end
 
-function IsQuestBattleFactionInvolvedInBattle()
+function IsQuestBattleFactionInvolvedInBattle(er)
 	for i = 1, cm:pending_battle_cache_num_defenders() do
 		local current_char_cqi, current_mf_cqi, current_faction_name = cm:pending_battle_cache_get_defender(i);
-		local faction = cm:get_faction(current_faction_name);
+        local faction = cm:get_faction(current_faction_name);
+        --er.Logger:Log("Battle participant: "..current_faction_name);
         if faction:is_null_interface() or faction:is_quest_battle_faction() == true then
 			return true;
 		end;
@@ -325,6 +330,7 @@ function IsQuestBattleFactionInvolvedInBattle()
 	for i = 1, cm:pending_battle_cache_num_attackers() do
 		local current_char_cqi, current_mf_cqi, current_faction_name = cm:pending_battle_cache_get_attacker(i);
         local faction = cm:get_faction(current_faction_name);
+        --er.Logger:Log("Battle participant: "..current_faction_name);
         if faction:is_null_interface() or faction:is_quest_battle_faction() == true then
 			return true;
 		end;
