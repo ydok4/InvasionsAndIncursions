@@ -32,6 +32,7 @@ testMilitaryForce = {
 }
 
 humanFaction = {
+    command_queue_index = function() return 10; end,
     name = function()
         return "wh2_main_hef_nagarythe";
     end,
@@ -81,14 +82,15 @@ humanFaction = {
 }
 
 testFaction = {
+    command_queue_index = function() return 10; end,
     name = function()
-        return "wh2_main_def_dark_elves_qb1";
+        return "wh_main_grn_greenskins_qb1";
     end,
     culture = function()
-        return "wh2_main_def_dark_elves";
+        return "wh_main_sc_grn_greenskins";
     end,
     subculture = function()
-        return "wh2_main_sc_def_dark_elves";
+        return "wh_main_sc_grn_greenskins";
     end,
     character_list = function()
         return {
@@ -230,7 +232,7 @@ function get_cm()
         turn_number = function() return turn_number; end,
         model = function ()
             return {
-                military_force_for_command_queue_index = function() return nil; end,
+                military_force_for_command_queue_index = function() return testMilitaryForce; end,
                 turn_number = function() return turn_number; end,
                 world = function()
                     return {
@@ -272,11 +274,12 @@ function get_cm()
         kill_all_armies_for_faction = function() end,
         get_region = function()
             return {
-                province_name = function() return "wh_main_couronne_et_languille"; end,
+                cqi = function() return 123; end,
+                province_name = function() return "wh2_main_vor_isthmus_of_lustria"; end,
                 religion_proportion = function() return 0; end,
                 public_order = function() return -100; end,
                 owning_faction = function() return testFaction; end,
-                name = function() return "region_name"; end,
+                name = function() return "wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn"; end,
                 is_province_capital = function() return false; end,
                 is_abandoned = function() return false; end,
                 command_queue_index = function() return 10; end,
@@ -366,6 +369,10 @@ function get_cm()
         show_message_event = function() end,
         show_message_event_located = function() end,
         trigger_incident_with_targets = function() end,
+        force_add_and_equip_ancillary = function() end,
+        add_agent_experience = function() end,
+        apply_effect_bundle_to_region = function() end,
+        remove_effect_bundle_from_region = function() end,
     };
 end
 

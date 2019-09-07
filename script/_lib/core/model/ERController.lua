@@ -263,6 +263,10 @@ function ERController:GetProvinceRebellionResources(provinceKey)
     return _G.ERResources.ProvinceSubcultureRebellionsPoolDataResources[provinceKey];
 end
 
+function ERController:GetArmyArchetypeData(subcultureKey, archetypeKey)
+    return _G.ERResources.RebelArmyArchetypesPoolData[subcultureKey][subcultureKey][archetypeKey];
+end
+
 function ERController:GetForceDataForRegionAndSubculture(region, rebellionProvinceData)
     -- First we figure out what archetype we should use for this region and subculture
     local archetypeData = self:GetArmyArchetypeForRegionProvinceAndSubculture(region, rebellionProvinceData.SubcultureKey);
@@ -322,9 +326,18 @@ function ERController:GetArmyArchetypeForRegionProvinceAndSubculture(region, reb
         local subcultureArmyArchetypes = self:GetSubcultureArmyArchetypes(region, rebellionSubculture);
         local armyArchetypeKey = GetRandomItemFromWeightedList(subcultureArmyArchetypes, true);
         local armyArchetypeResources = self:GetResourcesForRebelArmyArchetypes(rebellionSubculture, armyArchetypeKey);
+        local agentSubTypeKey = "";
+        for key, value in pairs(armyArchetypeResources.AgentSubtypes) do
+            if key == 1 then
+                agentSubTypeKey = GetRandomObjectFromList(armyArchetypeResources.AgentSubtypes);
+            else
+                agentSubTypeKey = GetRandomObjectKeyFromList(armyArchetypeResources.AgentSubtypes);
+            end
+            break;
+        end
         armyArchetypeData = {
             ArmyArchetypeKey = armyArchetypeKey,
-            AgentSubTypeKey = GetRandomObjectFromList(armyArchetypeResources.AgentSubtypes),
+            AgentSubTypeKey = agentSubTypeKey,
             MandatoryUnits = armyArchetypeResources.MandatoryUnits,
             UnitTags = armyArchetypeResources.UnitTags,
             ArmySize = armyArchetypeResources.ArmySize,
@@ -529,13 +542,30 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             else
                 self.Logger:Log("No mandatory units to add");
             end
-            local showMessage = factionKey == self.HumanFaction:name();
+            local showMessage = (factionKey == self.HumanFaction:name());
             if showMessage == true then
-                local factionCqi = character:faction():command_queue_index();
-                self.Logger:Log("Triggering incident");
-                --cm:trigger_incident_with_targets(factionCqi, "er_generic_incursion", factionCqi, 0, 0, 0, region:cqi(), 0);
-                --self.Logger:Log("Triggered incident");
+                local factionCqi = self.HumanFaction:command_queue_index();
+                cm:trigger_incident_with_targets(factionCqi, "er_generic_incursion", factionCqi, 0, 0, 0, region:cqi(), 0);
             end
+            -- Apply an effect bundle which gives a minor public order boost, reduces income and movement for a few turns
+            cm:apply_effect_bundle_to_region("er_effect_bundle_generic_incursion_region", regionKey, 5);
+            local bonusXpLevels = 0;
+            local armyArchetypeData = self:GetArmyArchetypeData(rebellionData.SubcultureKey, rebellionData.ArmyArchetypeKey)
+            local agentSubTypeSpawnData = armyArchetypeData.AgentSubtypes[rebellionData.AgentSubTypeData.AgentSubTypeKey];
+            if agentSubTypeSpawnData ~= nil then
+                bonusXpLevels = agentSubTypeSpawnData.MinimumLevel + Random(3);
+            else
+                bonusXpLevels = math.ceil(turnNumber / 10) + Random(3);
+            end
+            if bonusXpLevels > 20 then
+                bonusXpLevels = 20;
+            end
+            cm:add_agent_experience(characterLookupString, bonusXpLevels, true)
+            cm:callback(function()
+                if agentSubTypeSpawnData ~= nil and agentSubTypeSpawnData.AgentSubTypeMount ~= nil then
+                    cm:force_add_and_equip_ancillary(characterLookupString, agentSubTypeSpawnData.AgentSubTypeMount);
+                end
+            end, 1);
             self.Logger:Log_Finished();
         end
     );
@@ -554,6 +584,10 @@ function ERController:GrantUnitsForForce(rebelForceData, militaryForce)
     if armyArchetypeResources == nil then
         self.Logger:Log("Missing archetype resources, trying corruption resources...");
         armyArchetypeResources = self:GetResourcesForRebelCorruptionArmyArchetypes(generalSubculture.."_corruption", rebelForceData.ArmyArchetypeKey);
+        if armyArchetypeResources == nil and generalSubculture == "wh_main_sc_grn_greenskins" then
+            self.Logger:Log("Still missing archetype resources, trying savage orc resources...");
+            armyArchetypeResources = self:GetResourcesForRebelArmyArchetypes("wh_main_sc_grn_savage_orcs", rebelForceData.ArmyArchetypeKey);
+        end
         if armyArchetypeResources == nil then
             self.Logger:Log("ERROR: Can't find archetype army resources");
             return;

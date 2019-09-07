@@ -8,9 +8,6 @@ function GetMixuProvinceSubcultureRebellionsPoolDataResources()
                         FimirWarlord = {
                             Weighting = 2,
                         },
-                        FimirShamanLord = {
-                            Weighting = 1,
-                        },
                     },
                 },
             },

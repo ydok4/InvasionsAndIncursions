@@ -318,22 +318,31 @@ function GetSubcultureArmyPoolDataResources()
             Orcs = {
                 Early = {
                     wh_main_grn_inf_orc_boyz = 3,
-                    wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                    wh_main_grn_inf_orc_arrer_boyz = 2,
                     wh_main_grn_inf_orc_big_uns = 1,
-                    wh_main_grn_cav_orc_boar_boyz = 1,
                 },
                 Mid = {
                     wh_main_grn_inf_orc_boyz = 3,
-                    wh_main_grn_inf_savage_orc_arrer_boyz = 3,
+                    wh_main_grn_inf_orc_arrer_boyz = 2,
                     wh_main_grn_inf_orc_big_uns = 2,
-                    wh_main_grn_cav_orc_boar_boyz = 2,
                     wh_main_grn_inf_black_orcs = 1,
                 },
                 Late = {
                     wh_main_grn_inf_orc_boyz = 1,
-                    wh_main_grn_inf_savage_orc_arrer_boyz = 2,
+                    wh_main_grn_inf_orc_arrer_boyz = 2,
                     wh_main_grn_inf_black_orcs = 2,
                     wh_main_grn_inf_orc_big_uns = 1,
+                },
+            },
+            OrcBoarBoyz = {
+                Early = {
+                    wh_main_grn_cav_orc_boar_boyz = 1,
+                },
+                Mid = {
+                    wh_main_grn_cav_orc_boar_boyz = 2,
+                    wh_main_grn_cav_orc_boar_chariot = 1,
+                },
+                Late = {
                     wh_main_grn_cav_orc_boar_boyz = 2,
                     wh_main_grn_cav_orc_boar_boy_big_uns = 1,
                     wh_main_grn_cav_orc_boar_chariot = 1,
@@ -365,17 +374,28 @@ function GetSubcultureArmyPoolDataResources()
                 Early = {
                     wh_main_grn_inf_goblin_archers = 2,
                     wh_main_grn_inf_goblin_spearmen = 3,
-                    wh_main_grn_cav_goblin_wolf_riders_0 = 2,
                 },
                 Mid = {
                     wh_main_grn_inf_goblin_archers = 1,
                     wh_main_grn_inf_goblin_spearmen = 2,
-                    wh_main_grn_cav_goblin_wolf_riders_0 = 2,
-                    wh_main_grn_cav_goblin_wolf_riders_1 = 2,
                 },
                 Late = {
-                    wh_main_grn_cav_goblin_wolf_chariot = 1,
+                    wh_main_grn_inf_goblin_archers = 2,
+                    wh_main_grn_inf_goblin_spearmen = 2,
+                },
+            },
+            GoblinWolfRiders = {
+                Early = {
+                    wh_main_grn_cav_goblin_wolf_riders_0 = 1,
+                },
+                Mid = {
+                    wh_main_grn_cav_goblin_wolf_riders_0 = 2,
+                    wh_main_grn_cav_goblin_wolf_riders_1 = 1,
+                },
+                Late = {
+                    wh_main_grn_cav_goblin_wolf_riders_0 = 1,
                     wh_main_grn_cav_goblin_wolf_riders_1 = 2,
+                    wh_main_grn_cav_goblin_wolf_chariot = 1,
                 },
             },
             ForestGoblins = {
@@ -913,9 +933,7 @@ function GetSubcultureArmyPoolDataResources()
                     wh2_main_lzd_inf_temple_guards = 1,
                 },
                 Late = {
-                    wh2_main_lzd_inf_saurus_spearmen_0 = 1,
                     wh2_main_lzd_inf_saurus_spearmen_1 = 3,
-                    wh2_main_lzd_inf_saurus_warriors_0 = 1,
                     wh2_main_lzd_inf_saurus_warriors_1 = 3,
                     wh2_main_lzd_inf_temple_guards = 2,
                     wh2_main_lzd_inf_saurus_warriors_blessed_1 = 1,

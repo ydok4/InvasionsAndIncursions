@@ -84,12 +84,29 @@ function ER_SetupPostUIListeners(er)
                         local rebelForceTarget = cm:get_region(rebelForceData.Target);
                         local rebelForceTargetRegionKey = rebelForceTarget:name();
                         -- We need to first check for cases where we need to remove any rebels in the province
+                        -- This happens when the rebels have been killed.
                         if militaryForce == nil
                         or militaryForce:is_null_interface() then
                             if militaryForce == nil then
                                 er.Logger:Log("Military force is missing");
                             end
                             er.Logger:Log("Rebellion force: "..militaryForceCqi.." is missing from region: "..rebelForceTargetRegionKey);
+                            rebelData.Forces[index] = nil;
+                            er:AddPastRebellion(rebelForceData);
+                            er.RebelForces[militaryForceCqi] = nil;
+                            er.Logger:Log_Finished();
+                            -- Remove the incursion effect bundle (if it is still there)
+                            cm:remove_effect_bundle_from_region("er_effect_bundle_generic_incursion_region", rebelForceTargetRegionKey);
+                            -- Then add a larger public order boost to celebrate beating the rebels
+                            cm:apply_effect_bundle_to_region("er_effect_bundle_generic_incursion_defeated", regionKey, 5);
+                        -- If they have stuck around this long, it usually indicates they got stuck or started going
+                        -- on a rampage through the region. In both cases we need to clear up the force.
+                        elseif rebelForceTarget:is_null_interface() == false
+                        and rebelForceData.SpawnTurn < (turnNumber - 7) then
+                            er.Logger:Log("Military force has stuck around too long, removing the force.");
+                            local character = militaryForce:general_character();
+                            cm:kill_character(character:command_queue_index(), true, true);
+                            -- Clean up force data
                             rebelData.Forces[index] = nil;
                             er:AddPastRebellion(rebelForceData);
                             er.RebelForces[militaryForceCqi] = nil;
@@ -157,7 +174,11 @@ function ER_SetupPostUIListeners(er)
                 elseif publicOrder < 0
                 and checkedProvinces[provinceKey] == nil
                 and (er.ActiveRebellions[provinceKey] == nil or not TableHasAnyValue(er.ActiveRebellions[provinceKey].Forces)) then
-                    local spawnRebellion = Roll100(math.abs(publicOrder));
+                    local rebellionChance = math.abs(publicOrder);
+                    if rebellionChance > 50 and rebellionChance ~= 100 then
+                        rebellionChance = 50;
+                    end
+                    local spawnRebellion = Roll100(rebellionChance);
                     if spawnRebellion then
                         -- We have a timeout since the last rebellion was destroyed.
                         local isInTimeout = er:IsProvinceInTimeout(provinceKey);

@@ -54,11 +54,11 @@ function ArmyGenerator:GenerateForceForTurn(ramData)
         local gamePeriod = self:GetGamePeriod(turnNumber);
         self.Logger:Log("Game period is: "..gamePeriod);
         if gamePeriod == "Early" then
-            armySize = Random(10, 5) - mandatoryUnitCount;
+            armySize = Random(8, 5) - mandatoryUnitCount;
         elseif gamePeriod == "Mid" then
-            armySize = Random(15, 10) - mandatoryUnitCount;
+            armySize = Random(13, 8) - mandatoryUnitCount;
         else
-            armySize = Random(20, 15) - mandatoryUnitCount;
+            armySize = Random(20, 13) - mandatoryUnitCount;
         end
     else
         armySize = ramData.ArmySize - mandatoryUnitCount;
