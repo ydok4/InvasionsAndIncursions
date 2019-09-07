@@ -4,8 +4,8 @@ function GetMixuDarkElfRebelArmyArchetypesPoolDataResources()
             Beastmaster = {
                 AgentSubtypes = {"def_high_beastmaster", },
                 MandatoryUnits = {
-                    wh2_dlc10_def_mon_feral_manticore_0 = 2,
-                    wh2_dlc10_def_mon_kharibdyss_0 = 1,
+                    wh2_main_def_inf_harpies = 2,
+                    wh2_dlc10_def_mon_feral_manticore_0 = 1,
                 },
                 UnitTags = {"Warriors", "Cavalry", "Beasts", },
                 Weighting = 0,

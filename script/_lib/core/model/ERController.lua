@@ -148,7 +148,8 @@ function ERController:GetRebellionSubcultureForRegion(region)
                     local adjacentSubculture = adjacentAdjacentRegion:owning_faction():subculture();
                     -- Empire won't rebel against dwarfs and vice versa
                     if not ((adjacentSubculture == "wh_main_sc_dwf_dwarfs" and ownerSubculture == "wh_main_sc_emp_empire")
-                    or (adjacentSubculture == "wh_main_sc_emp_empire" and ownerSubculture == "wh_main_sc_dwf_dwarfs")) then
+                    or (adjacentSubculture == "wh_main_sc_emp_empire" and ownerSubculture == "wh_main_sc_dwf_dwarfs")
+                    or adjacentSubculture == "rebels") then
                         self.Logger:Log("Found adjacent subculture: "..adjacentSubculture.." in region: "..adjacentAdjacentRegion:name());
                         if validSubculturesForRegion[adjacentSubculture] ~= nil then
                             validSubculturesForRegion[adjacentSubculture].Weighting = validSubculturesForRegion[adjacentSubculture].Weighting + 1;
@@ -167,7 +168,8 @@ function ERController:GetRebellionSubcultureForRegion(region)
         and adjacentRegion:owning_faction():subculture() ~= ownerSubculture then
             local adjacentSubculture = adjacentRegion:owning_faction():subculture();
             if not ((adjacentSubculture == "wh_main_sc_dwf_dwarfs" and ownerSubculture == "wh_main_sc_emp_empire")
-            or (adjacentSubculture == "wh_main_sc_emp_empire" and ownerSubculture == "wh_main_sc_dwf_dwarfs")) then
+            or (adjacentSubculture == "wh_main_sc_emp_empire" and ownerSubculture == "wh_main_sc_dwf_dwarfs")
+            or adjacentSubculture == "rebels") then
                 self.Logger:Log("Found adjacent subculture: "..adjacentSubculture.." in region: "..adjacentRegion:name());
                 if validSubculturesForRegion[adjacentSubculture] ~= nil then
                     validSubculturesForRegion[adjacentSubculture].Weighting = validSubculturesForRegion[adjacentSubculture].Weighting + 1;
@@ -180,7 +182,7 @@ function ERController:GetRebellionSubcultureForRegion(region)
         end
     end
 
-    -- Now we remove the subculture of the lastish rebellion.
+    -- Now we remove the subculture of the last-ish rebellion.
     -- This is purely for variety reasons
     -- NOTE: We never exclude corruption rebels
     local lastRebellionData = self:GetLastRebellionData(provinceKey);
@@ -270,7 +272,7 @@ end
 function ERController:GetForceDataForRegionAndSubculture(region, rebellionProvinceData)
     -- First we figure out what archetype we should use for this region and subculture
     local archetypeData = self:GetArmyArchetypeForRegionProvinceAndSubculture(region, rebellionProvinceData.SubcultureKey);
-    local willSpawnOnSea = rebellionProvinceData.IsAdjacentToSea == true and archetypeData.CanSpawnOnSea == true;
+    local willSpawnOnSea = rebellionProvinceData.IsAdjacentToSea == true and archetypeData.CanSpawnOnSea == true and region:settlement():is_port() == true;
     -- Next we generate a name and art set for them
     -- NOTE: Art set isn't required but I can potentially use for other things
     local rebellionFaction = self:GetRebellionFactionForSubculture(rebellionProvinceData.SubcultureKey, willSpawnOnSea);
@@ -457,7 +459,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             -- Spawn distance (optional).
             -- Note: 9 is the distance which is also used for Skaven
             -- under city incursions
-            9
+            10
         );
     end
     if spawnX == -1 or spawnY == -1 then
@@ -526,6 +528,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
                     AgentSubTypeKey = rebellionData.AgentSubTypeData.AgentSubTypeKey,
                     ArmyArchetypeKey = rebellionData.ArmyArchetypeKey,
                     SpawnedOnSea = rebellionData.SpawnOnSea,
+                    SpawnCoordinates = spawnX.."/"..spawnY,
                 };
             else
                 self.Logger:Log("ERROR: Military force cqi already exists");
@@ -566,6 +569,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
                     cm:force_add_and_equip_ancillary(characterLookupString, agentSubTypeSpawnData.AgentSubTypeMount);
                 end
             end, 1);
+            cm:callback(function() core:trigger_event("ER_ScriptedEventEnableDiplomacy"); end, 0);
             self.Logger:Log_Finished();
         end
     );

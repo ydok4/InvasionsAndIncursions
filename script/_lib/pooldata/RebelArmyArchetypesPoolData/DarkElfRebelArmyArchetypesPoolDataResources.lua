@@ -13,8 +13,8 @@ function GetDarkElfRebelArmyArchetypesPoolDataResources()
                     wh2_main_def_inf_black_ark_corsairs_1 = 1,
                 },
                 UnitTags = {"Corsairs", "Warriors", },
-                Weighting = 1,
-                CanSpawnOnSea = false,
+                Weighting = 0,
+                CanSpawnOnSea = true,
             },
         },
     };

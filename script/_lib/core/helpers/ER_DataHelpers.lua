@@ -116,7 +116,7 @@ function GetRandomItemFromWeightedList(items, returnKey)
     local validItems = {};
     local sumOfWeight = 0;
     for key, data in pairs(items) do
-        if data["Weighting"] ~= nil then
+        if data["Weighting"] ~= nil and data["Weighting"] > 0 then
             sumOfWeight = sumOfWeight + data["Weighting"];
             validItems[key] = data;
         end

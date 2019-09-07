@@ -6,6 +6,12 @@ function GetNorscaRebelArmyArchetypesPoolDataResources()
                 UnitTags = {"Warriors", "Horsemen", "WarBeasts", },
                 Weighting = 4,
             },
+            ChieftainSeaRaiders = {
+                AgentSubtypes = {"nor_marauder_chieftain",  },
+                UnitTags = {"Warriors", },
+                Weighting = 0,
+                CanSpawnOnSea = true,
+            },
         },
     };
 end

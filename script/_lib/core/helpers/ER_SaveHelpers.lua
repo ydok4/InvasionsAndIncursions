@@ -58,6 +58,7 @@ function ER_SaveActiveRebelForces(er)
             rebelData.AgentSubTypeKey,
             rebelData.ArmyArchetypeKey,
             rebelData.SpawnedOnSea,
+            rebelData.SpawnCoordinates,
         };
         numberOfRebelForces = numberOfRebelForces + 1;
 

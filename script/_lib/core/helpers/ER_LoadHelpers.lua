@@ -89,6 +89,7 @@ function ER_LoadRebelForces(er)
             AgentSubTypeKey = rebelForceData[4],
             ArmyArchetypeKey = rebelForceData[5],
             SpawnedOnSea = rebelForceData[6],
+            SpawnCoordinates = rebelForceData[7],
         };
     end
 
