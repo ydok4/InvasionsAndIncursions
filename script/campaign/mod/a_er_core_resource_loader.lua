@@ -51,6 +51,9 @@ _G.ERResources = {
                         end
                         if subcultureData.ArmyArchetypes ~= nil then
                             for armyArchetypeKey, armyArchetypeData in pairs(subcultureData.ArmyArchetypes) do
+                                if existingSubcultureData.ArmyArchetypes == nil then
+                                    existingSubcultureData.ArmyArchetypes = {};
+                                end
                                 local existingArmyArchetype = existingSubcultureData.ArmyArchetypes[armyArchetypeKey];
                                 if existingArmyArchetype == nil then
                                     existingArmyArchetype = {};

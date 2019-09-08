@@ -14,6 +14,7 @@ function ER_SetupPostUIListeners(er)
         true
     );
 
+    local isQBFactionInvolvedInBattle = false;
     core:add_listener(
         "ER_PendingBattle",
         "PendingBattle",
@@ -21,7 +22,8 @@ function ER_SetupPostUIListeners(er)
             return true;
         end,
         function(context)
-            if IsQuestBattleFactionInvolvedInBattle(er) then
+            isQBFactionInvolvedInBattle = IsQuestBattleFactionInvolvedInBattle(er);
+            if isQBFactionInvolvedInBattle == true then
                 er.Logger:Log("QB Faction pending battle");
                 cm:disable_event_feed_events(true, "", "", "diplomacy_faction_destroyed");
                 er.Logger:Log_Finished();
@@ -31,15 +33,33 @@ function ER_SetupPostUIListeners(er)
     );
 
     core:add_listener(
+		"ER_BattleResolvedWithoutFighting",
+        "BattleCompletedCameraMove",
+        function(context)
+            return isQBFactionInvolvedInBattle == true;
+        end,
+		function(context)
+            local battleFought = cm:model():pending_battle():has_been_fought();
+            if battleFought == false then
+                er.Logger:Log("A faction has withdrawn from the battle");
+                cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed"); end, 0);
+                isQBFactionInvolvedInBattle = false;
+                er.Logger:Log_Finished();
+            end
+        end,
+    true);
+
+    core:add_listener(
         "ER_BattleCompleted",
         "BattleCompleted",
         function(context)
             return true;
         end,
         function(context)
-            if IsQuestBattleFactionInvolvedInBattle(er) then
+            if isQBFactionInvolvedInBattle == true then
                 er.Logger:Log("QB Faction completed battle");
                 cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed"); end, 0);
+                isQBFactionInvolvedInBattle = false;
                 er.Logger:Log_Finished();
             end
         end,

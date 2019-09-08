@@ -1,14 +1,13 @@
-Initialised   : [07, 09 2019 20:10:15]
+Initialised   : [07, 09 2019 22:19:38]
 FINISHED
 
-Checking military force: 10   : [07, 09 2019 20:10:15]
-Granting units to rebellion in region: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn   : [07, 09 2019 20:10:15]
-Missing archetype resources, trying corruption resources...   : [07, 09 2019 20:10:15]
-Still missing archetype resources, trying savage orc resources...   : [07, 09 2019 20:10:15]
-ERROR: Can't find archetype army resources   : [07, 09 2019 20:10:15]
+Checking region: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn in province: wh2_main_vor_isthmus_of_lustria   : [07, 09 2019 22:19:38]
+Checking military force: 10   : [07, 09 2019 22:19:38]
+Granting units to rebellion in region: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn   : [07, 09 2019 22:19:38]
 FINISHED
 
-Checking military force: 10   : [07, 09 2019 20:10:15]
-Enabling attack for rebellion in: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn   : [07, 09 2019 20:10:15]
+Checking region: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn in province: wh2_main_vor_isthmus_of_lustria   : [07, 09 2019 22:19:38]
+Checking military force: 10   : [07, 09 2019 22:19:38]
+Enabling attack for rebellion in: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn   : [07, 09 2019 22:19:38]
 FINISHED
 
