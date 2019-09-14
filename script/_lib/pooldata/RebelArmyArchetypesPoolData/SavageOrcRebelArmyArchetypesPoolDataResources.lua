@@ -3,7 +3,7 @@ function GetSavageOrcRebelArmyArchetypesPoolDataResources()
         wh_main_sc_grn_savage_orcs = {
             OrcWarboss = {
                 AgentSubtypes = {"grn_orc_warboss", },
-                UnitTags = {"SavageOrcs", "Monsters", },
+                UnitTags = {"SavageOrcs", "SavageOrcBoarBoyz", "Monsters", },
                 Weighting = 2,
             },
         },

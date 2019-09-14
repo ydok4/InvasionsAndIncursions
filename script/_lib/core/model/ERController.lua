@@ -439,9 +439,9 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
                 factionKey,
                 region:name(),
-                -- Rebellion spawn
-                true,
                 -- Spawn on sea
+                true,
+                -- Rebellion spawn
                 true,
                 spawnDistance
             );
@@ -452,14 +452,14 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
         spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
             factionKey,
             region:name(),
-            -- Rebellion spawn
-            true,
             -- Spawn on sea
             false,
+            -- Rebellion spawn
+            true,
             -- Spawn distance (optional).
             -- Note: 9 is the distance which is also used for Skaven
             -- under city incursions
-            10
+            9
         );
     end
     if spawnX == -1 or spawnY == -1 then
@@ -566,7 +566,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             cm:add_agent_experience(characterLookupString, bonusXpLevels, true)
             cm:callback(function()
                 if agentSubTypeSpawnData ~= nil and agentSubTypeSpawnData.AgentSubTypeMount ~= nil then
-                    cm:force_add_and_equip_ancillary(characterLookupString, agentSubTypeSpawnData.AgentSubTypeMount);
+                    cm:force_add_ancillary(character, agentSubTypeSpawnData.AgentSubTypeMount, true, true);
                 end
             end, 1);
             cm:callback(function() core:trigger_event("ER_ScriptedEventEnableDiplomacy"); end, 0);
@@ -694,12 +694,18 @@ function ERController:GetRebellionRegionForNewRebellion(region)
         if adjacentRegion:is_null_interface() == false
         and adjacentRegion:is_abandoned() == false
         and adjacentRegion:province_name() == provinceKey
-        and adjacentRegion:owning_faction():name() == owningFactionKey 
+        and adjacentRegion:owning_faction():name() == owningFactionKey
         and validRegionsInProvince[adjacentRegion:name()] == nil then
             validRegionsInProvince[adjacentRegion:name()] = true;
             numValidRegions = numValidRegions + 1;
         end
     end
+    -- This is a testing override to trigger rebellions in specific regions
+    -- in provinces
+    --[[if region:name() == "wh_main_couronne_et_languille_couronne" then
+        self.Logger:Log("Override rebellion in region");
+        return "wh_main_couronne_et_languille_languille";
+    end--]]
     -- If the province only has 1 region
     -- or the player only has 1 of the regions
     -- we still should spawn a rebellion,

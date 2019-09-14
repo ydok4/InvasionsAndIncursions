@@ -1,6 +1,0 @@
-GenerateForceForTurn   : [07, 09 2019 22:19:38]
-Adding subculture unit: wh_main_grn_inf_goblin_spearmen   : [07, 09 2019 22:19:38]
-Adding subculture unit: wh_main_grn_cav_forest_goblin_spider_riders_0   : [07, 09 2019 22:19:38]
-Adding subculture unit: wh_main_grn_art_goblin_rock_lobber   : [07, 09 2019 22:19:38]
-Adding subculture unit: wh_main_grn_inf_goblin_archers   : [07, 09 2019 22:19:38]
-Force size is 2   : [07, 09 2019 22:19:38]

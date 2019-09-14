@@ -1,15 +1,16 @@
 function GetNorscaRebelArmyArchetypesPoolDataResources()
     return {
         wh_main_sc_nor_norsca = {
-            Chieftain = {
+            ChieftainStandardArmy = {
                 AgentSubtypes = {"nor_marauder_chieftain",  },
                 UnitTags = {"Warriors", "Horsemen", "WarBeasts", },
-                Weighting = 4,
+                Weighting = 1,
+                CanSpawnOnSea = true,
             },
             ChieftainSeaRaiders = {
                 AgentSubtypes = {"nor_marauder_chieftain",  },
                 UnitTags = {"Warriors", },
-                Weighting = 0,
+                Weighting = 3,
                 CanSpawnOnSea = true,
             },
         },

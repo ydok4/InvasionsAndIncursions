@@ -21,13 +21,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_main_sc_lzd_lizardmen = {
-                    Weighting = 2,
+                    Weighting = 1,
                 },
                 wh_main_sc_grn_greenskins = {
                     Weighting = 1,
                 },
                 wh_main_sc_nor_norsca = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
             },
         },
@@ -253,6 +253,30 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_fort_bergbres = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
+        wh2_main_fort_helmgart = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
+        wh2_main_fort_soll = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_galleons_graveyard = {
             IsAdjacentToSea = true,
             RebelSubcultures = {
@@ -344,7 +368,15 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             },
         },
         wh2_main_huahuan_desert = {
-
+            IsAdjacentToSea = true,
+            RebelSubcultures = {
+                wh2_main_sc_lzd_lizardmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_savage_orcs = {
+                    Weighting = 1,
+                },
+            },
         },
         wh2_main_iron_mountains = {
             IsAdjacentToSea = true,
@@ -457,6 +489,39 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_laurelorn_forest = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 3,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
+        },
+        wh2_main_misty_hills = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 3,
+                    ArmyArchetypes = {
+                        DrakwaldGoblins = {
+                            Weighting = 3,
+                        },
+                    },
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_nagarythe = {
             IsAdjacentToSea = true,
             RebelSubcultures = {
@@ -554,6 +619,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh2_main_sc_skv_skaven = {
                     Weighting = 5,
+                },
+            },
+        },
+        wh2_main_solland = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 3,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
                 },
             },
         },
@@ -696,6 +775,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_grn_savage_orcs = {
                     Weighting = 1,
+                },
+            },
+        },
+        wh2_main_the_moot = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 3,
                 },
             },
         },
@@ -2203,6 +2296,14 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 wh_main_sc_vmp_vampire_counts = {
                     Weighting = 5,
                 },
+                wh_main_sc_emp_empire = {
+                    Weighting = 1,
+                    ArmyArchetypes = {
+                        ArchLector = {
+                            Weighting = 1,
+                        },
+                    },
+                },
             },
         },
         wh_main_estalia = {
@@ -3011,6 +3112,14 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_vmp_vampire_counts = {
                     Weighting = 1,
+                },
+                wh_main_sc_emp_empire = {
+                    Weighting = 1,
+                    ArmyArchetypes = {
+                        ArchLector = {
+                            Weighting = 1,
+                        },
+                    },
                 },
             },
         },

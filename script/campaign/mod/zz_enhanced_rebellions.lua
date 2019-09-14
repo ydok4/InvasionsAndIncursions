@@ -25,7 +25,6 @@ function zz_enhanced_rebellions()
     ER.Logger:Log("Initialised");
     ER_SetupPostUIListeners(ER);
     ER.Logger:Log_Finished();
-    cm:disable_rebellions_worldwide(true);
     out("EnR: Finished setup");
 end
 

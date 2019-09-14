@@ -3101,7 +3101,6 @@ function GetNameResources()
 					forename = {
 						Todbringer = "2147343940",
 						Leitdorf = "2147343947",
-						Wulfhart = "2147343965",
 						Helborg = "2147343980",
 						Schwarzhelm = "2147343989",
 						Huss = "2147344000",

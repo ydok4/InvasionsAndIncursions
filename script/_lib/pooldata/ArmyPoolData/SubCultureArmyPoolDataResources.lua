@@ -351,23 +351,29 @@ function GetSubcultureArmyPoolDataResources()
             SavageOrcs = {
                 Early = {
                     wh_main_grn_inf_savage_orcs = 3,
-                    wh_main_grn_inf_savage_orc_arrer_boyz = 2,
-                    wh_main_grn_inf_savage_orc_big_uns = 1,
-                    wh_main_grn_cav_savage_orc_boar_boyz = 1,
+                    wh_main_grn_inf_savage_orc_arrer_boyz = 1,
                 },
                 Mid = {
                     wh_main_grn_inf_savage_orcs = 2,
                     wh_main_grn_inf_savage_orc_arrer_boyz = 2,
-                    wh_main_grn_inf_savage_orc_big_uns = 2,
-                    wh_main_grn_cav_savage_orc_boar_boyz = 2,
-                    wh_main_grn_cav_savage_orc_boar_boy_big_uns = 1,
+                    wh_main_grn_inf_savage_orc_big_uns = 1,
                 },
                 Late = {
                     wh_main_grn_inf_savage_orcs = 2,
                     wh_main_grn_inf_savage_orc_arrer_boyz = 2,
                     wh_main_grn_inf_savage_orc_big_uns = 2,
+                },
+            },
+            SavageOrcBoarBoyz = {
+                Early = {
                     wh_main_grn_cav_savage_orc_boar_boyz = 1,
-                    wh_main_grn_cav_savage_orc_boar_boy_big_uns = 2,
+                },
+                Mid = {
+                    wh_main_grn_cav_savage_orc_boar_boyz = 2,
+                },
+                Late = {
+                    wh_main_grn_cav_savage_orc_boar_boyz = 2,
+                    wh_main_grn_cav_savage_orc_boar_boy_big_uns = 1,
                 },
             },
             Goblins = {
@@ -1412,26 +1418,44 @@ function GetSubcultureArmyPoolDataResources()
                 Early = {
                     wh_main_emp_inf_spearmen_0 = 2,
                     wh_dlc04_emp_inf_free_company_militia_0 = 1,
+                    wh2_dlc13_emp_inf_archers_0 = 1,
                 },
                 Mid = {
                     wh_main_emp_inf_spearmen_0 = 1,
-                    wh_main_emp_inf_spearmen_1 = 1,
-                    wh_main_emp_inf_crossbowmen = 1,
                     wh_dlc04_emp_inf_free_company_militia_0 = 1,
+                    wh2_dlc13_emp_inf_archers_0 = 1,
                 },
                 Late = {
-                    wh_main_emp_inf_spearmen_1 = 2,
-                    wh_main_emp_inf_crossbowmen = 1,
                     wh_dlc04_emp_inf_free_company_militia_0 = 1,
+                    wh2_dlc13_emp_inf_archers_0 = 1,
+                },
+            },
+            MidStateTroops = {
+                Early = {
+                    wh_main_emp_inf_swordsmen = 1,
+                    wh_main_emp_inf_spearmen_1 = 1,
+                    wh_main_emp_inf_crossbowmen = 1,
+                },
+                Mid = {
+                    wh_main_emp_inf_swordsmen = 2,
+                    wh_main_emp_inf_spearmen_1 = 1,
+                    wh_main_emp_inf_crossbowmen = 1,
+                },
+                Late = {
+                    wh_main_emp_inf_swordsmen = 1,
+                    wh_main_emp_inf_spearmen_1 = 1,
+                    wh_main_emp_inf_crossbowmen = 2,
                 },
             },
             EliteStateTroops = {
                 Early = {
                     wh_main_emp_inf_swordsmen = 1,
+                    wh_main_emp_inf_halberdiers = 1,
                 },
                 Mid = {
+                    wh_main_emp_inf_swordsmen = 1,
                     wh_main_emp_inf_halberdiers = 1,
-                    wh_main_emp_inf_handgunners = 1,
+                    wh2_dlc13_emp_inf_huntsmen_0 = 1,
                 },
                 Late = {
                     wh_main_emp_inf_halberdiers = 2,
@@ -1458,7 +1482,7 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Mid = {
                     wh_main_emp_art_great_cannon = 1,
-                    wh_main_emp_art_mortar = 2,
+                    wh_main_emp_art_mortar = 1,
                     wh_main_emp_art_helstorm_rocket_battery = 1,
                 },
                 Late = {

@@ -71,30 +71,6 @@ function CreateValidLuaTableKey(value)
     return value;
 end
 
-function GetStringifiedUnitList(character)
-    if character:has_military_force() == false then
-        URP_Log("Replaced character does not have military force");
-        return "";
-    end
-    local unitList = character:military_force():unit_list();
-
-    local unitString = "";
-    -- This starts at one so it skips the first unit, which is the general
-    for i = 0, unitList:num_items() - 1 do
-        -- If this is the last unit we should not add a comma to the end
-        local unitKey = unitList:item_at(i):unit_key();
-        if i ~= 0 then
-            if i == unitList:num_items() - 1 then
-                unitString = unitString..unitKey;
-            else
-                unitString = unitString..unitKey..",";
-            end
-        end
-    end
-    URP_Log("Built Unit string: "..unitString);
-    return unitString;
-end
-
 function GetKeysFromTable(tableWithKeys)
     local tableKeys = {};
     for key, value in pairs(tableWithKeys) do

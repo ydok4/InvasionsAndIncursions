@@ -205,6 +205,36 @@ function GetNameGroupResources()
 		wh2_dlc12_skv_clan_mange = {
 			NameGroup = "124",
 		},
+		wh2_dlc13_bst_beastmen_invasion = {
+			NameGroup = "131",
+		},
+		wh2_dlc13_emp_golden_order = {
+			NameGroup = "89",
+		},
+		wh2_dlc13_emp_the_huntmarshals_expedition = {
+			NameGroup = "89",
+		},
+		wh2_dlc13_grn_greenskins_invasion = {
+			NameGroup = "88",
+		},
+		wh2_dlc13_lzd_avengers = {
+			NameGroup = "117",
+		},
+		wh2_dlc13_lzd_defenders_of_the_great_plan = {
+			NameGroup = "117",
+		},
+		wh2_dlc13_lzd_spirits_of_the_jungle = {
+			NameGroup = "117",
+		},
+		wh2_dlc13_nor_norsca_invasion = {
+			NameGroup = "198",
+		},
+		wh2_dlc13_skv_skaven_invasion = {
+			NameGroup = "124",
+		},
+		wh2_dlc13_wef_laurelorn_forest = {
+			NameGroup = "143",
+		},
 		wh2_main_brt_knights_of_origo = {
 			NameGroup = "162",
 		},
@@ -1130,7 +1160,7 @@ function GetNameGroupResources()
 			NameGroup = "214",
 		},
 		wh_main_vmp_mousillon = {
-			NameGroup = "172",
+			NameGroup = "162",
 		},
 		wh_main_vmp_rival_sylvanian_vamps = {
 			NameGroup = "172",

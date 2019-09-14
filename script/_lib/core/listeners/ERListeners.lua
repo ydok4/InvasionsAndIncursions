@@ -1,19 +1,4 @@
 function ER_SetupPostUIListeners(er)
-    -- Doesn't seem to work...
-    core:add_listener(
-        "ER_DisableRebellions",
-        "FactionTurnStart",
-        function(context)
-            cm:disable_rebellions_worldwide(true);
-            return false;
-        end,
-        function(context)
-
-        end,
-        0,
-        true
-    );
-
     local isQBFactionInvolvedInBattle = false;
     core:add_listener(
         "ER_PendingBattle",
@@ -72,7 +57,6 @@ function ER_SetupPostUIListeners(er)
         "ER_CheckFactionRebellions",
         "FactionAboutToEndTurn",
         function(context)
-            cm:disable_rebellions_worldwide(true);
             local faction = context:faction();
             return er:IsExcludedFaction(faction) == false;
         end,
@@ -150,19 +134,20 @@ function ER_SetupPostUIListeners(er)
                                     local interimX, interimY = cm:find_valid_spawn_location_for_character_from_settlement(
                                         owningFactionKey,
                                         rebelForceTargetRegionKey,
-                                        -- Rebellion spawn
-                                        true,
                                         -- Spawn on sea
                                         false,
+                                        -- Rebellion spawn
+                                        true,
                                         -- Spawn distance (optional).
                                         -- Note: 9 is the distance which is also used for Skaven
                                         -- under city incursions
-                                        10
+                                        9
                                     );
                                     cm:teleport_to(characterLookupString, interimX, interimY, true);
+                                    cm:cai_disable_movement_for_character(characterLookupString);
+                                    cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
                                 elseif rebelForceData.SpawnTurn + 2 > turnNumber
                                 and rebelForceData.SpawnedOnSea == false then
-                                --and militaryForce:strength() < rebelForceTarget:garrison_residence():army():strength() then
                                     er.Logger:Log("Granting units to rebellion in region: "..rebelForceTargetRegionKey);
                                     local characterLookupString = "character_cqi:"..character:command_queue_index();
                                     if rebelForceData.SpawnedOnSea == false then
