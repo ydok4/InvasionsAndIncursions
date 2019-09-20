@@ -63,10 +63,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_def_dark_elves = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
                 wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceAvelorn = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -88,13 +96,26 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_def_dark_elves = {
-                    Weighting = 1,
+                    Weighting = 2,
+                    ArmyArchetypes = {
+                        Corsairs = {
+                            Weighting = 3,
+                        },
+                    },
                 },
                 wh_main_sc_grn_greenskins = {
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceCaledor = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -127,7 +148,15 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceCaledor = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -168,7 +197,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
             },
         },
@@ -240,6 +269,14 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 wh_main_sc_grn_greenskins = {
                     Weighting = 1,
                 },
+                wh2_main_sc_hef_high_elves = {
+                    Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceLothern = {
+                            Weighting = 3,
+                        },
+                    },
+                },
             },
         },
         wh2_main_ellyrion = {
@@ -250,6 +287,14 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_grn_greenskins = {
                     Weighting = 1,
+                },
+                wh2_main_sc_hef_high_elves = {
+                    Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceEllyrion = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -364,6 +409,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh2_main_sc_skv_skaven = {
                     Weighting = 5,
+                    ArmyArchetypes = {
+                        SkavenWarlord = {
+                            Weighting = 2,
+                        },
+                        SkavenSlaves = {
+                            Weighting = 3,
+                        },
+                        ClanMoulder = {
+                            Weighting = 1,
+                        },
+                        StormVermin = {
+                            Weighting = 1,
+                        },
+                    },
                 },
             },
         },
@@ -579,10 +638,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_def_dark_elves = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
                 wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceSaphery = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -619,6 +686,29 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh2_main_sc_skv_skaven = {
                     Weighting = 5,
+                    ArmyArchetypes = {
+                        SkavenWarlord = {
+                            Weighting = 2,
+                        },
+                        SkavenSlaves = {
+                            Weighting = 3,
+                        },
+                        ClanEshin = {
+                            Weighting = 1,
+                        },
+                        ClanMoulder = {
+                            Weighting = 1,
+                        },
+                        ClanSkryre = {
+                            Weighting = 1,
+                        },
+                        StormVermin = {
+                            Weighting = 1,
+                        },
+                        ClanPestilens = {
+                            Weighting = 1,
+                        },
+                    },
                 },
             },
         },
@@ -936,10 +1026,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_def_dark_elves = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
                 wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceAvelorn = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -947,7 +1045,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_def_dark_elves = {
-                    Weighting = 1,
+                    Weighting = 2,
                     ArmyArchetypes = {
                         Corsairs = {
                             Weighting = 3,
@@ -958,7 +1056,15 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceCaledor = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -988,7 +1094,15 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceCaledor = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -1103,7 +1217,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
             },
         },
@@ -1472,7 +1586,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
             },
         },
@@ -1528,10 +1642,18 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_def_dark_elves = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
                 wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceSaphery = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -1689,7 +1811,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
             },
         },
@@ -1710,8 +1832,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
         wh2_main_vor_straits_of_lothern = {
             IsAdjacentToSea = true,
             RebelSubcultures = {
-                wh2_main_sc_def_dark_elves = {
+                wh2_main_sc_hef_high_elves = {
                     Weighting = 1,
+                    ArmyArchetypes = {
+                        PrinceLothern = {
+                            Weighting = 3,
+                        },
+                    },
                 },
             },
         },
@@ -1809,17 +1936,12 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             RebelSubcultures = {
                 wh2_main_sc_def_dark_elves = {
                     Weighting = 1,
-                    ArmyArchetypes = {
-                        Corsairs = {
-                            Weighting = 3,
-                        },
-                    },
                 },
                 wh2_main_sc_lzd_lizardmen = {
                     Weighting = 2,
                 },
                 wh_main_sc_grn_savage_orcs = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
             },
         },
@@ -2033,7 +2155,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
-                    Weighting = 1,
+                    Weighting = 2,
                 },
             },
         },
@@ -2296,14 +2418,14 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 wh_main_sc_vmp_vampire_counts = {
                     Weighting = 5,
                 },
-                wh_main_sc_emp_empire = {
+                --[[wh_main_sc_emp_empire = {
                     Weighting = 1,
                     ArmyArchetypes = {
                         ArchLector = {
                             Weighting = 1,
                         },
                     },
-                },
+                },--]]
             },
         },
         wh_main_estalia = {
@@ -3113,14 +3235,14 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 wh_main_sc_vmp_vampire_counts = {
                     Weighting = 1,
                 },
-                wh_main_sc_emp_empire = {
+                --[[wh_main_sc_emp_empire = {
                     Weighting = 1,
                     ArmyArchetypes = {
                         ArchLector = {
                             Weighting = 1,
                         },
                     },
-                },
+                },--]]
             },
         },
         wh_main_wissenland = {

@@ -12,7 +12,7 @@ function GetLizardmenRebelArmyArchetypesPoolDataResources()
                     wh2_dlc12_lzd_inf_skink_red_crested_0 = 2,
                     wh2_main_lzd_mon_kroxigors = 1,
                 },
-                UnitTags = {"Skinks", "wh2_main_lzd_mon_kroxigors", "FeralBeasts", },
+                UnitTags = {"Skinks", "FeralBeasts", },
                 Weighting = 1,
             },
         },

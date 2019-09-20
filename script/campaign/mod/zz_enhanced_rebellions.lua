@@ -23,7 +23,7 @@ function zz_enhanced_rebellions()
     });
     ER:Initialise(random_army_manager, false);
     ER.Logger:Log("Initialised");
-    ER_SetupPostUIListeners(ER);
+    ER_SetupPostUIListeners(ER, core);
     ER.Logger:Log_Finished();
     out("EnR: Finished setup");
 end

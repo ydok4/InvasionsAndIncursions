@@ -85,14 +85,15 @@ function ER_SavePastRebellions(er)
     local tableCount = 1;
     local nthTable = {};
 
-    for regionKey, pastRegionData in pairs(er.PastRebellions) do
-        for index, pastRebellionData in pairs(pastRegionData) do
-            nthTable[regionKey.."/"..pastRebellionData.SpawnTurn] = { 
+    for provinceKey, pastProvinceData in pairs(er.PastRebellions) do
+        for index, pastRebellionData in pairs(pastProvinceData) do
+            nthTable[provinceKey.."/"..pastRebellionData.SpawnTurn.."/"..pastRebellionData.Target] = {
                 pastRebellionData.SpawnTurn,
                 pastRebellionData.SubcultureKey,
                 pastRebellionData.AgentSubTypeKey,
                 pastRebellionData.ArmyArchetypeKey,
-                pastRebellionData.Target,
+                pastRebellionData.TargetRegion,
+                pastRebellionData.TargetFaction,
                 pastRebellionData.DestroyedTurn,
             };
             numberOfPastRebellions = numberOfPastRebellions + 1;

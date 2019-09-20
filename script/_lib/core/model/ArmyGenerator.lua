@@ -89,9 +89,17 @@ function ArmyGenerator:GetOtherUnits(ramData)
         if tagData ~= nil then
             local periodTagData = tagData[gamePeriod];
             for unitKey, weighting in pairs(periodTagData) do
-                otherUnits[unitKey] = {
-                    Weighting = weighting,
-                };
+                if type(weighting) == "table" then
+                    local randomUnitKey = GetRandomObjectKeyFromList(weighting);
+                    local randomUnitWeighting = weighting[randomUnitKey];
+                    otherUnits[randomUnitKey] = {
+                        Weighting = randomUnitWeighting,
+                    }
+                else
+                    otherUnits[unitKey] = {
+                        Weighting = weighting,
+                    };
+                end
             end
         end
     end

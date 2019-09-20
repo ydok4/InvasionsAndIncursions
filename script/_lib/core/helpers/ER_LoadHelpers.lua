@@ -122,18 +122,19 @@ function ER_LoadPastRebellions(er)
 
     for key, pastRebellionData in pairs(serialised_save_table_units) do
         --out("EnR: Checking key: "..key);
-        local regionKey = key:match("(.-)/");
-        if er.PastRebellions[regionKey] == nil then
-            er.PastRebellions[regionKey] = {};
+        local provinceKey = key:match("(.-)/");
+        if er.PastRebellions[provinceKey] == nil then
+            er.PastRebellions[provinceKey] = {};
         end
-        local pastRebellions = er.PastRebellions[regionKey];
+        local pastRebellions = er.PastRebellions[provinceKey];
         pastRebellions[#pastRebellions + 1] = {
             SpawnTurn = pastRebellionData[1],
             SubcultureKey = pastRebellionData[2],
             AgentSubTypeKey = pastRebellionData[3],
             ArmyArchetypeKey = pastRebellionData[4],
-            Target = pastRebellionData[5],
-            DestroyedTurn = pastRebellionData[6],
+            TargetRegion = pastRebellionData[5],
+            TargetFaction = pastRebellionData[6],
+            DestroyedTurn = pastRebellionData[7],
         };
     end
 

@@ -8,7 +8,7 @@ function GetMixuDarkElfRebelArmyArchetypesPoolDataResources()
                     wh2_dlc10_def_mon_feral_manticore_0 = 1,
                 },
                 UnitTags = {"Warriors", "Cavalry", "Beasts", },
-                Weighting = 0,
+                Weighting = 1,
             },
         },
     };

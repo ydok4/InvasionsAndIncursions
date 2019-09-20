@@ -9,7 +9,7 @@ function GetMixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                 },
                 UnitTags = {"ChaosWarriors", "Beasts", },
                 ArmySize = 13,
-                Weighting = 3,
+                Weighting = 1,
             },
             DragonOgreChampionMedium = {
                 CorruptionThreshold = 45,
@@ -19,7 +19,7 @@ function GetMixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                 },
                 UnitTags = {"ChaosWarriors", "Beasts", },
                 ArmySize = 17,
-                Weighting = 3,
+                Weighting = 1,
             },
             DragonOgreChampionHigh = {
                 CorruptionThreshold = 60,
@@ -30,7 +30,7 @@ function GetMixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                 },
                 UnitTags = {"ChaosWarriors", "Beasts", },
                 ArmySize = 20,
-                Weighting = 3,
+                Weighting = 1,
             },
         },
     };

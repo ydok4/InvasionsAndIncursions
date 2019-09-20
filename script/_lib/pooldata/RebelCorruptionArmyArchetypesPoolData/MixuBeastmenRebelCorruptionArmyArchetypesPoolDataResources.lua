@@ -9,7 +9,7 @@ function GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 },
                 UnitTags = {"Gors", "WarBeasts", "Minotaurs", },
                 ArmySize = 13,
-                Weighting = 2,
+                Weighting = 1,
             },
             DoomBullMedium = {
                 CorruptionThreshold = 60,
@@ -19,7 +19,7 @@ function GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 },
                 UnitTags = {"Gors", "WarBeasts", "Minotaurs", },
                 ArmySize = 17,
-                Weighting = 2,
+                Weighting = 1,
             },
             DoomBullHigh = {
                 CorruptionThreshold = 60,
@@ -29,7 +29,7 @@ function GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 },
                 UnitTags = {"Gors", "WarBeasts", "Minotaurs", },
                 ArmySize = 20,
-                Weighting = 2,
+                Weighting = 1,
             },
         },
     };

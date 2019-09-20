@@ -1,0 +1,5 @@
+Generated name key is Daertoc   : [20, 09 2019 16:58:19]
+No tracked lords. Using first generated name.   : [20, 09 2019 16:58:19]
+FINISHED
+
+Getting art set for sub type: grn_savage_orc_warboss   : [20, 09 2019 16:58:19]

@@ -1,14 +1,16 @@
-Initialised   : [14, 09 2019 10:46:59]
+Initialised   : [20, 09 2019 16:58:18]
+Overriding Norscan listeners   : [20, 09 2019 16:58:18]
 FINISHED
 
-Checking military force: 10   : [14, 09 2019 10:46:59]
-Granting units to rebellion in region: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn   : [14, 09 2019 10:46:59]
-Missing archetype resources, trying corruption resources...   : [14, 09 2019 10:46:59]
-Still missing archetype resources, trying savage orc resources...   : [14, 09 2019 10:46:59]
-ERROR: Can't find archetype army resources   : [14, 09 2019 10:46:59]
+Checking player province: wh2_main_vor_isthmus_of_lustria   : [20, 09 2019 16:58:18]
+Rebellion chance: 100   : [20, 09 2019 16:58:18]
 FINISHED
 
-Checking military force: 10   : [14, 09 2019 10:46:59]
-Enabling attack for rebellion in: wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn   : [14, 09 2019 10:46:59]
-FINISHED
-
+Spawning rebellion for player.   : [20, 09 2019 16:58:18]
+Spawning rebellion in province: wh2_main_vor_isthmus_of_lustria for faction: wh2_main_hef_nagarythe   : [20, 09 2019 16:58:18]
+Rebellion will trigger in region: wh2_main_vor_heart_of_the_jungle_oreons_camp   : [20, 09 2019 16:58:18]
+Chosen rebellionSubculture: wh_main_sc_grn_savage_orcs   : [20, 09 2019 16:58:18]
+Generated general:grn_savage_orc_warboss and archetype: SavageOrcWarboss   : [20, 09 2019 16:58:19]
+Got Force string   : [20, 09 2019 16:58:19]
+Spawning at X: 1 Y: 1   : [20, 09 2019 16:58:19]
+Rebellion spawned. Military force cqi is: 10   : [20, 09 2019 16:58:19]

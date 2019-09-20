@@ -3,8 +3,13 @@ function GetDarkElfRebelArmyArchetypesPoolDataResources()
         wh2_main_sc_def_dark_elves = {
             DreadLord = {
                 AgentSubtypes = {"wh2_main_def_dreadlord", "wh2_main_def_dreadlord_fem", },
-                UnitTags = {"Warriors", "Cavalry", },
-                Weighting = 3,
+                UnitTags = {"Warriors", { "Cavalry", "ColdOnes", }, },
+                Weighting = 4,
+            },
+            DreadLordSpecial = {
+                AgentSubtypes = {"wh2_main_def_dreadlord", "wh2_main_def_dreadlord_fem", },
+                UnitTags = {"Warriors", { "Cavalry", "ColdOnes", }, { "Khainite", "Shades", }, },
+                Weighting = 1,
             },
             Corsairs = {
                 AgentSubtypes = {"wh2_main_def_dreadlord", "wh2_main_def_dreadlord_fem", },

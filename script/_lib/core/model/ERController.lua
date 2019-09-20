@@ -89,10 +89,10 @@ function ERController:GetRebellionSubcultureForRegion(region)
     -- We exclude the Bretonnian crusader factions because they don't have the event
     if turnNumber < 21
     and ownerSubculture == "wh_main_sc_brt_bretonnia"
-    and ownerFaction == self.HumanFaction:name()
-    and ownerFaction ~= "wh2_main_brt_knights_of_origo"
-    and ownerFaction ~= "wh2_main_brt_knights_of_the_flame"
-    and ownerFaction ~= "wh2_main_brt_thegans_crusaders"
+    and ownerFaction:name() == self.HumanFaction:name()
+    and ownerFaction:name() ~= "wh2_main_brt_knights_of_origo"
+    and ownerFaction:name() ~= "wh2_main_brt_knights_of_the_flame"
+    and ownerFaction:name() ~= "wh2_main_brt_thegans_crusaders"
     then
         local provinceKey = region:province_name();
         local provinceResources = self:GetProvinceRebellionResources(provinceKey);
@@ -432,13 +432,14 @@ end
 function ERController:SpawnArmy(rebellionData, region, owningFaction)
     local factionKey = owningFaction:name();
     local spawnX, spawnY = -1, -1;
+    local regionKey = region:name();
     if rebellionData.SpawnOnSea == true then
         self.Logger:Log("Attempting to spawn army on sea...");
         local spawnDistance = 10;
         repeat
             spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
                 factionKey,
-                region:name(),
+                regionKey,
                 -- Spawn on sea
                 true,
                 -- Rebellion spawn
@@ -451,7 +452,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
     if spawnX == -1 or spawnY == -1 then
         spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
             factionKey,
-            region:name(),
+            regionKey,
             -- Spawn on sea
             false,
             -- Rebellion spawn
@@ -468,7 +469,6 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
     else
         self.Logger:Log("Spawning at X: "..spawnX.." Y: "..spawnY);
     end
-    local regionKey = region:name();
     local provinceKey = region:province_name();
     cm:create_force_with_general(
         rebellionData.FactionKey,
@@ -489,19 +489,33 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             local militaryForceCqi = militaryForce:command_queue_index();
             self.Logger:Log("Rebellion spawned. Military force cqi is: "..militaryForceCqi);
             local characterLookupString = "character_cqi:"..cqi;
-            -- Perform diplomacy and other setup commands
-            -- Force war without peace with targeted faction
-            cm:force_diplomacy("faction:" .. factionKey, "faction:" .. rebellionData.FactionKey, "peace", false, false, true);
+            -- Perform diplomacy and other setup commands. Note: Even though the QB factions are excluded
+            -- from diplomacy by db, it seems like they can still make diplomatic offers to the player (and maybe the AI)
+            -- Thats why I still need these commands.
+            cm:force_diplomacy("faction:"..rebellionData.FactionKey, "all", "all", false, false, true);
+            cm:force_diplomacy("faction:"..rebellionData.FactionKey, "all", "war", true, true, true);
+            local atWarWithFactions = {};
+            -- Force war with targeted faction
             cm:force_declare_war(rebellionData.FactionKey, factionKey, false, false);
+            atWarWithFactions[rebellionData.FactionKey] = true;
             -- Then do the same for the player
-            cm:force_diplomacy("faction:" .. self.HumanFaction:name(), "faction:" .. rebellionData.FactionKey, "peace", false, false, true);
             cm:force_declare_war(rebellionData.FactionKey, self.HumanFaction:name(), false, false);
+            atWarWithFactions[self.HumanFaction:name()] = true;
+            -- Then do the same for any adjacent factions
+            local adjacentRegionList = region:adjacent_region_list();
+            for i = 0, adjacentRegionList:num_items() - 1 do
+                local adjacentRegion = adjacentRegionList:item_at(i);
+                if adjacentRegion:is_null_interface() == false
+                and adjacentRegion:is_abandoned() == false
+                and atWarWithFactions[adjacentRegion:owning_faction():name()] == nil then
+                    atWarWithFactions[adjacentRegion:owning_faction():name()] = true;
+                    cm:force_declare_war(rebellionData.FactionKey, adjacentRegion:owning_faction():name(), false, false);
+                end
+            end
             -- We gave the army free upkeep so it won't take attrition
             cm:apply_effect_bundle_to_force("wh_main_bundle_military_upkeep_free_force", militaryForceCqi, -1);
-            -- Disable movement so they won't run away but only for non-sea spawns
-            if rebellionData.SpawnOnSea == false then
-                cm:cai_disable_movement_for_character(characterLookupString);
-            end
+            -- Disable movement so they won't run away
+            cm:cai_disable_movement_for_character(characterLookupString);
             -- Force them into raiding stance so they take some money from the faction but only on land
             if rebellionData.SpawnOnSea == false then
                 cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
@@ -630,17 +644,19 @@ function ERController:AddPastRebellion(rebelForce)
     if self.PastRebellions[provinceKey] == nil then
         self.PastRebellions[provinceKey] = {};
     end
-    local pastRebellionsForRegion = self.PastRebellions[provinceKey];
-    pastRebellionsForRegion[#pastRebellionsForRegion + 1] = {
+    local pastRebellionsForProvince = self.PastRebellions[provinceKey];
+    pastRebellionsForProvince[#pastRebellionsForProvince + 1] = {
         SpawnTurn = rebelForce.SpawnTurn,
         SubcultureKey = rebelForce.SubcultureKey,
         AgentSubTypeKey = rebelForce.AgentSubTypeKey,
-        Target = rebelForce.Target,
+        ArmyArchetypeKey = rebelForce.ArmyArchetypeKey,
+        TargetRegion = rebelForce.Target,
+        TargetFaction = regionObject:owning_faction():name(),
         DestroyedTurn = turnNumber,
     };
 end
 
-function ERController:IsProvinceInTimeout(provinceKey)
+function ERController:IsProvinceInTimeout(provinceKey, factionKey)
     local rebellionsForProvinces = self.PastRebellions[provinceKey];
     if rebellionsForProvinces == nil then
         return false;
@@ -648,12 +664,14 @@ function ERController:IsProvinceInTimeout(provinceKey)
     local turnNumber = cm:model():turn_number();
     local lastRebellionTurn = 0;
     for index, pastProvinceRebellions in pairs(rebellionsForProvinces) do
-        if pastProvinceRebellions.DestroyedTurn > lastRebellionTurn then
+        if pastProvinceRebellions.DestroyedTurn ~= nil
+        and pastProvinceRebellions.DestroyedTurn > lastRebellionTurn
+        and pastProvinceRebellions.TargetFaction == factionKey then
             lastRebellionTurn = pastProvinceRebellions.DestroyedTurn;
         end
     end
-    -- We have a timeout of 3 turns since the last rebellion was destroyed.
-    if turnNumber > lastRebellionTurn + 3 then
+    -- We have a timeout of 2 turns since the last rebellion was destroyed.
+    if turnNumber > lastRebellionTurn + 2 then
         return false;
     end
     return true;
@@ -670,7 +688,8 @@ function ERController:GetLastRebellionData(provinceKey)
     for index, pastProvinceRebellion in pairs(rebellionsForProvinces) do
         -- We don't bother counting rebellions which happened more than
         -- X amount of turns ago since it shouldn't be repetitive
-        if pastProvinceRebellion.DestroyedTurn + 15 < turnNumber
+        if pastProvinceRebellion.DestroyedTurn ~= nil
+        and pastProvinceRebellion.DestroyedTurn + 15 < turnNumber
         and pastProvinceRebellion.DestroyedTurn > lastRebellionTurn then
             lastRebellionTurn = pastProvinceRebellion.DestroyedTurn;
             lastRebellionData = pastProvinceRebellion;

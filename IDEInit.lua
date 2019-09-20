@@ -84,13 +84,13 @@ humanFaction = {
 testFaction = {
     command_queue_index = function() return 10; end,
     name = function()
-        return "wh_main_grn_greenskins_qb1";
+        return "wh2_main_wef_bowmen_of_oreon";
     end,
     culture = function()
-        return "wh_main_sc_grn_greenskins";
+        return "wh_dlc05_wef_wood_elves";
     end,
     subculture = function()
-        return "wh_main_sc_grn_greenskins";
+        return "wh_dlc05_sc_wef_wood_elves";
     end,
     character_list = function()
         return {
@@ -279,7 +279,7 @@ function get_cm()
                 religion_proportion = function() return 0; end,
                 public_order = function() return -100; end,
                 owning_faction = function() return testFaction; end,
-                name = function() return "wh2_main_vor_isthmus_of_lustria_ziggurat_of_dawn"; end,
+                name = function() return "wh2_main_vor_heart_of_the_jungle_oreons_camp"; end,
                 is_province_capital = function() return false; end,
                 is_abandoned = function() return false; end,
                 command_queue_index = function() return 10; end,
@@ -358,6 +358,8 @@ function get_cm()
         force_diplomacy = function() end,
         apply_effect_bundle_to_force = function() end,
         force_declare_war = function() end,
+        enable_movement_for_character = function() end,
+        disable_movement_for_character = function() end,
         cai_enable_movement_for_character = function() end,
         cai_disable_movement_for_character = function() end,
         add_unit_model_overrides = function() end,
@@ -373,6 +375,7 @@ function get_cm()
         add_agent_experience = function() end,
         apply_effect_bundle_to_region = function() end,
         remove_effect_bundle_from_region = function() end,
+        get_saved_value = function() return nil; end,
     };
 end
 
@@ -457,6 +460,7 @@ core = {
     end,
     get_ui_root = function() end,
     get_screen_resolution = function() return 0, 1 end;
+    is_mod_loaded = function() return true; end,
 }
 
 random_army_manager = {
