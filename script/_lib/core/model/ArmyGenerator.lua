@@ -31,13 +31,11 @@ function ArmyGenerator:GenerateForceForTurn(ramData)
 
     self.random_army_manager:new_force(ramData.ForceKey);
     local mandatoryUnits = ramData.ForceData.MandatoryUnits;
-    local mandatoryUnitCount = 0;
     if mandatoryUnits ~= nil then
         self.Logger:Log("Getting mandatory units");
         for unitKey, amount in pairs(mandatoryUnits) do
-            mandatoryUnitCount = mandatoryUnitCount + amount;
+            self.random_army_manager:add_mandatory_unit(ramData.ForceKey, unitKey, amount);
         end
-        self.Logger:Log("Got mandatory unit count: "..mandatoryUnitCount);
     end
 
     local subcultureUnits = self:GetOtherUnits(ramData);
@@ -54,14 +52,14 @@ function ArmyGenerator:GenerateForceForTurn(ramData)
         local gamePeriod = self:GetGamePeriod(turnNumber);
         self.Logger:Log("Game period is: "..gamePeriod);
         if gamePeriod == "Early" then
-            armySize = Random(8, 5) - mandatoryUnitCount;
+            armySize = Random(8, 5);
         elseif gamePeriod == "Mid" then
-            armySize = Random(13, 8) - mandatoryUnitCount;
+            armySize = Random(13, 8);
         else
-            armySize = Random(20, 13) - mandatoryUnitCount;
+            armySize = Random(20, 13);
         end
     else
-        armySize = ramData.ArmySize - mandatoryUnitCount;
+        armySize = ramData.ArmySize;
     end
     self.Logger:Log("Force size is "..armySize);
     return self.random_army_manager:generate_force(ramData.ForceKey, armySize, false);

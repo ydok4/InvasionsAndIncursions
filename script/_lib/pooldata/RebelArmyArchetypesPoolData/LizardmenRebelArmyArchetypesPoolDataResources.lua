@@ -4,7 +4,7 @@ function GetLizardmenRebelArmyArchetypesPoolDataResources()
             Saurus = {
                 AgentSubtypes = {"wh2_main_lzd_saurus_old_blood", },
                 UnitTags = {"Saurus", "ColdOnes", "FeralBeasts", },
-                Weighting = 3,
+                Weighting = 4,
             },
             Skinks = {
                 AgentSubtypes = {"wh2_dlc12_lzd_red_crested_skink_chief", },

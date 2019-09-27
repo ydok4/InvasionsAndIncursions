@@ -6,7 +6,7 @@ function GetMixuEmpireRebelArmyArchetypesPoolDataResources()
                 MandatoryUnits = {
                     wh_main_emp_veh_luminark_of_hysh_0 = 1,
                 },
-                UnitTags = {"StateTroops", "GenericCavalry", },
+                UnitTags = {"StateTroops", "MidStateTroops", "GenericCavalry", },
                 Weighting = 1,
             },
         },

@@ -18,7 +18,7 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
                     wh2_main_skv_inf_gutter_runners_1 = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanEshin", },
-                Weighting = 1,
+                Weighting = 0,
             },
             ClanMoulder = {
                 AgentSubtypes = {"wh2_main_skv_warlord", },
@@ -26,7 +26,7 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
                     wh2_main_skv_mon_rat_ogres = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanMoulder", },
-                Weighting = 1,
+                Weighting = 0,
             },
             ClanSkryre = {
                 AgentSubtypes = {"wh2_main_skv_warlord",  "wh2_dlc12_skv_warlock_master", },
@@ -35,7 +35,7 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
                     wh2_main_skv_inf_poison_wind_globadiers = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanSkyre",},
-                Weighting = 1,
+                Weighting = 0,
             },
             StormVermin = {
                 AgentSubtypes = {"wh2_main_skv_warlord", "wh2_main_skv_grey_seer_plague", "wh2_main_skv_grey_seer_ruin", },
@@ -44,12 +44,12 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
                     wh2_main_skv_inf_stormvermin_1 = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", },
-                Weighting = 1,
+                Weighting = 0,
             },
             ClanPestilens = {
                 AgentSubtypes = {"wh2_main_skv_warlord", },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanPestilens"},
-                Weighting = 1,
+                Weighting = 0,
             },
         },
     };

@@ -1,31 +1,21 @@
 function GetMixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
     return {
         wh_main_sc_chs_chaos_corruption = {
-            DragonOgreChampionLow = {
-                CorruptionThreshold = 30,
-                AgentSubtypes = {"chs_shaggoth_champion", },
-                MandatoryUnits = {
-                    wh_dlc01_chs_mon_dragon_ogre = 1,
-                },
-                UnitTags = {"ChaosWarriors", "Beasts", },
-                ArmySize = 13,
-                Weighting = 1,
-            },
             DragonOgreChampionMedium = {
-                CorruptionThreshold = 45,
+                CorruptionThreshold = 50,
                 AgentSubtypes = {"chs_shaggoth_champion", },
                 MandatoryUnits = {
                     wh_dlc01_chs_mon_dragon_ogre = 1,
                 },
                 UnitTags = {"ChaosWarriors", "Beasts", },
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 1,
             },
             DragonOgreChampionHigh = {
-                CorruptionThreshold = 60,
+                CorruptionThreshold = 75,
                 AgentSubtypes = {"chs_shaggoth_champion", },
                 MandatoryUnits = {
-                    wh_dlc01_chs_mon_dragon_ogre = 2,
+                    wh_dlc01_chs_mon_dragon_ogre = 1,
                     wh_dlc01_chs_mon_dragon_ogre_shaggoth = 1,
                 },
                 UnitTags = {"ChaosWarriors", "Beasts", },

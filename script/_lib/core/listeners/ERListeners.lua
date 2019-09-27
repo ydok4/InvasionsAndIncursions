@@ -1,5 +1,70 @@
 function ER_SetupPostUIListeners(er, core)
+
+    local isQBFactionInvolvedInBattle = false;
+    core:add_listener(
+        "ER_PendingBattle",
+        "PendingBattle",
+        function(context)
+            return true;
+        end,
+        function(context)
+            isQBFactionInvolvedInBattle = IsQuestBattleFactionInvolvedInBattle(er);
+            if isQBFactionInvolvedInBattle == true then
+                er.Logger:Log("QB Faction pending battle");
+                cm:disable_event_feed_events(true, "", "", "diplomacy_faction_destroyed");
+                er.Logger:Log_Finished();
+            end
+        end,
+        true
+    );
+
+    core:add_listener(
+		"ER_BattleResolvedWithoutFighting",
+        "BattleCompletedCameraMove",
+        function(context)
+            return isQBFactionInvolvedInBattle == true;
+        end,
+		function(context)
+            local battleFought = cm:model():pending_battle():has_been_fought();
+            if battleFought == false then
+                er.Logger:Log("A faction has withdrawn from the battle");
+                cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed"); end, 0);
+                isQBFactionInvolvedInBattle = false;
+                er.Logger:Log_Finished();
+            end
+        end,
+    true);
+
+    core:add_listener(
+        "ER_BattleCompleted",
+        "BattleCompleted",
+        function(context)
+            return true;
+        end,
+        function(context)
+            if isQBFactionInvolvedInBattle == true then
+                er.Logger:Log("QB Faction completed battle");
+                cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_faction_destroyed"); end, 0);
+                isQBFactionInvolvedInBattle = false;
+                er.Logger:Log_Finished();
+            end
+        end,
+        true
+    );
+
     local numberOfRebellions = 0;
+    core:add_listener(
+        "ER_ResetWarDeclared",
+        "FactionTurnStart",
+        function(context)
+            local faction = context:faction();
+            return er.HumanFaction:name() == faction:name();
+        end,
+        function(context)
+            cm:disable_event_feed_events(false, "", "", "diplomacy_war_declared");
+        end,
+    true);
+
     core:add_listener(
         "ER_CheckFactionRebellions",
         "FactionAboutToEndTurn",
@@ -70,10 +135,7 @@ function ER_SetupPostUIListeners(er, core)
                                 er:AddPastRebellion(rebelForceData);
                                 er.RebelForces[militaryForceCqi] = nil;
                                 er.Logger:Log_Finished();
-                                -- Remove the incursion effect bundle (if it is still there)
-                                cm:remove_effect_bundle_from_region("er_effect_bundle_generic_incursion_region", rebelForceTargetRegionKey);
-                                -- Then add a larger public order boost to celebrate beating the rebels
-                                cm:apply_effect_bundle_to_region("er_effect_bundle_generic_incursion_defeated", regionKey, 5);
+                                er:UpdateDefeatedRebelEffectBundle(rebelForceTargetRegionKey);
                             else
                                 local character = militaryForce:general_character();
                                 -- To ensure we are only updating a rebel force once per turn
@@ -153,15 +215,21 @@ function ER_SetupPostUIListeners(er, core)
                         if isInTimeout == true then
                             er.Logger:Log("Can't spawn rebels for faction: "..faction:name().." because one was destroyed recently for faction.");
                         else
-                            cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
                             numberOfRebellions = numberOfRebellions + 1;
                             er.Logger:Log("Spawning rebellion in province: "..provinceKey.." for faction: "..faction:name());
                             local rebellionRegionKey = er:GetRebellionRegionForNewRebellion(region);
-                            er.Logger:Log("Rebellion will trigger in region: "..rebellionRegionKey);
-                            local rebellionRegion = cm:get_region(rebellionRegionKey);
-                            er:StartRebellion(rebellionRegion, faction);
-                            er.Logger:Log("Spawned rebellion in province: "..provinceKey);
+                            if rebellionRegionKey == nil then
+                                er.Logger:Log("Can't trigger rebellion in region");
+                            else
+                                cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
+                                er.Logger:Log("Rebellion will trigger in region: "..rebellionRegionKey);
+                                local rebellionRegion = cm:get_region(rebellionRegionKey);
+                                er:StartRebellion(rebellionRegion, faction);
+                                er.Logger:Log("Spawned rebellion in province: "..provinceKey);
+                            end
                         end
+                        er.Logger:Log_Finished();
+                    else
                         er.Logger:Log_Finished();
                     end
                 end
@@ -229,7 +297,6 @@ function ER_SetupPostUIListeners(er, core)
                                 cm:force_declare_war(rebelForceData.FactionKey, adjacentRegion:owning_faction():name(), false, false);
                             end
                         end
-                        cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_war_declared"); end, 0.2);
                     end
                 end
             end
@@ -309,5 +376,27 @@ function ER_SetupPostUIListeners(er, core)
             end;
 		end,
 		true
-	);
+    );
+    er.Logger:Log_Finished();
+end
+
+function IsQuestBattleFactionInvolvedInBattle(er)
+	for i = 1, cm:pending_battle_cache_num_defenders() do
+		local current_char_cqi, current_mf_cqi, current_faction_name = cm:pending_battle_cache_get_defender(i);
+        local faction = cm:get_faction(current_faction_name);
+        --er.Logger:Log("Battle participant: "..current_faction_name);
+        if faction:is_null_interface() or faction:is_quest_battle_faction() == true then
+			return true;
+		end;
+	end;
+
+	for i = 1, cm:pending_battle_cache_num_attackers() do
+		local current_char_cqi, current_mf_cqi, current_faction_name = cm:pending_battle_cache_get_attacker(i);
+        local faction = cm:get_faction(current_faction_name);
+        --er.Logger:Log("Battle participant: "..current_faction_name);
+        if faction:is_null_interface() or faction:is_quest_battle_faction() == true then
+			return true;
+		end;
+	end;
+    return false;
 end

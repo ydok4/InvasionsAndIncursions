@@ -1,10 +1,15 @@
 function GetChaosRebelArmyArchetypesPoolDataResources()
     return {
         wh_main_sc_chs_chaos = {
-            Lord = {
+            ChaosLord = {
                 AgentSubtypes = {"chs_lord", },
                 UnitTags = {"Marauders", "MarauderHorsemen", "ChaosWarriors", "Beasts", },
-                Weighting = 3,
+                Weighting = 4,
+            },
+            ChaosSorcerorLord = {
+                AgentSubtypes = {"chs_sorcerer_lord_death", "chs_sorcerer_lord_fire", "chs_sorcerer_lord_metal", "dlc07_chs_sorcerer_lord_shadow", },
+                UnitTags = { "Marauders", "MarauderHorsemen", "ChaosWarriors", "Beasts", },
+                Weighting = 1,
             },
         },
     };

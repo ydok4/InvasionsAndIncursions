@@ -5,6 +5,10 @@ function GetRebelFactionPoolDataResources()
             Default = "wh_dlc03_bst_beastmen_qb1",
             Sea = "",
         },
+        wh_dlc03_sc_bst_beastmen_corruption = {
+            Default = "wh_dlc03_bst_beastmen_qb1",
+            Sea = "",
+        },
         -- Bretonnia
         wh_main_sc_brt_bretonnia = {
             Default = "wh_main_brt_bretonnia_qb1",
@@ -12,6 +16,10 @@ function GetRebelFactionPoolDataResources()
         },
         -- Chaos
         wh_main_sc_chs_chaos = {
+            Default = "wh_main_chs_chaos_qb1",
+            Sea = "",
+        },
+        wh_main_sc_chs_chaos_corruption = {
             Default = "wh_main_chs_chaos_qb1",
             Sea = "",
         },
@@ -65,6 +73,10 @@ function GetRebelFactionPoolDataResources()
             Default = "wh2_main_skv_skaven_qb1",
             Sea = "",
         },
+        wh2_main_sc_skv_skaven_corruption = {
+            Default = "wh2_main_skv_skaven_qb1",
+            Sea = "",
+        },
         -- TEB
         wh_main_sc_teb_teb = {
             Default = "wh_main_emp_empire_qb1",
@@ -80,8 +92,16 @@ function GetRebelFactionPoolDataResources()
             Default = "wh2_dlc11_cst_vampire_coast_qb1",
             Sea = "wh2_dlc11_cst_vampire_coast_qb1",
         },
+        wh2_dlc11_sc_cst_vampire_coast_corruption = {
+            Default = "wh2_dlc11_cst_vampire_coast_qb1",
+            Sea = "wh2_dlc11_cst_vampire_coast_qb1",
+        },
         -- Vampire Counts
         wh_main_sc_vmp_vampire_counts = {
+            Default = "wh_main_vmp_vampire_counts_qb1",
+            Sea = "",
+        },
+        wh_main_sc_vmp_vampire_counts_corruption = {
             Default = "wh_main_vmp_vampire_counts_qb1",
             Sea = "",
         },

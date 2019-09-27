@@ -17,7 +17,7 @@ function GetEmpireRebelArmyArchetypesPoolDataResources()
                     wh_dlc04_emp_inf_flagellants_0 = 3,
                 },
                 UnitTags = {"StateTroops", "EliteStateTroops", },
-                Weighting = 2,
+                Weighting = 1,
             },
         },
     };

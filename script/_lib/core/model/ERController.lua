@@ -7,6 +7,8 @@ ERController = {
     ActiveRebellions = {},
     RebelForces = {},
     PastRebellions = {},
+    -- Feature toggles
+    EnableCorruptionArmies = true,
 }
 
 function ERController:new (o)
@@ -29,6 +31,30 @@ function ERController:Initialise(random_army_manager, enableLogging)
     self.Logger = Logger:new({});
     self.Logger:Initialise("EnhancedRebellions.txt", enableLogging);
     self.Logger:Log_Start();
+end
+
+function ERController:CheckMCMOptions(core)
+    if not mcm then
+        self.Logger:Log("Can't find MCM in class scope");
+        return;
+    end
+    if not ER_SetupPostUIListeners then
+        self.Logger:Log("Can't find listener function in class scope");
+        return;
+    end
+    local enableRebellions = cm:get_saved_value("mcm_tweaker_public_order_expanded_toggle_rebellions_value");
+    if enableRebellions == nil or enableRebellions == "enable_rebellions" then
+        self.Logger:Log("Rebellions are enabled in MCM");
+        ER_SetupPostUIListeners(self, core);
+    else
+        self.Logger:Log("Rebellions are disabled in MCM");
+    end
+    local enableCorruptionArmies = cm:get_saved_value("mcm_tweaker_public_order_expanded_toggle_corruption_armies_value");
+    if enableCorruptionArmies == nil or enableCorruptionArmies == "enable_corruption_armies" then
+        self.EnableCorruptionArmies = true;
+    else
+        self.EnableCorruptionArmies = false;
+    end
 end
 
 -- This exists to convert the human faction list to just an object.
@@ -102,7 +128,7 @@ function ERController:GetRebellionSubcultureForRegion(region)
         };
         return rebellionProvinceData;
     end
-    -- First subculture we add is out current subculture with some exceptions.
+    -- First subculture we add is our current subculture with some exceptions.
     -- In vanilla, Dwarfs and Bretonnia won't rebel against themselves.
     -- Everyone else will though.
     if ownerSubculture ~= "wh_main_sc_dwf_dwarfs"
@@ -136,6 +162,7 @@ function ERController:GetRebellionSubcultureForRegion(region)
     checkedRegions[regionKey] = true;
     for i = 0, adjacentRegionList:num_items() - 1 do
         local adjacentRegion = adjacentRegionList:item_at(i);
+        -- First we see if this is an adjacent region in the same province
         if checkedRegions[adjacentRegion:name()] == nil
         and adjacentRegion:province_name() == provinceKey then
             self.Logger:Log("Checking adjacent region: "..adjacentRegion:name().." in province: "..provinceKey);
@@ -163,6 +190,7 @@ function ERController:GetRebellionSubcultureForRegion(region)
                 checkedRegions[adjacentAdjacentRegion:name()] = true;
             end
             checkedRegions[adjacentRegion:name()] = true;
+        -- Otherwise, it must be a different province
         elseif checkedRegions[adjacentRegion:name()] == nil
         and adjacentRegion:is_abandoned() == false
         and adjacentRegion:owning_faction():subculture() ~= ownerSubculture then
@@ -192,52 +220,70 @@ function ERController:GetRebellionSubcultureForRegion(region)
         validSubculturesForRegion[lastRebellionSubculture] = nil;
     end
 
-    -- Finally consider rebels added by corruption.
+    -- Finally consider rebels added by corruption (If enabled).
     -- This could be Vampire Counts/Vampire Coast, Chaos/Beastmen or Skaven
-    local chaosCorruption = region:religion_proportion("wh_main_religion_chaos");
-    local chaosCorruptionWeighting = self:GetCorruptionWeighting(chaosCorruption);
-    if chaosCorruptionWeighting > 0 then
-        -- Chaos corruption is split between beastmen and chaos warriors
-        local chaosWarriorsCorruptionWeighting = math.ceil(0.25 * chaosCorruptionWeighting);
-        validSubculturesForRegion["wh_main_sc_chs_chaos_corruption"] = {
-            Weighting = chaosWarriorsCorruptionWeighting,
-        };
-        local beastmenCorruptionWeighting = math.ceil(0.75 * chaosCorruptionWeighting);
-        validSubculturesForRegion["wh_dlc03_sc_bst_beastmen_corruption"] = {
-            Weighting = beastmenCorruptionWeighting,
-        };
-        self.Logger:Log("Chaos corruption for "..regionKey.." is: "..chaosCorruption);
-    end
-
-    local vampireCorruption = region:religion_proportion("wh_main_religion_undeath");
-    local vampireCorruptionWeighting = self:GetCorruptionWeighting(vampireCorruption);
-    if vampireCorruptionWeighting > 0 then
-        if provinceResources.IsAdjacentToSea ~= nil
-        and provinceResources.IsAdjacentToSea == true then
-            local vampireCountsCorruptionWeighting = math.ceil(0.25 * vampireCorruptionWeighting);
-            validSubculturesForRegion["wh_main_sc_vmp_vampire_counts_corruption"] = {
-                Weighting = vampireCountsCorruptionWeighting,
-            };
-            local vampireCoastCorruptionWeighting = math.ceil(0.75 * vampireCorruptionWeighting);
-            validSubculturesForRegion["wh2_dlc11_sc_cst_vampire_coast_corruption"] = {
-                Weighting = vampireCoastCorruptionWeighting,
-            };
-        else
-            validSubculturesForRegion["wh_main_sc_vmp_vampire_counts_corruption"] = {
-                Weighting = vampireCorruptionWeighting,
-            };
+    if self.EnableCorruptionArmies == true then
+        -- Beastmen and Chaos can't rebel against Norsca
+        -- Same with the Cult of Pleasure
+        if ownerSubculture ~= "wh_main_sc_nor_norsca"
+        and ownerFaction:name() ~= "wh2_main_def_cult_of_pleasure" then
+            local chaosCorruption = math.floor(region:religion_proportion("wh_main_religion_chaos") * 100);
+            local chaosCorruptionWeighting = self:GetCorruptionWeighting(chaosCorruption);
+            if chaosCorruptionWeighting > 0 then
+                self.Logger:Log("Chaos corruption for "..regionKey.." is: "..chaosCorruption);
+                -- Chaos corruption is split between beastmen and chaos warriors
+                local chaosWarriorsCorruptionWeighting = math.ceil(0.25 * chaosCorruptionWeighting);
+                validSubculturesForRegion["wh_main_sc_chs_chaos_corruption"] = {
+                    Weighting = chaosWarriorsCorruptionWeighting,
+                };
+                local beastmenCorruptionWeighting = math.ceil(0.75 * chaosCorruptionWeighting);
+                validSubculturesForRegion["wh_dlc03_sc_bst_beastmen_corruption"] = {
+                    Weighting = beastmenCorruptionWeighting,
+                };
+                self.Logger:Log("Chaos corruption weighting for "..regionKey.." is: "..chaosCorruptionWeighting);
+            end
         end
-        self.Logger:Log("Vampire corruption for "..regionKey.." is: "..vampireCorruption);
-    end
 
-    local skavenCorruption = region:religion_proportion("wh2_main_religion_skaven");
-    local skavenCorruptionWeighting = self:GetCorruptionWeighting(skavenCorruption);
-    if skavenCorruptionWeighting > 0 then
-        validSubculturesForRegion["wh2_main_sc_skv_skaven_corruption"] = {
-            Weighting = skavenCorruptionWeighting,
-        };
-        self.Logger:Log("Skaven corruption for "..regionKey.." is: "..skavenCorruption);
+        -- Vampire counts aren't impacting by their own corruption rebellions
+        if ownerSubculture ~= "wh_main_sc_vmp_vampire_counts"
+        and ownerSubculture ~= "wh2_dlc11_sc_cst_vampire_coast"
+        and ownerFaction:name() ~= "wh2_dlc09_tmb_followers_of_nagash"
+        then
+            local vampireCorruption = math.floor(region:religion_proportion("wh_main_religion_undeath") * 100);
+            local vampireCorruptionWeighting = self:GetCorruptionWeighting(vampireCorruption);
+            if vampireCorruptionWeighting > 0 then
+                self.Logger:Log("Vampire corruption for "..regionKey.." is: "..vampireCorruption);
+                if provinceResources.IsAdjacentToSea ~= nil
+                and provinceResources.IsAdjacentToSea == true then
+                    local vampireCountsCorruptionWeighting = math.ceil(0.25 * vampireCorruptionWeighting);
+                    validSubculturesForRegion["wh_main_sc_vmp_vampire_counts_corruption"] = {
+                        Weighting = vampireCountsCorruptionWeighting,
+                    };
+                    local vampireCoastCorruptionWeighting = math.ceil(0.75 * vampireCorruptionWeighting);
+                    validSubculturesForRegion["wh2_dlc11_sc_cst_vampire_coast_corruption"] = {
+                        Weighting = vampireCoastCorruptionWeighting,
+                    };
+                else
+                    validSubculturesForRegion["wh_main_sc_vmp_vampire_counts_corruption"] = {
+                        Weighting = vampireCorruptionWeighting,
+                    };
+                end
+                self.Logger:Log("Vampire corruption weighting for "..regionKey.." is: "..vampireCorruptionWeighting);
+            end
+        end
+
+        -- Skaven are impacted by their own subculture rebellions
+        local skavenCorruption = math.floor(region:religion_proportion("wh2_main_religion_skaven") * 100);
+        local skavenCorruptionWeighting = self:GetCorruptionWeighting(skavenCorruption);
+        if skavenCorruptionWeighting > 0 then
+            self.Logger:Log("Skaven corruption for "..regionKey.." is: "..skavenCorruption);
+            validSubculturesForRegion["wh2_main_sc_skv_skaven_corruption"] = {
+                Weighting = skavenCorruptionWeighting,
+            };
+            self.Logger:Log("Skaven corruption weighting for "..regionKey.." is: "..skavenCorruptionWeighting);
+        end
     end
+    -- With all the data gatherd and weighted grab a subculture from the weighted list
     local rebellionProvinceData = {
         SubcultureKey = GetRandomItemFromWeightedList(validSubculturesForRegion, true),
         IsAdjacentToSea = provinceResources.IsAdjacentToSea,
@@ -247,6 +293,7 @@ end
 
 function ERController:GetCorruptionWeighting(corruptionValue)
     local corruptionWeighting = math.floor(corruptionValue / 10);
+    -- We round up from 5
     if corruptionValue % 10 > 5 then
         corruptionWeighting = corruptionWeighting + 1;
     end
@@ -266,7 +313,11 @@ function ERController:GetProvinceRebellionResources(provinceKey)
 end
 
 function ERController:GetArmyArchetypeData(subcultureKey, archetypeKey)
-    return _G.ERResources.RebelArmyArchetypesPoolData[subcultureKey][subcultureKey][archetypeKey];
+    if _G.ERResources.RebelArmyArchetypesPoolData[subcultureKey] == nil then
+        return _G.ERResources.RebelCorruptionArmyArchetypesPoolData[subcultureKey][subcultureKey][archetypeKey];
+    else
+        return _G.ERResources.RebelArmyArchetypesPoolData[subcultureKey][subcultureKey][archetypeKey];
+    end
 end
 
 function ERController:GetForceDataForRegionAndSubculture(region, rebellionProvinceData)
@@ -308,6 +359,9 @@ function ERController:GetForceDataForRegionAndSubculture(region, rebellionProvin
         ArmySize = archetypeData.ArmySize,
         ForceData = rebellionData,
     };
+    if string.match(ramData.ForceData.SubcultureKey, "_corruption") then
+        ramData.ForceData.SubcultureKey = ramData.ForceData.SubcultureKey:match("(.-)_corruption");
+    end
     self.Logger:Log("Generated general:"..archetypeData.AgentSubTypeKey.." and archetype: "..archetypeData.ArmyArchetypeKey);
     local forceString = self.ArmyGenerator:GenerateForceForTurn(ramData);
     if forceString == nil then
@@ -547,25 +601,12 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             else
                 self.Logger:Log("ERROR: Military force cqi already exists");
             end
-            -- Add mandatory units
-            -- Grant the new force any mandatory units
-            if rebellionData.MandatoryUnits ~= nil then
-                for unitKey, amount in pairs(rebellionData.MandatoryUnits) do
-                    for i = 1, amount do
-                        self.Logger:Log("Granting mandatory unit to invasion: "..unitKey);
-                        cm:grant_unit_to_character(characterLookupString, unitKey);
-                    end
-                end
-            else
-                self.Logger:Log("No mandatory units to add");
-            end
             local showMessage = (factionKey == self.HumanFaction:name());
             if showMessage == true then
                 local factionCqi = self.HumanFaction:command_queue_index();
                 cm:trigger_incident_with_targets(factionCqi, "er_generic_incursion", factionCqi, 0, 0, 0, region:cqi(), 0);
             end
-            -- Apply an effect bundle which gives a minor public order boost, reduces income and movement for a few turns
-            cm:apply_effect_bundle_to_region("er_effect_bundle_generic_incursion_region", regionKey, 5);
+            self:ApplyIncursionCustomEffectBundle(regionKey);
             local bonusXpLevels = 0;
             local armyArchetypeData = self:GetArmyArchetypeData(rebellionData.SubcultureKey, rebellionData.ArmyArchetypeKey)
             local agentSubTypeSpawnData = armyArchetypeData.AgentSubtypes[rebellionData.AgentSubTypeData.AgentSubTypeKey];
@@ -625,7 +666,7 @@ function ERController:GrantUnitsForForce(rebelForceData, militaryForce)
         -- Force data
         ForceData = {
             SubcultureKey = generalSubculture,
-            UnitTags = armyArchetypeResources.UnitTags,
+            UnitTags = { armyArchetypeResources.UnitTags[1], },
         },
     };
 
@@ -670,11 +711,68 @@ function ERController:IsProvinceInTimeout(provinceKey, factionKey)
             lastRebellionTurn = pastProvinceRebellions.DestroyedTurn;
         end
     end
+    local timeoutThreshold = self:GetTimeoutForDifficulty();
     -- We have a timeout of 2 turns since the last rebellion was destroyed.
-    if turnNumber > lastRebellionTurn + 2 then
+    if turnNumber > lastRebellionTurn + timeoutThreshold then
         return false;
     end
     return true;
+end
+
+function ERController:GetTimeoutForDifficulty()
+    local difficulty = cm:get_difficulty(true);
+    local timeout = 0;
+    if difficulty == "easy" then
+        timeout = 4;
+    elseif difficulty == "normal" then
+        timeout = 3;
+    elseif difficulty == "hard" then
+        timeout = 2;
+    elseif difficulty == "very hard" then
+        timeout = 3;
+    elseif difficulty == "legendary" then
+        timeout = 4;
+    end
+    return timeout;
+end
+
+function ERController:GetCustomEffectBundleBaseAmountForDifficulty()
+    local difficulty = cm:get_difficulty(true);
+    local timeout = 0;
+    if difficulty == "easy" then
+        timeout = 0;
+    elseif difficulty == "normal" then
+        timeout = 0;
+    elseif difficulty == "hard" then
+        timeout = 2;
+    elseif difficulty == "very hard" then
+        timeout = 4;
+    elseif difficulty == "legendary" then
+        timeout = 8;
+    end
+    return timeout;
+end
+
+function ERController:UpdateDefeatedRebelEffectBundle(regionKey)
+    -- Remove the incursion effect bundle (if it is still there)
+    cm:remove_effect_bundle_from_region("er_effect_bundle_generic_incursion_region", regionKey);
+    local customEffectBundle = cm:create_new_custom_effect_bundle("er_effect_bundle_generic_incursion_defeated");
+    customEffectBundle:set_duration(5);
+    local publicOrderAmount = self:GetCustomEffectBundleBaseAmountForDifficulty() + 10;
+    customEffectBundle:add_effect("wh_main_effect_public_order_events", "region_to_province_own", publicOrderAmount);
+    local region = cm:get_region(regionKey);
+    -- Then add a larger public order boost to celebrate beating the rebels
+    cm:apply_custom_effect_bundle_to_region(customEffectBundle, region);
+end
+
+function ERController:ApplyIncursionCustomEffectBundle(regionKey)
+    -- Apply an effect bundle which gives a minor public order boost, reduces income and movement for a few turns
+    local customEffectBundle = cm:create_new_custom_effect_bundle("er_effect_bundle_generic_incursion_region");
+    customEffectBundle:set_duration(5);
+    local publicOrderAmount = self:GetCustomEffectBundleBaseAmountForDifficulty() + 5;
+    customEffectBundle:add_effect("wh_main_effect_public_order_events", "region_to_province_own", publicOrderAmount);
+    local region = cm:get_region(regionKey);
+    cm:apply_custom_effect_bundle_to_region(customEffectBundle, region);
 end
 
 function ERController:GetLastRebellionData(provinceKey)
@@ -714,6 +812,7 @@ function ERController:GetRebellionRegionForNewRebellion(region)
         and adjacentRegion:is_abandoned() == false
         and adjacentRegion:province_name() == provinceKey
         and adjacentRegion:owning_faction():name() == owningFactionKey
+        and adjacentRegion:owning_faction():is_quest_battle_faction() == false
         and validRegionsInProvince[adjacentRegion:name()] == nil then
             validRegionsInProvince[adjacentRegion:name()] = true;
             numValidRegions = numValidRegions + 1;
@@ -730,6 +829,9 @@ function ERController:GetRebellionRegionForNewRebellion(region)
     -- we still should spawn a rebellion,
     -- even if they had one recently in that region
     if numValidRegions == 1 then
+        if region:owning_faction():is_quest_battle_faction() == true then
+            return nil;
+        end
         return GetRandomObjectKeyFromList(validRegionsInProvince);
     end
 

@@ -4,10 +4,10 @@ function GetMixuBeastmenRebelArmyArchetypesPoolDataResources()
             DoomBull = {
                 AgentSubtypes = {"bst_doombull", },
                 MandatoryUnits = {
-                    wh_dlc03_bst_inf_minotaurs_2 = 1,
+                    wh_dlc03_bst_inf_minotaurs_0 = 1,
                 },
                 UnitTags = {"Gors", "WarBeasts", "Minotaurs" },
-                Weighting = 0,
+                Weighting = 1,
             },
         },
     };
