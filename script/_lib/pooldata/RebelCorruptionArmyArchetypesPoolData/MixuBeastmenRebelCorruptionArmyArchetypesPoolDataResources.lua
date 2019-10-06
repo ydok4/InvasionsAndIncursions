@@ -12,7 +12,7 @@ function GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 Weighting = 1,
             },
             DoomBullHigh = {
-                CorruptionThreshold = 75,
+                CorruptionThreshold = 85,
                 AgentSubtypes = {"bst_doombull", },
                 MandatoryUnits = {
                     wh_dlc03_bst_inf_minotaurs_2 = 2,

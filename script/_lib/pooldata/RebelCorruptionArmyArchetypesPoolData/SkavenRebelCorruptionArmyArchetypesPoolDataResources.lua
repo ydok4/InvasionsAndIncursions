@@ -8,7 +8,6 @@ function GetSkavenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh2_main_skv_mon_rat_ogres = 1,
                 },
                 UnitTags = {"Warriors", "SkavenSlaves", },
-                ArmySize = 13,
                 Weighting = 4,
             },
             GreySeerDefault = {
@@ -18,7 +17,6 @@ function GetSkavenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh2_main_skv_mon_rat_ogres = 1,
                 },
                 UnitTags = {"Warriors", "SkavenSlaves", },
-                ArmySize = 13,
                 Weighting = 1,
             },
             -- Low clan data
@@ -84,7 +82,7 @@ function GetSkavenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh2_main_skv_inf_gutter_runner_slingers_1 = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanEshin", },
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 1,
             },
             ClanMoulderMedium = {
@@ -94,7 +92,7 @@ function GetSkavenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh2_main_skv_mon_rat_ogres = 2,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanMoulder", },
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 1,
             },
             ClanSkryreMedium = {
@@ -105,7 +103,7 @@ function GetSkavenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh2_main_skv_inf_poison_wind_globadiers = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanSkyre",},
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 1,
             },
             ClanPestilensMedium = {
@@ -116,7 +114,7 @@ function GetSkavenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh2_main_skv_art_plagueclaw_catapult = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanPestilens"},
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 1,
             },
             -- High clan data

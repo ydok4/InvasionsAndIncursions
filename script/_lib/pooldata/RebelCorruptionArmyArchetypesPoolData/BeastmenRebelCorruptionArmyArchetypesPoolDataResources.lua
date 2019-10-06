@@ -5,7 +5,6 @@ function GetBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                 CorruptionThreshold = 0,
                 AgentSubtypes = {"dlc03_bst_beastlord", },
                 UnitTags = {"Gors", "WarBeasts", "Monsters", },
-                ArmySize = 13,
                 Weighting = 4,
             },
             BeastLordLow = {
@@ -15,7 +14,6 @@ function GetBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_dlc03_bst_inf_bestigor_herd_0 = 1,
                 },
                 UnitTags = {"Gors", "WarBeasts", "Monsters", },
-                ArmySize = 13,
                 Weighting = 4,
             },
             BeastLordMed = {
@@ -25,7 +23,7 @@ function GetBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_dlc03_bst_inf_bestigor_herd_0 = 1,
                 },
                 UnitTags = {"Gors", "WarBeasts", "Monsters", },
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 4,
             },
             BeastLordHigh = {

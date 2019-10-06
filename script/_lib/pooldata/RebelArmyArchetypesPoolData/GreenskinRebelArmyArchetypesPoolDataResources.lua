@@ -6,7 +6,6 @@ function GetGreenskinRebelArmyArchetypesPoolDataResources()
                     grn_goblin_great_shaman = {
                         AgentSubtypeKey = "grn_goblin_great_shaman",
                         AgentSubTypeMount = "wh_main_anc_mount_grn_goblin_great_shaman_giant_wolf",
-                        MinimumLevel = 8,
                     },
                 },
                 MandatoryUnits = {
@@ -25,7 +24,6 @@ function GetGreenskinRebelArmyArchetypesPoolDataResources()
                     grn_goblin_great_shaman = {
                         AgentSubtypeKey = "grn_goblin_great_shaman",
                         AgentSubTypeMount = "wh_main_anc_mount_grn_goblin_great_shaman_giant_wolf",
-                        MinimumLevel = 9,
                     },
                 },
                 MandatoryUnits = {
@@ -45,7 +43,8 @@ function GetGreenskinRebelArmyArchetypesPoolDataResources()
                     grn_orc_warboss = {
                         AgentSubtypeKey = "grn_orc_warboss",
                         AgentSubTypeMount = "wh_main_anc_mount_grn_orc_warboss_war_boar",
-                        MinimumLevel = 8,
+                        -- Left in as an example
+                        -- MinimumLevel = 8,
                     },
                 },
                 MandatoryUnits = {

@@ -12,7 +12,7 @@ function GetMixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                 Weighting = 1,
             },
             DragonOgreChampionHigh = {
-                CorruptionThreshold = 75,
+                CorruptionThreshold = 85,
                 AgentSubtypes = {"chs_shaggoth_champion", },
                 MandatoryUnits = {
                     wh_dlc01_chs_mon_dragon_ogre = 1,

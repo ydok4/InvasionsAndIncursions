@@ -5,14 +5,12 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                 CorruptionThreshold = 0,
                 AgentSubtypes = {"chs_lord", },
                 UnitTags = { "Marauders", "MarauderHorsemen", "ChaosWarriors", "Beasts", },
-                ArmySize = 13,
                 Weighting = 4,
             },
             ChaosSorcerorLordDefault = {
                 CorruptionThreshold = 0,
                 AgentSubtypes = {"chs_sorcerer_lord_death", "chs_sorcerer_lord_fire", "chs_sorcerer_lord_metal", "dlc07_chs_sorcerer_lord_shadow", },
                 UnitTags = { "Marauders", "MarauderHorsemen", "ChaosWarriors", "Beasts", },
-                ArmySize = 13,
                 Weighting = 2,
             },
             ChaosLordLow = {
@@ -23,7 +21,6 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_dlc06_chs_feral_manticore = 1,
                 },
                 UnitTags = { "Marauders", "ChaosWarriors", "Beasts", },
-                ArmySize = 13,
                 Weighting = 4,
             },
             ChaosSorcerorLordLow = {
@@ -34,7 +31,6 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_dlc06_chs_feral_manticore = 1,
                 },
                 UnitTags = { "Marauders", "ChaosWarriors", "Beasts", },
-                ArmySize = 13,
                 Weighting = 2,
             },
             ChaosLordMedium = {
@@ -45,7 +41,7 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_main_chs_inf_chosen_0 = 1,
                 },
                 UnitTags = { "Marauders", "ChaosWarriors", "ChaosCavalry", "Beasts", },
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 4,
             },
             ChaosSorcerorLordMedium = {
@@ -56,11 +52,11 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_main_chs_inf_chosen_0 = 1,
                 },
                 UnitTags = { "Marauders", "ChaosWarriors", "ChaosCavalry", "Beasts", },
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 2,
             },
             ChaosLordHigh = {
-                CorruptionThreshold = 75,
+                CorruptionThreshold = 85,
                 AgentSubtypes = {"chs_lord", },
                 MandatoryUnits = {
                     wh_main_chs_inf_chosen_1 = 1,
@@ -71,7 +67,7 @@ function GetChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources()
                 Weighting = 4,
             },
             ChaosSorcerorLordHigh = {
-                CorruptionThreshold = 75,
+                CorruptionThreshold = 85,
                 AgentSubtypes = {"chs_sorcerer_lord_death", "chs_sorcerer_lord_fire", "chs_sorcerer_lord_metal", "dlc07_chs_sorcerer_lord_shadow", },
                 MandatoryUnits = {
                     wh_main_chs_inf_chosen_1 = 1,

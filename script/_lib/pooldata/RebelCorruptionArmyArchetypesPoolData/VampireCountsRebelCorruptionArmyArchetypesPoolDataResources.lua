@@ -8,7 +8,6 @@ function GetVampireCountsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_dlc04_vmp_veh_corpse_cart_1 = 1,
                 },
                 UnitTags = {"Chaff", "Beasts", "Spirits",},
-                ArmySize = 13,
                 Weighting = 3,
             },
             MasterNecromancerLow = {
@@ -29,7 +28,7 @@ function GetVampireCountsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_dlc04_vmp_veh_mortis_engine_0 = 1,
                 },
                 UnitTags = {"Chaff", "Beasts", "Spirits",},
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 3,
             },
             StrigoiGhoulKingMedium = {
@@ -39,7 +38,7 @@ function GetVampireCountsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_main_vmp_mon_crypt_horrors = 1,
                 },
                 UnitTags = {"Ghouls", "Beasts", },
-                ArmySize = 17,
+                ArmySize = 15,
                 Weighting = 1,
             },
             VampireLordMedium = {
@@ -49,7 +48,7 @@ function GetVampireCountsRebelCorruptionArmyArchetypesPoolDataResources()
                     wh_main_vmp_cav_black_knights_3 = 1,
                 },
                 UnitTags = {"Chaff", "GraveGuard", "BlackKnights", "VampiricBeasts"},
-                ArmySize = 20,
+                ArmySize = 15,
                 Weighting = 1,
             },
             VonCarsteinHigh = {
