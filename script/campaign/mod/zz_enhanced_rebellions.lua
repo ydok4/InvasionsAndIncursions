@@ -13,6 +13,11 @@ require 'script/_lib/core/model/Logger';
 -- Listeners
 require 'script/_lib/core/listeners/ERListeners';
 
+cm:add_first_tick_callback(
+    function(context)
+        cm:disable_rebellions_worldwide(true);
+    end
+);
 
 function zz_enhanced_rebellions()
     out("EnR: Main mod function");
