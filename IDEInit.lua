@@ -3,7 +3,7 @@ testCharacter = {
     cqi = function() return 123 end,
     get_forename = function() return "Direfan"; end,
     get_surname = function() return "Cylostra"; end,
-    character_subtype_key = function() return "chs_egrimm_van_horstmann"; end,
+    character_subtype_key = function() return "brt_louen_leoncouer"; end,
     command_queue_index = function() end,
     has_military_force = function() return true end,
     military_force = function() return testMilitaryForce; end,
@@ -42,6 +42,7 @@ humanFaction = {
     subculture = function()
         return "wh2_main_sc_hef_high_elves";
     end,
+    is_dead = function() return true; end,
     character_list = function()
         return {
             num_items = function()
@@ -92,6 +93,7 @@ testFaction = {
     subculture = function()
         return "wh_dlc05_sc_wef_wood_elves";
     end,
+    is_dead = function() return true; end,
     character_list = function()
         return {
             num_items = function()
@@ -137,6 +139,7 @@ testFaction2 = {
     subculture = function()
         return "wh_main_sc_nor_norsca";
     end,
+    is_dead = function() return true; end,
     character_list = function()
         return {
             num_items = function()
@@ -275,7 +278,7 @@ function get_cm()
         get_region = function()
             return {
                 cqi = function() return 123; end,
-                province_name = function() return "wh2_main_vor_isthmus_of_lustria"; end,
+                province_name = function() return "wh_main_couronne_et_languille"; end,
                 religion_proportion = function() return 0; end,
                 public_order = function() return -100; end,
                 owning_faction = function() return testFaction; end,
@@ -310,6 +313,9 @@ function get_cm()
                     } end ,
                 } end,
                 settlement = function() return {
+                    is_port = function()
+                        return true;
+                    end,
                     slot_list = function() return {
                         num_items = function () return 2; end,
                         item_at = function(index)
@@ -376,6 +382,15 @@ function get_cm()
         apply_effect_bundle_to_region = function() end,
         remove_effect_bundle_from_region = function() end,
         get_saved_value = function() return nil; end,
+        create_new_custom_effect_bundle = function()
+            return {
+                set_duration = function() end,
+                add_effect = function() end,
+            };
+        end,
+        apply_custom_effect_bundle_to_region = function() end,
+        get_difficulty = function() return "hard"; end,
+        add_first_tick_callback = function() end,
     };
 end
 
@@ -509,6 +524,15 @@ local MockContext_ER_CheckFactionRebellions = {
     },
 }
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
+
+zz_enhanced_rebellions();
+
+turn_number = 2;
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
+
+turn_number = 3;
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
+
 ER_InitialiseSaveHelpers(cm, context);
 ER_SaveActiveRebellions(ER);
 ER_SaveActiveRebelForces(ER);
@@ -518,11 +542,3 @@ ER_InitialiseLoadHelpers(cm, context);
 ER_LoadActiveRebellions(ER);
 ER_LoadRebelForces(ER);
 ER_LoadPastRebellions(ER);
-
-zz_enhanced_rebellions();
-
-turn_number = 2;
-mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
-
-turn_number = 3;
-mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
