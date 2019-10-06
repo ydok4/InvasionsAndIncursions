@@ -10,7 +10,7 @@ function ER_InitialiseSaveHelpers(cmObject, contextObject)
 end
 
 function ER_SaveActiveRebellions(er)
-    out("Enr: Saving active rebellions");
+    out("EnR: Saving active rebellions");
     local er_active_rebellions_header = {};
 
     local numberOfRebellions = 0;
@@ -27,7 +27,7 @@ function ER_SaveActiveRebellions(er)
             numberOfRebellions = numberOfRebellions + 1;
 
             if numberOfRebellions % MAX_NUM_SAVE_TABLE_KEYS == 0 then
-                out("Enr: Saving table number "..(tableCount + 1));
+                out("EnR: Saving table number "..(tableCount + 1));
                 cm:save_named_value("er_active_rebellions_"..tableCount, nthTable, context);
                 tableCount = tableCount + 1;
                 nthTable = {};
@@ -36,14 +36,14 @@ function ER_SaveActiveRebellions(er)
     end
     -- Saving the remaining active rebellions
     cm:save_named_value("er_active_rebellions_"..tableCount, nthTable, context);
-    out("Enr: Saving "..numberOfRebellions.." active rebellions");
+    out("EnR: Saving "..numberOfRebellions.." active rebellions");
 
     er_active_rebellions_header["TotalActiveRebellions"] = numberOfRebellions;
     cm:save_named_value("er_active_rebellions_header", er_active_rebellions_header, context);
 end
 
 function ER_SaveActiveRebelForces(er)
-    out("Enr: Saving rebel forces");
+    out("EnR: Saving rebel forces");
     local er_rebellion_forces_header = {};
 
     local numberOfRebelForces = 0;
@@ -63,7 +63,7 @@ function ER_SaveActiveRebelForces(er)
         numberOfRebelForces = numberOfRebelForces + 1;
 
         if numberOfRebelForces % MAX_NUM_SAVE_TABLE_KEYS == 0 then
-            out("Enr: Saving table number "..(tableCount + 1));
+            out("EnR: Saving table number "..(tableCount + 1));
             cm:save_named_value("er_rebel_forces_"..tableCount, nthTable, context);
             tableCount = tableCount + 1;
             nthTable = {};
@@ -71,14 +71,14 @@ function ER_SaveActiveRebelForces(er)
     end
     -- Saving the remaining active rebellions
     cm:save_named_value("er_rebel_forces_"..tableCount, nthTable, context);
-    out("Enr: Saving "..numberOfRebelForces.." rebel forces");
+    out("EnR: Saving "..numberOfRebelForces.." rebel forces");
 
     er_rebellion_forces_header["TotalRebelForces"] = numberOfRebelForces;
     cm:save_named_value("er_rebellion_forces_header", er_rebellion_forces_header, context);
 end
 
 function ER_SavePastRebellions(er)
-    out("Enr: Saving past rebellions");
+    out("EnR: Saving past rebellions");
     local er_past_rebellions_header = {};
 
     local numberOfPastRebellions = 0;
@@ -87,7 +87,7 @@ function ER_SavePastRebellions(er)
 
     for provinceKey, pastProvinceData in pairs(er.PastRebellions) do
         for index, pastRebellionData in pairs(pastProvinceData) do
-            nthTable[provinceKey.."/"..pastRebellionData.SpawnTurn.."/"..pastRebellionData.Target] = {
+            nthTable[provinceKey.."/"..pastRebellionData.SpawnTurn.."/"..pastRebellionData.TargetRegion] = {
                 pastRebellionData.SpawnTurn,
                 pastRebellionData.SubcultureKey,
                 pastRebellionData.AgentSubTypeKey,
@@ -99,7 +99,7 @@ function ER_SavePastRebellions(er)
             numberOfPastRebellions = numberOfPastRebellions + 1;
 
             if numberOfPastRebellions % MAX_NUM_SAVE_TABLE_KEYS == 0 then
-                out("Enr: Saving table number "..(tableCount + 1));
+                out("EnR: Saving table number "..(tableCount + 1));
                 cm:save_named_value("er_past_rebellions_"..tableCount, nthTable, context);
                 tableCount = tableCount + 1;
                 nthTable = {};
@@ -108,7 +108,7 @@ function ER_SavePastRebellions(er)
     end
     -- Saving the remaining active rebellions
     cm:save_named_value("er_past_rebellions_"..tableCount, nthTable, context);
-    out("Enr: Saving "..numberOfPastRebellions.." past rebellions");
+    out("EnR: Saving "..numberOfPastRebellions.." past rebellions");
 
     er_past_rebellions_header["TotalPastRebellions"] = numberOfPastRebellions;
     cm:save_named_value("er_past_rebellions_header", er_past_rebellions_header, context);

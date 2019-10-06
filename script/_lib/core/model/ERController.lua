@@ -315,6 +315,12 @@ end
 function ERController:GetArmyArchetypeData(subcultureKey, archetypeKey)
     if _G.ERResources.RebelArmyArchetypesPoolData[subcultureKey] == nil then
         return _G.ERResources.RebelCorruptionArmyArchetypesPoolData[subcultureKey][subcultureKey][archetypeKey];
+    elseif _G.ERResources.RebelArmyArchetypesPoolData[subcultureKey][subcultureKey][archetypeKey] == nil then
+        local armySubcultureKey = subcultureKey;
+        if not string.match(subcultureKey, "_corruption") then
+            armySubcultureKey = armySubcultureKey.."_corruption";
+        end
+        return _G.ERResources.RebelCorruptionArmyArchetypesPoolData[armySubcultureKey][armySubcultureKey][archetypeKey];
     else
         return _G.ERResources.RebelArmyArchetypesPoolData[subcultureKey][subcultureKey][archetypeKey];
     end
