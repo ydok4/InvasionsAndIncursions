@@ -562,7 +562,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
             cm:force_declare_war(rebellionData.FactionKey, self.HumanFaction:name(), false, false);
             atWarWithFactions[self.HumanFaction:name()] = true;
             -- Then do the same for any adjacent factions
-            local adjacentRegionList = region:adjacent_region_list();
+            --[[local adjacentRegionList = region:adjacent_region_list();
             for i = 0, adjacentRegionList:num_items() - 1 do
                 local adjacentRegion = adjacentRegionList:item_at(i);
                 if adjacentRegion:is_null_interface() == false
@@ -571,7 +571,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction)
                     atWarWithFactions[adjacentRegion:owning_faction():name()] = true;
                     cm:force_declare_war(rebellionData.FactionKey, adjacentRegion:owning_faction():name(), false, false);
                 end
-            end
+            end--]]
             -- We gave the army free upkeep so it won't take attrition
             cm:apply_effect_bundle_to_force("wh_main_bundle_military_upkeep_free_force", militaryForceCqi, -1);
             -- Disable movement so they won't run away

@@ -284,7 +284,8 @@ function ER_SetupPostUIListeners(er, core)
                         er.Logger:Log("Attacking region: "..rebelForceTargetRegionKey);
                         cm:attack_region(characterLookupString, rebelForceTargetRegionKey, true);
                     else
-                        -- Then do the same for any adjacent factions
+                        -- If the region does belong to the QB/Proxy Rebel faction declare war on the
+                        -- surrounding factions
                         local adjacentRegionList = rebelForceTarget:adjacent_region_list();
                         local atWarWithFactions = {};
                         cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
