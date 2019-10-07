@@ -2299,6 +2299,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     },
                 },
             },
+            PassiveRebelEvents = {
+                wh_main_sc_brt_bretonnia = {
+                    ReemergeanceArchetypeCouronne = {
+                        Weighting = 0,
+                    },
+                },
+            },
         },
         wh_main_death_pass = {
             IsAdjacentToSea = false,

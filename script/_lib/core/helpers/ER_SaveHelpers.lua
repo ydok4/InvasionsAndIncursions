@@ -59,6 +59,7 @@ function ER_SaveActiveRebelForces(er)
             rebelData.ArmyArchetypeKey,
             rebelData.SpawnedOnSea,
             rebelData.SpawnCoordinates,
+            rebelData.CleanUpForce,
         };
         numberOfRebelForces = numberOfRebelForces + 1;
 
@@ -106,10 +107,110 @@ function ER_SavePastRebellions(er)
             end
         end
     end
-    -- Saving the remaining active rebellions
+    -- Saving the remaining past rebellions
     cm:save_named_value("er_past_rebellions_"..tableCount, nthTable, context);
     out("EnR: Saving "..numberOfPastRebellions.." past rebellions");
 
     er_past_rebellions_header["TotalPastRebellions"] = numberOfPastRebellions;
     cm:save_named_value("er_past_rebellions_header", er_past_rebellions_header, context);
+end
+
+function ER_SaveActivePREs(er)
+    out("EnR: Saving active PREs");
+    local er_active_pres_header = {};
+
+    local numberOfActivePREsRebellions = 0;
+    local tableCount = 1;
+    local nthTable = {};
+
+    for provinceKey, pastProvinceData in pairs(er.ActivePREs) do
+        for index, activePREData in pairs(pastProvinceData) do
+            nthTable[provinceKey.."/"..activePREData.SpawnTurnNumber.."/"..activePREData.TargetRegion] = {
+                activePREData.PREKey,
+                activePREData.PRESubculture,
+                activePREData.PREFaction,
+                activePREData.SpawnTurnNumber,
+                activePREData.EffectBundleDuration,
+                activePREData.TargetRegion,
+                activePREData.IsRebelSpawnLocked,
+            };
+            numberOfActivePREsRebellions = numberOfActivePREsRebellions + 1;
+
+            if numberOfActivePREsRebellions % MAX_NUM_SAVE_TABLE_KEYS == 0 then
+                out("EnR: Saving table number "..(tableCount + 1));
+                cm:save_named_value("er_active_pres_"..tableCount, nthTable, context);
+                tableCount = tableCount + 1;
+                nthTable = {};
+            end
+        end
+    end
+    -- Saving the remaining active PREs
+    cm:save_named_value("er_active_pres_"..tableCount, nthTable, context);
+    out("EnR: Saving "..numberOfActivePREsRebellions.." active PREs");
+
+    er_active_pres_header["TotalActivePREs"] = numberOfActivePREsRebellions;
+    cm:save_named_value("er_active_pres_header", er_active_pres_header, context);
+end
+
+function ER_SavePastPREs(er)
+    out("EnR: Saving past PREs");
+    local er_past_pres_header = {};
+
+    local numberOfPastPREs = 0;
+    local tableCount = 1;
+    local nthTable = {};
+
+    for provinceKey, pastProvinceData in pairs(er.PastPREs) do
+        for index, pastPREData in pairs(pastProvinceData) do
+            nthTable[provinceKey.."/"..pastPREData.SpawnTurnNumber.."/"..pastPREData.TargetRegion] = {
+                pastPREData.PREKey,
+                pastPREData.SpawnTurnNumber,
+                pastPREData.PREFaction,
+                pastPREData.PRESubculture,
+                pastPREData.TargetRegion,
+                pastPREData.TargetFaction,
+                pastPREData.CompletedTurn,
+            };
+            numberOfPastPREs = numberOfPastPREs + 1;
+
+            if numberOfPastPREs % MAX_NUM_SAVE_TABLE_KEYS == 0 then
+                out("EnR: Saving table number "..(tableCount + 1));
+                cm:save_named_value("er_past_pres_"..tableCount, nthTable, context);
+                tableCount = tableCount + 1;
+                nthTable = {};
+            end
+        end
+    end
+    -- Saving the remaining past PREs
+    cm:save_named_value("er_past_pres_"..tableCount, nthTable, context);
+    out("EnR: Saving "..numberOfPastPREs.." past PREs");
+
+    er_past_pres_header["TotalPastPREs"] = numberOfPastPREs;
+    cm:save_named_value("er_past_pres_header", er_past_pres_header, context);
+end
+
+function ER_SaveReemergedFactions(er)
+    out("EnR: Saving re-emerged factions");
+    local er_reemerged_factions_header = {};
+
+    local numberOfReemergedFactions = 0;
+    local tableCount = 1;
+    local nthTable = {};
+
+    for factionKey, isReemerged in pairs(er.ReemergedFactions) do
+        nthTable[factionKey] = isReemerged;
+        numberOfReemergedFactions = numberOfReemergedFactions + 1;
+        if numberOfReemergedFactions % MAX_NUM_SAVE_TABLE_KEYS == 0 then
+            out("EnR: Saving table number "..(tableCount + 1));
+            cm:save_named_value("er_reemerged_factions_"..tableCount, nthTable, context);
+            tableCount = tableCount + 1;
+            nthTable = {};
+        end
+    end
+    -- Saving the remaining reemerged factions
+    cm:save_named_value("er_reemerged_factions_"..tableCount, nthTable, context);
+    out("EnR: Saving "..numberOfReemergedFactions.." reemerged factions");
+
+    er_reemerged_factions_header["TotalReemergedFactions"] = numberOfReemergedFactions;
+    cm:save_named_value("er_reemerged_factions_header", er_reemerged_factions_header, context);
 end

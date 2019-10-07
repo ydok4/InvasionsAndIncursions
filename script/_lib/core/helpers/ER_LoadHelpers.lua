@@ -12,15 +12,15 @@ end
 function ER_LoadActiveRebellions(er)
     out("EnR: LoadActiveRebellions");
     if cm == nil then
-        out("Enr: Can't access CM");
+        out("EnR: Can't access CM");
         return;
     end
     local er_active_rebellions_header = cm:load_named_value("er_active_rebellions_header", {}, context);
     if er_active_rebellions_header == nil or er_active_rebellions_header["TotalActiveRebellions"] == nil then
-        out("Enr: No active rebellions to load");
+        out("EnR: No active rebellions to load");
         return;
     else
-        out("Enr: Loading "..er_active_rebellions_header["TotalActiveRebellions"].." active rebellions");
+        out("EnR: Loading "..er_active_rebellions_header["TotalActiveRebellions"].." active rebellions");
     end
 
     local serialised_save_table_units = {};
@@ -56,15 +56,15 @@ end
 function ER_LoadRebelForces(er)
     out("EnR: LoadRebelForces");
     if cm == nil then
-        out("Enr: Can't access CM");
+        out("EnR: Can't access CM");
         return;
     end
     local er_rebellion_forces_header = cm:load_named_value("er_rebellion_forces_header", {}, context);
     if er_rebellion_forces_header == nil or er_rebellion_forces_header["TotalRebelForces"] == nil then
-        out("Enr: No rebel forces to load");
+        out("EnR: No rebel forces to load");
         return;
     else
-        out("Enr: Loading "..er_rebellion_forces_header["TotalRebelForces"].." rebel forces");
+        out("EnR: Loading "..er_rebellion_forces_header["TotalRebelForces"].." rebel forces");
     end
 
     local serialised_save_table_units = {};
@@ -99,15 +99,15 @@ end
 function ER_LoadPastRebellions(er)
     out("EnR: LoadPastRebellions");
     if cm == nil then
-        out("Enr: Can't access CM");
+        out("EnR: Can't access CM");
         return;
     end
     local er_past_rebellions_header = cm:load_named_value("er_past_rebellions_header", {}, context);
     if er_past_rebellions_header == nil or er_past_rebellions_header["TotalPastRebellions"] == nil then
-        out("Enr: No past rebellions to load");
+        out("EnR: No past rebellions to load");
         return;
     else
-        out("Enr: Loading "..er_past_rebellions_header["TotalPastRebellions"].." past rebellions");
+        out("EnR: Loading "..er_past_rebellions_header["TotalPastRebellions"].." past rebellions");
     end
 
     local serialised_save_table_units = {};
@@ -139,4 +139,127 @@ function ER_LoadPastRebellions(er)
     end
 
     out("EnR: Finished loading past rebellion tables");
+end
+
+function ER_LoadActivePREs(er)
+    out("EnR: ER_LoadActivePREs");
+    if cm == nil then
+        out("EnR: Can't access CM");
+        return;
+    end
+    local er_active_pres_header = cm:load_named_value("er_active_pres_header", {}, context);
+    if er_active_pres_header == nil or er_active_pres_header["TotalActivePREs"] == nil then
+        out("EnR: No active PREs to load");
+        return;
+    else
+        out("EnR: Loading "..er_active_pres_header["TotalActivePREs"].." active PREs");
+    end
+
+    local serialised_save_table_pres = {};
+    er.ActivePREs = {};
+    local tableCount = math.ceil(er_active_pres_header["TotalActivePREs"] / MAX_NUM_SAVE_TABLE_KEYS);
+    for n = 1, tableCount do
+        out("EnR: Loading table "..tostring(n));
+        local nthTable = cm:load_named_value("er_active_pres_"..tostring(n), {}, context);
+        ConcatTableWithKeys(serialised_save_table_pres, nthTable);
+    end
+    out("EnR: Concatted serialised save data");
+
+    for key, activePREData in pairs(serialised_save_table_pres) do
+        --out("EnR: Checking key: "..key);
+        local provinceKey = key:match("(.-)/");
+        if er.ActivePREs[provinceKey] == nil then
+            er.ActivePREs[provinceKey] = {};
+        end
+        local activeProvincePREs = er.ActivePREs[provinceKey];
+        activeProvincePREs[#activeProvincePREs + 1] = {
+            PREKey = activePREData[1],
+            PRESubculture = activePREData[2],
+            PREFaction = activePREData[3],
+            SpawnTurnNumber = activePREData[4],
+            EffectBundleDuration = activePREData[5],
+            TargetRegion = activePREData[6],
+            IsRebelSpawnLocked = activePREData[7],
+            CleanUpForce = activePREData[8],
+        };
+    end
+
+    out("EnR: Finished loading active pres tables");
+end
+
+function ER_LoadPastPREs(er)
+    out("EnR: ER_LoadPastPREs");
+    if cm == nil then
+        out("EnR: Can't access CM");
+        return;
+    end
+    local er_past_pres_header = cm:load_named_value("er_past_pres_header", {}, context);
+    if er_past_pres_header == nil or er_past_pres_header["TotalPastPREs"] == nil then
+        out("EnR: No past PREs to load");
+        return;
+    else
+        out("EnR: Loading "..er_past_pres_header["TotalPastPREs"].." past PREs");
+    end
+
+    local serialised_save_table_pres = {};
+    er.PastPREs = {};
+    local tableCount = math.ceil(er_past_pres_header["TotalPastPREs"] / MAX_NUM_SAVE_TABLE_KEYS);
+    for n = 1, tableCount do
+        out("EnR: Loading table "..tostring(n));
+        local nthTable = cm:load_named_value("er_past_pres_"..tostring(n), {}, context);
+        ConcatTableWithKeys(serialised_save_table_pres, nthTable);
+    end
+    out("EnR: Concatted serialised save data");
+
+    for key, pastPREData in pairs(serialised_save_table_pres) do
+        --out("EnR: Checking key: "..key);
+        local provinceKey = key:match("(.-)/");
+        if er.PastPREs[provinceKey] == nil then
+            er.PastPREs[provinceKey] = {};
+        end
+        local activeProvincePREs = er.PastPREs[provinceKey];
+        activeProvincePREs[#activeProvincePREs + 1] = {
+            PREKey = pastPREData[1],
+            SpawnTurnNumber = pastPREData[2],
+            PREFaction = pastPREData[3],
+            PRESubculture = pastPREData[4],
+            TargetRegion = pastPREData[5],
+            TargetFaction = pastPREData[6],
+            CompletedTurn = pastPREData[7],
+        };
+    end
+
+    out("EnR: Finished loading past pres tables");
+end
+
+function ER_LoadReemergedFactions(er)
+    out("EnR: ER_LoadReemergedFactions");
+    if cm == nil then
+        out("EnR: Can't access CM");
+        return;
+    end
+    local er_reemerged_factions_header = cm:load_named_value("er_reemerged_factions_header", {}, context);
+    if er_reemerged_factions_header == nil or er_reemerged_factions_header["TotalReemergedFactions"] == nil then
+        out("EnR: No reemerged factions to load");
+        return;
+    else
+        out("EnR: Loading "..er_reemerged_factions_header["TotalReemergedFactions"].." reemerged factions");
+    end
+
+    local serialised_save_table_pres = {};
+    er.ReemergedFactions = {};
+    local tableCount = math.ceil(er_reemerged_factions_header["TotalReemergedFactions"] / MAX_NUM_SAVE_TABLE_KEYS);
+    for n = 1, tableCount do
+        out("EnR: Loading table "..tostring(n));
+        local nthTable = cm:load_named_value("er_reemerged_factions_"..tostring(n), {}, context);
+        ConcatTableWithKeys(serialised_save_table_pres, nthTable);
+    end
+    out("EnR: Concatted serialised save data");
+
+    for reemergedFactionKey, isReemerged in pairs(serialised_save_table_pres) do
+        out("EnR: Reemerged faction:  "..reemergedFactionKey);
+        er.ReemergedFactions[reemergedFactionKey] = isReemerged;
+    end
+
+    out("EnR: Finished loading reemerged faction tables");
 end

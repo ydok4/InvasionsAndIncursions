@@ -1,5 +1,7 @@
 function ER_SetupPostUIListeners(er, core)
 
+    -- The following listeners exist to try and reduce the amount of
+    -- event feed spam from rebel factions dying
     local isQBFactionInvolvedInBattle = false;
     core:add_listener(
         "ER_PendingBattle",
@@ -65,6 +67,8 @@ function ER_SetupPostUIListeners(er, core)
         end,
     true);
 
+    -- Checks provinces for existing rebels and whether the data needs to be cleaned up
+    -- and performs the actions to spawn rebels
     core:add_listener(
         "ER_CheckFactionRebellions",
         "FactionAboutToEndTurn",
@@ -76,161 +80,25 @@ function ER_SetupPostUIListeners(er, core)
             local faction = context:faction();
             local factionKey = faction:name();
             local regionList = faction:region_list();
-            local outputRegionChance = false;
-            if factionKey == er.HumanFaction:name() then
-                outputRegionChance = true;
-            end
             -- Keeps track of the provinces we check
             -- we have 1 roll per province per turn
             local checkedProvinces = {};
             for i = 0, regionList:num_items() - 1 do
                 local region = regionList:item_at(i);
-                local regionKey = region:name();
                 local provinceKey = region:province_name();
-                if outputRegionChance == true and checkedProvinces[provinceKey] == nil then
-                    er.Logger:Log("Checking player province: "..provinceKey);
-                    --er.Logger:Log("Checking player region: "..regionKey);
-                end
                 local rebellionInFactionProvince = false;
-                local publicOrder = region:public_order();
-                -- If we have a negative public order
-                -- and
-                -- we don't have any active rebel armies
-                -- TBD: Won't handle multiple rebellions, at least not initially
-                if er.ActiveRebellions[provinceKey] ~= nil
-                and TableHasAnyValue(er.ActiveRebellions[provinceKey].Forces)
-                and checkedProvinces[provinceKey] == nil then
-                    local turnNumber = cm:model():turn_number();
-                    local rebelData = er.ActiveRebellions[provinceKey];
-                    for index, militaryForceCqi in pairs(rebelData.Forces) do
-                        local militaryForce = cm:model():military_force_for_command_queue_index(tonumber(militaryForceCqi));
-                        local rebelForceData = er.RebelForces[tostring(militaryForceCqi)];
-                        local rebelForceTarget = cm:get_region(rebelForceData.Target);
-                        if rebelForceTarget:is_null_interface() == false
-                        and rebelForceTarget:is_abandoned() == true then
-                            local rebelForceTargetRegionKey = rebelForceTarget:name();
-                            er.Logger:Log("Target region is abandoned: "..rebelForceTargetRegionKey);
-                            local character = militaryForce:general_character();
-                            local characterLookupString = "character_cqi:"..character:command_queue_index();
-                            cm:cai_enable_movement_for_character(characterLookupString);
-                            er.Logger:Log("Untracking military force "..militaryForceCqi);
-                            rebelData.Forces[index] = nil;
-                            er:AddPastRebellion(rebelForceData);
-                            er.RebelForces[militaryForceCqi] = nil;
-                            -- Finally, we kill them and their force
-                            cm:kill_character(character:command_queue_index(), true, true);
-                            er.Logger:Log_Finished();
-                        elseif rebelForceTarget:owning_faction():name() == factionKey then
-                            local rebelForceTargetRegionKey = rebelForceTarget:name();
-                            rebellionInFactionProvince = true;
-                            -- We need to first check for cases where we need to remove any rebels in the province
-                            -- This happens when the rebels have been killed.
-                            if militaryForce == nil
-                            or militaryForce:is_null_interface() then
-                                if militaryForce == nil then
-                                    er.Logger:Log("Military force is missing");
-                                end
-                                er.Logger:Log("Rebellion force: "..militaryForceCqi.." is missing from region: "..rebelForceTargetRegionKey);
-                                rebelData.Forces[index] = nil;
-                                er:AddPastRebellion(rebelForceData);
-                                er.RebelForces[militaryForceCqi] = nil;
-                                er.Logger:Log_Finished();
-                                er:UpdateDefeatedRebelEffectBundle(rebelForceTargetRegionKey);
-                            else
-                                local character = militaryForce:general_character();
-                                -- To ensure we are only updating a rebel force once per turn
-                                -- we check if the target region owner matches the faction whose turn we are
-                                -- checking
-                                if region:owning_faction():name() == rebelForceTarget:owning_faction():name() then
-                                    er.Logger:Log("Checking military force: "..militaryForceCqi);
-                                    if rebelForceData.SpawnedOnSea == true
-                                    and character:region():is_null_interface() then
-                                        er.Logger:Log("Character is in sea still");
-                                        local characterLookupString = "character_cqi:"..character:command_queue_index();
-                                        local owningFactionKey = rebelForceTarget:owning_faction():name();
-                                        local interimX, interimY = cm:find_valid_spawn_location_for_character_from_settlement(
-                                            owningFactionKey,
-                                            rebelForceTargetRegionKey,
-                                            -- Spawn on sea
-                                            false,
-                                            -- Rebellion spawn
-                                            true,
-                                            -- Spawn distance (optional).
-                                            -- Note: 9 is the distance which is also used for Skaven
-                                            -- under city incursions
-                                            9
-                                        );
-                                        cm:teleport_to(characterLookupString, interimX, interimY, true);
-                                        cm:cai_disable_movement_for_character(characterLookupString);
-                                        cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
-                                    elseif rebelForceData.SpawnTurn + 3 > turnNumber
-                                    and rebelForceData.SpawnedOnSea == false then
-                                        er.Logger:Log("Granting units to rebellion in region: "..rebelForceTargetRegionKey);
-                                        local characterLookupString = "character_cqi:"..character:command_queue_index();
-                                        if rebelForceData.SpawnedOnSea == false then
-                                            cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
-                                        end
-                                        er:GrantUnitsForForce(rebelForceData, militaryForce);
-                                    else
-                                        local positionString = character:logical_position_x().."/"..character:logical_position_y();
-                                        -- The character should move on the turn after we tell them to attack
-                                        -- If their position matches their spawn position, then they are stuck
-                                        -- and should be removed. This is pretty rare but can happen in some settlements
-                                        if rebelForceData.SpawnTurn + 5 < turnNumber
-                                        and positionString == rebelForceData.SpawnCoordinates then
-                                            er.Logger:Log("Military force has stuck around too long, removing the force for faction: "..character:faction():name());
-                                            -- Clean up force data
-                                            rebelData.Forces[index] = nil;
-                                            er:AddPastRebellion(rebelForceData);
-                                            er.RebelForces[militaryForceCqi] = nil;
-                                            -- Finally, we kill them and their force
-                                            cm:kill_character(character:command_queue_index(), true, true);
-                                            er.Logger:Log_Finished();
-                                        end
-                                    end
-                                    er.Logger:Log_Finished();
-                                end
-                            end
+                if checkedProvinces[provinceKey] == nil then
+                    rebellionInFactionProvince = er:UpdateExistingRebels(region);
+                    if rebellionInFactionProvince == false then
+                        local spawnedRebellion = false;
+                        spawnedRebellion = er:UpdatePREs(region);
+                        er:SpawnPREs(region);
+                        if spawnedRebellion == false then
+                            spawnedRebellion = er:CheckForRebelSpawn(region);
                         end
-                    end
-                end
-                if publicOrder < 0
-                and rebellionInFactionProvince == false
-                and checkedProvinces[provinceKey] == nil then
-                    local rebellionChance = math.abs(publicOrder);
-                    if outputRegionChance == true then
-                        er.Logger:Log("Rebellion chance: "..rebellionChance);
-                        er.Logger:Log_Finished();
-                    end
-                    if rebellionChance > 50 and rebellionChance ~= 100 then
-                        rebellionChance = 50;
-                    end
-                    local spawnRebellion = Roll100(rebellionChance);
-                    if spawnRebellion then
-                        if outputRegionChance == true then
-                            er.Logger:Log("Spawning rebellion for player.");
-                        end
-                        -- We have a timeout since the last rebellion was destroyed.
-                        local isInTimeout = er:IsProvinceInTimeout(provinceKey, factionKey);
-                        if isInTimeout == true then
-                            er.Logger:Log("Can't spawn rebels for faction: "..faction:name().." because one was destroyed recently for faction.");
-                        else
+                        if spawnedRebellion == true then
                             numberOfRebellions = numberOfRebellions + 1;
-                            er.Logger:Log("Spawning rebellion in province: "..provinceKey.." for faction: "..faction:name());
-                            local rebellionRegionKey = er:GetRebellionRegionForNewRebellion(region);
-                            if rebellionRegionKey == nil then
-                                er.Logger:Log("Can't trigger rebellion in region");
-                            else
-                                cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
-                                er.Logger:Log("Rebellion will trigger in region: "..rebellionRegionKey);
-                                local rebellionRegion = cm:get_region(rebellionRegionKey);
-                                er:StartRebellion(rebellionRegion, faction);
-                                er.Logger:Log("Spawned rebellion in province: "..provinceKey);
-                            end
                         end
-                        er.Logger:Log_Finished();
-                    else
-                        er.Logger:Log_Finished();
                     end
                 end
                 checkedProvinces[provinceKey] = true;
@@ -238,7 +106,7 @@ function ER_SetupPostUIListeners(er, core)
         end,
         true
     );
-
+    -- Another event feed cleanup listener which happens after we spawn the rebels
     core:add_listener(
 		"ER_ScriptedEventEnableDiplomacyListener",
 		"ER_ScriptedEventEnableDiplomacy",
@@ -254,12 +122,14 @@ function ER_SetupPostUIListeners(er, core)
         end,
 		true
 	);
-
+    -- Call the attack region command for the rebels when the QB faction begins their turn
     core:add_listener(
         "ER_RebelAttack",
         "FactionBeginTurnPhaseNormal",
         function(context)
-            return context:faction():is_quest_battle_faction() == true;
+            local factionKey = context:faction():name();
+            return er.ReemergedFactions[factionKey] == true
+            or context:faction():is_quest_battle_faction() == true;
         end,
         function(context)
             local faction = context:faction();
@@ -274,29 +144,37 @@ function ER_SetupPostUIListeners(er, core)
                     local characterLookupString = "character_cqi:"..character:command_queue_index();
                     local turnNumber = cm:model():turn_number();
                     local rebelForceData = er.RebelForces[tostring(militaryForceCqi)];
-                    local rebelForceTarget = cm:get_region(rebelForceData.Target);
-                    if rebelForceData ~= nil
-                    and turnNumber > rebelForceData.SpawnTurn + 2
-                    and rebelForceTarget:owning_faction():name() ~= factionName then
-                        er.Logger:Log("Character has matching force data and is ready to attack");
-                        cm:cai_enable_movement_for_character(characterLookupString);
-                        local rebelForceTargetRegionKey = rebelForceTarget:name();
-                        er.Logger:Log("Attacking region: "..rebelForceTargetRegionKey);
-                        cm:attack_region(characterLookupString, rebelForceTargetRegionKey, true);
-                    else
-                        -- If the region does belong to the QB/Proxy Rebel faction declare war on the
-                        -- surrounding factions
-                        local adjacentRegionList = rebelForceTarget:adjacent_region_list();
-                        local atWarWithFactions = {};
-                        cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
-                        for i = 0, adjacentRegionList:num_items() - 1 do
-                            local adjacentRegion = adjacentRegionList:item_at(i);
-                            if adjacentRegion:is_null_interface() == false
-                            and adjacentRegion:is_abandoned() == false
-                            and atWarWithFactions[adjacentRegion:owning_faction():name()] == nil then
-                                atWarWithFactions[adjacentRegion:owning_faction():name()] = true;
-                                cm:force_declare_war(rebelForceData.FactionKey, adjacentRegion:owning_faction():name(), false, false);
+                    if rebelForceData ~= nil then
+                        local rebelForceTarget = cm:get_region(rebelForceData.Target);
+                        -- If the rebel force can attack and they do not occupy the settlement already
+                        if turnNumber > rebelForceData.SpawnTurn + 2
+                        and rebelForceTarget:owning_faction():name() ~= factionName then
+                            er.Logger:Log("Character has matching force data and is ready to attack");
+                            cm:cai_enable_movement_for_character(characterLookupString);
+                            local rebelForceTargetRegionKey = rebelForceTarget:name();
+                            er.Logger:Log("Attacking region: "..rebelForceTargetRegionKey);
+                            cm:attack_region(characterLookupString, rebelForceTargetRegionKey, true);
+                        -- This only happens if they have occuped the settlement and they are a QB faction
+                        elseif rebelForceTarget:owning_faction():name() == factionName
+                        and context:faction():is_quest_battle_faction() == true then
+                            -- If the region does belong to the QB/Proxy Rebel faction declare war on the
+                            -- surrounding factions
+                            local adjacentRegionList = rebelForceTarget:adjacent_region_list();
+                            local atWarWithFactions = {};
+                            cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
+                            for i = 0, adjacentRegionList:num_items() - 1 do
+                                local adjacentRegion = adjacentRegionList:item_at(i);
+                                if adjacentRegion:is_null_interface() == false
+                                and adjacentRegion:is_abandoned() == false
+                                and atWarWithFactions[adjacentRegion:owning_faction():name()] == nil then
+                                    atWarWithFactions[adjacentRegion:owning_faction():name()] = true;
+                                    cm:force_declare_war(rebelForceData.FactionKey, adjacentRegion:owning_faction():name(), false, false);
+                                end
                             end
+                        -- Non QB factions should be untracked and added as a past rebellion
+                        elseif rebelForceTarget:owning_faction():name() == factionName then
+                            er:AddPastRebellion(rebelForceData);
+                            er.RebelForces[militaryForceCqi] = nil;
                         end
                     end
                 end
@@ -305,6 +183,25 @@ function ER_SetupPostUIListeners(er, core)
         end,
         true
     );
+
+    -- Faction reemergeance listener to add the right PRE
+    core:add_listener(
+        "ER_IsFactionDestroyed",
+        "FactionTurnStart",
+        function(context)
+            local faction = context:faction();
+            return faction:is_dead() == true;
+        end,
+        function(context)
+
+        end,
+        true
+    );
+
+    -- PRE listeners
+
+    -- These listeners override the vanilla equivalents. This needs to happen because otherwise
+    -- the Norscan factions will keep confederating the Norscan Proxy Rebels
     er.Logger:Log("Overriding Norscan listeners");
     local NORSCA_SUBCULTURE = "wh_main_sc_nor_norsca";
     local NORSCA_CONFEDERATION_DILEMMA = "wh2_dlc08_confederate_";

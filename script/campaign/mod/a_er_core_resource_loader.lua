@@ -26,6 +26,7 @@ require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/VampireCoastRebelArmyA
 require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/VampireCountsRebelArmyArchetypesPoolDataResources'
 require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/WoodElfRebelArmyArchetypesPoolDataResources'
 
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/BretonniaPREPoolDataResources'
 
 _G.ERResources = {
     RebelFactionPoolDataResources = GetRebelFactionPoolDataResources(),
@@ -126,7 +127,13 @@ _G.ERResources = {
                 end
             end
         end
-    end
+    end,
+    PassiveRebelEventsPoolData = {
+        wh_main_sc_brt_bretonnia = GetBretonniaPREPoolDataResources(),
+    },
+    AddAdditionPassiveRebelEventResources = function(subculture, data)
+
+    end,
 };
 
 require 'script/_lib/dbexports/SubCultureNameGroupResources'

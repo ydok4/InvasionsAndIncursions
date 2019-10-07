@@ -1,5 +1,5 @@
-Generated name key is Daertoc   : [20, 09 2019 16:58:19]
-No tracked lords. Using first generated name.   : [20, 09 2019 16:58:19]
+Generated name key is Aesrit   : [07, 10 2019 15:05:14]
+No tracked lords. Using first generated name.   : [07, 10 2019 15:05:14]
 FINISHED
 
-Getting art set for sub type: grn_savage_orc_warboss   : [20, 09 2019 16:58:19]
+Getting art set for sub type: grn_orc_warboss   : [07, 10 2019 15:05:14]

@@ -26,6 +26,9 @@ function zz_enhanced_rebellions()
         RebelForces = ER.RebelForces,
         PastRebellions = ER.PastRebellions,
         EnableCorruptionArmies = true,
+        ActivePREs = ER.ActivePREs,
+        PastPREs = ER.PastPREs,
+        ReemergedFactions = ER.ReemergedFactions,
     });
     ER:Initialise(random_army_manager, true);
     ER.Logger:Log("Initialised");
@@ -68,8 +71,11 @@ cm:add_saving_game_callback(
             ER_SaveActiveRebellions(ER);
             ER_SaveActiveRebelForces(ER);
             ER_SavePastRebellions(ER);
+            ER_SaveActivePREs(ER);
+            ER_SavePastPREs(ER);
+            ER_SaveReemergedFactions(ER);
         end
-        out("Enr: Finished saving");
+        out("EnR: Finished saving");
     end
 );
 
@@ -82,6 +88,9 @@ cm:add_loading_game_callback(
             ER_LoadActiveRebellions(ER);
             ER_LoadRebelForces(ER);
             ER_LoadPastRebellions(ER);
+            ER_LoadActivePREs(ER);
+            ER_LoadPastPREs(ER);
+            ER_LoadReemergedFactions(ER);
         end
         out("EnR: Finished loading");
 	end

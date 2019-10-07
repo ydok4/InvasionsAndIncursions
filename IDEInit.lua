@@ -88,10 +88,10 @@ testFaction = {
         return "wh2_main_wef_bowmen_of_oreon";
     end,
     culture = function()
-        return "wh_dlc05_wef_wood_elves";
+        return "wh_main_sc_brt_bretonnia";
     end,
     subculture = function()
-        return "wh_dlc05_sc_wef_wood_elves";
+        return "wh_main_sc_brt_bretonnia";
     end,
     is_dead = function() return true; end,
     character_list = function()
@@ -280,7 +280,7 @@ function get_cm()
                 cqi = function() return 123; end,
                 province_name = function() return "wh_main_couronne_et_languille"; end,
                 religion_proportion = function() return 0; end,
-                public_order = function() return -100; end,
+                public_order = function() return -99; end,
                 owning_faction = function() return testFaction; end,
                 name = function() return "wh2_main_vor_heart_of_the_jungle_oreons_camp"; end,
                 is_province_capital = function() return false; end,
@@ -338,7 +338,10 @@ function get_cm()
         trigger_incident = function() end,
         trigger_dilemma = function() end,
         trigger_mission = function() end,
-        create_force_with_general = function(self, factionKey, forceString, regionKey, spawnX, spawnY, generalType, agentSubTypeKey, clanNameKey, dummyName1, foreNameKey, dummayName2, umm, callbackFunction)
+        create_force_with_general = function(self, factionKey, forceString, regionKey, spawnX, spawnY, generalType, agentSubTypeKey, clanNameKey, dummyName1, foreNameKey, dummyName2, umm, callbackFunction)
+            callbackFunction(123);
+        end,
+        create_force_with_existing_general = function(self, cqi, factionKey, forceString, regionKey, spawnX, spawnY, callbackFunction)
             callbackFunction(123);
         end,
         force_add_trait = function() end,
@@ -378,6 +381,7 @@ function get_cm()
         show_message_event_located = function() end,
         trigger_incident_with_targets = function() end,
         force_add_and_equip_ancillary = function() end,
+        force_add_ancillary = function() end,
         add_agent_experience = function() end,
         apply_effect_bundle_to_region = function() end,
         remove_effect_bundle_from_region = function() end,
@@ -391,6 +395,7 @@ function get_cm()
         apply_custom_effect_bundle_to_region = function() end,
         get_difficulty = function() return "hard"; end,
         add_first_tick_callback = function() end,
+        appoint_character_to_most_expensive_force = function() end,
     };
 end
 
@@ -537,8 +542,14 @@ ER_InitialiseSaveHelpers(cm, context);
 ER_SaveActiveRebellions(ER);
 ER_SaveActiveRebelForces(ER);
 ER_SavePastRebellions(ER);
+ER_SaveActivePREs(ER);
+ER_SavePastPREs(ER);
+ER_SaveReemergedFactions(ER);
 
 ER_InitialiseLoadHelpers(cm, context);
 ER_LoadActiveRebellions(ER);
 ER_LoadRebelForces(ER);
 ER_LoadPastRebellions(ER);
+ER_LoadActivePREs(ER);
+ER_LoadPastPREs(ER);
+ER_LoadReemergedFactions(ER);
