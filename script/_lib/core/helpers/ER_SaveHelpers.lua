@@ -130,7 +130,7 @@ function ER_SaveActivePREs(er)
                 activePREData.PRESubculture,
                 activePREData.PREFaction,
                 activePREData.SpawnTurnNumber,
-                activePREData.EffectBundleDuration,
+                activePREData.PREDuration,
                 activePREData.TargetRegion,
                 activePREData.IsRebelSpawnLocked,
             };
@@ -213,4 +213,83 @@ function ER_SaveReemergedFactions(er)
 
     er_reemerged_factions_header["TotalReemergedFactions"] = numberOfReemergedFactions;
     cm:save_named_value("er_reemerged_factions_header", er_reemerged_factions_header, context);
+end
+
+function ER_SaveConfederatedFactions(er)
+    out("EnR: Saving confederated factions");
+    local er_confederated_factions_header = {};
+
+    local numberOfConfederatedFactions = 0;
+    local tableCount = 1;
+    local nthTable = {};
+
+    for factionKey, isConfederated in pairs(er.ConfederatedFactions) do
+        out("EnR: Saving confederated faction: "..factionKey);
+        nthTable[factionKey] = isConfederated;
+        numberOfConfederatedFactions = numberOfConfederatedFactions + 1;
+        if numberOfConfederatedFactions % MAX_NUM_SAVE_TABLE_KEYS == 0 then
+            out("EnR: Saving table number "..(tableCount + 1));
+            cm:save_named_value("er_confederated_factions_"..tableCount, nthTable, context);
+            tableCount = tableCount + 1;
+            nthTable = {};
+        end
+    end
+    cm:save_named_value("er_confederated_factions_"..tableCount, nthTable, context);
+    out("EnR: Saving "..numberOfConfederatedFactions.." confederated factions");
+
+    er_confederated_factions_header["TotalConfederatedFactions"] = numberOfConfederatedFactions;
+    cm:save_named_value("er_confederated_factions_header", er_confederated_factions_header, context);
+end
+
+function ER_SaveMilitaryCrackDowns(er)
+    out("EnR: Saving military crackdowns");
+    local er_military_crackdowns_header = {};
+
+    local numberOfMilitaryCrackDowns = 0;
+    local tableCount = 1;
+    local nthTable = {};
+
+    for factionKey, crackDownData in pairs(er.MilitaryCrackDowns) do
+        nthTable[factionKey] = {
+            crackDownData.ProvinceKey,
+            crackDownData.TurnStart,
+        };
+        numberOfMilitaryCrackDowns = numberOfMilitaryCrackDowns + 1;
+        if numberOfMilitaryCrackDowns % MAX_NUM_SAVE_TABLE_KEYS == 0 then
+            out("EnR: Saving table number "..(tableCount + 1));
+            cm:save_named_value("er_military_crackdowns_"..tableCount, nthTable, context);
+            tableCount = tableCount + 1;
+            nthTable = {};
+        end
+    end
+    cm:save_named_value("er_military_crackdowns_"..tableCount, nthTable, context);
+    out("EnR: Saving "..numberOfMilitaryCrackDowns.." military crackdowns");
+
+    er_military_crackdowns_header["TotalMilitaryCrackDowns"] = numberOfMilitaryCrackDowns;
+    cm:save_named_value("er_military_crackdowns_header", er_military_crackdowns_header, context);
+end
+
+function ER_SaveTriggeredAgentDeployDilemmas(er)
+    out("EnR: Saving triggered agent deploy dilemmas");
+    local er_agent_deploy_dilemmas_header = {};
+
+    local numberOfAgentDeployDilemmas = 0;
+    local tableCount = 1;
+    local nthTable = {};
+
+    for dilemmaKey, isTriggered in pairs(er.TriggeredAgentDeployDilemmas) do
+        nthTable[dilemmaKey] = isTriggered;
+        numberOfAgentDeployDilemmas = numberOfAgentDeployDilemmas + 1;
+        if numberOfAgentDeployDilemmas % MAX_NUM_SAVE_TABLE_KEYS == 0 then
+            out("EnR: Saving table number "..(tableCount + 1));
+            cm:save_named_value("er_agent_deploy_dilemmas_"..tableCount, nthTable, context);
+            tableCount = tableCount + 1;
+            nthTable = {};
+        end
+    end
+    cm:save_named_value("er_agent_deploy_dilemmas_"..tableCount, nthTable, context);
+    out("EnR: Saving "..numberOfAgentDeployDilemmas.." agent deploy dilemmas");
+
+    er_agent_deploy_dilemmas_header["TotalAgentDeployDilemmas"] = numberOfAgentDeployDilemmas;
+    cm:save_named_value("er_agent_deploy_dilemmas_header", er_agent_deploy_dilemmas_header, context);
 end

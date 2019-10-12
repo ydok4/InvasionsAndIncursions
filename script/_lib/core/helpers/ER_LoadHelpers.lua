@@ -177,7 +177,7 @@ function ER_LoadActivePREs(er)
             PRESubculture = activePREData[2],
             PREFaction = activePREData[3],
             SpawnTurnNumber = activePREData[4],
-            EffectBundleDuration = activePREData[5],
+            PREDuration = activePREData[5],
             TargetRegion = activePREData[6],
             IsRebelSpawnLocked = activePREData[7],
             CleanUpForce = activePREData[8],
@@ -262,4 +262,101 @@ function ER_LoadReemergedFactions(er)
     end
 
     out("EnR: Finished loading reemerged faction tables");
+end
+
+function ER_LoadConfederatedFactions(er)
+    out("EnR: ER_LoadConfederatedFactions");
+    if cm == nil then
+        out("EnR: Can't access CM");
+        return;
+    end
+    local er_confederated_factions_header = cm:load_named_value("er_confederated_factions_header", {}, context);
+    if er_confederated_factions_header == nil or er_confederated_factions_header["TotalConfederatedFactions"] == nil then
+        out("EnR: No confederated factions to load");
+        return;
+    else
+        out("EnR: Loading "..er_confederated_factions_header["TotalConfederatedFactions"].." confederated factions");
+    end
+
+    local serialised_save_table_confederated_factions = {};
+    er.ConfederatedFactions = {};
+    local tableCount = math.ceil(er_confederated_factions_header["TotalConfederatedFactions"] / MAX_NUM_SAVE_TABLE_KEYS);
+    for n = 1, tableCount do
+        out("EnR: Loading table "..tostring(n));
+        local nthTable = cm:load_named_value("er_confederated_factions_"..tostring(n), {}, context);
+        ConcatTableWithKeys(serialised_save_table_confederated_factions, nthTable);
+    end
+    out("EnR: Concatted serialised save data");
+
+    for confederatedFactionKey, isConfederated in pairs(serialised_save_table_confederated_factions) do
+        out("EnR: Confederated faction:  "..confederatedFactionKey);
+        er.ReemergedFactions[confederatedFactionKey] = isConfederated;
+    end
+
+    out("EnR: Finished loading confederated faction tables");
+end
+
+function ER_LoadMilitaryCrackDowns(er)
+    out("EnR: ER_LoadMilitaryCrackDowns");
+    if cm == nil then
+        out("EnR: Can't access CM");
+        return;
+    end
+    local er_military_crackdowns_header = cm:load_named_value("er_military_crackdowns_header", {}, context);
+    if er_military_crackdowns_header == nil or er_military_crackdowns_header["TotalMilitaryCrackDowns"] == nil then
+        out("EnR: No military crackdowns to load");
+        return;
+    else
+        out("EnR: Loading "..er_military_crackdowns_header["TotalMilitaryCrackDowns"].." military crack downs");
+    end
+
+    local serialised_save_table_military_crackdowns = {};
+    er.MilitaryCrackDowns = {};
+    local tableCount = math.ceil(er_military_crackdowns_header["TotalMilitaryCrackDowns"] / MAX_NUM_SAVE_TABLE_KEYS);
+    for n = 1, tableCount do
+        out("EnR: Loading table "..tostring(n));
+        local nthTable = cm:load_named_value("er_military_crackdowns_"..tostring(n), {}, context);
+        ConcatTableWithKeys(serialised_save_table_military_crackdowns, nthTable);
+    end
+    out("EnR: Concatted serialised save data");
+
+    for factionKey, crackDownData in pairs(serialised_save_table_military_crackdowns) do
+        er.MilitaryCrackDowns[factionKey] = {
+            ProvinceKey = crackDownData[1],
+            TurnStart = crackDownData[2],
+        };
+    end
+
+    out("EnR: Finished loading past military crackdown tables");
+end
+
+function ER_LoadAgentDeployDilemmas(er)
+    out("EnR: ER_LoadAgentDeployDilemmas");
+    if cm == nil then
+        out("EnR: Can't access CM");
+        return;
+    end
+    local er_agent_deploy_dilemmas_header = cm:load_named_value("er_agent_deploy_dilemmas_header", {}, context);
+    if er_agent_deploy_dilemmas_header == nil or er_agent_deploy_dilemmas_header["TotalAgentDeployDilemmas"] == nil then
+        out("EnR: No agent deploy dilemmas to load");
+        return;
+    else
+        out("EnR: Loading "..er_agent_deploy_dilemmas_header["TotalAgentDeployDilemmas"].." agent deploy dilemmas");
+    end
+
+    local serialised_save_table_agent_deploy_dilemmas = {};
+    er.TriggeredAgentDeployDilemmas = {};
+    local tableCount = math.ceil(er_agent_deploy_dilemmas_header["TotalAgentDeployDilemmas"] / MAX_NUM_SAVE_TABLE_KEYS);
+    for n = 1, tableCount do
+        out("EnR: Loading table "..tostring(n));
+        local nthTable = cm:load_named_value("er_agent_deploy_dilemmas_"..tostring(n), {}, context);
+        ConcatTableWithKeys(serialised_save_table_agent_deploy_dilemmas, nthTable);
+    end
+    out("EnR: Concatted serialised save data");
+
+    for dilemmaKey, isTriggered in pairs(serialised_save_table_agent_deploy_dilemmas) do
+        er.TriggeredAgentDeployDilemmas[dilemmaKey] = isTriggered;
+    end
+
+    out("EnR: Finished loading past agent deploy dilemma tables");
 end

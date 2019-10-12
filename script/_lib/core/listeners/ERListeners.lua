@@ -199,6 +199,72 @@ function ER_SetupPostUIListeners(er, core)
     );
 
     -- PRE listeners
+    -- We need to track whether a faction has joined a confederation
+    -- so we know if they should reemerge
+    core:add_listener(
+        "ER_ConfederationListener",
+        "FactionJoinsConfederation",
+        function(context)
+            return true;
+        end,
+        function(context)
+            local confederee = context:faction():name();
+            er.Logger:Log("Faction has been confederated: "..confederee);
+            er:TrackConfederation(confederee);
+            er.Logger:Log_Finished();
+        end,
+        true
+    );
+
+    -- Listens for crackdown dilemmas
+    core:add_listener(
+        "ER_MilitaryCrackDownDilemmaChoiceMade",
+        "DilemmaChoiceMadeEvent",
+        function(context)
+            local dilemma = context:dilemma();
+            if string.match(dilemma, "poe_military_crackdown_")
+            -- THIS IS ONLY FOR TESTING
+            or dilemma == "wh2_main_dilemma_treasure_hunt_shrine_to_nagash" then
+                return true;
+            end
+            return false;
+        end,
+        function(context)
+            local choice = context:choice();
+            er.Logger:Log("Military crackdown choice made: "..choice);
+            if choice == 0 then
+                return;
+            end
+            er:AddMilitaryCrackDown();
+            er.Logger:Log_Finished();
+        end,
+        true
+    );
+
+    -- Listens for deploy agents dilemmas
+    core:add_listener(
+        "ER_AgentDeployDilemmaChoiceMade",
+        "DilemmaChoiceMadeEvent",
+        function(context)
+            local dilemma = context:dilemma();
+            if string.match(dilemma, "poe_deploy_agents_")
+            -- THIS IS ONLY FOR TESTING
+            or dilemma == "wh2_main_dilemma_treasure_hunt_slaanesh_fungi" then
+                return true;
+            end
+            return false;
+        end,
+        function(context)
+            local choice = context:choice();
+            er.Logger:Log("Deploy agents choice made: "..choice);
+            if choice == 0 then
+                return;
+            end
+            er:AddAgentDeployDilemma(context:dilemma());
+            er.Logger:Log_Finished();
+        end,
+        true
+    );
 
     -- These listeners override the vanilla equivalents. This needs to happen because otherwise
     -- the Norscan factions will keep confederating the Norscan Proxy Rebels

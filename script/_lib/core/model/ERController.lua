@@ -9,7 +9,13 @@ ERController = {
     PastRebellions = {},
     ActivePREs = {},
     PastPREs = {},
+    -- This stores the key of the region a button
+    -- triggered a dilemma from
+    ButtonSelectedRegion = {},
     ReemergedFactions = {},
+    ConfederatedFactions = {},
+    MilitaryCrackDowns = {},
+    TriggeredAgentDeployDilemmas = {},
     -- Feature toggles
     EnableCorruptionArmies = true,
 }
@@ -49,6 +55,7 @@ function ERController:CheckMCMOptions(core)
     if enableRebellions == nil or enableRebellions == "enable_rebellions" then
         self.Logger:Log("Rebellions are enabled in MCM");
         ER_SetupPostUIListeners(self, core);
+        ER_SetupPostUIInterfaceListeners(self, core, true);
     else
         self.Logger:Log("Rebellions are disabled in MCM");
     end
@@ -635,7 +642,13 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction, preKey)
                 local factionCqi = self.HumanFaction:command_queue_index();
                 if preKey ~= nil then
                     local preResources = self:GetPREPoolDataResource(character:faction():subculture(), character:faction():name(), preKey);
-                    cm:trigger_incident_with_targets(factionCqi, preResources.InitialRebellionIncident, factionCqi, 0, 0, 0, region:cqi(), 0);
+                    local selectedIncidentKey = "";
+                    if preResources.InitialRebellionIncident[region:owning_faction():subculture()] == nil then
+                        selectedIncidentKey = preResources.InitialRebellionIncident["default"];
+                    else
+                        selectedIncidentKey = preResources.InitialRebellionIncident[region:owning_faction():subculture()];
+                    end
+                    cm:trigger_incident_with_targets(factionCqi, selectedIncidentKey, factionCqi, 0, 0, 0, region:cqi(), 0);
                 else
                     cm:trigger_incident_with_targets(factionCqi, "er_generic_incursion", factionCqi, 0, 0, 0, region:cqi(), 0);
                 end
@@ -682,7 +695,9 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction, preKey)
                     local armyArchetypeData = self:GetArmyArchetypeData(rebellionData.SubcultureKey, rebellionData.ArmyArchetypeKey);
                     local agentSubTypeSpawnData = armyArchetypeData.AgentSubtypes[rebellionData.AgentSubTypeData.AgentSubTypeKey];
                     if agentSubTypeSpawnData ~= nil and agentSubTypeSpawnData.AgentSubTypeMount ~= nil then
-                        cm:force_add_ancillary(existingCharacter, agentSubTypeSpawnData.AgentSubTypeMount, true, true);
+                        if existingCharacter:has_ancillary(agentSubTypeSpawnData.AgentSubTypeMount) == false then
+                            cm:force_add_ancillary(existingCharacter, agentSubTypeSpawnData.AgentSubTypeMount, true, true);
+                        end
                     end
                 end, 2);
             else
@@ -1083,14 +1098,19 @@ function ERController:CheckForRebelSpawn(region)
             local provinceKey = region:province_name();
             local faction = region:owning_faction();
             local factionKey = faction:name();
+            local regionKey = region:name();
             -- We have a timeout since the last rebellion was destroyed.
             local regionPreData = self:GetSpawnablePREForProvince(region);
             if regionPreData ~= nil then
-                self:StartFactionReemergeance(region, regionPreData);
-                self:AddPastPRE(region, regionPreData);
-                self.Logger:Log("Faction: "..regionPreData.PREFaction.." has reemerged in province: "..provinceKey);
-                self.Logger:Log_Finished();
-            else
+                if regionPreData.IsRebelSpawnLocked == true then
+                    self.Logger:Log("Spawn is locked");
+                else
+                    self:StartFactionReemergeance(region, regionPreData);
+                    self:AddPastPRE(region, regionPreData);
+                    self.Logger:Log("Faction: "..regionPreData.PREFaction.." has reemerged in province: "..provinceKey);
+                    self.Logger:Log_Finished();
+                end
+            elseif self:IsActiveMilitaryCrackDown(factionKey, false, provinceKey) == false then
                 local isInTimeout = self:IsProvinceInTimeout(provinceKey, factionKey);
                 if isInTimeout == true then
                     self.Logger:Log("Can't spawn rebels for faction: "..factionKey.." because one was destroyed recently for faction.");
@@ -1109,6 +1129,8 @@ function ERController:CheckForRebelSpawn(region)
                         return true;
                     end
                 end
+            else
+                self.Logger:Log("Region is under military crackdown");
             end
             self.Logger:Log_Finished();
         end
@@ -1123,8 +1145,7 @@ function ERController:GetSpawnablePREForProvince(region)
     if presForProvince ~= nil then
         self.Logger:Log("Found PRE in province: "..provinceKey);
         for index, activePREData in pairs(presForProvince) do
-            if region:name() == activePREData.TargetRegion
-            and activePREData.IsRebelSpawnLocked == false then
+            if region:name() == activePREData.TargetRegion then
                 return activePREData;
             end
         end
@@ -1144,24 +1165,40 @@ function ERController:UpdatePREs(region)
         for index, activePREData in pairs(presForProvince) do
             self.Logger:Log("Checking PRE: "..activePREData.PREKey);
             local preResourceData = self:GetPREPoolDataResource(activePREData.PRESubculture, activePREData.PREFaction, activePREData.PREKey);
-            -- Check incidents
-            for incidentKey, incidentData in pairs(preResourceData.Incidents) do
-                if turnNumber == incidentData.NumberOfTurns + activePREData.SpawnTurnNumber then
-                    cm:trigger_incident_with_targets(faction:command_queue_index(), incidentKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+            local showMessage = (faction:name() == self.HumanFaction:name());
+            if showMessage == true then
+                -- Check incidents
+                local subcultureIncidents = preResourceData.Incidents[faction:subculture()];
+                if subcultureIncidents == nil then
+                    subcultureIncidents = preResourceData.Incidents["default"];
                 end
-            end
-            -- Check dilemmas
-            for dilemmaKey, dilemmaData in pairs(preResourceData.Dilemmas) do
-                if turnNumber == dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber then
-                    cm:trigger_dilemma_with_targets(faction:command_queue_index(), dilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                for incidentKey, incidentData in pairs(subcultureIncidents) do
+                    if turnNumber == incidentData.NumberOfTurns + activePREData.SpawnTurnNumber then
+                        self.Logger:Log("Triggering PRE incident: "..incidentKey);
+                        cm:trigger_incident_with_targets(faction:command_queue_index(), incidentKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                    end
+                end
+                -- Check auto dilemmas
+                local autoDilemmas = preResourceData.AutoDilemmas[faction:subculture()];
+                if autoDilemmas == nil then
+                    autoDilemmas = preResourceData.AutoDilemmas["default"];
+                end
+                for dilemmaKey, dilemmaData in pairs(autoDilemmas) do
+                    if turnNumber == dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber then
+                        self.Logger:Log("Triggering PRE auto dilemma: "..dilemmaKey);
+                        cm:trigger_dilemma_with_targets(faction:command_queue_index(), dilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                    end
                 end
             end
             -- Check rebel spawn
-            if turnNumber >= preResourceData.EffectBundleDuration + activePREData.SpawnTurnNumber then
+            self.Logger:Log("CurrentTurn: "..turnNumber.." PRE emerge turn: "..(preResourceData.PREDuration + activePREData.SpawnTurnNumber));
+            if turnNumber >= preResourceData.PREDuration + activePREData.SpawnTurnNumber then
                 spawnedRebellion = true;
                 self:StartFactionReemergeance(region, activePREData);
                 self:AddPastPRE(region, activePREData);
                 self.Logger:Log("Faction: "..activePREData.PREFaction.." has reemerged in province: "..provinceKey);
+                self.Logger:Log_Finished();
+            else
                 self.Logger:Log_Finished();
             end
         end
@@ -1209,11 +1246,11 @@ function ERController:SpawnPREs(region)
     local presForRegion = self:GeneratePREPoolForRegion(region);
     -- Check criteria for each PRE
     for preKey, preData in pairs(presForRegion) do
-        --self.Logger:Log("Found potential pre in region: "..preKey);
+        self.Logger:Log("Found potential pre in region: "..preKey);
         if string.match(preKey, "ReemergeanceArchetype") then
             local passedCriteria = self:CheckReemergeanceCriteria(region, preKey, preData);
             if passedCriteria == true then
-                --self.Logger:Log("PRE "..preKey.." passed ReemergeanceArchetype criteria");
+                self.Logger:Log("PRE "..preKey.." passed ReemergeanceArchetype criteria");
             else
                 --self.Logger:Log("PRE "..preKey.." failed ReemergeanceArchetype criteria");
                 presForRegion[preKey] = nil;
@@ -1233,26 +1270,46 @@ end
 
 function ERController:CheckReemergeanceCriteria(region, preKey, preData)
     local provinceKey = region:province_name();
-    -- if faction is dead and PRE is not already active and PRE has not triggered previously
+    local turnNumber = cm:model():turn_number();
+    -- If we are more than 50 turns into a campaign and the faction is dead
     local faction = cm:get_faction(preData.PREFactionKey);
-    if not faction:is_null_interface()
-    and faction:is_dead() == true
-    and not self.ReemergedFactions[preData.PREFactionKey]
-    and (self.ActivePREs[provinceKey] == nil or (self.ActivePREs[provinceKey] ~= nil and self.ActivePREs[provinceKey][preKey] == nil)) then
-        local factionControlsCapitalInProvince = region:is_province_capital() == true;
-        -- Then we check adjacent regions
-        if factionControlsCapitalInProvince == false then
-            local adjacentRegionList = region:adjacent_region_list();
-            for i = 0, adjacentRegionList:num_items() - 1 do
-                local adjacentRegion = adjacentRegionList:item_at(i);
-                if adjacentRegion:province_name() == provinceKey
-                and adjacentRegion:owning_faction():name() == region:owning_faction():name()
-                and adjacentRegion:is_province_capital() == true then
-                    factionControlsCapitalInProvince = true;
+    if turnNumber > 0
+    and not faction:is_null_interface()
+    and faction:is_dead() == true then
+        local owningFaction = "";
+        if region:is_abandoned() == false then
+            owningFaction = region:owning_faction();
+        else
+            return false;
+        end
+        local isHumanOwner = owningFaction:name() == self.HumanFaction:name();
+        local testChance = 10;
+        if isHumanOwner == true then
+            testChance = 50;
+        end
+        -- If it passes the random roll and PRE is not already active and PRE has not triggered previously
+        -- and they have not been confederated
+        if Roll100(testChance) == true
+        and not self.ConfederatedFactions[preData.PREFactionKey]
+        and owningFaction:subculture() ~= preData.PRESubculture
+        and not self.ReemergedFactions[preData.PREFactionKey]
+        and (self.ActivePREs[provinceKey] == nil or (self.ActivePREs[provinceKey] ~= nil and self.ActivePREs[provinceKey][preKey] == nil)) then
+            local factionControlsCapitalInProvince = region:is_province_capital() == true;
+            -- Then we check adjacent regions
+            if factionControlsCapitalInProvince == false then
+                local adjacentRegionList = region:adjacent_region_list();
+                for i = 0, adjacentRegionList:num_items() - 1 do
+                    local adjacentRegion = adjacentRegionList:item_at(i);
+                    if adjacentRegion:province_name() == provinceKey
+                    and adjacentRegion:owning_faction():name() == region:owning_faction():name()
+                    and adjacentRegion:is_province_capital() == true then
+                        factionControlsCapitalInProvince = true;
+                        break;
+                    end
                 end
             end
+            return factionControlsCapitalInProvince;
         end
-        return factionControlsCapitalInProvince;
     end
     --self.Logger:Log("Faction cannot reemerge");
     return false;
@@ -1308,10 +1365,7 @@ end
 
 function ERController:GetPRESubculturePoolDataResources(subcultureKey, factionKey)
     local preResources = {};
-    if _G.ERResources.PassiveRebelEventsPoolData[subcultureKey] == nil then
-        return preResources;
-    end
-    local subcultureResourceGrouping = _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][subcultureKey];
+    local subcultureResourceGrouping = _G.ERResources.PassiveRebelEventsPoolData[subcultureKey];
     if subcultureResourceGrouping == nil then
         return preResources;
     end
@@ -1337,11 +1391,11 @@ function ERController:GetPRESubculturePoolDataResources(subcultureKey, factionKe
 end
 
 function ERController:GetPREPoolDataResource(subcultureKey, factionKey, preKey)
-    if _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][subcultureKey][factionKey] == nil
-    or _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][subcultureKey][factionKey][preKey] == nil then
-        return _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][subcultureKey][subcultureKey][preKey];
+    if _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][factionKey] == nil
+    or _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][factionKey][preKey] == nil then
+        return _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][subcultureKey][preKey];
     end
-    return _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][subcultureKey][factionKey][preKey];
+    return _G.ERResources.PassiveRebelEventsPoolData[subcultureKey][factionKey][preKey];
 end
 
 function ERController:AddPREToRegion(region, preKey, preData)
@@ -1354,7 +1408,7 @@ function ERController:AddPREToRegion(region, preKey, preData)
         PRESubculture = preData.PRESubcultureKey,
         PREFaction = preData.PREFactionKey,
         SpawnTurnNumber = turnNumber,
-        EffectBundleDuration = preData.PREData.EffectBundleDuration,
+        PREDuration = preData.PREData.PREDuration,
         TargetRegion = regionKey,
         IsRebelSpawnLocked = false,
     };
@@ -1365,7 +1419,7 @@ function ERController:AddPREToRegion(region, preKey, preData)
     self.Logger:Log("PRE: "..preKey.." is active in region: "..regionKey);
     -- Create the effect bundle for the region based off of the data structure
     local customEffectBundle = cm:create_new_custom_effect_bundle(preData.PREData.EffectBundleKey);
-    customEffectBundle:set_duration(preData.PREData.EffectBundleDuration + 1);
+    customEffectBundle:set_duration(preData.PREData.PREDuration + 1);
     for effectKey, effectValue in pairs(preData.PREData.EffectBundleEffects) do
         customEffectBundle:add_effect(effectKey, "region_to_province_own", effectValue);
     end
@@ -1391,5 +1445,203 @@ function ERController:AddPastPRE(region, activePREData)
         TargetFaction = regionObject:owning_faction():name(),
         CompletedTurn = turnNumber,
     };
-    activePREData = nil;
+    self:RemoveActivePREInRegion(region, activePREData);
+end
+
+function ERController:RemoveActivePREInProvince(provinceKey, activePREData)
+    if self.ActivePREs[provinceKey] == nil then
+        return;
+    end
+    for index, pre in pairs(self.ActivePREs[provinceKey]) do
+        if pre.PREKey == activePREData.PREKey
+        and pre.PREFaction == activePREData.PREFaction then
+            self.ActivePREs[provinceKey][index] = nil;
+            break;
+        end
+    end
+end
+
+function ERController:TrackConfederation(confedereeFactionKey)
+    self.ConfederatedFactions[confedereeFactionKey] = true;
+end
+
+function ERController:TriggerCrackDownDilemma(regionKey, faction)
+    self.Logger:Log("TriggerCrackDownDilemma");
+    if not faction then
+        faction = self.HumanFaction;
+    end
+    local factionKey = faction:name();
+    if factionKey == self.HumanFaction:name() then
+        self.Logger:Log("Triggering crackdown for human faction, selected region is: "..regionKey);
+        local crackdownDilemmaKey = self:GetMilitaryCrackDownDilemmaKey();
+        self.Logger:Log("Crackdown dilemma is: "..crackdownDilemmaKey);
+        self.ButtonSelectedRegion = regionKey;
+        local region = cm:get_region(self.ButtonSelectedRegion);
+        cm:trigger_dilemma_with_targets(faction:command_queue_index(), crackdownDilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+    else
+        -- Create the effect bundle for the region based off of the data structure
+        --[[local customEffectBundle = cm:create_new_custom_effect_bundle(preData.PREData.EffectBundleKey);
+        customEffectBundle:set_duration(preData.PREData.PREDuration + 1);
+        for effectKey, effectValue in pairs(preData.PREData.EffectBundleEffects) do
+            customEffectBundle:add_effect(effectKey, "region_to_province_own", effectValue);
+        end
+        cm:apply_custom_effect_bundle_to_region(customEffectBundle, region);--]]
+    end
+    self.Logger:Log_Finished();
+end
+
+function ERController:GetMilitaryCrackDownDilemmaKey()
+    return "wh2_main_dilemma_treasure_hunt_shrine_to_nagash";
+end
+
+function ERController:IsActiveMilitaryCrackDown(factionKey, checkIsInCooldown, provinceKey)
+    local turnNumber = cm:model():turn_number();
+     if self.MilitaryCrackDowns[factionKey] ~= nil then
+        if provinceKey == nil then
+            return true;
+        end
+        if checkIsInCooldown == true
+        and self.MilitaryCrackDowns[factionKey].TurnStart > (turnNumber - 20) then
+            if provinceKey ~= nil
+            and provinceKey == self.self.MilitaryCrackDowns[factionKey].ProvinceKey then
+                return true;
+            end
+        elseif checkIsInCooldown == false
+        and self.MilitaryCrackDowns[factionKey].TurnStart > (turnNumber - 10) then
+            if provinceKey == self.self.MilitaryCrackDowns[factionKey].ProvinceKey then
+                return true;
+            end
+        end
+    end
+     return false;
+end
+
+function ERController:AddMilitaryCrackDown()
+    self.Logger:Log("Adding crackdown for region: "..self.ButtonSelectedRegion);
+    local region = cm:get_region(self.ButtonSelectedRegion);
+    local faction = region:owning_faction();
+    local factionKey = faction:name();
+    local provinceKey = region:province_name();
+    local factionInCrackDown = self.MilitaryCrackDowns[factionKey];
+    local turnNumber = cm:model():turn_number();
+    factionInCrackDown = {
+        ProvinceKey = provinceKey,
+        TurnStart = turnNumber,
+    };
+    self.MilitaryCrackDowns[factionKey] = factionInCrackDown;
+    self.ButtonSelectedRegion = "";
+end
+
+function ERController:TriggerAgentDeployDilemma(regionKey, faction)
+    self.Logger:Log("TriggerAgentDeployDilemma");
+    if not faction then
+        faction = self.HumanFaction;
+    end
+    local factionKey = faction:name();
+    if factionKey == self.HumanFaction:name() then
+        self.Logger:Log("Triggering agent deploy dilemma for human faction, selected region is: "..regionKey);
+        local agentDeployDilemmaKey = self:GetAgentDeployDilemmaKey(regionKey);
+        if agentDeployDilemmaKey ~= nil then
+            self.Logger:Log("Agent deploy dilemma is: "..agentDeployDilemmaKey);
+            self.ButtonSelectedRegion = regionKey;
+            local region = cm:get_region(self.ButtonSelectedRegion);
+            cm:trigger_dilemma_with_targets(faction:command_queue_index(), agentDeployDilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+        end
+    -- Give the AI an approximate effect
+    else
+        -- Create the effect bundle for the region based off of the data structure
+        --[[local customEffectBundle = cm:create_new_custom_effect_bundle(preData.PREData.EffectBundleKey);
+        customEffectBundle:set_duration(preData.PREData.PREDuration + 1);
+        for effectKey, effectValue in pairs(preData.PREData.EffectBundleEffects) do
+            customEffectBundle:add_effect(effectKey, "region_to_province_own", effectValue);
+        end
+        cm:apply_custom_effect_bundle_to_region(customEffectBundle, region);--]]
+    end
+    self.Logger:Log_Finished();
+end
+
+function ERController:IsAvailableAgentDeployDilemma(regionKey)
+    local region = cm:get_region(regionKey);
+    local faction = region:owning_faction();
+    local provinceKey = region:province_name();
+    local turnNumber = cm:model():turn_number();
+    local presForProvince = self.ActivePREs[provinceKey];
+    self.Logger:Log("Selected region is: "..regionKey);
+    self.Logger:Log("Turn number is: "..turnNumber);
+    if presForProvince ~= nil then
+        self.Logger:Log("Found PREs in province: "..provinceKey);
+        for index, activePREData in pairs(presForProvince) do
+            self.Logger:Log("PRE.TargetRegion is in province: "..activePREData.TargetRegion);
+            if not self.ReemergedFactions[activePREData.PREFaction] then
+                self.Logger:Log("Faction has not reemerged");
+            end
+            if not self.ReemergedFactions[activePREData.PREFaction]
+            and regionKey == activePREData.TargetRegion then
+                local preResourceData = self:GetPREPoolDataResource(activePREData.PRESubculture, activePREData.PREFaction, activePREData.PREKey);
+                -- Check agent deploy dilemmas
+                local agentDeployDilemmas = preResourceData.AgentDeployDilemmas[faction:subculture()];
+                if agentDeployDilemmas == nil then
+                    agentDeployDilemmas = preResourceData.AutoDilemmas["default"];
+                end
+                self.Logger:Log("PRE spawn turn is: "..activePREData.SpawnTurnNumber);
+                for dilemmaKey, dilemmaData in pairs(agentDeployDilemmas) do
+                    self.Logger:Log("Dilemma required turns is : "..dilemmaData.NumberOfTurns);
+                    if turnNumber >= dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber
+                    and self.TriggeredAgentDeployDilemmas[dilemmaKey] == nil then
+                        return true;
+                    end
+                end
+            end
+        end
+    end
+    self.Logger:Log("No available agent dilemmas");
+    return false;
+end
+
+function ERController:GetAgentDeployDilemmaKey(regionKey)
+    local region = cm:get_region(regionKey);
+    local faction = region:owning_faction();
+    local provinceKey = region:province_name();
+    local turnNumber = cm:model():turn_number();
+    local presForProvince = self.ActivePREs[provinceKey];
+    if presForProvince ~= nil then
+        self.Logger:Log("Found PRE in province: "..provinceKey);
+        for index, activePREData in pairs(presForProvince) do
+            if self.ReemergedFactions[activePREData.PREFaction] == nil
+            and regionKey == activePREData.TargetRegion then
+                local preResourceData = self:GetPREPoolDataResource(activePREData.PRESubculture, activePREData.PREFaction, activePREData.PREKey);
+                -- Check agent deploy dilemmas
+                local agentDeployDilemmas = preResourceData.AgentDeployDilemmas[faction:subculture()];
+                if agentDeployDilemmas == nil then
+                    agentDeployDilemmas = preResourceData.AutoDilemmas["default"];
+                end
+                self.Logger:Log("PRE spawn turn is: "..activePREData.SpawnTurnNumber);
+                for dilemmaKey, dilemmaData in pairs(agentDeployDilemmas) do
+                    self.Logger:Log("Dilemma required turns is : "..dilemmaData.NumberOfTurns);
+                    if turnNumber >= dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber
+                    and self.TriggeredAgentDeployDilemmas[dilemmaKey] == nil then
+                        return dilemmaKey;
+                    end
+                end
+            end
+        end
+    end
+    return nil;
+end
+
+function ERController:AddAgentDeployDilemma(dilemmaKey)
+    self.Logger:Log("Adding agent deploy dilemma: "..dilemmaKey);
+    self.TriggeredAgentDeployDilemmas[dilemmaKey] = true;
+    local region = cm:get_region(self.ButtonSelectedRegion);
+    local provinceKey = region:province_name();
+    local presForProvince = self.ActivePREs[provinceKey];
+    if presForProvince ~= nil then
+        for index, activePREData in pairs(presForProvince) do
+            if region:name() == activePREData.TargetRegion then
+                self.Logger:Log("Locking rebel PRE spawn for province: "..provinceKey);
+                activePREData.IsRebelSpawnLocked = true;
+            end
+        end
+    end
+    self.ButtonSelectedRegion = "";
 end

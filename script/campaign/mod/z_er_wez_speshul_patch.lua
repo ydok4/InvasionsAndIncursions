@@ -1,4 +1,4 @@
-require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/WezSpeshulSavageOrcRebelArmyArchetypesPoolDataResources'
+--[[require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/WezSpeshulSavageOrcRebelArmyArchetypesPoolDataResources'
 
 _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_grn_savage_orcs", GetWezSpeshulSavageOrcRebelArmyArchetypesPoolDataResources(), false);
 
@@ -15,3 +15,4 @@ out("EnR: Loading Wez Speshul Data");
 if _G.CG_NameResources then
     _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.campaign_character_data, GetWezSpeshulDataResources());
 end
+--]]

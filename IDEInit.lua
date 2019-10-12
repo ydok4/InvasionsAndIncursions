@@ -510,6 +510,7 @@ out = function(text)
 end
 
 require 'script/campaign/mod/a_er_core_resource_loader'
+require 'script/campaign/mod/z_er_cataph_patch'
 require 'script/campaign/mod/z_er_mixu_patch'
 require 'script/campaign/mod/z_er_wez_speshul_patch'
 require 'script/campaign/mod/zz_enhanced_rebellions'
@@ -535,8 +536,48 @@ zz_enhanced_rebellions();
 turn_number = 2;
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
+local ER_SettlementSelected = {
+    Key = "ER_SettlementSelected",
+    Context = {
+        garrison_residence = function() return {
+                region = function() return get_cm():get_region(); end,
+                faction = function() return humanFaction; end,
+            };
+        end
+    },
+}
+mock_listeners:trigger_listener(ER_SettlementSelected);
+
 turn_number = 3;
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
+
+turn_number = 4;
+local ER_AgentDeployDilemmaChoiceMade = {
+    Key = "ER_AgentDeployDilemmaChoiceMade",
+    Context = {
+        dilemma = function() return "poe_deploy_agents_"; end,
+        choice = function() return 1; end,
+    },
+}
+mock_listeners:trigger_listener(ER_AgentDeployDilemmaChoiceMade);
+
+local ER_SettlementPanelOpened = {
+    Key = "ER_SettlementPanelOpened",
+    Context = {
+        string = "settlement_panel",
+    },
+}
+mock_listeners:trigger_listener(ER_SettlementPanelOpened);
+
+turn_number = 5;
+local ER_MilitaryCrackDownDilemmaChoiceMade = {
+    Key = "ER_MilitaryCrackDownDilemmaChoiceMade",
+    Context = {
+        dilemma = function() return "poe_military_crackdown_"; end,
+        choice = function() return 1; end,
+    },
+}
+mock_listeners:trigger_listener(ER_MilitaryCrackDownDilemmaChoiceMade);
 
 ER_InitialiseSaveHelpers(cm, context);
 ER_SaveActiveRebellions(ER);
@@ -545,6 +586,9 @@ ER_SavePastRebellions(ER);
 ER_SaveActivePREs(ER);
 ER_SavePastPREs(ER);
 ER_SaveReemergedFactions(ER);
+ER_SaveConfederatedFactions(ER);
+ER_SaveMilitaryCrackDowns(ER);
+ER_SaveTriggeredAgentDeployDilemmas(ER);
 
 ER_InitialiseLoadHelpers(cm, context);
 ER_LoadActiveRebellions(ER);
@@ -553,3 +597,6 @@ ER_LoadPastRebellions(ER);
 ER_LoadActivePREs(ER);
 ER_LoadPastPREs(ER);
 ER_LoadReemergedFactions(ER);
+ER_LoadConfederatedFactions(ER);
+ER_LoadMilitaryCrackDowns(ER);
+ER_LoadAgentDeployDilemmas(ER);

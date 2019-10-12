@@ -607,7 +607,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             },
         },
         wh2_main_northern_jungle_of_pahualaxa = {
-            IsAdjacentToSea = false,
+            IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_lzd_lizardmen = {
                     Weighting = 2,
@@ -738,7 +738,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             },
         },
         wh2_main_southern_jungle_of_pahualaxa = {
-            IsAdjacentToSea = false,
+            IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_lzd_lizardmen = {
                     Weighting = 2,
@@ -1433,7 +1433,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
             },
         },
         wh2_main_vor_jungle_of_pahualaxa = {
-            IsAdjacentToSea = false,
+            IsAdjacentToSea = true,
             RebelSubcultures = {
                 wh2_main_sc_lzd_lizardmen = {
                     Weighting = 2,
@@ -2425,14 +2425,6 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 wh_main_sc_vmp_vampire_counts = {
                     Weighting = 5,
                 },
-                --[[wh_main_sc_emp_empire = {
-                    Weighting = 1,
-                    ArmyArchetypes = {
-                        ArchLector = {
-                            Weighting = 1,
-                        },
-                    },
-                },--]]
             },
         },
         wh_main_estalia = {

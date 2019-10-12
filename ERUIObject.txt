@@ -1,0 +1,18 @@
+ERROR: Missing UIMF   : [12, 10 2019 15:51:40]
+FINISHED
+
+ERROR: Missing UIMF   : [12, 10 2019 15:51:40]
+FINISHED
+
+Selected faction is: wh2_main_hef_nagarythe   : [12, 10 2019 15:51:40]
+Human faction is: wh2_main_hef_nagarythe   : [12, 10 2019 15:51:40]
+FINISHED
+
+ERROR: Missing UIMF   : [12, 10 2019 15:51:47]
+FINISHED
+
+ERROR: Missing UIMF   : [12, 10 2019 15:51:47]
+FINISHED
+
+Selected faction is: wh2_main_hef_nagarythe   : [12, 10 2019 15:51:48]
+Human faction is: wh2_main_hef_nagarythe   : [12, 10 2019 15:51:48]

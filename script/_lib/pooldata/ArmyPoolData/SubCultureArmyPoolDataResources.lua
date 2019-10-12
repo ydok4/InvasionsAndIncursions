@@ -771,6 +771,22 @@ function GetSubcultureArmyPoolDataResources()
                     wh2_main_hef_inf_swordmasters_of_hoeth_0 = 2,
                 },
             },
+            -- Cataph's Sea Helm
+            SeaHelm = {
+                Early = {
+                    AK_hef_sea_company = 3,
+                },
+                Mid = {
+                    AK_hef_sea_company = 2,
+                    AK_hef_sea_rangers = 1,
+                    AK_hef_sea_roc_riders = 1,
+                },
+                Late = {
+                    AK_hef_sea_company = 2,
+                    AK_hef_sea_rangers = 2,
+                    AK_hef_sea_roc_riders = 1,
+                },
+            },
         },
 
         -- Skaven
@@ -1313,6 +1329,19 @@ function GetSubcultureArmyPoolDataResources()
                     { wh_main_dwf_veh_gyrocopter_1 = 1, wh_main_dwf_veh_gyrobomber = 1, },
                 },
             },
+            KrakaDrakElites = {
+                Early = {
+                    dwf_rust = 1,
+                },
+                Mid = {
+                    dwf_rust = 1,
+                    dwf_impact = 1,
+                },
+                Late = {
+                    dwf_impact = 2,
+                    dwf_huskarls = 1,
+                },
+            },
         },
         -- Chaos
         wh_main_sc_chs_chaos = {
@@ -1590,6 +1619,123 @@ function GetSubcultureArmyPoolDataResources()
                     { wh_main_emp_art_mortar = 2, wh_main_emp_art_great_cannon = 2, },
                 },
             },
+            -- Cataph TEB specific tags
+            Mercenary = {
+                Early = {
+                    wh_main_dwf_inf_dwarf_warrior_0 = 1,
+                    teb_paymaster = 1,
+                },
+                Mid = {
+                    { wh_main_dwf_inf_dwarf_warrior_0 = 1, wh_main_dwf_inf_dwarf_warrior_1 = 1, },
+                    { bor_mercs = 1, wh_dlc06_dwf_inf_rangers_0 = 1, },
+                    
+                },
+                Late = {
+                    { wh_main_dwf_inf_dwarf_warrior_0 = 1, wh_main_dwf_inf_dwarf_warrior_1 = 1, },
+                    { bor_mercs = 1, wh_dlc06_dwf_inf_rangers_0 = 1, },
+                    { wh_main_dwf_art_cannon = 1, wh_main_dwf_art_organ_gun = 1 },
+                },
+            },
+            TEBStateTroops = {
+                Early = {
+                    wh_main_emp_inf_spearmen_0 = 2,
+                    wh_main_emp_inf_swordsmen = 1,
+                },
+                Mid = {
+                    wh_main_emp_inf_swordsmen = 1,
+                    wh_main_emp_inf_spearmen_1 = 1,
+                    wh_main_emp_inf_crossbowmen = 1,
+                },
+                Late = {
+                    wh_main_emp_inf_spearmen_1 = 2,
+                    wh_main_emp_inf_crossbowmen = 1,
+                },
+            },
+            BorderPrincesTroops = {
+                Early = {
+                    bor_archers = 2,
+                },
+                Mid = {
+                    bor_archers = 1,
+                    bor_rangers = 1,
+                },
+                Late = {
+                    bor_rangers = 1,
+                    bor_hop = 1,
+                },
+            },
+            BorderPrincesCavalry = {
+                Early = {
+                    bor_HA = 1,
+                    bor_light_cav = 1,
+                },
+                Mid = {
+                    bor_HA = 1,
+                    bor_heavy_cav = 1,
+                },
+                Late = {
+                    bor_HA = 1,
+                    bor_heavy_cav = 1,
+                    bor_knights = 1,
+                },
+            },
+            EstalianTroops = {
+                Early = {
+                    wh_main_emp_inf_halberdiers = 2,
+                },
+                Mid = {
+                    wh_main_emp_inf_halberdiers = 1,
+                    til_pike = 1,
+                    est_conqui_foot = 1,
+                },
+                Late = {
+                    wh_main_emp_inf_halberdiers = 1,
+                    { til_pike = 1, est_conqui_foot = 1, },
+                    { est_royal = 1, til_greatswords = 1, },
+                },
+            },
+            EstalianCavalry = {
+                Early = {
+                    est_cav = 1,
+                },
+                Mid = {
+                    est_cav = 1,
+                    est_conqui = 1,
+                },
+                Late = {
+                    est_cav = 1,
+                    est_conqui = 1,
+                    til_ducale = 1,
+                },
+            }, 
+            TileanTroops = {
+                Early = {
+                    wh_main_emp_inf_halberdiers = 2,
+                },
+                Mid = {
+                    wh_main_emp_inf_halberdiers = 1,
+                    til_pike = 2,
+                },
+                Late = {
+                    til_pike = 2,
+                    til_pavise = 1,
+                    { til_guard = 1, til_greatswords = 1, },
+                },
+            },
+            TileanCavalry = {
+                Early = {
+                    wh_main_emp_cav_pistoliers_1 = 1,
+                },
+                Mid = {
+                    til_broken_lances = 1,
+                    til_carabineers = 1,
+                },
+                Late = {
+                    til_carabineers = 1,
+                    til_encarmine = 1,
+                    til_ducale = 1,
+                },
+            }, 
         },
         -- Bretonnia
         wh_main_sc_brt_bretonnia = {

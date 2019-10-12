@@ -12,6 +12,7 @@ require 'script/_lib/core/model/CharacterGenerator';
 require 'script/_lib/core/model/Logger';
 -- Listeners
 require 'script/_lib/core/listeners/ERListeners';
+require 'script/_lib/core/listeners/ERUIListeners';
 
 cm:add_first_tick_callback(
     function(context)
@@ -29,6 +30,9 @@ function zz_enhanced_rebellions()
         ActivePREs = ER.ActivePREs,
         PastPREs = ER.PastPREs,
         ReemergedFactions = ER.ReemergedFactions,
+        ConfederatedFactions = ER.ConfederatedFactions,
+        MilitaryCrackDowns = ER.MilitaryCrackDowns,
+        TriggeredAgentDeployDilemmas = ER.TriggeredAgentDeployDilemmas,
     });
     ER:Initialise(random_army_manager, true);
     ER.Logger:Log("Initialised");
@@ -56,6 +60,7 @@ function zz_enhanced_rebellions()
         end
     else
         ER_SetupPostUIListeners(ER, core);
+        ER_SetupPostUIInterfaceListeners(ER, core, true);
     end
     ER.Logger:Log_Finished();
     out("EnR: Finished setup");
@@ -74,6 +79,9 @@ cm:add_saving_game_callback(
             ER_SaveActivePREs(ER);
             ER_SavePastPREs(ER);
             ER_SaveReemergedFactions(ER);
+            ER_SaveConfederatedFactions(ER);
+            ER_SaveMilitaryCrackDowns(ER);
+            ER_SaveTriggeredAgentDeployDilemmas(ER);
         end
         out("EnR: Finished saving");
     end
@@ -91,6 +99,9 @@ cm:add_loading_game_callback(
             ER_LoadActivePREs(ER);
             ER_LoadPastPREs(ER);
             ER_LoadReemergedFactions(ER);
+            ER_LoadConfederatedFactions(ER);
+            ER_LoadMilitaryCrackDowns(ER);
+            ER_LoadAgentDeployDilemmas(ER);
         end
         out("EnR: Finished loading");
 	end
