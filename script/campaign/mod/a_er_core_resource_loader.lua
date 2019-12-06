@@ -136,11 +136,10 @@ _G.ERResources = {
     end,
 };
 
-require 'script/_lib/dbexports/SubCultureNameGroupResources'
 require 'script/_lib/dbexports/AgentDataResources'
-require 'script/_lib/dbexports/NameGroupResources'
-require 'script/_lib/dbexports/NameResources'
-
+require 'script/_lib/dbexports/NameGenerator/SubCultureNameGroupResources'
+require 'script/_lib/dbexports/NameGenerator/NameGroupResources'
+require 'script/_lib/dbexports/NameGenerator/NameResources'
 -- Load the name resources
 -- This is separate so I can use this in other mods
 if not _G.CG_NameResources then

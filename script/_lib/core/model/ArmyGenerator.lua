@@ -22,7 +22,7 @@ function ArmyGenerator:Initialise(random_army_manager, enableLogging)
     self.random_army_manager = random_army_manager;
 end
 
-function ArmyGenerator:GenerateForceForTurn(ramData)
+function ArmyGenerator:GenerateForceForTurn(ramData, numberOfUnitsOverride)
     self.Logger:Log("GenerateForceForTurn");
     if not self.random_army_manager then
         self.Logger:Log("Can't find random_army_manager");
@@ -45,21 +45,46 @@ function ArmyGenerator:GenerateForceForTurn(ramData)
             self.random_army_manager:add_unit(ramData.ForceKey, unitKey, unitData.Weighting);
         end
     end
-
     local armySize = 0;
-    if ramData.ArmySize == nil then
+    if numberOfUnitsOverride == nil then
         local turnNumber = cm:model():turn_number();
         local gamePeriod = self:GetGamePeriod(turnNumber);
         self.Logger:Log("Game period is: "..gamePeriod);
+        local minSize = 0;
+        local maxSize = 0;
+        local periodEnd = 0;
         if gamePeriod == "Early" then
-            armySize = Random(8, 5);
+            minSize = 6;
+            maxSize = 9;
+            periodEnd = 50;
         elseif gamePeriod == "Mid" then
-            armySize = Random(13, 8);
+            minSize = 8;
+            maxSize = 13;
+            periodEnd = 120;
         else
-            armySize = Random(20, 13);
+            minSize = 13;
+            maxSize = 19;
+            periodEnd = 200;
+        end
+        if ramData.ArmySize ~= nil then
+            minSize = ramData.ArmySize;
+            if maxSize < minSize then
+                maxSize = minSize;
+            end
+        end
+        local bonusSize = 0;
+        if Roll100(33) then
+            bonusSize = 1;
+        elseif Roll100(33) then
+            bonusSize = -1;
+        end
+        -- The extra 0.5 is the rounding bonus
+        armySize = math.floor(minSize + (maxSize - minSize) * (turnNumber / periodEnd) + bonusSize + 0.5);
+        if armySize > 19 then
+            armySize = 19;
         end
     else
-        armySize = ramData.ArmySize;
+        armySize = numberOfUnitsOverride;
     end
     self.Logger:Log("Force size is "..armySize);
     return self.random_army_manager:generate_force(ramData.ForceKey, armySize, false);
@@ -109,9 +134,9 @@ function ArmyGenerator:GetSubcultureArmyData(subcultureKey)
 end
 
 function ArmyGenerator:GetGamePeriod(turnNumber)
-    if turnNumber < 60 then
+    if turnNumber < 50 then
         return "Early";
-    elseif turnNumber < 150 then
+    elseif turnNumber < 120 then
         return "Mid";
     else
         return "Late";

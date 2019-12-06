@@ -1,5 +1,0 @@
-Generated name key is Aesrit   : [07, 10 2019 15:05:14]
-No tracked lords. Using first generated name.   : [07, 10 2019 15:05:14]
-FINISHED
-
-Getting art set for sub type: grn_orc_warboss   : [07, 10 2019 15:05:14]

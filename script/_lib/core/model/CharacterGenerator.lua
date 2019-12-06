@@ -14,6 +14,27 @@ function CharacterGenerator:Initialise(enableLogging)
     self.Logger = Logger:new({});
     self.Logger:Initialise("CharacterGenerator.txt", enableLogging);
     self.Logger:Log_Start();
+    -- Load add ons
+    -- Load Gunking's elf names
+    local newElfNameKey = effect.get_localised_string("names_name_1550000001");
+    if newElfNameKey ~= nil
+    and newElfNameKey ~= "" then
+        require 'script/_lib/dbexports/NameGenerator/GunkingElfNameGroupResources'
+        require 'script/_lib/dbexports/NameGenerator/GunkingElfNameResources'
+        --Custom_Log("NameGenerator: Loading Gunking Elf Names");
+        _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.name_groups_to_names, GetGunkingElfNameResources());
+        _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.faction_to_name_groups, GetGunkingElfNameGroupResources());
+    end
+    -- Load Gunking's skaven/lizardmen names
+    local newSkavenLizardmenNameKey = effect.get_localised_string("names_name_1313000111");
+    if newSkavenLizardmenNameKey ~= nil
+    and newSkavenLizardmenNameKey ~= "" then
+        require 'script/_lib/dbexports/NameGenerator/GunkingSkavenLizardmenNameGroupResources'
+        require 'script/_lib/dbexports/NameGenerator/GunkingSkavenLizardmenNameResources'
+        --Custom_Log("NameGenerator: Loading Gunking Skaven/Lizardmen Names");
+        _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.name_groups_to_names, GetGunkingSkavenLizardmenNameResources());
+        _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.faction_to_name_groups, GetGunkingSkavenLizardmenNameGroupResources());
+    end
 end
 
 function CharacterGenerator:InitialiseCRP(crpLords)

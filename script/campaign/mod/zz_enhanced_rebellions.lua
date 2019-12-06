@@ -14,13 +14,8 @@ require 'script/_lib/core/model/Logger';
 require 'script/_lib/core/listeners/ERListeners';
 require 'script/_lib/core/listeners/ERUIListeners';
 
-cm:add_first_tick_callback(
-    function(context)
-        cm:disable_rebellions_worldwide(true);
-    end
-);
-
 function zz_enhanced_rebellions()
+    local enableLogging = false;
     out("EnR: Main mod function");
     ER = ERController:new({
         ActiveRebellions = ER.ActiveRebellions,
@@ -34,7 +29,7 @@ function zz_enhanced_rebellions()
         MilitaryCrackDowns = ER.MilitaryCrackDowns,
         TriggeredAgentDeployDilemmas = ER.TriggeredAgentDeployDilemmas,
     });
-    ER:Initialise(random_army_manager, true);
+    ER:Initialise(random_army_manager, enableLogging);
     ER.Logger:Log("Initialised");
     if mcm then
         if cm:is_new_game() then
@@ -60,7 +55,7 @@ function zz_enhanced_rebellions()
         end
     else
         ER_SetupPostUIListeners(ER, core);
-        ER_SetupPostUIInterfaceListeners(ER, core, true);
+        ER_SetupPostUIInterfaceListeners(ER, core, enableLogging);
     end
     ER.Logger:Log_Finished();
     out("EnR: Finished setup");

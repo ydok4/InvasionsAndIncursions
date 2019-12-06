@@ -636,6 +636,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction, preKey)
                 -- We give the army free upkeep and attrition immunity for 20 turns to lets the faction catch up
                 cm:apply_effect_bundle_to_force("wh_main_bundle_military_upkeep_free_force", militaryForceCqi, 20);
                 cm:apply_effect_bundle_to_force("wh2_dlc11_bundle_immune_all_attrition", militaryForceCqi, 20);
+                --cm:apply_effect_bundle_to_force("ef_effect_bundle_generic_incursion_recruitment_block", militaryForceCqi, 0);
             end
             local showMessage = (factionKey == self.HumanFaction:name());
             if showMessage == true then
@@ -778,13 +779,15 @@ function ERController:GrantUnitsForForce(rebelForceData, militaryForce)
             return;
         end
     end
-
+    local turnNumber = cm:model():turn_number();
+    local gamePeriod = self:GetGamePeriod(turnNumber);
     local maximumNumberOfExtraUnits = 19 - militaryForce:unit_list():num_items();
-    if maximumNumberOfExtraUnits > 2 then
+    if maximumNumberOfExtraUnits > 2 and gamePeriod ~= "Early" then
         maximumNumberOfExtraUnits = 2;
+    else
+        maximumNumberOfExtraUnits = 1;
     end
 
-    local turnNumber = cm:model():turn_number();
     local ramData = {
         ForceKey = rebelForceData.Target..turnNumber..generalFaction,
         -- Generate between 1 and 2 additional units
@@ -796,7 +799,7 @@ function ERController:GrantUnitsForForce(rebelForceData, militaryForce)
         },
     };
 
-    local additionalUnits = self.ArmyGenerator:GenerateForceForTurn(ramData);
+    local additionalUnits = self.ArmyGenerator:GenerateForceForTurn(ramData, ramData.ArmySize);
     for additionalUnit in string.gmatch(additionalUnits, "[^,]+") do
         self.Logger:Log("Adding unit: "..additionalUnit);
         cm:grant_unit_to_character(generalLookupString, additionalUnit);
@@ -913,10 +916,13 @@ function ERController:GetLastRebellionData(provinceKey)
         -- We don't bother counting rebellions which happened more than
         -- X amount of turns ago since it shouldn't be repetitive
         if pastProvinceRebellion.DestroyedTurn ~= nil
-        and pastProvinceRebellion.DestroyedTurn + 15 < turnNumber
+        and turnNumber < pastProvinceRebellion.DestroyedTurn + 15
         and pastProvinceRebellion.DestroyedTurn > lastRebellionTurn then
             lastRebellionTurn = pastProvinceRebellion.DestroyedTurn;
             lastRebellionData = pastProvinceRebellion;
+        -- If it doesn't meet this criteria then we remove it
+        elseif pastProvinceRebellion.DestroyedTurn + 15 > turnNumber then
+            rebellionsForProvinces[index] = nil;
         end
     end
     if lastRebellionData ~= nil then

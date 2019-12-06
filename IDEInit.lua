@@ -278,7 +278,8 @@ function get_cm()
         get_region = function()
             return {
                 cqi = function() return 123; end,
-                province_name = function() return "wh_main_couronne_et_languille"; end,
+                province_name = function() return "wh_main_death_pass"; end,
+                faction_province_growth = function() return 3; end,
                 religion_proportion = function() return 0; end,
                 public_order = function() return -99; end,
                 owning_faction = function() return testFaction; end,
@@ -512,7 +513,6 @@ end
 require 'script/campaign/mod/a_er_core_resource_loader'
 require 'script/campaign/mod/z_er_cataph_patch'
 require 'script/campaign/mod/z_er_mixu_patch'
-require 'script/campaign/mod/z_er_wez_speshul_patch'
 require 'script/campaign/mod/zz_enhanced_rebellions'
 
 math.randomseed(os.time())

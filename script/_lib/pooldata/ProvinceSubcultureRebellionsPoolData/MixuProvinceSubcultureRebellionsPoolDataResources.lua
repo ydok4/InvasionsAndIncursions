@@ -24,6 +24,9 @@ function GetMixuProvinceSubcultureRebellionsPoolDataResources()
                         SavageOrcWarboss = {
                             Weighting = 3,
                         },
+                        SavageOrcGreatShaman = {
+                            Weighting = 2,
+                        },
                     },
                 },
             },
@@ -39,6 +42,9 @@ function GetMixuProvinceSubcultureRebellionsPoolDataResources()
                     ArmyArchetypes = {
                         SavageOrcWarboss = {
                             Weighting = 3,
+                        },
+                        SavageOrcGreatShaman = {
+                            Weighting = 2,
                         },
                     },
                 },
@@ -56,6 +62,9 @@ function GetMixuProvinceSubcultureRebellionsPoolDataResources()
                         SavageOrcWarboss = {
                             Weighting = 3,
                         },
+                        SavageOrcGreatShaman = {
+                            Weighting = 2,
+                        },
                     },
                 },
             },
@@ -72,6 +81,9 @@ function GetMixuProvinceSubcultureRebellionsPoolDataResources()
                         SavageOrcWarboss = {
                             Weighting = 3,
                         },
+                        SavageOrcGreatShaman = {
+                            Weighting = 2,
+                        },
                     },
                 },
             },
@@ -87,6 +99,9 @@ function GetMixuProvinceSubcultureRebellionsPoolDataResources()
                     ArmyArchetypes = {
                         SavageOrcWarboss = {
                             Weighting = 3,
+                        },
+                        SavageOrcGreatShaman = {
+                            Weighting = 2,
                         },
                     },
                 },
