@@ -15,7 +15,7 @@ require 'script/_lib/core/listeners/ERListeners';
 require 'script/_lib/core/listeners/ERUIListeners';
 
 function zz_enhanced_rebellions()
-    local enableLogging = false;
+    local enableLogging = true;
     out("EnR: Main mod function");
     ER = ERController:new({
         ActiveRebellions = ER.ActiveRebellions,

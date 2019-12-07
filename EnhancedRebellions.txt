@@ -1,34 +1,28 @@
-Initialised   : [16, 11 2019 13:20:50]
-Overriding Norscan listeners   : [16, 11 2019 13:20:50]
+Initialised   : [07, 12 2019 13:29:02]
+Overriding Norscan listeners   : [07, 12 2019 13:29:02]
 FINISHED
 
 FINISHED
 
-Checking military force: 10   : [16, 11 2019 13:20:50]
-Granting units to rebellion in region: wh2_main_vor_heart_of_the_jungle_oreons_camp   : [16, 11 2019 13:20:50]
-Missing archetype resources, trying corruption resources...   : [16, 11 2019 13:20:50]
-ERROR: Can't find archetype army resources   : [16, 11 2019 13:20:50]
+Checking military force: 10   : [07, 12 2019 13:29:02]
 FINISHED
 
 FINISHED
 
 FINISHED
 
-Checking military force: 10   : [16, 11 2019 13:20:50]
-Granting units to rebellion in region: wh2_main_vor_heart_of_the_jungle_oreons_camp   : [16, 11 2019 13:20:50]
-Missing archetype resources, trying corruption resources...   : [16, 11 2019 13:20:50]
-ERROR: Can't find archetype army resources   : [16, 11 2019 13:20:50]
+Checking military force: 10   : [07, 12 2019 13:29:02]
 FINISHED
 
-Deploy agents choice made: 1   : [16, 11 2019 13:20:50]
-Adding agent deploy dilemma: poe_deploy_agents_   : [16, 11 2019 13:20:50]
+Deploy agents choice made: 1   : [07, 12 2019 13:29:02]
+Adding agent deploy dilemma: poe_deploy_agents_   : [07, 12 2019 13:29:02]
 FINISHED
 
-Settlement panel opened   : [16, 11 2019 13:20:51]
-Settlement panel buttons initialised   : [16, 11 2019 13:20:51]
+Settlement panel opened   : [07, 12 2019 13:29:02]
+Settlement panel buttons initialised   : [07, 12 2019 13:29:02]
 FINISHED
 
-Military crackdown choice made: 1   : [16, 11 2019 13:20:51]
-Adding crackdown for region:    : [16, 11 2019 13:20:51]
+Military crackdown choice made: 1   : [07, 12 2019 13:29:02]
+Adding crackdown for region:    : [07, 12 2019 13:29:02]
 FINISHED
 

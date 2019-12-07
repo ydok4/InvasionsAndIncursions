@@ -247,9 +247,7 @@ function ER_SetupPostUIListeners(er, core)
         "DilemmaChoiceMadeEvent",
         function(context)
             local dilemma = context:dilemma();
-            if string.match(dilemma, "poe_deploy_agents_")
-            -- THIS IS ONLY FOR TESTING
-            or dilemma == "wh2_main_dilemma_treasure_hunt_slaanesh_fungi" then
+            if string.match(dilemma, "poe_deploy_agents_") then
                 return true;
             end
             return false;
@@ -258,6 +256,7 @@ function ER_SetupPostUIListeners(er, core)
             local choice = context:choice();
             er.Logger:Log("Deploy agents choice made: "..choice);
             if choice == 0 then
+                er.Logger:Log_Finished();
                 return;
             end
             er:AddAgentDeployDilemma(context:dilemma());

@@ -278,12 +278,12 @@ function get_cm()
         get_region = function()
             return {
                 cqi = function() return 123; end,
-                province_name = function() return "wh_main_death_pass"; end,
+                province_name = function() return "wh_main_couronne_et_languille"; end,
                 faction_province_growth = function() return 3; end,
                 religion_proportion = function() return 0; end,
                 public_order = function() return -99; end,
                 owning_faction = function() return testFaction; end,
-                name = function() return "wh2_main_vor_heart_of_the_jungle_oreons_camp"; end,
+                name = function() return "wh_main_couronne_et_languille_couronne"; end,
                 is_province_capital = function() return false; end,
                 is_abandoned = function() return false; end,
                 command_queue_index = function() return 10; end,

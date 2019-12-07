@@ -1,22 +1,22 @@
-ERROR: Missing UIMF   : [16, 11 2019 13:20:50]
+ERROR: Missing UIMF   : [07, 12 2019 13:29:02]
 FINISHED
 
-ERROR: Missing UIMF   : [16, 11 2019 13:20:50]
+ERROR: Missing UIMF   : [07, 12 2019 13:29:02]
 FINISHED
 
-UpdateButtons   : [16, 11 2019 13:20:50]
-Selected faction is: wh2_main_hef_nagarythe   : [16, 11 2019 13:20:50]
-Human faction is: wh2_main_hef_nagarythe   : [16, 11 2019 13:20:50]
+UpdateButtons   : [07, 12 2019 13:29:02]
+Selected faction is: wh2_main_hef_nagarythe   : [07, 12 2019 13:29:02]
+Human faction is: wh2_main_hef_nagarythe   : [07, 12 2019 13:29:02]
 FINISHED
 
-ERROR: Missing UIMF   : [16, 11 2019 13:20:51]
+ERROR: Missing UIMF   : [07, 12 2019 13:29:02]
 FINISHED
 
-ERROR: Missing UIMF   : [16, 11 2019 13:20:51]
+ERROR: Missing UIMF   : [07, 12 2019 13:29:02]
 FINISHED
 
-UpdateButtons   : [16, 11 2019 13:20:51]
-Selected faction is: wh2_main_hef_nagarythe   : [16, 11 2019 13:20:51]
-Human faction is: wh2_main_hef_nagarythe   : [16, 11 2019 13:20:51]
+UpdateButtons   : [07, 12 2019 13:29:02]
+Selected faction is: wh2_main_hef_nagarythe   : [07, 12 2019 13:29:02]
+Human faction is: wh2_main_hef_nagarythe   : [07, 12 2019 13:29:02]
 FINISHED
 

@@ -651,7 +651,7 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction, preKey)
                     end
                     cm:trigger_incident_with_targets(factionCqi, selectedIncidentKey, factionCqi, 0, 0, 0, region:cqi(), 0);
                 else
-                    cm:trigger_incident_with_targets(factionCqi, "er_generic_incursion", factionCqi, 0, 0, 0, region:cqi(), 0);
+                    cm:trigger_incident_with_targets(factionCqi, "poe_generic_incursion", factionCqi, 0, 0, 0, region:cqi(), 0);
                 end
             end
             -- When spawning existing characters we don't add any XP or ancilliaries
@@ -1178,10 +1178,12 @@ function ERController:UpdatePREs(region)
                 if subcultureIncidents == nil then
                     subcultureIncidents = preResourceData.Incidents["default"];
                 end
-                for incidentKey, incidentData in pairs(subcultureIncidents) do
-                    if turnNumber == incidentData.NumberOfTurns + activePREData.SpawnTurnNumber then
-                        self.Logger:Log("Triggering PRE incident: "..incidentKey);
-                        cm:trigger_incident_with_targets(faction:command_queue_index(), incidentKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                if subcultureIncidents ~= nil then
+                    for incidentKey, incidentData in pairs(subcultureIncidents) do
+                        if turnNumber == incidentData.NumberOfTurns + activePREData.SpawnTurnNumber then
+                            self.Logger:Log("Triggering PRE incident: "..incidentKey);
+                            cm:trigger_incident_with_targets(faction:command_queue_index(), incidentKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                        end
                     end
                 end
                 -- Check auto dilemmas
@@ -1189,10 +1191,12 @@ function ERController:UpdatePREs(region)
                 if autoDilemmas == nil then
                     autoDilemmas = preResourceData.AutoDilemmas["default"];
                 end
-                for dilemmaKey, dilemmaData in pairs(autoDilemmas) do
-                    if turnNumber == dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber then
-                        self.Logger:Log("Triggering PRE auto dilemma: "..dilemmaKey);
-                        cm:trigger_dilemma_with_targets(faction:command_queue_index(), dilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                if autoDilemmas ~= nil then
+                    for dilemmaKey, dilemmaData in pairs(autoDilemmas) do
+                        if turnNumber == dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber then
+                            self.Logger:Log("Triggering PRE auto dilemma: "..dilemmaKey);
+                            cm:trigger_dilemma_with_targets(faction:command_queue_index(), dilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                        end
                     end
                 end
             end
