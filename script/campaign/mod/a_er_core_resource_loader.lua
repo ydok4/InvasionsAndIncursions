@@ -129,7 +129,7 @@ _G.ERResources = {
         end
     end,
     PassiveRebelEventsPoolData = {
-        wh_main_sc_brt_bretonnia = GetBretonniaPREPoolDataResources(),
+        --wh_main_sc_brt_bretonnia = GetBretonniaPREPoolDataResources(),
     },
     AddAdditionPassiveRebelEventResources = function(subculture, data)
 

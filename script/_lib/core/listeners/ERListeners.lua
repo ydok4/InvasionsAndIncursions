@@ -16,6 +16,17 @@ function ER_SetupPostUIListeners(er, core)
                 cm:disable_event_feed_events(true, "", "", "diplomacy_faction_destroyed");
                 er.Logger:Log_Finished();
             end
+            local setPieceBattleKey = cm:model():pending_battle():set_piece_battle_key();
+            if setPieceBattleKey ~= ""
+            and cm:pending_battle_cache_is_quest_battle() == true then
+                er.Logger:Log("setPieceBattleKey is: "..setPieceBattleKey);
+                er.Logger:Log("Pending battle is quest battle");
+                local involvedQBFactions = GetInvolvedQuestFactionKeysInBattle();
+                for index, factionKey in pairs(involvedQBFactions) do
+                    cm:change_localised_faction_name(factionKey, "factions_screen_name_"..factionKey);
+                end
+                er.Logger:Log_Finished();
+            end
         end,
         true
     );
@@ -50,11 +61,21 @@ function ER_SetupPostUIListeners(er, core)
                 isQBFactionInvolvedInBattle = false;
                 er.Logger:Log_Finished();
             end
+            local setPieceBattleKey = cm:model():pending_battle():set_piece_battle_key();
+            if setPieceBattleKey ~= ""
+            and cm:pending_battle_cache_is_quest_battle() == true then
+                er.Logger:Log("setPieceBattleKey is: "..setPieceBattleKey);
+                er.Logger:Log("Pending battle is quest battle");
+                local involvedQBFactions = GetInvolvedQuestFactionKeysInBattle();
+                for index, factionKey in pairs(involvedQBFactions) do
+                    cm:change_localised_faction_name(factionKey, "factions_screen_name_when_rebels_"..factionKey);
+                end
+                er.Logger:Log_Finished();
+            end
         end,
         true
     );
 
-    local numberOfRebellions = 0;
     core:add_listener(
         "ER_ResetWarDeclared",
         "FactionTurnStart",
@@ -67,8 +88,56 @@ function ER_SetupPostUIListeners(er, core)
         end,
     true);
 
+    -- These listeners exist to reduce the clutter in the diplomacy UI by hiding the proxy rebels
+    -- Note: Flickering may occur when changing factions
+    -- Bonus: It also hides other vanilla factions which are excluded from diplomacy
+    local UIFlagCache = nil;
+    local startedFromButton = false;
+    core:add_listener(
+        "ER_ClickedFactionInDiplomacy",
+        "ComponentLClickUp",
+        function(context)
+            return string.match(context.string, "faction_row_entry_")
+            or context.string == "button_diplomacy"
+            or context.string == "flag";
+        end,
+        function(context)
+            if context.string == "button_diplomacy" then
+                startedFromButton = true;
+            else
+                er.Logger:Log("Diplomacy panel opened or faction changed");
+                ER_HideRebelsInDiplomacy(er, UIFlagCache);
+                er.Logger:Log_Finished();
+            end
+        end,
+        true
+    );
+
+    core:add_listener(
+        "ER_DiplomacyOpened",
+        "PanelOpenedCampaign",
+        function(context)
+            return context.string == "diplomacy_dropdown";
+        end,
+        function(context)
+            er.Logger:Log("Diplomacy panel opened");
+            -- Callback required for hiding because otherwise this will happen before the UI
+            -- is finished
+            cm:callback(function(context)
+                if startedFromButton == true then
+                    startedFromButton = false;
+                end
+                ER_HideRebelsInDiplomacy(er, UIFlagCache);
+            end,
+            1);
+            er.Logger:Log_Finished();
+        end,
+        true
+    );
+
     -- Checks provinces for existing rebels and whether the data needs to be cleaned up
     -- and performs the actions to spawn rebels
+    local numberOfRebellions = 0;
     core:add_listener(
         "ER_CheckFactionRebellions",
         "FactionAboutToEndTurn",
@@ -362,4 +431,65 @@ function IsQuestBattleFactionInvolvedInBattle(er)
 		end;
 	end;
     return false;
+end
+
+function GetInvolvedQuestFactionKeysInBattle()
+    local qbFactionKeys = {};
+	for i = 1, cm:pending_battle_cache_num_defenders() do
+		local current_char_cqi, current_mf_cqi, current_faction_name = cm:pending_battle_cache_get_defender(i);
+        local faction = cm:get_faction(current_faction_name);
+        --er.Logger:Log("Battle participant: "..current_faction_name);
+        if faction:is_null_interface() or faction:is_quest_battle_faction() == true then
+            qbFactionKeys[#qbFactionKeys + 1] = faction:name();
+		end;
+	end;
+
+	for i = 1, cm:pending_battle_cache_num_attackers() do
+		local current_char_cqi, current_mf_cqi, current_faction_name = cm:pending_battle_cache_get_attacker(i);
+        local faction = cm:get_faction(current_faction_name);
+        --er.Logger:Log("Battle participant: "..current_faction_name);
+        if faction:is_null_interface() or faction:is_quest_battle_faction() == true then
+			qbFactionKeys[#qbFactionKeys + 1] = faction:name();
+		end;
+	end;
+    return qbFactionKeys;
+end
+
+function ER_HideRebelsInDiplomacy(er, UIFlagCache)
+    if UIFlagCache == nil then
+        er.Logger:Log("Cache is nil, setting cached tooltips");
+        UIFlagCache = {};
+        for subcultureKey, subcultureRebelData in pairs(_G.ERResources.RebelFactionPoolDataResources) do
+            local rebelFactionName = effect.get_localised_string("factions_screen_name_when_rebels_"..subcultureRebelData.Default);
+            UIFlagCache[rebelFactionName.." - Click to show on map"] = true;
+        end
+    end
+    local rightStatusPanelEnemies = find_uicomponent(core:get_ui_root(), "diplomacy_dropdown", "faction_right_status_panel", "diplomatic_relations", "list", "icon_at_war", "enemies");
+    ER_HideRebelsInStatusPanel(er, UIFlagCache, rightStatusPanelEnemies);
+    local leftStatusPanelEnemies = find_uicomponent(core:get_ui_root(), "diplomacy_dropdown", "faction_left_status_panel", "diplomatic_relations", "list", "icon_at_war", "enemies");
+    ER_HideRebelsInStatusPanel(er, UIFlagCache, leftStatusPanelEnemies);
+end
+
+function ER_HideRebelsInStatusPanel(er, UIFlagCache, statusPanelEnemies)
+    local originalCoordinates = {};
+    local numberOfHiddenEnemies = 0;
+    for i = 0, statusPanelEnemies:ChildCount() - 1  do
+        local enemy = UIComponent(statusPanelEnemies:Find(i));
+        local tooltipText = enemy:GetTooltipText();
+        if tooltipText == nil then
+            er.Logger:Log("Tooltip text is nil");
+        else
+            local xPos, yPos = enemy:Position()
+            originalCoordinates[#originalCoordinates + 1] = {xPos, yPos};
+            if UIFlagCache[tooltipText] == true then
+                enemy:SetVisible(false);
+                numberOfHiddenEnemies = numberOfHiddenEnemies + 1;
+            else
+                if numberOfHiddenEnemies > 0 then
+                    local moveToIndex = (i + 1) - numberOfHiddenEnemies;
+                    enemy:MoveTo(originalCoordinates[moveToIndex][1], originalCoordinates[moveToIndex][2]);
+                end
+            end
+        end
+    end
 end

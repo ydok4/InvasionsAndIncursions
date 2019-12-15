@@ -1,7 +1,6 @@
 if core:is_mod_loaded("mixu_ttl") then
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuBeastmenRebelArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuChaosRebelArmyArchetypesPoolDataResources'
-    require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuDarkElfRebelArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuEmpireRebelArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuGreenskinRebelArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuNorscaRebelArmyArchetypesPoolDataResources'
@@ -10,7 +9,6 @@ if core:is_mod_loaded("mixu_ttl") then
 
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc03_sc_bst_beastmen", GetMixuBeastmenRebelArmyArchetypesPoolDataResources(), false);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_chs_chaos", GetMixuChaosRebelArmyArchetypesPoolDataResources(), false);
-    _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh2_main_sc_def_dark_elves", GetMixuDarkElfRebelArmyArchetypesPoolDataResources(), false);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_emp_empire", GetMixuEmpireRebelArmyArchetypesPoolDataResources(), false);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_grn_greenskins", GetMixuGreenskinRebelArmyArchetypesPoolDataResources(), false);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_nor_norsca", GetMixuNorscaRebelArmyArchetypesPoolDataResources(), false);

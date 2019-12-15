@@ -88,10 +88,10 @@ testFaction = {
         return "wh2_main_wef_bowmen_of_oreon";
     end,
     culture = function()
-        return "wh_main_sc_brt_bretonnia";
+        return "wh_main_grn_greenskins";
     end,
     subculture = function()
-        return "wh_main_sc_brt_bretonnia";
+        return "wh_main_sc_grn_greenskins";
     end,
     is_dead = function() return true; end,
     character_list = function()
@@ -397,6 +397,7 @@ function get_cm()
         get_difficulty = function() return "hard"; end,
         add_first_tick_callback = function() end,
         appoint_character_to_most_expensive_force = function() end,
+        change_localised_faction_name = function() end,
     };
 end
 
@@ -560,6 +561,7 @@ local ER_AgentDeployDilemmaChoiceMade = {
     },
 }
 mock_listeners:trigger_listener(ER_AgentDeployDilemmaChoiceMade);
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
 local ER_SettlementPanelOpened = {
     Key = "ER_SettlementPanelOpened",
@@ -578,6 +580,7 @@ local ER_MilitaryCrackDownDilemmaChoiceMade = {
     },
 }
 mock_listeners:trigger_listener(ER_MilitaryCrackDownDilemmaChoiceMade);
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
 ER_InitialiseSaveHelpers(cm, context);
 ER_SaveActiveRebellions(ER);

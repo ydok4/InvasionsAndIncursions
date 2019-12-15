@@ -11,6 +11,15 @@ function GetDarkElfRebelArmyArchetypesPoolDataResources()
                 UnitTags = {"Warriors", { "Cavalry", "ColdOnes", }, { "Khainite", "Shades", }, },
                 Weighting = 1,
             },
+            Beastmaster = {
+                AgentSubtypes = {"wh2_dlc14_def_high_beastmaster", },
+                MandatoryUnits = {
+                    wh2_main_def_inf_harpies = 2,
+                    { wh2_dlc10_def_mon_feral_manticore_0 = 1, wh2_dlc14_def_cav_scourgerunner_chariot_0 = 1 },
+                },
+                UnitTags = {"Warriors", "ColdOnes", "Beasts", },
+                Weighting = 1,
+            },
             Corsairs = {
                 AgentSubtypes = {"wh2_main_def_dreadlord", "wh2_main_def_dreadlord_fem", },
                 MandatoryUnits = {

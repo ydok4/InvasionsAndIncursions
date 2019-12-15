@@ -1,28 +1,28 @@
-Initialised   : [07, 12 2019 13:29:02]
-Overriding Norscan listeners   : [07, 12 2019 13:29:02]
+Initialised   : [14, 12 2019 12:56:58]
+Overriding Norscan listeners   : [14, 12 2019 12:56:58]
 FINISHED
 
 FINISHED
 
-Checking military force: 10   : [07, 12 2019 13:29:02]
+Checking military force: 10   : [14, 12 2019 12:56:58]
+Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [14, 12 2019 12:56:58]
 FINISHED
 
+Checking military force: 10   : [14, 12 2019 12:56:58]
+Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [14, 12 2019 12:56:58]
 FINISHED
 
+Deploy agents choice made: 1   : [14, 12 2019 12:56:58]
+Adding agent deploy dilemma: poe_deploy_agents_   : [14, 12 2019 12:56:58]
 FINISHED
 
-Checking military force: 10   : [07, 12 2019 13:29:02]
+Checking military force: 10   : [14, 12 2019 12:56:58]
 FINISHED
 
-Deploy agents choice made: 1   : [07, 12 2019 13:29:02]
-Adding agent deploy dilemma: poe_deploy_agents_   : [07, 12 2019 13:29:02]
+Military crackdown choice made: 1   : [14, 12 2019 12:56:58]
+Adding crackdown for region:    : [14, 12 2019 12:56:58]
 FINISHED
 
-Settlement panel opened   : [07, 12 2019 13:29:02]
-Settlement panel buttons initialised   : [07, 12 2019 13:29:02]
-FINISHED
-
-Military crackdown choice made: 1   : [07, 12 2019 13:29:02]
-Adding crackdown for region:    : [07, 12 2019 13:29:02]
+Checking military force: 10   : [14, 12 2019 12:56:58]
 FINISHED
 

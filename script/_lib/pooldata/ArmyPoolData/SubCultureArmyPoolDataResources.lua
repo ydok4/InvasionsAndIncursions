@@ -551,8 +551,8 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Late = {
                     wh2_main_def_inf_witch_elves_0 = 3,
-                    wh2_dlc10_def_inf_sisters_of_slaughter = 1,
-                    wh2_main_def_inf_har_ganeth_executioners_0 = 1,
+                    { wh2_dlc10_def_inf_sisters_of_slaughter = 1, wh2_main_def_inf_har_ganeth_executioners_0 = 1, },
+                    { wh2_main_def_inf_har_ganeth_executioners_0 = 1, wh2_dlc14_def_veh_bloodwrack_shrine_0 = 1 },
                 },
             },
             Cavalry = {
@@ -617,7 +617,7 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Mid = {
                     { wh2_main_def_inf_harpies = 2, wh2_dlc10_def_mon_feral_manticore_0 = 1, },
-                    { wh2_main_def_mon_war_hydra = 1, wh2_dlc10_def_mon_kharibdyss_0 = 1, },
+                    { wh2_dlc14_def_cav_scourgerunner_chariot_0 = 1, wh2_main_def_mon_war_hydra = 1, wh2_dlc10_def_mon_kharibdyss_0 = 1, },
                 },
                 Late = {
                     wh2_main_def_inf_harpies = 2,
@@ -867,11 +867,11 @@ function GetSubcultureArmyPoolDataResources()
                 Mid = {
                     wh2_main_skv_inf_warpfire_thrower = 1,
                     wh2_main_skv_inf_poison_wind_globadiers = 1,
-                    { wh2_dlc12_skv_inf_warplock_jezzails_0 = 1, wh2_dlc12_skv_veh_doom_flayer_0 = 1, },
+                    { wh2_dlc12_skv_inf_warplock_jezzails_0 = 1, wh2_dlc12_skv_veh_doom_flayer_0 = 1, wh2_dlc14_skv_inf_warp_grinder_0 = 1, },
                 },
                 Late = {
-                    { wh2_main_skv_inf_warpfire_thrower = 1, wh2_main_skv_inf_poison_wind_globadiers = 1, },
-                    { wh2_dlc12_skv_inf_ratling_gun_0 = 1, wh2_main_skv_inf_death_globe_bombardiers = 1, wh2_dlc12_skv_inf_warplock_jezzails_0 = 1, },
+                    { wh2_main_skv_inf_warpfire_thrower = 1, wh2_main_skv_inf_poison_wind_globadiers = 1, wh2_dlc14_skv_inf_warp_grinder_0 = 1, },
+                    { wh2_dlc12_skv_inf_ratling_gun_0 = 1, wh2_main_skv_inf_death_globe_bombardiers = 1, wh2_dlc12_skv_inf_warplock_jezzails_0 = 1, wh2_dlc14_skv_inf_poison_wind_mortar_0 = 1, },
                     { wh2_main_skv_art_warp_lightning_cannon = 1, wh2_main_skv_veh_doomwheel = 1, },
                 },
             },

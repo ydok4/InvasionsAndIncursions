@@ -15,7 +15,7 @@ require 'script/_lib/core/listeners/ERListeners';
 require 'script/_lib/core/listeners/ERUIListeners';
 
 function zz_enhanced_rebellions()
-    local enableLogging = true;
+    local enableLogging = false;
     out("EnR: Main mod function");
     ER = ERController:new({
         ActiveRebellions = ER.ActiveRebellions,
@@ -55,7 +55,7 @@ function zz_enhanced_rebellions()
         end
     else
         ER_SetupPostUIListeners(ER, core);
-        ER_SetupPostUIInterfaceListeners(ER, core, enableLogging);
+        --ER_SetupPostUIInterfaceListeners(ER, core, enableLogging);
     end
     ER.Logger:Log_Finished();
     out("EnR: Finished setup");

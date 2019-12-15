@@ -40,6 +40,12 @@ function ERController:Initialise(random_army_manager, enableLogging)
     self.Logger = Logger:new({});
     self.Logger:Initialise("EnhancedRebellions.txt", enableLogging);
     self.Logger:Log_Start();
+    -- Now we change the qb faction names
+    if cm:is_new_game() then
+        for subcultureKey, subcultureRebelData in pairs(_G.ERResources.RebelFactionPoolDataResources) do
+            cm:change_localised_faction_name(subcultureRebelData.Default, "factions_screen_name_when_rebels_"..subcultureRebelData.Default);
+        end
+    end
 end
 
 function ERController:CheckMCMOptions(core)
@@ -55,7 +61,7 @@ function ERController:CheckMCMOptions(core)
     if enableRebellions == nil or enableRebellions == "enable_rebellions" then
         self.Logger:Log("Rebellions are enabled in MCM");
         ER_SetupPostUIListeners(self, core);
-        ER_SetupPostUIInterfaceListeners(self, core, true);
+        --ER_SetupPostUIInterfaceListeners(self, core, true);
     else
         self.Logger:Log("Rebellions are disabled in MCM");
     end
@@ -599,12 +605,12 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction, preKey)
                 -- Thats why I still need these commands.
                 cm:force_diplomacy("faction:"..rebellionData.FactionKey, "all", "all", false, false, true);
                 cm:force_diplomacy("faction:"..rebellionData.FactionKey, "all", "war", true, true, true);
-                --local atWarWithFactions = {};
+                -- Then do the same for the player
+                cm:force_declare_war(rebellionData.FactionKey, self.HumanFaction:name(), false, false);
                 -- Force war with targeted faction
                 cm:force_declare_war(rebellionData.FactionKey, factionKey, false, false);
                 --atWarWithFactions[rebellionData.FactionKey] = true;
-                -- Then do the same for the player
-                cm:force_declare_war(rebellionData.FactionKey, self.HumanFaction:name(), false, false);
+
                 --atWarWithFactionsatWarWithFactionsatWarWithFactions[self.HumanFaction:name()] = true;
                 -- Then do the same for any adjacent factions
                 --[[local adjacentRegionList = region:adjacent_region_list();
@@ -710,8 +716,8 @@ function ERController:SpawnArmy(rebellionData, region, owningFaction, preKey)
                 else
                     bonusXpLevels = math.ceil(turnNumber / 10) + Random(3);
                 end
-                if bonusXpLevels > 20 then
-                    bonusXpLevels = 20;
+                if bonusXpLevels > 15 then
+                    bonusXpLevels = 15;
                 end
                 cm:add_agent_experience(characterLookupString, bonusXpLevels, true)
                 cm:callback(function()
@@ -780,9 +786,9 @@ function ERController:GrantUnitsForForce(rebelForceData, militaryForce)
         end
     end
     local turnNumber = cm:model():turn_number();
-    local gamePeriod = self:GetGamePeriod(turnNumber);
     local maximumNumberOfExtraUnits = 19 - militaryForce:unit_list():num_items();
-    if maximumNumberOfExtraUnits > 2 and gamePeriod ~= "Early" then
+    -- Turn 50 is equivalent to the early result returned from GetGamePeriod in  the ArmyGenerator
+    if maximumNumberOfExtraUnits > 2 and turnNumber > 50 then
         maximumNumberOfExtraUnits = 2;
     else
         maximumNumberOfExtraUnits = 1;
@@ -1352,20 +1358,22 @@ function ERController:GeneratePREPoolForRegion(region)
     if provinceResources.PassiveRebelEvents ~= nil then
         for subcultureRegionPREKey, regionSubculturePREData in pairs(provinceResources.PassiveRebelEvents) do
             local subculturePREs = self:GetPRESubculturePoolDataResources(subcultureRegionPREKey, factionKey);
-            for preKey, regionPREData in pairs(regionSubculturePREData) do
-                local preData = subculturePREs[preKey];
-                if preData ~= nil
-                and tonumber(publicOrder) > preData.MinimumRequriedPublicOrder then
-                    local armyArchetypeKey = GetRandomObjectFromList(preData.ArmyArchetypes);
-                    local armyArchetypeResources = self:GetArmyArchetypeData(subcultureRegionPREKey, armyArchetypeKey);
-                    validPreData[preKey] = {
-                        PRESubcultureKey = subcultureRegionPREKey,
-                        PREFactionKey = armyArchetypeResources.RebellionFaction,
-                        PREData = preData,
-                        Weighting = preData.Weighting,
-                    };
-                else
-                    self.Logger:Log("Public order is less than required threshold");
+            if TableHasAnyValue(subculturePREs) == true then
+                for preKey, regionPREData in pairs(regionSubculturePREData) do
+                    local preData = subculturePREs[preKey];
+                    if preData ~= nil
+                    and tonumber(publicOrder) > preData.MinimumRequriedPublicOrder then
+                        local armyArchetypeKey = GetRandomObjectFromList(preData.ArmyArchetypes);
+                        local armyArchetypeResources = self:GetArmyArchetypeData(subcultureRegionPREKey, armyArchetypeKey);
+                        validPreData[preKey] = {
+                            PRESubcultureKey = subcultureRegionPREKey,
+                            PREFactionKey = armyArchetypeResources.RebellionFaction,
+                            PREData = preData,
+                            Weighting = preData.Weighting,
+                        };
+                    else
+                        self.Logger:Log("Public order is less than required threshold");
+                    end
                 end
             end
         end

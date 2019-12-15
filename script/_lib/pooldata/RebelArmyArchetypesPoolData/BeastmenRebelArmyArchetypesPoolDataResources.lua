@@ -4,7 +4,7 @@ function GetBeastmenRebelArmyArchetypesPoolDataResources()
             BeastLord = {
                 AgentSubtypes = {"dlc03_bst_beastlord", },
                 UnitTags = {"Gors", "WarBeasts", },
-                Weighting = 4,
+                Weighting = 5,
             },
         },
     };

@@ -34,7 +34,12 @@ function ArmyGenerator:GenerateForceForTurn(ramData, numberOfUnitsOverride)
     if mandatoryUnits ~= nil then
         self.Logger:Log("Getting mandatory units");
         for unitKey, amount in pairs(mandatoryUnits) do
-            self.random_army_manager:add_mandatory_unit(ramData.ForceKey, unitKey, amount);
+            if type(amount) == "table" then
+                local randomMandatoryUnitKey = GetRandomObjectKeyFromList(amount);
+                self.random_army_manager:add_mandatory_unit(ramData.ForceKey, randomMandatoryUnitKey, amount[randomMandatoryUnit]);
+            else
+                self.random_army_manager:add_mandatory_unit(ramData.ForceKey, unitKey, amount);
+            end
         end
     end
 

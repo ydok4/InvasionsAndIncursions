@@ -1,0 +1,8 @@
+GenerateForceForTurn   : [14, 12 2019 12:56:58]
+Adding subculture unit: wh_main_grn_inf_goblin_spearmen   : [14, 12 2019 12:56:58]
+Adding subculture unit: wh_main_grn_inf_goblin_archers   : [14, 12 2019 12:56:58]
+Force size is 1   : [14, 12 2019 12:56:58]
+GenerateForceForTurn   : [14, 12 2019 12:56:58]
+Adding subculture unit: wh_main_grn_inf_goblin_spearmen   : [14, 12 2019 12:56:58]
+Adding subculture unit: wh_main_grn_inf_goblin_archers   : [14, 12 2019 12:56:58]
+Force size is 1   : [14, 12 2019 12:56:58]

@@ -12,10 +12,10 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
                 Weighting = 2,
             },
             ClanEshin = {
-                AgentSubtypes = {"wh2_main_skv_warlord", },
+                AgentSubtypes = {"wh2_dlc14_skv_master_assassin", },
                 MandatoryUnits = {
+                    wh2_dlc14_skv_inf_eshin_triads_0 = 1,
                     wh2_main_skv_inf_death_runners_0 = 1,
-                    wh2_main_skv_inf_gutter_runners_1 = 1,
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanEshin", },
                 Weighting = 0,
@@ -31,8 +31,8 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
             ClanSkryre = {
                 AgentSubtypes = {"wh2_main_skv_warlord",  "wh2_dlc12_skv_warlock_master", },
                 MandatoryUnits = {
-                    wh2_main_skv_inf_warpfire_thrower = 1,
-                    wh2_main_skv_inf_poison_wind_globadiers = 1,
+                    { wh2_main_skv_inf_warpfire_thrower = 1, wh2_main_skv_inf_poison_wind_globadiers = 1 },
+                    { wh2_dlc12_skv_inf_ratling_gun_0 = 1, wh2_dlc12_skv_inf_warplock_jezzails_0 = 1, wh2_dlc14_skv_inf_poison_wind_mortar_0 = 1, },
                 },
                 UnitTags = {"SkavenSlaves", "Warriors", "ClanSkyre",},
                 Weighting = 0,

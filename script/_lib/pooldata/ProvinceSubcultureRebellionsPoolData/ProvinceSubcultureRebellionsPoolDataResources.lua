@@ -92,6 +92,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_the_broken_teeth = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 2,
+                },
+            },
+        },
         wh2_main_caledor = {
             IsAdjacentToSea = true,
             RebelSubcultures = {
@@ -257,6 +271,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_dragon_isles = {
+            IsAdjacentToSea = true,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh2_main_sc_lzd_lizardmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_eagle_gate = {
 
         },
@@ -336,6 +364,17 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
                     Weighting = 4,
+                },
+            },
+        },
+        wh2_main_gnoblar_country = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_emp_empire = {
+                    Weighting = 1,
                 },
             },
         },
@@ -882,6 +921,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_the_plain_of_bones = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_the_road_of_skulls = {
             IsAdjacentToSea = true,
             RebelSubcultures = {
@@ -896,6 +949,17 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_nor_norsca = {
                     Weighting = 1,
+                },
+            },
+        },
+        wh2_main_the_wolf_lands = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
                 },
             },
         },
