@@ -1007,16 +1007,19 @@ function ERController:UpdateExistingRebels(region)
             and rebelForceTarget:is_abandoned() == true then
                 local rebelForceTargetRegionKey = rebelForceTarget:name();
                 self.Logger:Log("Target region is abandoned: "..rebelForceTargetRegionKey);
-                local character = militaryForce:general_character();
-                local characterLookupString = "character_cqi:"..character:command_queue_index();
-                cm:cai_enable_movement_for_character(characterLookupString);
                 self.Logger:Log("Untracking military force "..militaryForceCqi);
                 rebelData.Forces[index] = nil;
                 self:AddPastRebellion(rebelForceData);
                 self.RebelForces[militaryForceCqi] = nil;
-                -- Finally, we kill them and their force
-                if rebelForceData.CleanUpRebelForce == true then
-                    cm:kill_character(character:command_queue_index(), true, true);
+                if militaryForce ~= nil
+                and not militaryForce:is_null_interface() then
+                    local character = militaryForce:general_character();
+                    local characterLookupString = "character_cqi:"..character:command_queue_index();
+                    cm:cai_enable_movement_for_character(characterLookupString);
+                    -- Finally, we kill them and their force
+                    if rebelForceData.CleanUpRebelForce == true then
+                        cm:kill_character(character:command_queue_index(), true, true);
+                    end
                 end
                 self.Logger:Log_Finished();
             elseif rebelForceTarget:owning_faction():name() == factionKey then
