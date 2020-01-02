@@ -1,28 +1,49 @@
-Initialised   : [14, 12 2019 12:56:58]
-Overriding Norscan listeners   : [14, 12 2019 12:56:58]
+Initialised   : [01, 01 2020 11:41:32]
+Overriding Norscan listeners   : [01, 01 2020 11:41:32]
 FINISHED
 
 FINISHED
 
-Checking military force: 10   : [14, 12 2019 12:56:58]
-Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [14, 12 2019 12:56:58]
+Spawning rebellion in province: wh_main_couronne_et_languille for faction: wh2_main_wef_bowmen_of_oreon   : [01, 01 2020 11:41:32]
+Rebellion will trigger in region: wh_main_couronne_et_languille_couronne   : [01, 01 2020 11:41:32]
+Chosen rebellionSubculture: wh_main_sc_grn_greenskins   : [01, 01 2020 11:41:32]
+Generated general:grn_orc_warboss and archetype: OrcWarboss   : [01, 01 2020 11:41:32]
+Spawn region is: wh_main_couronne_et_languille_couronne   : [01, 01 2020 11:41:32]
+Spawning at X: 1 Y: 1   : [01, 01 2020 11:41:32]
+Rebellion spawned. Military force cqi is: 10   : [01, 01 2020 11:41:32]
+Adding to active rebellions   : [01, 01 2020 11:41:32]
 FINISHED
 
-Checking military force: 10   : [14, 12 2019 12:56:58]
-Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [14, 12 2019 12:56:58]
+Spawned rebellion in province: wh_main_couronne_et_languille   : [01, 01 2020 11:41:32]
 FINISHED
 
-Deploy agents choice made: 1   : [14, 12 2019 12:56:58]
-Adding agent deploy dilemma: poe_deploy_agents_   : [14, 12 2019 12:56:58]
 FINISHED
 
-Checking military force: 10   : [14, 12 2019 12:56:58]
 FINISHED
 
-Military crackdown choice made: 1   : [14, 12 2019 12:56:58]
-Adding crackdown for region:    : [14, 12 2019 12:56:58]
+Checking rebels in province: wh_main_couronne_et_languille   : [01, 01 2020 11:41:32]
+Checking military force: 10   : [01, 01 2020 11:41:32]
+Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [01, 01 2020 11:41:32]
 FINISHED
 
-Checking military force: 10   : [14, 12 2019 12:56:58]
+Deploy agents choice made: 1   : [01, 01 2020 11:41:32]
+Adding agent deploy dilemma: poe_deploy_agents_   : [01, 01 2020 11:41:32]
+FINISHED
+
+Checking rebels in province: wh_main_couronne_et_languille   : [01, 01 2020 11:41:32]
+Checking military force: 10   : [01, 01 2020 11:41:32]
+Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [01, 01 2020 11:41:32]
+FINISHED
+
+Settlement panel opened   : [01, 01 2020 11:41:32]
+Settlement panel buttons initialised   : [01, 01 2020 11:41:32]
+FINISHED
+
+Military crackdown choice made: 1   : [01, 01 2020 11:41:32]
+Adding crackdown for region:    : [01, 01 2020 11:41:32]
+FINISHED
+
+Checking rebels in province: wh_main_couronne_et_languille   : [01, 01 2020 11:41:32]
+Checking military force: 10   : [01, 01 2020 11:41:32]
 FINISHED
 

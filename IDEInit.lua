@@ -22,6 +22,7 @@ testMilitaryForce = {
     command_queue_index = function() return 10; end,
     is_armed_citizenry = function () return false; end,
     general_character = function() return testCharacter; end,
+    faction = function() return testFaction; end,
     unit_list = function() return {
         num_items = function() return 2; end,
         item_at = function(self, index)
@@ -130,6 +131,7 @@ testFaction = {
     is_human = function() return false; end,
     has_effect_bundle = function() return true; end,
     command_queue_index = function() return 10; end,
+    at_war_with = function() return true; end,
 }
 
 testFaction2 = {
@@ -170,6 +172,7 @@ testFaction2 = {
     is_human = function() return false; end,
     has_effect_bundle = function() return true; end,
     command_queue_index = function() return 10; end,
+    at_war_with = function() return true; end,
 }
 
 test_unit = {
@@ -519,7 +522,6 @@ require 'script/campaign/mod/zz_enhanced_rebellions'
 math.randomseed(os.time())
 
 -- This is used in game by Warhammer but we have it hear so it won't throw errors when running
--- in ZeroBrane IDE
 zz_enhanced_rebellions();
 
 local ER = _G.ER;

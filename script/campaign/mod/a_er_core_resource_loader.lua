@@ -41,33 +41,49 @@ _G.ERResources = {
                 if provinceData.IsAdjacentToSea ~= nil then
                     existingProvinceData.IsAdjacentToSea = provinceData.IsAdjacentToSea;
                 end
-
-                for subcultureKey, subcultureData in pairs(provinceData.RebelSubcultures) do
-                    if existingProvinceData.RebelSubcultures[subcultureKey] == nil then
-                        existingProvinceData.RebelSubcultures[subcultureKey] = subcultureData;
-                    else
-                        local existingSubcultureData = existingProvinceData.RebelSubcultures[subcultureKey];
-                        if subcultureData.Weighting ~= nil then
-                            existingSubcultureData.Weighting = subcultureData.Weighting;
-                        end
-                        if subcultureData.ArmyArchetypes ~= nil then
-                            for armyArchetypeKey, armyArchetypeData in pairs(subcultureData.ArmyArchetypes) do
-                                if existingSubcultureData.ArmyArchetypes == nil then
-                                    existingSubcultureData.ArmyArchetypes = {};
-                                end
-                                local existingArmyArchetype = existingSubcultureData.ArmyArchetypes[armyArchetypeKey];
-                                if existingArmyArchetype == nil then
-                                    existingArmyArchetype = {};
-                                    existingArmyArchetype[armyArchetypeKey] = armyArchetypeData;
-                                else
-                                    if armyArchetypeData == false then
-                                        existingArmyArchetype[armyArchetypeKey] = nil;
+                if provinceData.RebelSubcultures ~= nil then
+                    for subcultureKey, subcultureData in pairs(provinceData.RebelSubcultures) do
+                        if existingProvinceData.RebelSubcultures[subcultureKey] == nil then
+                            existingProvinceData.RebelSubcultures[subcultureKey] = subcultureData;
+                        else
+                            local existingSubcultureData = existingProvinceData.RebelSubcultures[subcultureKey];
+                            if subcultureData.Weighting ~= nil then
+                                existingSubcultureData.Weighting = subcultureData.Weighting;
+                            end
+                            if subcultureData.ArmyArchetypes ~= nil then
+                                for armyArchetypeKey, armyArchetypeData in pairs(subcultureData.ArmyArchetypes) do
+                                    if existingSubcultureData.ArmyArchetypes == nil then
+                                        existingSubcultureData.ArmyArchetypes = {};
+                                    end
+                                    local existingArmyArchetype = existingSubcultureData.ArmyArchetypes[armyArchetypeKey];
+                                    if existingArmyArchetype == nil then
+                                        existingArmyArchetype = {};
+                                        existingArmyArchetype[armyArchetypeKey] = armyArchetypeData;
                                     else
-                                        if armyArchetypeData.Weighting ~= nil then
-                                            existingArmyArchetype[armyArchetypeKey] = armyArchetypeData.Weighting;
+                                        if armyArchetypeData == false then
+                                            existingArmyArchetype[armyArchetypeKey] = nil;
+                                        else
+                                            if armyArchetypeData.Weighting ~= nil then
+                                                existingArmyArchetype[armyArchetypeKey] = armyArchetypeData.Weighting;
+                                            end
                                         end
                                     end
                                 end
+                            end
+                        end
+                    end
+                end
+                if provinceData.PassiveRebelEvents ~= nil then
+                    for subcultureKey, subcultureData in pairs(provinceData.PassiveRebelEvents) do
+                        if existingProvinceData.PassiveRebelEvents == nil then
+                            existingProvinceData.PassiveRebelEvents = {};
+                        end
+                        if existingProvinceData.PassiveRebelEvents[subcultureKey] == nil then
+                            existingProvinceData.PassiveRebelEvents[subcultureKey] = subcultureData;
+                        else
+                            local existingSubcultureData = existingProvinceData.PassiveRebelEvents[subcultureKey];
+                            if subcultureData.Weighting ~= nil then
+                                existingSubcultureData.Weighting = subcultureData.Weighting;
                             end
                         end
                     end
@@ -105,11 +121,11 @@ _G.ERResources = {
     AddAdditionalRebelArmyArchetypesResources = function(subculture, data, isCorruption)
         local existingSubcultureArchetypes = {};
         if isCorruption == true then
-            existingSubcultureArchetypes = _G.ERResources.RebelCorruptionArmyArchetypesPoolData[subculture][subculture];
+            existingSubcultureArchetypes = _G.ERResources.RebelCorruptionArmyArchetypesPoolData[subculture];
         else
-            existingSubcultureArchetypes = _G.ERResources.RebelArmyArchetypesPoolData[subculture][subculture];
+            existingSubcultureArchetypes = _G.ERResources.RebelArmyArchetypesPoolData[subculture];
         end
-        for armyArchetypeKey, armyArchetypeData in pairs(data[subculture]) do
+        for armyArchetypeKey, armyArchetypeData in pairs(data) do
             if existingSubcultureArchetypes[armyArchetypeKey] == nil then
                 existingSubcultureArchetypes[armyArchetypeKey] = armyArchetypeData;
             elseif armyArchetypeData == false then
@@ -129,10 +145,21 @@ _G.ERResources = {
         end
     end,
     PassiveRebelEventsPoolData = {
-        --wh_main_sc_brt_bretonnia = GetBretonniaPREPoolDataResources(),
+        default = {},
+        wh_main_sc_brt_bretonnia = GetBretonniaPREPoolDataResources(),
     },
-    AddAdditionPassiveRebelEventResources = function(subculture, data)
-
+    AddAdditionalPassiveRebelEventResources = function(data)
+        local existingPREPoolData = _G.ERResources.PassiveRebelEventsPoolData;
+        for subcultureKey, subculturePREData in pairs(data) do
+            if existingPREPoolData[subcultureKey] == nil then
+                existingPREPoolData[subcultureKey] = {};
+            end
+            for preKey, preData in pairs(subculturePREData) do
+                if existingPREPoolData[subcultureKey][preKey] == nil then
+                    existingPREPoolData[subcultureKey][preKey] = preData;
+                end
+            end
+        end
     end,
 };
 

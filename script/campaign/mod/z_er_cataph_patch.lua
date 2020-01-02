@@ -11,7 +11,7 @@ if core:is_mod_loaded("cataph_kraka") then
 end
 
 if core:is_mod_loaded("cataph_aislinn") then
-        require 'script/_lib/pooldata/ProvinceSubcultureRebellionsPoolData/CataphHighElfProvinceSubcultureRebellionsPoolDataResources'
+    require 'script/_lib/pooldata/ProvinceSubcultureRebellionsPoolData/CataphHighElfProvinceSubcultureRebellionsPoolDataResources'
 
     _G.ERResources.AddAdditionalProvinceRebellionResources(GetCataphHighElfProvinceSubcultureRebellionsPoolDataResources());
 
@@ -24,7 +24,7 @@ if core:is_mod_loaded("cataph_teb") then
     require 'script/_lib/pooldata/ProvinceSubcultureRebellionsPoolData/CataphTEBProvinceSubcultureRebellionsPoolDataResources'
 
     _G.ERResources.AddAdditionalProvinceRebellionResources(GetCataphTEBProvinceSubcultureRebellionsPoolDataResources());
-    
+
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/CataphTEBRebelArmyArchetypesPoolDataResources'
 
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_teb_teb", GetCataphTEBRebelArmyArchetypesPoolDataResources(), false);
@@ -32,7 +32,7 @@ if core:is_mod_loaded("cataph_teb") then
 end
 
 if anyLoaded == true then
-    require 'script/_lib/dbexports/ERCataphDataResources'
+    require 'script/_lib/dbexports/CataphDataResources'
 
     out("EnR: Loading Cataph Data");
     -- Load the name resources

@@ -21,6 +21,15 @@ function TableHasAnyValue(table)
     return false;
 end
 
+function TableHasKey(table, keyToCheck)
+    for key, value in pairs(table) do
+        if key == keyToCheck then
+            return true;
+        end
+    end
+    return false;
+end
+
 function Random(limit, start)
     if not start then
         start = 1;

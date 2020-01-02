@@ -1,0 +1,5 @@
+Generated name key is Merciw   : [01, 01 2020 11:41:32]
+No tracked lords. Using first generated name.   : [01, 01 2020 11:41:32]
+FINISHED
+
+Getting art set for sub type: grn_orc_warboss   : [01, 01 2020 11:41:32]

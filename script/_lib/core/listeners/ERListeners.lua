@@ -207,13 +207,13 @@ function ER_SetupPostUIListeners(er, core)
             er.Logger:Log("Rebel faction found: "..factionName);
             for i = 0, character_list:num_items() - 1 do
                 local character = character_list:item_at(i);
-                if character:has_military_force() then
+                if cm:char_is_general_with_army(character) == true then
                     local militaryForceCqi = character:military_force():command_queue_index();
-                    er.Logger:Log("Found character with military force: "..militaryForceCqi);
-                    local characterLookupString = "character_cqi:"..character:command_queue_index();
-                    local turnNumber = cm:model():turn_number();
                     local rebelForceData = er.RebelForces[tostring(militaryForceCqi)];
                     if rebelForceData ~= nil then
+                        er.Logger:Log("Found character with military force: "..militaryForceCqi);
+                        local characterLookupString = "character_cqi:"..character:command_queue_index();
+                        local turnNumber = cm:model():turn_number();
                         local rebelForceTarget = cm:get_region(rebelForceData.Target);
                         -- If the rebel force can attack and they do not occupy the settlement already
                         if turnNumber > rebelForceData.SpawnTurn + 2
@@ -245,6 +245,8 @@ function ER_SetupPostUIListeners(er, core)
                             er:AddPastRebellion(rebelForceData);
                             er.RebelForces[militaryForceCqi] = nil;
                         end
+                    else
+                        er.Logger:Log("Missing RebelForces data.");
                     end
                 end
             end

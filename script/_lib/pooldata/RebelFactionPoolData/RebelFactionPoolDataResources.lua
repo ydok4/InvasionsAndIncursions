@@ -2,11 +2,11 @@ function GetRebelFactionPoolDataResources()
     return {
         -- Beastmen
         wh_dlc03_sc_bst_beastmen = {
-            Default = "wh_dlc03_bst_beastmen_qb1",
+            Default = "wh_dlc03_bst_beastmen_qb2",
             Sea = "",
         },
         wh_dlc03_sc_bst_beastmen_corruption = {
-            Default = "wh_dlc03_bst_beastmen_qb1",
+            Default = "wh_dlc03_bst_beastmen_qb2",
             Sea = "",
         },
         -- Bretonnia

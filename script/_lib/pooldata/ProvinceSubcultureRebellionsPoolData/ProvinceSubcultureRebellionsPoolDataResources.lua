@@ -2381,7 +2381,7 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 3,
                 },
                 wh2_main_sc_skv_skaven = {
-                    Weighting = 2,
+                    Weighting = 200,
                 },
             },
         },

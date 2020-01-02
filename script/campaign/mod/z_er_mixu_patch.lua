@@ -26,7 +26,7 @@ if core:is_mod_loaded("mixu_ttl") then
     _G.ERResources.AddAdditionalProvinceRebellionResources(GetMixuProvinceSubcultureRebellionsPoolDataResources());
 
 
-    require 'script/_lib/dbexports/ERMixuDataResources'
+    require 'script/_lib/dbexports/MixuDataResources'
 
     out("EnR: Loading Mixu Data");
     -- Load the name resources
