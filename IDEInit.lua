@@ -4,7 +4,6 @@ testCharacter = {
     get_forename = function() return "Direfan"; end,
     get_surname = function() return "Cylostra"; end,
     character_subtype_key = function() return "brt_louen_leoncouer"; end,
-    command_queue_index = function() end,
     has_military_force = function() return true end,
     military_force = function() return testMilitaryForce; end,
     faction = function() return testFaction; end,
@@ -35,13 +34,13 @@ testMilitaryForce = {
 humanFaction = {
     command_queue_index = function() return 10; end,
     name = function()
-        return "wh2_main_hef_nagarythe";
+        return "wh2_dlc11_def_the_blessed_dread";
     end,
     culture = function()
-        return "wh2_main_hef_high_elves";
+        return "wh2_main_def_dark_elves";
     end,
     subculture = function()
-        return "wh2_main_sc_hef_high_elves";
+        return "wh2_main_sc_def_dark_elves";
     end,
     is_dead = function() return true; end,
     character_list = function()
@@ -281,7 +280,7 @@ function get_cm()
         get_region = function()
             return {
                 cqi = function() return 123; end,
-                province_name = function() return "wh_main_couronne_et_languille"; end,
+                province_name = function() return "wh2_main_southern_jungle_of_pahualaxa"; end,
                 faction_province_growth = function() return 3; end,
                 religion_proportion = function() return 0; end,
                 public_order = function() return -99; end,
@@ -490,6 +489,7 @@ core = {
 
 random_army_manager = {
     new_force = function() end,
+    remove_force = function() end,
     add_mandatory_unit = function() end,
     add_unit = function() end,
     generate_force = function() return ""; end,
@@ -508,7 +508,9 @@ invasion_manager = {
     end,
     get_invasion = function() return {
         release = function() return end,
-    }; end,
+        create_general = function() end,
+    };
+    end,
 }
 out = function(text)
   print(text);

@@ -265,7 +265,7 @@ function GetAgentDataResources()
 			ArtSetIds = {
 				 "wh_dlc05_art_set_wef_glade_lord_fem_01", "wh_dlc05_art_set_wef_glade_lord_fem_02", "wh_dlc05_art_set_wef_glade_lord_fem_03", "wh_dlc05_art_set_wef_glade_lord_fem_04", "wh_dlc05_art_set_wef_glade_lord_fem_05",
 			},
-			IsFemale = "false",
+			IsFemale = "true",
 		},
 		dlc05_wef_spellsinger_beasts = {
 			AgentType = "wizard",
@@ -431,7 +431,7 @@ function GetAgentDataResources()
 		emp_captain = {
 			AgentType = "champion",
 			ArtSetIds = {
-				 "wh_main_art_set_emp_captain_01", "wh_main_art_set_emp_captain_02", "wh_main_art_set_emp_captain_of_the_empire",
+				 "wh_main_art_set_emp_captain_01", "wh_main_art_set_emp_captain_02",
 			},
 			IsFemale = "false",
 		},
@@ -503,6 +503,13 @@ function GetAgentDataResources()
 			ArtSetIds = {
 				 "wh_main_art_set_grn_orc_warboss_01", "wh_main_art_set_grn_orc_warboss_02", "wh_main_art_set_grn_orc_warboss_03", "wh_main_art_set_grn_orc_warboss_04", "wh_main_art_set_grn_orc_warboss_05",
 			},
+			IsFemale = "false",
+		},
+		emp_karl_franz = {
+			AgentType = "general",
+			ArtSetIds = {
+				"wh_main_art_set_emp_karl_franz",
+		   },
 			IsFemale = "false",
 		},
 		ksl_captain = {
@@ -593,6 +600,13 @@ function GetAgentDataResources()
 			AgentType = "general",
 			ArtSetIds = {
 				 "wh_main_art_set_vmp_lord_01", "wh_main_art_set_vmp_lord_02", "wh_main_art_set_vmp_lord_03", "wh_main_art_set_vmp_lord_04", "wh_main_art_set_vmp_lord_05",
+			},
+			IsFemale = "false",
+		},
+		vmp_mannfred_von_carstein  = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh_main_art_set_vmp_mannfred_von_carstein",
 			},
 			IsFemale = "false",
 		},
@@ -797,7 +811,7 @@ function GetAgentDataResources()
 			ArtSetIds = {
 				 "wh2_main_art_set_hef_mage_01", "wh2_main_art_set_hef_mage_02", "wh2_main_art_set_hef_mage_03",
 			},
-			IsFemale = "false",
+			IsFemale = "true",
 		},
 		wh2_dlc10_hef_mage_shadows = {
 			AgentType = "wizard",
@@ -1436,6 +1450,13 @@ function GetAgentDataResources()
 			},
 			IsFemale = "false",
 		},
+		wh2_dlc12_lzd_tlaqua_skink_chief = {
+			AgentType = "spy",
+			ArtSetIds = {
+				 "wh2_main_art_set_lzd_skink_chief_01", "wh2_main_art_set_lzd_skink_chief_02", "wh2_main_art_set_lzd_skink_chief_03",
+			},
+			IsFemale = "false",
+		},
 		wh2_main_lzd_skink_priest_beasts = {
 			AgentType = "wizard",
 			ArtSetIds = {
@@ -1443,7 +1464,21 @@ function GetAgentDataResources()
 			},
 			IsFemale = "false",
 		},
+		wh2_dlc12_lzd_tlaqua_skink_priest_beasts = {
+			AgentType = "wizard",
+			ArtSetIds = {
+				 "wh2_main_art_set_lzd_skink_priest_01_beasts", "wh2_main_art_set_lzd_skink_priest_01_heavens", "wh2_main_art_set_lzd_skink_priest_01_tlaqua_beasts", "wh2_main_art_set_lzd_skink_priest_01_tlaqua_heavens", "wh2_main_art_set_lzd_skink_priest_02_beasts", "wh2_main_art_set_lzd_skink_priest_02_heavens", "wh2_main_art_set_lzd_skink_priest_02_tlaqua_beasts", "wh2_main_art_set_lzd_skink_priest_02_tlaqua_heavens", "wh2_main_art_set_lzd_skink_priest_03_beasts", "wh2_main_art_set_lzd_skink_priest_03_heavens", "wh2_main_art_set_lzd_skink_priest_03_tlaqua_beasts", "wh2_main_art_set_lzd_skink_priest_03_tlaqua_heavens",
+			},
+			IsFemale = "false",
+		},
 		wh2_main_lzd_skink_priest_heavens = {
+			AgentType = "wizard",
+			ArtSetIds = {
+				 "wh2_main_art_set_lzd_skink_priest_01_heavens", "wh2_main_art_set_lzd_skink_priest_02_heavens", "wh2_main_art_set_lzd_skink_priest_03_heavens",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc12_lzd_tlaqua_skink_priest_heavens = {
 			AgentType = "wizard",
 			ArtSetIds = {
 				 "wh2_main_art_set_lzd_skink_priest_01_heavens", "wh2_main_art_set_lzd_skink_priest_02_heavens", "wh2_main_art_set_lzd_skink_priest_03_heavens",
@@ -1569,6 +1604,13 @@ function GetAgentDataResources()
 			},
 			IsFemale = "false",
 		},
+		wh_dlc05_vmp_vampire_shadow = {
+			AgentType = "dignitary",
+			ArtSetIds = {
+				 "wh_main_art_set_vmp_vampire_01", "wh_main_art_set_vmp_vampire_02", "wh_main_art_set_vmp_vampire_03",
+			},
+			IsFemale = "true",
+		},
 		wh_dlc08_bst_cygor_boss = {
 			AgentType = "general",
 			ArtSetIds = {
@@ -1637,14 +1679,14 @@ function GetAgentDataResources()
 			ArtSetIds = {
 				 "wh_dlc08_art_set_nor_fimir_balefiend_01", "wh_dlc08_art_set_nor_fimir_balefiend_02", "wh_dlc08_art_set_nor_fimir_balefiend_03",
 			},
-			IsFemale = "true",
+			IsFemale = "false",
 		},
 		wh_dlc08_nor_fimir_balefiend_shadow = {
 			AgentType = "dignitary",
 			ArtSetIds = {
 				 "wh_dlc08_art_set_nor_fimir_balefiend_01", "wh_dlc08_art_set_nor_fimir_balefiend_02", "wh_dlc08_art_set_nor_fimir_balefiend_03",
 			},
-			IsFemale = "true",
+			IsFemale = "false",
 		},
 		wh_dlc08_nor_frost_wyrm_boss = {
 			AgentType = "general",
@@ -1708,6 +1750,27 @@ function GetAgentDataResources()
 				 "wh_dlc08_art_set_forest_dragon_01",
 			},
 			IsFemale = "false",
+		},
+		wh2_dlc11_cst_fleet_captain = {
+			AgentType = "dignitary",
+			ArtSetIds = {
+				 "wh2_dlc11_art_set_cst_fleet_captain_campaign_01", "wh2_dlc11_art_set_cst_fleet_captain_campaign_02", "wh2_dlc11_art_set_cst_fleet_captain_campaign_03","wh2_dlc11_art_set_cst_fleet_captain_campaign_04", "wh2_dlc11_art_set_cst_fleet_captain_campaign_05",
+			},
+			IsFemale = "true",
+		},
+		wh2_dlc11_cst_fleet_captain_death = {
+			AgentType = "dignitary",
+			ArtSetIds = {
+				"wh2_dlc11_art_set_cst_fleet_captain_campaign_01", "wh2_dlc11_art_set_cst_fleet_captain_campaign_02", "wh2_dlc11_art_set_cst_fleet_captain_campaign_03","wh2_dlc11_art_set_cst_fleet_captain_campaign_04", "wh2_dlc11_art_set_cst_fleet_captain_campaign_05",
+		   },
+			IsFemale = "true",
+		},
+		wh2_dlc11_cst_fleet_captain_deep = {
+			AgentType = "dignitary",
+			ArtSetIds = {
+				"wh2_dlc11_art_set_cst_fleet_captain_campaign_01", "wh2_dlc11_art_set_cst_fleet_captain_campaign_02", "wh2_dlc11_art_set_cst_fleet_captain_campaign_03","wh2_dlc11_art_set_cst_fleet_captain_campaign_04", "wh2_dlc11_art_set_cst_fleet_captain_campaign_05",
+		   },
+			IsFemale = "true",
 		},
 	}
 end

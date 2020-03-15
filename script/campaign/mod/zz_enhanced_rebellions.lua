@@ -32,6 +32,7 @@ function zz_enhanced_rebellions()
     ER:Initialise(random_army_manager, enableLogging);
     ER.Logger:Log("Initialised");
     if mcm then
+        ER.Logger:Log("Found MCM");
         if cm:is_new_game() then
             ER.Logger:Log("Found MCM for new game!");
             -- Setup default values for options
@@ -54,10 +55,12 @@ function zz_enhanced_rebellions()
             ER:CheckMCMOptions(core);
         end
     else
+        ER.Logger:Log("No MCM");
         ER_SetupPostUIListeners(ER, core);
         ER_SetupPostUIInterfaceListeners(ER, core, enableLogging);
     end
     ER.Logger:Log_Finished();
+    _G.ER = ER;
     out("EnR: Finished setup");
 end
 

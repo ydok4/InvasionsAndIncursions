@@ -27,6 +27,17 @@ require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/VampireCountsRebelArmy
 require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/WoodElfRebelArmyArchetypesPoolDataResources'
 
 require 'script/_lib/pooldata/PassiveRebelEventsPoolData/BretonniaPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/DarkElvesPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/DwarfPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/EmpirePREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/GreenskinPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/HighElvesPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/LizardmenPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/SkavenPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/TombKingsPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/VampireCoastPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/VampireCountsPREPoolDataResources'
+require 'script/_lib/pooldata/PassiveRebelEventsPoolData/WoodElvesPREPoolDataResources'
 
 _G.ERResources = {
     RebelFactionPoolDataResources = GetRebelFactionPoolDataResources(),
@@ -146,7 +157,22 @@ _G.ERResources = {
     end,
     PassiveRebelEventsPoolData = {
         default = {},
+        --wh_dlc03_sc_bst_beastmen = GetBeastmenPREPoolDataResources(),
         wh_main_sc_brt_bretonnia = GetBretonniaPREPoolDataResources(),
+        wh2_main_sc_def_dark_elves = GetDarkElvesPREPoolDataResources(),
+        wh_main_sc_dwf_dwarfs = GetDwarfPREPoolDataResources(),
+        wh_main_sc_emp_empire = GetEmpirePREPoolDataResources(),
+        wh_main_sc_grn_greenskins = GetGreenskinPREPoolDataResources(),
+        wh2_main_sc_hef_high_elves = GetHighElvesPREPoolDataResources(),
+        wh2_main_sc_lzd_lizardmen = GetLizardmenPREPoolDataResources(),
+        --wh_main_sc_nor_norsca = GetDwarfPREPoolDataResources(),
+        --wh_main_sc_grn_savage_orcs = GetDwarfPREPoolDataResources(),
+        wh2_main_sc_skv_skaven = GetSkavenPREPoolDataResources(),
+        --wh_main_sc_teb_teb = GetDwarfPREPoolDataResources(),
+        wh2_dlc09_sc_tmb_tomb_kings = GetTombKingsPREPoolDataResources(),
+        wh2_dlc11_sc_cst_vampire_coast = GetVampireCoastPREPoolDataResources(),
+        wh_main_sc_vmp_vampire_counts = GetVampireCountsPREPoolDataResources(),
+        wh_dlc05_sc_wef_wood_elves = GetWoodElvesPREPoolDataResources(),
     },
     AddAdditionalPassiveRebelEventResources = function(data)
         local existingPREPoolData = _G.ERResources.PassiveRebelEventsPoolData;

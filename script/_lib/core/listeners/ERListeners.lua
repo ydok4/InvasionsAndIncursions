@@ -205,11 +205,17 @@ function ER_SetupPostUIListeners(er, core)
             local factionName = faction:name();
             local character_list = faction:character_list();
             er.Logger:Log("Rebel faction found: "..factionName);
+            if er.ReemergedFactions[factionName] == true then
+                er.Logger:Log("Checking ReEmerged faction: "..factionName);
+            end
             for i = 0, character_list:num_items() - 1 do
                 local character = character_list:item_at(i);
                 if cm:char_is_general_with_army(character) == true then
                     local militaryForceCqi = character:military_force():command_queue_index();
                     local rebelForceData = er.RebelForces[tostring(militaryForceCqi)];
+                    --[[if er.ReemergedFactions[factionName] == true then
+                        er.Logger:Log("Checking character: "..character:character_subtype_key());
+                    end--]]
                     if rebelForceData ~= nil then
                         er.Logger:Log("Found character with military force: "..militaryForceCqi);
                         local characterLookupString = "character_cqi:"..character:command_queue_index();
@@ -223,6 +229,10 @@ function ER_SetupPostUIListeners(er, core)
                             local rebelForceTargetRegionKey = rebelForceTarget:name();
                             er.Logger:Log("Attacking region: "..rebelForceTargetRegionKey);
                             cm:attack_region(characterLookupString, rebelForceTargetRegionKey, true);
+                            if er.ReemergedFactions[factionName] == true then
+                                er:AddPastRebellion(rebelForceData);
+                                er.RebelForces[militaryForceCqi] = nil;
+                            end
                         -- This only happens if they have occuped the settlement and they are a QB faction
                         elseif rebelForceTarget:owning_faction():name() == factionName
                         and context:faction():is_quest_battle_faction() == true then
@@ -240,13 +250,15 @@ function ER_SetupPostUIListeners(er, core)
                                     cm:force_declare_war(rebelForceData.FactionKey, adjacentRegion:owning_faction():name(), false, false);
                                 end
                             end
+                            er:AddPastRebellion(rebelForceData);
+                            er.RebelForces[militaryForceCqi] = nil;
                         -- Non QB factions should be untracked and added as a past rebellion
                         elseif rebelForceTarget:owning_faction():name() == factionName then
                             er:AddPastRebellion(rebelForceData);
                             er.RebelForces[militaryForceCqi] = nil;
                         end
                     else
-                        er.Logger:Log("Missing RebelForces data.");
+                        er.Logger:Log("Missing RebelForces data. CQI: "..militaryForceCqi);
                     end
                 end
             end

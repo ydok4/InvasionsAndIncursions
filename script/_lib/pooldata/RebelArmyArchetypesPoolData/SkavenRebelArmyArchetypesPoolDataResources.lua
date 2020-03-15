@@ -50,5 +50,27 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
             UnitTags = {"SkavenSlaves", "Warriors", "ClanPestilens"},
             Weighting = 0,
         },
+        IkitClawReemerge = {
+            RebellionFaction = "wh2_main_skv_clan_skyre",
+            SpawnWithExistingCharacter = true,
+            AgentSubtypes = {
+                wh2_dlc12_skv_ikit_claw = {
+                    AgentSubtypeKey = "wh2_dlc12_skv_ikit_claw",
+                },
+            },
+            MandatoryUnits = {
+                wh2_main_skv_inf_stormvermin_0 = 2,
+                wh2_main_skv_inf_stormvermin_1 = 2,
+                wh2_dlc12_skv_inf_warplock_jezzails_0 = 1,
+                wh2_main_skv_art_warp_lightning_cannon = 1,
+            },
+            UnitTags = {"Warriors", "ClanSkyre", },
+            ArmySize = 18,
+            Weighting = 0,
+            OverrideSpawnRegion = {
+                main_warhammer = { "wh2_main_skavenblight_skavenblight", },
+                wh2_main_great_vortex = nil,
+            },
+        },
     };
 end

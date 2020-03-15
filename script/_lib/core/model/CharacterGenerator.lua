@@ -1,5 +1,5 @@
 CharacterGenerator = {
-    CrpLordsInPools = {};
+    CrpLordsInPools = {},
     Logger = {},
 }
 
@@ -10,10 +10,14 @@ function CharacterGenerator:new (o)
     return o;
 end
 
-function CharacterGenerator:Initialise(enableLogging)
+function CharacterGenerator:Initialise(enableLogging, crpLords)
     self.Logger = Logger:new({});
     self.Logger:Initialise("CharacterGenerator.txt", enableLogging);
     self.Logger:Log_Start();
+    -- If crplords is nil it wipes the key
+    if crpLords ~= nil then
+        self.CrpLordsInPools = crpLords;
+    end
     -- Load add ons
     -- Load Gunking's elf names
     local newElfNameKey = effect.get_localised_string("names_name_1550000001");
@@ -21,7 +25,7 @@ function CharacterGenerator:Initialise(enableLogging)
     and newElfNameKey ~= "" then
         require 'script/_lib/dbexports/NameGenerator/GunkingElfNameGroupResources'
         require 'script/_lib/dbexports/NameGenerator/GunkingElfNameResources'
-        --Custom_Log("NameGenerator: Loading Gunking Elf Names");
+        --self.Logger:Log("NameGenerator: Loading Gunking Elf Names");
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.name_groups_to_names, GetGunkingElfNameResources());
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.faction_to_name_groups, GetGunkingElfNameGroupResources());
     end
@@ -31,20 +35,15 @@ function CharacterGenerator:Initialise(enableLogging)
     and newSkavenLizardmenNameKey ~= "" then
         require 'script/_lib/dbexports/NameGenerator/GunkingSkavenLizardmenNameGroupResources'
         require 'script/_lib/dbexports/NameGenerator/GunkingSkavenLizardmenNameResources'
-        --Custom_Log("NameGenerator: Loading Gunking Skaven/Lizardmen Names");
+        --self.Logger:Log("NameGenerator: Loading Gunking Skaven/Lizardmen Names");
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.name_groups_to_names, GetGunkingSkavenLizardmenNameResources());
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.faction_to_name_groups, GetGunkingSkavenLizardmenNameGroupResources());
     end
 end
 
-function CharacterGenerator:InitialiseCRP(crpLords)
-    RecalculatePoolLimits();
-    -- If crplords is nil it wipes the key
-    self.CrpLordsInPools = crpLords;
-end
-
 function CharacterGenerator:GetArtSetForSubType(subType)
     if not _G.CG_NameResources then
+        self.Logger:Log("ERROR: Missing Name resources");
         return;
     end
     self.Logger:Log("Getting art set for sub type: "..subType);
@@ -59,6 +58,32 @@ function CharacterGenerator:GetArtSetForSubType(subType)
     end
     local artSetId = GetRandomObjectFromList(subTypeData.ArtSetIds);
     return artSetId;
+end
+
+function CharacterGenerator:GetSubtypeData(subType)
+    if not _G.CG_NameResources then
+        self.Logger:Log("ERROR: Missing Name resources");
+        return;
+    end
+    return _G.CG_NameResources.campaign_character_data[subType];
+end
+
+function CharacterGenerator:GetAgentTypeForSubtype(subType)
+    if not _G.CG_NameResources then
+        self.Logger:Log("ERROR: Missing Name resources");
+        return;
+    end
+    self.Logger:Log("Getting agent type for sub type: "..subType);
+    local subTypeData = _G.CG_NameResources.campaign_character_data[subType];
+    if subTypeData == nil then
+        self.Logger:Log("ERROR: Missing SubTypeData");
+        return nil;
+    end
+    if subTypeData.AgentType == nil then
+        self.Logger:Log("ERROR: Missing subtype AgentType");
+        return nil;
+    end
+    return subTypeData.AgentType;
 end
 
 function CharacterGenerator:GetValidAgentArtSetForFaction(faction)
@@ -113,6 +138,7 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
     end
 
     nameGroup = "name_group_"..nameGroup;
+    self.Logger:Log("Getting name for "..nameGroup);
     local namePool = _G.CG_NameResources.name_groups_to_names[nameGroup];
     local canUseFemaleNames = self:GetGenderForAgentSubType(agentSubType);
 
@@ -128,6 +154,10 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
     end
 
     local failSafe = 0;
+    if namePool == nil then
+        self.Logger:Log("ERROR: Missing name pool");
+        return nil;
+    end
     while doOnce == false or factionLords == nil or factionLords[nameKey] ~= nil or nameKey == "" do
         clan_name_object = self:GetValidNameForType(namePool, canUseFemaleNames, "clan_name");
         if Roll100(forename_chance) then
@@ -157,7 +187,7 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
         clan_name = clan_name_object.Id,
         forename = forename_object.Id,
     };
-    self.Logger:Log_Finished();
+    --self.Logger:Log("Got generated name");
     return generatedName;
 end
 
@@ -232,9 +262,9 @@ function CharacterGenerator:GetRandomCharacterTrait(faction, generalSubType)
         factionName = "wh_main_grn_skull_takerz";
     end
 
-    local cultureData = _G.CRPResources.CulturePoolResources[subculture];
+    local cultureData = _G.CRPResources.RecruitmentPoolResources[subculture];
     if cultureData == nil then
-        cultureData = _G.CRPResources.CulturePoolResources["wh_rogue_armies"];
+        cultureData = _G.CRPResources.RecruitmentPoolResources["wh_rogue_armies"];
     end
 
     local defaultSubCultureData = cultureData[subculture];
@@ -269,7 +299,7 @@ function CharacterGenerator:GetRandomCharacterTrait(faction, generalSubType)
     end
 
     -- Otherwise get a random trait from the shared traits
-    local sharedTraits = _G.CRPResources.CulturePoolResources["shared"]["shared"].Traits;
+    local sharedTraits = _G.CRPResources.RecruitmentPoolResources["shared"]["shared"].Traits;
 
     if defaultFactionData ~= nil and defaultFactionData.ExcludedTraits ~= nil then
         -- Then remove any excluded traits

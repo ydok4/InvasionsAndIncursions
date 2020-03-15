@@ -24,8 +24,12 @@ function GetBretonniaRebelArmyArchetypesPoolDataResources()
                 wh_dlc07_brt_cav_royal_hippogryph_knights_0 = 1,
             },
             UnitTags = {"MenAtArms", "Knights", "GrailKnights", },
-            ArmySize = 20,
+            ArmySize = 18,
             Weighting = 0,
+            OverrideSpawnRegion = {
+                main_warhammer = { "wh_main_couronne_et_languille_couronne", },
+                wh2_main_great_vortex = nil,
+            },
         },
     };
 end

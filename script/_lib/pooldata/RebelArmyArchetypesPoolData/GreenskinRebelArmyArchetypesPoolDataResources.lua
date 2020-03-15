@@ -1,5 +1,10 @@
 function GetGreenskinRebelArmyArchetypesPoolDataResources()
     return {
+        OrcWarboss = {
+            AgentSubtypes = {"grn_orc_warboss", },
+            UnitTags = {"Goblins", "Orcs", "Monsters", },
+            Weighting = 3,
+        },
         DrakwaldGoblins = {
             AgentSubtypes = {
                 grn_goblin_great_shaman = {
@@ -53,10 +58,26 @@ function GetGreenskinRebelArmyArchetypesPoolDataResources()
             UnitTags = {"Orcs", "OrcBoarBoyz", },
             Weighting = 0,
         },
-        OrcWarboss = {
-            AgentSubtypes = {"grn_orc_warboss", },
+        GrimgorReemerge = {
+            RebellionFaction = "wh_main_grn_greenskins",
+            SpawnWithExistingCharacter = true,
+            AgentSubtypes = {
+                grn_grimgor_ironhide = {
+                    AgentSubtypeKey = "grn_grimgor_ironhide",
+                },
+            },
+            MandatoryUnits = {
+                wh_main_grn_inf_black_orcs = 3,
+                wh_main_grn_cav_orc_boar_boy_big_uns = 2,
+                wh_main_grn_mon_giant = 1,
+            },
             UnitTags = {"Goblins", "Orcs", "Monsters", },
-            Weighting = 3,
+            ArmySize = 18,
+            Weighting = 0,
+            OverrideSpawnRegion = {
+                main_warhammer = { "wh_main_death_pass_karak_drazh", },
+                wh2_main_great_vortex = nil,
+            },
         },
     };
 end

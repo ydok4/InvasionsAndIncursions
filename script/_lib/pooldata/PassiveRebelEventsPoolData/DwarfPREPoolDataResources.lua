@@ -1,9 +1,9 @@
-function GetBretonniaPREPoolDataResources()
+function GetDwarfPREPoolDataResources()
     return {
-        ReemergeanceArchetypeCouronne = {
+        ReemergeanceArchetypeKarazAKarak = {
             MinimumRequriedPublicOrder = -99,
-            PRESubculture = "wh_main_sc_brt_bretonnia",
-            ArmyArchetypes = {"LouenReemerge", },
+            PRESubculture = "wh_main_sc_dwf_dwarfs",
+            ArmyArchetypes = {"ThorgrimReemerge", },
             CleanUpRebelForce = false,
             EffectBundleKey = "er_effect_bundle_generic_incursion_region",
             EffectBundleEffects = {
@@ -11,7 +11,7 @@ function GetBretonniaPREPoolDataResources()
             },
             PREDuration = 5,
             InitialRebellionIncident = {
-                default = "er_louen_reemerging_faction_incident_spawn_incident",
+                default = "er_thorgrim_reemerging_faction_incident_spawn_incident",
             },
             TriggerArmySpawnWhenPREEnds = true,
             IsRebelSpawnLocked = true,
@@ -19,32 +19,32 @@ function GetBretonniaPREPoolDataResources()
                 default = {
 
                 },
-                wh2_main_sc_def_dark_elves = {
-                    er_louen_reemerging_faction_incident_1_dark_elves = {
+                wh_main_sc_brt_bretonnia = {
+                    er_thorgrim_reemerging_faction_incident_1_brettonia = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_dark_elves = {
+                    er_thorgrim_reemerging_faction_incident_2_bretonnia = {
                         NumberOfTurns = 4,
                     },
                 },
-                wh_main_sc_dwf_dwarfs = {
-                    er_louen_reemerging_faction_incident_1_dwarfs = {
+                wh2_main_sc_def_dark_elves = {
+                   er_thorgrim_reemerging_faction_incident_1_dark_elves = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_dwarfs = {
+                   er_thorgrim_reemerging_faction_incident_2_dark_elves = {
                         NumberOfTurns = 4,
                     },
                 },
                 wh_main_sc_emp_empire = {
-                    er_louen_reemerging_faction_incident_1_empire = {
+                   er_thorgrim_reemerging_faction_incident_1_empire = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_empire = {
+                   er_thorgrim_reemerging_faction_incident_2_empire = {
                         NumberOfTurns = 4,
                     },
                 },
                 wh_main_sc_grn_greenskins = {
-                    er_louen_reemerging_faction_incident_1_greenskins = {
+                   er_thorgrim_reemerging_faction_incident_1_greenskins = {
                         NumberOfTurns = 1,
                     },
                     er_louen_reemerging_faction_incident_2_greenskins = {
@@ -52,47 +52,47 @@ function GetBretonniaPREPoolDataResources()
                     },
                 },
                 wh2_main_sc_hef_high_elves = {
-                    er_louen_reemerging_faction_incident_1_high_elves = {
+                   er_thorgrim_reemerging_faction_incident_1_high_elves = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_high_elves = {
+                   er_thorgrim_reemerging_faction_incident_2_high_elves = {
                         NumberOfTurns = 4,
                     },
                 },
                 wh2_main_sc_lzd_lizardmen = {
-                    er_louen_reemerging_faction_incident_1_lizardmen = {
+                   er_thorgrim_reemerging_faction_incident_1_lizardmen = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_lizardmen = {
+                   er_thorgrim_reemerging_faction_incident_2_lizardmen = {
                         NumberOfTurns = 4,
                     },
                 },
                 wh2_main_sc_skv_skaven = {
-                    er_louen_reemerging_faction_incident_1_skaven = {
+                   er_thorgrim_reemerging_faction_incident_1_skaven = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_skaven = {
+                   er_thorgrim_reemerging_faction_incident_2_skaven = {
                         NumberOfTurns = 4,
                     },
                 },
                 wh2_dlc09_sc_tmb_tomb_kings = {
-                    er_louen_reemerging_faction_incident_1_tomb_kings = {
+                   er_thorgrim_reemerging_faction_incident_1_tomb_kings = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_tomb_kings = {
+                   er_thorgrim_reemerging_faction_incident_2_tomb_kings = {
                         NumberOfTurns = 4,
                     },
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
-                    er_louen_reemerging_faction_incident_1_vampire_coast = {
+                   er_thorgrim_reemerging_faction_incident_1_vampire_coast = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_vampire_coast = {
+                   er_thorgrim_reemerging_faction_incident_2_vampire_coast = {
                         NumberOfTurns = 4,
                     },
                 },
                 wh_main_sc_vmp_vampire_counts = {
-                    er_louen_reemerging_faction_incident_1_vampire_counts = {
+                   er_thorgrim_reemerging_faction_incident_1_vampire_counts = {
                         NumberOfTurns = 1,
                     },
                     er_louen_reemerging_faction_incident_2_vampire_counts = {
@@ -100,10 +100,10 @@ function GetBretonniaPREPoolDataResources()
                     },
                 },
                 wh_dlc05_sc_wef_wood_elves = {
-                    er_louen_reemerging_faction_incident_1_wood_elves = {
+                   er_thorgrim_reemerging_faction_incident_1_wood_elves = {
                         NumberOfTurns = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_wood_elves = {
+                   er_thorgrim_reemerging_faction_incident_2_wood_elves = {
                         NumberOfTurns = 4,
                     },
                 },
@@ -126,11 +126,6 @@ function GetBretonniaPREPoolDataResources()
                         NumberOfTurns = 4,
                     },
                 },--]]
-                wh_main_sc_emp_empire = {
-                    er_deploy_agents_louen_reemerging_faction_dilemma_1_empire = {
-                        NumberOfTurns = 4,
-                    },
-                },
             },
             Weighting = 0,
         },

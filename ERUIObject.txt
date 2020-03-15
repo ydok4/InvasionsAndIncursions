@@ -1,22 +1,11 @@
-ERROR: Missing UIMF   : [01, 01 2020 11:41:32]
+ERROR: Missing UIMF   : [15, 02 2020 21:49:08]
 FINISHED
 
-ERROR: Missing UIMF   : [01, 01 2020 11:41:32]
+ERROR: Missing UIMF   : [15, 02 2020 21:49:08]
 FINISHED
 
-UpdateButtons   : [01, 01 2020 11:41:32]
-Selected faction is: wh2_main_hef_nagarythe   : [01, 01 2020 11:41:32]
-Human faction is: wh2_main_hef_nagarythe   : [01, 01 2020 11:41:32]
-FINISHED
-
-ERROR: Missing UIMF   : [01, 01 2020 11:41:32]
-FINISHED
-
-ERROR: Missing UIMF   : [01, 01 2020 11:41:32]
-FINISHED
-
-UpdateButtons   : [01, 01 2020 11:41:32]
-Selected faction is: wh2_main_hef_nagarythe   : [01, 01 2020 11:41:32]
-Human faction is: wh2_main_hef_nagarythe   : [01, 01 2020 11:41:32]
+UpdateButtons   : [15, 02 2020 21:49:08]
+Selected faction is: wh2_dlc11_def_the_blessed_dread   : [15, 02 2020 21:49:08]
+Human faction is: wh2_dlc11_def_the_blessed_dread   : [15, 02 2020 21:49:08]
 FINISHED
 

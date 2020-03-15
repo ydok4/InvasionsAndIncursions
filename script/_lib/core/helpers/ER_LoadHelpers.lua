@@ -78,7 +78,7 @@ function ER_LoadRebelForces(er)
     out("EnR: Concatted serialised save data");
 
     for militaryForceCqi, rebelForceData in pairs(serialised_save_table_units) do
-        --out("EnR: Checking militaryForceCqi: "..militaryForceCqi);
+        out("EnR: Checking militaryForceCqi: "..militaryForceCqi);
         if er.RebelForces[tostring(militaryForceCqi)] == nil then
             er.RebelForces[tostring(militaryForceCqi)] = {};
         end

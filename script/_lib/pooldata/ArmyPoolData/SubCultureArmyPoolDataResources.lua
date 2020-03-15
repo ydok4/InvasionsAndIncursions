@@ -898,8 +898,8 @@ function GetSubcultureArmyPoolDataResources()
         wh2_main_sc_lzd_lizardmen = {
             Skinks = {
                 Early = {
-                    wh2_main_lzd_inf_skink_cohort_0 = 2,
-                    wh2_main_lzd_inf_skink_cohort_1 = 1,
+                    wh2_main_lzd_inf_skink_cohort_0 = 4,
+                    wh2_main_lzd_inf_skink_cohort_1 = 2,
                     wh2_main_lzd_inf_skink_skirmishers_0 = 1,
                 },
                 Mid = {
@@ -969,16 +969,15 @@ function GetSubcultureArmyPoolDataResources()
                     wh2_main_lzd_cav_cold_one_spearmen_1 = 1,
                 },
                 Late = {
-                    wh2_main_lzd_cav_cold_one_spearmen_1 = 1,
                     wh2_main_lzd_cav_horned_ones_0 = 1,
                 },
             },
             FeralBeasts = {
                 Early = {
-                    wh2_main_lzd_cav_cold_ones_feral_0 = 2,
+                    wh2_main_lzd_cav_cold_ones_feral_0 = 1,
                 },
                 Mid = {
-                    wh2_main_lzd_cav_cold_ones_feral_0 = 2,
+                    wh2_main_lzd_cav_cold_ones_feral_0 = 1,
                     { wh2_main_lzd_mon_bastiladon_0 = 1, wh2_main_lzd_mon_stegadon_0 = 1, },
                 },
                 Late = {

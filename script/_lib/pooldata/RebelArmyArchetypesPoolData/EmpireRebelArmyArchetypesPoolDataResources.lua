@@ -18,5 +18,25 @@ function GetEmpireRebelArmyArchetypesPoolDataResources()
             UnitTags = {"StateTroops", "EliteStateTroops", },
             Weighting = 1,
         },
+        KarlFranzReemerge = {
+            RebellionFaction = "wh_main_emp_empire",
+            SpawnWithExistingCharacter = true,
+            AgentSubtypes = {
+                emp_karl_franz = {
+                    AgentSubtypeKey = "emp_karl_franz",
+                },
+            },
+            MandatoryUnits = {
+                wh_main_emp_inf_greatswords = 2,
+                wh_main_emp_cav_reiksguard = 1,
+            },
+            UnitTags = { "StateTroops", "MidStateTroops", "GenericCavalry", "Artillery", },
+            ArmySize = 18,
+            Weighting = 0,
+            OverrideSpawnRegion = {
+                main_warhammer = { "wh_main_reikland_altdorf", },
+                wh2_main_great_vortex = nil,
+            },
+        },
     };
 end

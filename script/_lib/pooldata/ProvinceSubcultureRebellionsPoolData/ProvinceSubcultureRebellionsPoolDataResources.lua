@@ -306,6 +306,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     },
                 },
             },
+            PassiveRebelEvents = {
+                wh2_main_sc_hef_high_elves = {
+                    ReemergeanceArchetypeLothern = {
+                        Weighting = 0,
+                    },
+                },
+            },
         },
         wh2_main_ellyrion = {
             IsAdjacentToSea = true,
@@ -364,6 +371,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh2_dlc11_sc_cst_vampire_coast = {
                     Weighting = 4,
+                },
+            },
+            PassiveRebelEvents = {
+                wh2_dlc11_sc_cst_vampire_coast = {
+                    ReemergeanceArchetypeGalleonsGraveyard = {
+                        Weighting = 0,
+                    },
                 },
             },
         },
@@ -489,6 +503,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
             },
+            PassiveRebelEvents = {
+                wh2_main_sc_def_dark_elves = {
+                    ReemergeanceArchetypeNaggarond = {
+                        Weighting = 0,
+                    },
+                },
+            },
         },
         wh2_main_ironfrost_glacier = {
             IsAdjacentToSea = false,
@@ -512,6 +533,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_grn_savage_orcs = {
                     Weighting = 1,
+                },
+            },
+            PassiveRebelEvents = {
+                wh2_main_sc_lzd_lizardmen = {
+                    ReemergeanceArchetypeHexoatl = {
+                        Weighting = 0,
+                    },
                 },
             },
         },
@@ -570,6 +598,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_vmp_vampire_counts = {
                     Weighting = 1,
+                },
+            },
+            PassiveRebelEvents = {
+                wh2_dlc09_sc_tmb_tomb_kings = {
+                    ReemergeanceArchetypeKhemri = {
+                        Weighting = 0,
+                    },
                 },
             },
         },
@@ -747,6 +782,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                         ClanPestilens = {
                             Weighting = 1,
                         },
+                    },
+                },
+            },
+            PassiveRebelEvents = {
+                wh2_main_sc_skv_skaven = {
+                    ReemergeanceArchetypeSkavenblight = {
+                        Weighting = 0,
                     },
                 },
             },
@@ -1389,6 +1431,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 4,
                 },
             },
+            PassiveRebelEvents = {
+                wh2_dlc11_sc_cst_vampire_coast = {
+                    ReemergeanceArchetypeGalleonsGraveyard = {
+                        Weighting = 0,
+                    },
+                },
+            },
         },
         wh2_main_vor_great_mortis_delta = {
             IsAdjacentToSea = false,
@@ -1495,6 +1544,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
             },
+            PassiveRebelEvents = {
+                wh2_main_sc_lzd_lizardmen = {
+                    ReemergeanceArchetypeHexoatl = {
+                        Weighting = 0,
+                    },
+                },
+            },
         },
         wh2_main_vor_jungle_of_pahualaxa = {
             IsAdjacentToSea = true,
@@ -1564,6 +1620,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
             },
+            PassiveRebelEvents = {
+                wh2_dlc09_sc_tmb_tomb_kings = {
+                    ReemergeanceArchetypeKhemri = {
+                        Weighting = 0,
+                    },
+                },
+            },
         },
         wh2_main_vor_land_of_the_dervishes = {
             IsAdjacentToSea = true,
@@ -1607,6 +1670,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_nor_norsca = {
                     Weighting = 1,
+                },
+            },
+            PassiveRebelEvents = {
+                wh2_main_sc_def_dark_elves = {
+                    ReemergeanceArchetypeNaggarond = {
+                        Weighting = 0,
+                    },
                 },
             },
         },
@@ -1902,6 +1972,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                         PrinceLothern = {
                             Weighting = 3,
                         },
+                    },
+                },
+            },
+            PassiveRebelEvents = {
+                wh2_main_sc_hef_high_elves = {
+                    ReemergeanceArchetypeLothern = {
+                        Weighting = 0,
                     },
                 },
             },
@@ -2381,7 +2458,14 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 3,
                 },
                 wh2_main_sc_skv_skaven = {
-                    Weighting = 200,
+                    Weighting = 2,
+                },
+            },
+            PassiveRebelEvents = {
+                wh_main_sc_grn_greenskins = {
+                    ReemergeanceArchetypeBlackCrag = {
+                        Weighting = 0,
+                    },
                 },
             },
         },
@@ -2488,6 +2572,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_vmp_vampire_counts = {
                     Weighting = 5,
+                },
+            },
+            PassiveRebelEvents = {
+                wh_main_sc_vmp_vampire_counts = {
+                    ReemergeanceArchetypeDrakenhof = {
+                        Weighting = 0,
+                    },
                 },
             },
         },
@@ -2947,6 +3038,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 1,
                 },
             },
+            PassiveRebelEvents = {
+                wh_main_sc_emp_empire = {
+                    ReemergeanceArchetypeAltdorf = {
+                        Weighting = 0,
+                    },
+                },
+            },
         },
         wh_main_rib_peaks = {
             IsAdjacentToSea = false,
@@ -3090,6 +3188,13 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh_main_sc_dwf_dwarfs = {
                     Weighting = 2,
+                },
+            },
+            PassiveRebelEvents = {
+                wh_main_sc_dwf_dwarfs = {
+                    ReemergeanceArchetypeKarazAKarak = {
+                        Weighting = 0,
+                    },
                 },
             },
         },

@@ -5,5 +5,26 @@ function GetTombKingsRebelArmyArchetypesPoolDataResources()
             UnitTags = {"SkeletonWarriors", "SkeletonCavalry", },
             Weighting = 3,
         },
+        SettraReemerge = {
+            RebellionFaction = "wh2_dlc09_tmb_khemri",
+            SpawnWithExistingCharacter = true,
+            AgentSubtypes = {
+                wh2_dlc09_tmb_settra = {
+                    AgentSubtypeKey = "wh2_dlc09_tmb_settra",
+                },
+            },
+            MandatoryUnits = {
+                wh2_dlc09_tmb_mon_ushabti_0 = 2,
+                wh2_dlc09_tmb_mon_ushabti_1 = 1,
+                wh2_dlc09_tmb_art_screaming_skull_catapult_0 = 2,
+            },
+            UnitTags = { "SkeletonWarriors", "TombGuard", "SkeletonCavalry", "ConstructMonsters", },
+            ArmySize = 18,
+            Weighting = 0,
+            OverrideSpawnRegion = {
+                main_warhammer = { "wh2_main_land_of_the_dead_khemri", },
+                wh2_main_great_vortex = { "wh2_main_vor_land_of_the_dead_khemri", },
+            },
+        },
     };
 end

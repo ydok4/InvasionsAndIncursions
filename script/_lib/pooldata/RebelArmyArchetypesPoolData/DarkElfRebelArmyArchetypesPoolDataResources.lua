@@ -29,5 +29,25 @@ function GetDarkElfRebelArmyArchetypesPoolDataResources()
             Weighting = 0,
             CanSpawnOnSea = true,
         },
+        MalekithReemerge = {
+            RebellionFaction = "wh2_main_def_naggarond",
+            SpawnWithExistingCharacter = true,
+            AgentSubtypes = {
+                wh2_main_def_malekith = {
+                    AgentSubtypeKey = "wh2_main_def_malekith",
+                },
+            },
+            MandatoryUnits = {
+                wh2_main_def_inf_black_guard_0 = 2,
+                wh2_main_def_mon_black_dragon = 1,
+            },
+            UnitTags = {"Warriors", { "Cavalry", "ColdOnes", }, { "Khainite", "Shades", }, },
+            ArmySize = 18,
+            Weighting = 0,
+            OverrideSpawnRegion = {
+                main_warhammer = { "wh2_main_iron_mountains_naggarond", },
+                wh2_main_great_vortex = { "wh2_main_vor_naggarond_naggarond", },
+            },
+        },
     };
 end
