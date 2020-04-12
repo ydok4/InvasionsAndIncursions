@@ -1,7 +1,7 @@
 function GetLizardmenPREPoolDataResources()
     return {
         ReemergeanceArchetypeHexoatl = {
-            MinimumRequriedPublicOrder = -99,
+            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh2_main_sc_lzd_lizardmen",
             ArmyArchetypes = {"MazdamundiReemerge", },
             CleanUpRebelForce = false,

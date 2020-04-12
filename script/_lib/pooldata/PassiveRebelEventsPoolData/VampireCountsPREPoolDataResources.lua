@@ -1,7 +1,7 @@
 function GetVampireCountsPREPoolDataResources()
     return {
         ReemergeanceArchetypeDrakenhof = {
-            MinimumRequriedPublicOrder = -99,
+            MinimumRequriedPublicOrder = 90,
             PRESubculture = "wh_main_sc_vmp_vampire_counts",
             ArmyArchetypes = {"MannfredReemerge", },
             CleanUpRebelForce = false,

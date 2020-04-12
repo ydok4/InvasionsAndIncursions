@@ -1,7 +1,7 @@
 function GetTombKingsPREPoolDataResources()
     return {
         ReemergeanceArchetypeKhemri = {
-            MinimumRequriedPublicOrder = -99,
+            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh2_dlc09_sc_tmb_tomb_kings",
             ArmyArchetypes = {"SettraReemerge", },
             CleanUpRebelForce = false,

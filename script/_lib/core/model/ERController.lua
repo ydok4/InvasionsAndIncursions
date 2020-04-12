@@ -1464,9 +1464,9 @@ function ERController:CheckReemergeanceCriteria(region, preKey, preData)
             return false;
         end
         local isHumanOwner = owningFaction:name() == self.HumanFaction:name();
-        local testChance = 100;
+        local testChance = 5;
         if isHumanOwner == true then
-            testChance = 50;
+            testChance = 10;
         end
         -- If it passes the random roll and PRE is not already active and PRE has not triggered previously
         -- and they have not been confederated

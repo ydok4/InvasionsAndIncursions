@@ -1,7 +1,7 @@
 function GetBretonniaPREPoolDataResources()
     return {
         ReemergeanceArchetypeCouronne = {
-            MinimumRequriedPublicOrder = -99,
+            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh_main_sc_brt_bretonnia",
             ArmyArchetypes = {"LouenReemerge", },
             CleanUpRebelForce = false,
