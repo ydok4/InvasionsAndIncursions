@@ -1,7 +1,6 @@
 function GetSkavenPREPoolDataResources()
     return {
         ReemergeanceArchetypeSkavenblight = {
-            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh2_main_sc_skv_skaven",
             ArmyArchetypes = {"IkitClawReemerge", },
             CleanUpRebelForce = false,

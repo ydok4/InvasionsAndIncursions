@@ -61,7 +61,7 @@ function ERController:CheckMCMOptions(core)
     if enableRebellions == nil or enableRebellions == "enable_rebellions" then
         self.Logger:Log("Rebellions are enabled in MCM");
         ER_SetupPostUIListeners(self, core);
-        ER_SetupPostUIInterfaceListeners(self, core, true);
+        --ER_SetupPostUIInterfaceListeners(self, core, true);
     else
         self.Logger:Log("Rebellions are disabled in MCM");
     end
@@ -670,7 +670,8 @@ function ERController:SpawnArmy(rebellionData, preKey)
                 if preKey ~= nil then
                     local preResources = self:GetPREPoolDataResource(character:faction():subculture(), preKey);
                     local selectedIncidentKey = nil;
-                    if preResources.InitialRebellionIncident ~= nil then
+                    if preResources ~= nil
+                    and preResources.InitialRebellionIncident ~= nil then
                         if preResources.InitialRebellionIncident[spawnRegion:owning_faction():subculture()] == nil then
                             selectedIncidentKey = preResources.InitialRebellionIncident["default"];
                         else
@@ -832,6 +833,8 @@ function ERController:SetupRebelForceTracking(rebellionData, militaryForceCqi, p
             self.Logger:Log("Getting pre resources: "..preKey);
             local preResources = self:GetPREPoolDataResource(rebellionData.SubcultureKey, preKey);
             cleanUpForce = preResources.CleanUpRebelForce;
+        else
+            preKey = '';
         end
         self.RebelForces[tostring(militaryForceCqi)] = {
             Target = rebellionData.TargetRegion,
@@ -842,10 +845,12 @@ function ERController:SetupRebelForceTracking(rebellionData, militaryForceCqi, p
             SpawnedOnSea = rebellionData.SpawnOnSea,
             SpawnCoordinates = spawnCoordinates,
             CleanUpForce = cleanUpForce,
+            AssociatedPRE = preKey,
         };
     else
         self.Logger:Log("ERROR: Military force cqi already exists");
     end
+    self.Logger:Log("Added force to active rebellions");
 end
 
 function ERController:GrantUnitsForForce(rebelForceData, militaryForce)
@@ -1041,7 +1046,6 @@ function ERController:GetRebellionRegionForNewRebellion(region)
             numValidRegions = numValidRegions + 1;
         end
     end
-    self.Logger:Log("Found valid regions");
     -- This is a testing override to trigger rebellions in specific regions
     -- in provinces
     --[[if region:name() == "wh_main_couronne_et_languille_couronne" then
@@ -1091,110 +1095,115 @@ function ERController:UpdateExistingRebels(region)
         for index, militaryForceCqi in pairs(rebelData.Forces) do
             local militaryForce = cm:model():military_force_for_command_queue_index(tonumber(militaryForceCqi));
             local rebelForceData = self.RebelForces[tostring(militaryForceCqi)];
-            local rebelForceTarget = cm:get_region(rebelForceData.Target);
-            self.Logger:Log("Checking rebels in province: "..provinceKey);
-            if not rebelForceTarget:is_null_interface()
-            and rebelForceTarget:is_abandoned() == true then
-                local rebelForceTargetRegionKey = rebelForceTarget:name();
-                self.Logger:Log("Target region is abandoned: "..rebelForceTargetRegionKey);
-                self.Logger:Log("Untracking military force "..militaryForceCqi);
+            if rebelForceData == nil then
                 rebelData.Forces[index] = nil;
-                self:AddPastRebellion(rebelForceData);
-                self.RebelForces[militaryForceCqi] = nil;
-                if militaryForce ~= nil
-                and not militaryForce:is_null_interface() then
-                    local character = militaryForce:general_character();
-                    local characterLookupString = "character_cqi:"..character:command_queue_index();
-                    cm:cai_enable_movement_for_character(characterLookupString);
-                    -- Finally, we kill them and their force
-                    if rebelForceData.CleanUpRebelForce == true then
-                        cm:kill_character(character:command_queue_index(), true, true);
-                    end
-                end
-                self.Logger:Log_Finished();
-            elseif rebelForceTarget:owning_faction():name() == factionKey then
-                rebellionInFactionProvince = true;
-                local rebelForceTargetRegionKey = rebelForceTarget:name();
-                -- We need to first check for cases where we need to remove any rebels in the province
-                -- This happens when the rebels have been killed.
-                if militaryForce == nil
-                or militaryForce:is_null_interface() then
-                    if militaryForce == nil then
-                        self.Logger:Log("Military force is missing");
-                    end
-                    self.Logger:Log("Rebellion force: "..militaryForceCqi.." is missing from region: "..rebelForceTargetRegionKey);
+            else
+                local rebelForceTarget = cm:get_region(rebelForceData.Target);
+                self.Logger:Log("Checking rebels in province: "..provinceKey);
+                if not rebelForceTarget:is_null_interface()
+                and rebelForceTarget:is_abandoned() == true then
+                    local rebelForceTargetRegionKey = rebelForceTarget:name();
+                    self.Logger:Log("Target region is abandoned: "..rebelForceTargetRegionKey);
+                    self.Logger:Log("Untracking military force "..militaryForceCqi);
                     rebelData.Forces[index] = nil;
                     self:AddPastRebellion(rebelForceData);
-                    self.RebelForces[militaryForceCqi] = nil;
-                    self.Logger:Log_Finished();
-                    self:UpdateDefeatedRebelEffectBundle(rebelForceTargetRegionKey);
-                else
-                    local character = militaryForce:general_character();
-                    -- To ensure we are only updating a rebel force once per turn
-                    -- we check if the target region owner matches the faction whose turn we are
-                    -- checking
-                    local militaryForceFaction = militaryForce:faction();
-                    if rebelForceTarget:owning_faction():name() ~= militaryForceFaction:name()
-                    and militaryForceFaction:at_war_with(rebelForceTarget:owning_faction()) == false then
-                        self.Logger:Log("Region has changed owner. New owner is: "..rebelForceTarget:owning_faction():name());
-                        cm:force_declare_war(militaryForceFaction:name(), rebelForceTarget:owning_faction():name(), false, false);
-                    end
-                    if region:owning_faction():name() == rebelForceTarget:owning_faction():name() then
-                        self.Logger:Log("Checking military force: "..militaryForceCqi);
-                        if rebelForceData.SpawnedOnSea == true
-                        and character:region():is_null_interface() then
-                            self.Logger:Log("Character is in sea still");
-                            local characterLookupString = "character_cqi:"..character:command_queue_index();
-                            local owningFactionKey = rebelForceTarget:owning_faction():name();
-                            local interimX, interimY = cm:find_valid_spawn_location_for_character_from_settlement(
-                                owningFactionKey,
-                                rebelForceTargetRegionKey,
-                                -- Spawn on sea
-                                false,
-                                -- Rebellion spawn
-                                true,
-                                -- Spawn distance (optional).
-                                -- Note: 9 is the distance which is also used for Skaven
-                                -- under city incursions
-                                9
-                            );
-                            cm:teleport_to(characterLookupString, interimX, interimY, true);
-                            cm:cai_disable_movement_for_character(characterLookupString);
-                            if rebelForceData.SpawnedOnSea == false then
-                                cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
-                            end
-                        elseif rebelForceData.SpawnTurn + 3 > turnNumber
-                        and rebelForceData.SpawnedOnSea == false then
-                            self.Logger:Log("Granting units to rebellion in region: "..rebelForceTargetRegionKey);
-                            local characterLookupString = "character_cqi:"..character:command_queue_index();
-                            if rebelForceData.SpawnedOnSea == false then
-                                cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
-                            end
-                            self:GrantUnitsForForce(rebelForceData, militaryForce);
-                        else
-                            local positionString = character:logical_position_x().."/"..character:logical_position_y();
-                            -- The character should move on the turn after we tell them to attack
-                            -- If their position matches their spawn position, then they are stuck
-                            -- and should be removed. This is pretty rare but can happen in some settlements
-                            if rebelForceData.SpawnTurn + 5 < turnNumber
-                            and positionString == rebelForceData.SpawnCoordinates then
-                                self.Logger:Log("Military force has stuck around too long, removing the force for faction: "..character:faction():name());
-                                -- Clean up force data
-                                rebelData.Forces[index] = nil;
-                                self:AddPastRebellion(rebelForceData);
-                                self.RebelForces[militaryForceCqi] = nil;
-                                -- Finally, we kill them and their force
-                                cm:kill_character(character:command_queue_index(), true, true);
-                                self.Logger:Log_Finished();
-                            end
+                    self.RebelForces[tostring(militaryForceCqi)] = nil;
+                    if militaryForce ~= nil
+                    and not militaryForce:is_null_interface() then
+                        local character = militaryForce:general_character();
+                        local characterLookupString = "character_cqi:"..character:command_queue_index();
+                        cm:cai_enable_movement_for_character(characterLookupString);
+                        -- Finally, we kill them and their force
+                        if rebelForceData.CleanUpRebelForce == true then
+                            cm:kill_character(character:command_queue_index(), true, true);
                         end
-                        self.Logger:Log_Finished();
                     end
+                    self.Logger:Log_Finished();
+                elseif rebelForceTarget:owning_faction():name() == factionKey then
+                    rebellionInFactionProvince = true;
+                    local rebelForceTargetRegionKey = rebelForceTarget:name();
+                    -- We need to first check for cases where we need to remove any rebels in the province
+                    -- This happens when the rebels have been killed.
+                    if militaryForce == nil
+                    or militaryForce:is_null_interface() then
+                        if militaryForce == nil then
+                            self.Logger:Log("Military force is missing");
+                        end
+                        self.Logger:Log("Rebellion force: "..militaryForceCqi.." is missing from region: "..rebelForceTargetRegionKey);
+                        rebelData.Forces[index] = nil;
+                        self:AddPastRebellion(rebelForceData);
+                        self.RebelForces[tostring(militaryForceCqi)] = nil;
+                        self.Logger:Log_Finished();
+                        self:UpdateDefeatedRebelEffectBundle(rebelForceTargetRegionKey);
+                    else
+                        local character = militaryForce:general_character();
+                        -- To ensure we are only updating a rebel force once per turn
+                        -- we check if the target region owner matches the faction whose turn we are
+                        -- checking
+                        local militaryForceFaction = militaryForce:faction();
+                        if rebelForceTarget:owning_faction():name() ~= militaryForceFaction:name()
+                        and militaryForceFaction:at_war_with(rebelForceTarget:owning_faction()) == false then
+                            self.Logger:Log("Region has changed owner. New owner is: "..rebelForceTarget:owning_faction():name());
+                            cm:force_declare_war(militaryForceFaction:name(), rebelForceTarget:owning_faction():name(), false, false);
+                        end
+                        if region:owning_faction():name() == rebelForceTarget:owning_faction():name() then
+                            self.Logger:Log("Checking military force: "..militaryForceCqi);
+                            if rebelForceData.SpawnedOnSea == true
+                            and character:region():is_null_interface() then
+                                self.Logger:Log("Character is in sea still");
+                                local characterLookupString = "character_cqi:"..character:command_queue_index();
+                                local owningFactionKey = rebelForceTarget:owning_faction():name();
+                                local interimX, interimY = cm:find_valid_spawn_location_for_character_from_settlement(
+                                    owningFactionKey,
+                                    rebelForceTargetRegionKey,
+                                    -- Spawn on sea
+                                    false,
+                                    -- Rebellion spawn
+                                    true,
+                                    -- Spawn distance (optional).
+                                    -- Note: 9 is the distance which is also used for Skaven
+                                    -- under city incursions
+                                    9
+                                );
+                                cm:teleport_to(characterLookupString, interimX, interimY, true);
+                                cm:cai_disable_movement_for_character(characterLookupString);
+                                if rebelForceData.SpawnedOnSea == false then
+                                    cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
+                                end
+                            elseif rebelForceData.SpawnTurn + 3 > turnNumber
+                            and rebelForceData.SpawnedOnSea == false then
+                                self.Logger:Log("Granting units to rebellion in region: "..rebelForceTargetRegionKey);
+                                local characterLookupString = "character_cqi:"..character:command_queue_index();
+                                if rebelForceData.SpawnedOnSea == false then
+                                    cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
+                                end
+                                self:GrantUnitsForForce(rebelForceData, militaryForce);
+                            else
+                                local positionString = character:logical_position_x().."/"..character:logical_position_y();
+                                -- The character should move on the turn after we tell them to attack
+                                -- If their position matches their spawn position, then they are stuck
+                                -- and should be removed. This is pretty rare but can happen in some settlements
+                                if rebelForceData.SpawnTurn + 5 < turnNumber
+                                and positionString == rebelForceData.SpawnCoordinates then
+                                    self.Logger:Log("Military force has stuck around too long, removing the force for faction: "..character:faction():name());
+                                    -- Clean up force data
+                                    rebelData.Forces[index] = nil;
+                                    self:AddPastRebellion(rebelForceData);
+                                    self.RebelForces[tostring(militaryForceCqi)] = nil;
+                                    -- Finally, we kill them and their force
+                                    cm:kill_character(character:command_queue_index(), true, true);
+                                    self.Logger:Log_Finished();
+                                end
+                            end
+                            self.Logger:Log_Finished();
+                        end
+                    end
+                else
+                    self.Logger:Log("Rebel force is in province but is not targeting the current owning faction: "..factionKey);
+                    self.Logger:Log("Target region is: "..rebelForceTarget:name());
+                    self.Logger:Log("Target faction is: "..rebelForceTarget:owning_faction():name());
+                    self.Logger:Log_Finished();
                 end
-            else
-                self.Logger:Log("Rebel force is in province but is not targeting the current owning faction: "..factionKey);
-                self.Logger:Log("Target faction is: "..rebelForceTarget:owning_faction():name());
-                self.Logger:Log_Finished();
             end
         end
     end
@@ -1285,45 +1294,83 @@ function ERController:UpdatePREs(region)
             local showMessage = (faction:name() == self.HumanFaction:name());
             if showMessage == true then
                 -- Check incidents
-                local subcultureIncidents = preResourceData.Incidents[faction:subculture()];
-                if subcultureIncidents == nil then
-                    subcultureIncidents = preResourceData.Incidents["default"];
-                end
-                if subcultureIncidents ~= nil then
-                    for incidentKey, incidentData in pairs(subcultureIncidents) do
-                        if turnNumber == incidentData.NumberOfTurns + activePREData.SpawnTurnNumber then
-                            self.Logger:Log("Triggering PRE incident: "..incidentKey);
-                            if faction:name() == self.HumanFaction:name() then
-                                cm:trigger_incident_with_targets(faction:command_queue_index(), incidentKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
-                            end
-                            if incidentData.SpawnArmyArchetype == true then
-                                self:StartPREArmy(region, activePREData, incidentData);
+                if preResourceData.Incidents ~= nil then
+                    local subcultureIncidents = preResourceData.Incidents[faction:subculture()];
+                    if subcultureIncidents == nil then
+                        subcultureIncidents = preResourceData.Incidents["default"];
+                    end
+                    if subcultureIncidents ~= nil then
+                        for incidentKey, incidentData in pairs(subcultureIncidents) do
+                            if turnNumber == incidentData.NumberOfTurns + activePREData.SpawnTurnNumber then
+                                self.Logger:Log("Triggering PRE incident: "..incidentKey);
+                                if faction:name() == self.HumanFaction:name() then
+                                    cm:trigger_incident_with_targets(faction:command_queue_index(), incidentKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                                end
+                                if incidentData.SpawnArmyArchetype == true then
+                                    self:StartPREArmy(region, activePREData, incidentData);
+                                end
                             end
                         end
                     end
                 end
                 -- Check auto dilemmas
-                local autoDilemmas = preResourceData.AutoDilemmas[faction:subculture()];
-                if autoDilemmas == nil then
-                    autoDilemmas = preResourceData.AutoDilemmas["default"];
-                end
-                if autoDilemmas ~= nil then
-                    for dilemmaKey, dilemmaData in pairs(autoDilemmas) do
-                        if turnNumber == dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber then
-                            self.Logger:Log("Triggering PRE auto dilemma: "..dilemmaKey);
-                            cm:trigger_dilemma_with_targets(faction:command_queue_index(), dilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                if preResourceData.AutoDilemmas ~= nil then
+                    local autoDilemmas = preResourceData.AutoDilemmas[faction:subculture()];
+                    if autoDilemmas == nil then
+                        autoDilemmas = preResourceData.AutoDilemmas["default"];
+                    end
+                    if autoDilemmas ~= nil then
+                        for dilemmaKey, dilemmaData in pairs(autoDilemmas) do
+                            if turnNumber == dilemmaData.NumberOfTurns + activePREData.SpawnTurnNumber then
+                                self.Logger:Log("Triggering PRE auto dilemma: "..dilemmaKey);
+                                cm:trigger_dilemma_with_targets(faction:command_queue_index(), dilemmaKey, faction:command_queue_index(), 0, 0, 0, region:cqi(), 0);
+                            end
                         end
                     end
                 end
             end
-            -- Check emerging faction spawn
+            if preResourceData.ArmySpawnChance ~= nil
+            and activePREData.RemainingNumberOfRandomSpawns ~= nil
+            and activePREData.RemainingNumberOfRandomSpawns > 0 then
+                if Roll100(preResourceData.ArmySpawnChance) then
+                    self.Logger:Log("PRE passed army spawn chance");
+                    self:StartPREArmy(region, activePREData);
+                    activePREData.RemainingNumberOfRandomSpawns = activePREData.RemainingNumberOfRandomSpawns - 1;
+                    self.Logger:Log("PRE Army: "..activePREData.PREFaction.." has spawned in province: "..provinceKey);
+                    self.Logger:Log_Finished();
+                end
+            end
+            -- Check if any PREs need to spawn armies
             self.Logger:Log("CurrentTurn: "..turnNumber.." PRE emerge turn: "..(preResourceData.PREDuration + activePREData.SpawnTurnNumber));
             if turnNumber >= preResourceData.PREDuration + activePREData.SpawnTurnNumber then
-                spawnedRebellion = true;
-                self:StartPREArmy(region, activePREData);
-                self:AddPastPRE(region, activePREData);
-                self.Logger:Log("Faction: "..activePREData.PREFaction.." has reemerged in province: "..provinceKey);
-                self.Logger:Log_Finished();
+                if preResourceData.TriggerArmySpawnWhenPREEnds == true then
+                    spawnedRebellion = true;
+                    self:StartPREArmy(region, activePREData);
+                    self:AddPastPRE(region, activePREData);
+                    self.Logger:Log("PRE Army: "..activePREData.PREFaction.." has spawned in province: "..provinceKey);
+                    self.Logger:Log_Finished();
+                -- Note: This cleans up all forces belonging to a PRE, therefore it should only be used
+                -- with PREs can only have one copy active at a time
+                elseif preResourceData.CleanupForcesWhenPREEnds == true then
+                    for militaryForceCqi, rebelForceData in pairs(self.RebelForces) do
+                        if rebelForceData.AssociatedPRE == activePREData.PREKey then
+                            self:AddPastRebellion(rebelForceData);
+                            self.RebelForces[tostring(militaryForceCqi)] = nil;
+                            self.Logger:Log("Cleaning up force: "..militaryForceCqi.." for PRE: "..activePREData.PREKey);
+                            local militaryForce = cm:model():military_force_for_command_queue_index(tonumber(militaryForceCqi));
+                            if militaryForce ~= nil
+                            and not militaryForce:is_null_interface() then
+                                local character = militaryForce:general_character();
+                                cm:kill_character(character:command_queue_index(), true, true);
+                            end
+                            self.Logger:Log_Finished();
+                        end
+                    end
+                else
+                    self:AddPastPRE(region, activePREData);
+                    self.Logger:Log("PRE: "..activePREData.PREFaction.." has finished in province: "..provinceKey);
+                    self.Logger:Log_Finished();
+                end
             else
                 self.Logger:Log_Finished();
             end
@@ -1353,13 +1400,16 @@ function ERController:StartPREArmy(region, activePREData, incidentData)
     -- Get general/army data
     local forceData = self:GetForceDataForRegionAndSubculture(region, rebellionProvinceData, armyArchetypeKey);
     self:SpawnArmy(forceData, activePREData.PREKey);
-    local preFaction = cm:get_faction(activePREData.PREFaction);
-    if preFaction:is_quest_battle_faction() == false then
-        self.ReemergedFactions[activePREData.PREFaction] = true;
+    if activePREData.PREFaction ~= nil
+    and (string.match(activePREData.PREKey, "ReemergeanceArchetype") or string.match(activePREData.PREKey, "DelayedStart")) then
+        local preFaction = cm:get_faction(activePREData.PREFaction);
+        if preFaction:is_quest_battle_faction() == false then
+            self.ReemergedFactions[activePREData.PREFaction] = true;
+        end
     end
 end
 
-function ERController:SpawnPREs(region)
+function ERController:SpawnReemergingFactionPREs(region)
     local provinceKey = region:province_name();
     if self.ActivePREs[provinceKey] ~= nil
     and TableHasAnyValue(self.ActivePREs[provinceKey]) then
@@ -1378,58 +1428,6 @@ function ERController:SpawnPREs(region)
             else
                 --self.Logger:Log("PRE "..preKey.." failed ReemergeanceArchetype criteria");
                 presForRegion[preKey] = nil;
-            end
-        elseif turnNumber > 0
-        and preData.PREData.PREFactionKey ~= self.HumanFaction:name()
-        --turnNumber > 25
-        --and turnNumber > preData.PREData.MinimumTurn
-        --and Roll100(5) == true then
-        then
-            local pastProvincePREs = self.PastPREs[provinceKey];
-            if pastProvincePREs == nil then
-                self.Logger:Log("No previous PRE so it must be valid: "..preKey);
-            else
-                local removePRE = false;
-                for index, pastPRE in pairs(pastProvincePREs) do
-                    --self.Logger:Log("Found past PRE: "..pastPRE.PREKey);
-                    if pastPRE.PREKey == preKey
-                    and preData.PREData.TriggerCritieria ~= nil then
-                        if preData.PREData.TriggerCritieria.IsUnique == true then
-                            removePRE = true;
-                        elseif preData.PREData.TriggerCritieria.Timeout ~= nil
-                        and turnNumber < pastPRE.CompletedTurn + preData.PREData.TriggerCritieria.Timeout then
-                            removePRE = true;
-                        elseif preData.PREData.TriggerCritieria.Timeout ~= nil
-                        and turnNumber > pastPRE.CompletedTurn + preData.PREData.TriggerCritieria.Timeout then
-                            self.PastPREs[provinceKey][index] = nil;
-                        end
-                        if preData.PREData.TriggerCritieria.UniqueArmyArchetype == true then
-                            -- This trigger option should only be used when there is only 1 archetype available
-                            local archetypeKey = GetRandomObjectFromList(preData.PREData.ArmyArchetypes);
-                            local armyArchetype = self:GetArmyArchetypeData(preData.PREData.PRESubculture, archetypeKey);
-                            local agentSubType = GetRandomObjectKeyFromList(armyArchetype.AgentSubtypes);
-                            local faction = cm:get_faction(armyArchetype.RebellionFaction);
-                            local char_list = faction:character_list();
-                            for i = 0, char_list:num_items() - 1 do
-                                local character = char_list:item_at(i);
-                                if character:character_subtype_key() == agentSubType then
-                                    if cm:char_is_general_with_army(character) == true then
-                                        removePRE = true;
-                                    end
-                                    break;
-                                end
-                            end
-                        end
-                        if removePRE == true then
-                            --self.Logger:Log("Invalid PRE "..preKey);
-                            presForRegion[preKey] = nil;
-                            break;
-                        end
-                    end
-                end
-                if removePRE == false then
-                    self.Logger:Log("Valid PRE "..preKey);
-                end
             end
         else
             presForRegion[preKey] = nil;
@@ -1451,7 +1449,7 @@ function ERController:CheckReemergeanceCriteria(region, preKey, preData)
     local turnNumber = cm:model():turn_number();
     -- If we are more than 50 turns into a campaign and the faction is dead
     local faction = cm:get_faction(preData.PREFactionKey);
-    if turnNumber > 0
+    if turnNumber > 50
     and not faction:is_null_interface()
     and faction:is_dead() == true then
         local owningFaction = "";
@@ -1496,27 +1494,9 @@ function ERController:CheckReemergeanceCriteria(region, preKey, preData)
 end
 
 function ERController:GeneratePREPoolForRegion(region)
-    local prePool = {};
-    local regionKey = region:name();
     local provinceKey = region:province_name();
-    local faction = region:owning_faction();
-    local factionKey = faction:name();
-    local subcultureKey = faction:subculture();
     local publicOrder = region:public_order();
     local validPreData = {};
-    -- Grab generic PREs for the occupying subculture
-    local genericResources = self:GetPRESubculturePoolDataResources(subcultureKey);
-    for preKey, genericPREData in pairs(genericResources) do
-        --self.Logger:Log("Found generic PRE: "..preKey);
-        if genericPREData.Weighting > 0 then
-            validPreData[preKey] = {
-                PRESubcultureKey = subcultureKey,
-                PREFactionKey = factionKey,
-                PREData = genericPREData,
-                Weighting = genericPREData.Weighting,
-            };
-        end
-    end
     -- Grab the region specific PREs
     local provinceResources = self:GetProvinceRebellionResources(provinceKey);
     if provinceResources.PassiveRebelEvents ~= nil then
@@ -1529,7 +1509,7 @@ function ERController:GeneratePREPoolForRegion(region)
             for preKey, regionPREData in pairs(regionSubculturePREData) do
                 local preData = combinedPREs[preKey];
                 if preData ~= nil
-                and tonumber(publicOrder) > preData.MinimumRequriedPublicOrder then
+                and tonumber(publicOrder) > 60 then
                     local armyArchetypeKey = GetRandomObjectFromList(preData.ArmyArchetypes);
                     local armyArchetypeResources = self:GetArmyArchetypeData(preData.PRESubculture, armyArchetypeKey);
                     validPreData[preKey] = {
@@ -1576,6 +1556,10 @@ function ERController:AddPREToRegion(region, preKey, preData)
     if preData.PREData.IsRebelSpawnLocked ~= nil then
         isRebelSpawnLocked = preData.PREData.IsRebelSpawnLocked;
     end
+    local allowedNumberOfRandomSpawns = 0;
+    if preData.PREData.AllowedNumberOfRandomSpawns ~= nil then
+        allowedNumberOfRandomSpawns = preData.PREData.AllowedNumberOfRandomSpawns;
+    end
     -- Map data into structure we are saving for later
     local activePRE = {
         PREKey = preKey,
@@ -1585,6 +1569,7 @@ function ERController:AddPREToRegion(region, preKey, preData)
         PREDuration = preData.PREData.PREDuration,
         TargetRegion = regionKey,
         IsRebelSpawnLocked = isRebelSpawnLocked,
+        RemainingNumberOfRandomSpawns = allowedNumberOfRandomSpawns,
     };
     if self.ActivePREs[provinceKey] == nil then
         self.ActivePREs[provinceKey] = {};
@@ -1600,7 +1585,7 @@ function ERController:AddPREToRegion(region, preKey, preData)
         end
         cm:apply_custom_effect_bundle_to_region(customEffectBundle, region);
     end
-    self.Logger:Log("PRE: Will start on turn: "..(turnNumber + activePRE.PREDuration));
+    self.Logger:Log("PRE: Will finish on turn: "..(turnNumber + activePRE.PREDuration));
     self.Logger:Log_Finished();
 end
 
@@ -1779,7 +1764,7 @@ function ERController:GetAgentDeployDilemmaKey(regionKey)
     local turnNumber = cm:model():turn_number();
     local presForProvince = self.ActivePREs[provinceKey];
     if presForProvince ~= nil then
-        self.Logger:Log("Found PRE in province: "..provinceKey);
+        self.Logger:Log("Found PRE in province: "..provinceKey.." for faction: "..faction:name());
         for index, activePREData in pairs(presForProvince) do
             if self.ReemergedFactions[activePREData.PREFaction] == nil
             and regionKey == activePREData.TargetRegion then

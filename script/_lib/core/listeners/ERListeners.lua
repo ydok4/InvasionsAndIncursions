@@ -161,7 +161,7 @@ function ER_SetupPostUIListeners(er, core)
                     if rebellionInFactionProvince == false then
                         local spawnedRebellion = false;
                         spawnedRebellion = er:UpdatePREs(region);
-                        er:SpawnPREs(region);
+                        er:SpawnReemergingFactionPREs(region);
                         if spawnedRebellion == false then
                             spawnedRebellion = er:CheckForRebelSpawn(region);
                         end
@@ -204,9 +204,10 @@ function ER_SetupPostUIListeners(er, core)
             local faction = context:faction();
             local factionName = faction:name();
             local character_list = faction:character_list();
-            er.Logger:Log("Rebel faction found: "..factionName);
             if er.ReemergedFactions[factionName] == true then
                 er.Logger:Log("Checking ReEmerged faction: "..factionName);
+            else
+                er.Logger:Log("Rebel faction found: "..factionName);
             end
             for i = 0, character_list:num_items() - 1 do
                 local character = character_list:item_at(i);
@@ -230,8 +231,9 @@ function ER_SetupPostUIListeners(er, core)
                             er.Logger:Log("Attacking region: "..rebelForceTargetRegionKey);
                             cm:attack_region(characterLookupString, rebelForceTargetRegionKey, true);
                             if er.ReemergedFactions[factionName] == true then
+                                er.Logger:Log("Remerged faction will be untracked");
                                 er:AddPastRebellion(rebelForceData);
-                                er.RebelForces[militaryForceCqi] = nil;
+                                er.RebelForces[tostring(militaryForceCqi)] = nil;
                             end
                         -- This only happens if they have occuped the settlement and they are a QB faction
                         elseif rebelForceTarget:owning_faction():name() == factionName
@@ -251,11 +253,14 @@ function ER_SetupPostUIListeners(er, core)
                                 end
                             end
                             er:AddPastRebellion(rebelForceData);
-                            er.RebelForces[militaryForceCqi] = nil;
+                            er.RebelForces[tostring(militaryForceCqi)] = nil;
+                            cm:cai_enable_movement_for_character(characterLookupString);
                         -- Non QB factions should be untracked and added as a past rebellion
                         elseif rebelForceTarget:owning_faction():name() == factionName then
+                            er.Logger:Log("Non qb faction controls their target, untracking.");
                             er:AddPastRebellion(rebelForceData);
-                            er.RebelForces[militaryForceCqi] = nil;
+                            er.RebelForces[tostring(militaryForceCqi)] = nil;
+                            cm:cai_enable_movement_for_character(characterLookupString);
                         end
                     else
                         er.Logger:Log("Missing RebelForces data. CQI: "..militaryForceCqi);
@@ -471,7 +476,7 @@ end
 
 function ER_HideRebelsInDiplomacy(er, UIFlagCache)
     if UIFlagCache == nil then
-        er.Logger:Log("Cache is nil, setting cached tooltips");
+        --er.Logger:Log("Cache is nil, setting cached tooltips");
         UIFlagCache = {};
         for subcultureKey, subcultureRebelData in pairs(_G.ERResources.RebelFactionPoolDataResources) do
             local rebelFactionName = effect.get_localised_string("factions_screen_name_when_rebels_"..subcultureRebelData.Default);

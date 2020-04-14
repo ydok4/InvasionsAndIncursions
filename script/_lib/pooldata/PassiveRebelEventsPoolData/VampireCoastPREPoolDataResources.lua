@@ -1,7 +1,6 @@
 function GetVampireCoastPREPoolDataResources()
     return {
         ReemergeanceArchetypeGalleonsGraveyard = {
-            MinimumRequriedPublicOrder = 90,
             PRESubculture = "wh2_dlc11_sc_cst_vampire_coast",
             ArmyArchetypes = {"CountNoctilusReemerge", },
             CleanUpRebelForce = false,

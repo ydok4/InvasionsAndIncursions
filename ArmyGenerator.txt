@@ -1,0 +1,8 @@
+GenerateForceForTurn: wh_main_couronne_et_languille_couronne2wh2_main_wef_bowmen_of_oreon   : [14, 04 2020 11:48:44]
+Adding subculture unit: wh_main_grn_inf_goblin_archers   : [14, 04 2020 11:48:44]
+Adding subculture unit: wh_main_grn_inf_goblin_spearmen   : [14, 04 2020 11:48:44]
+Force size is 1   : [14, 04 2020 11:48:44]
+GenerateForceForTurn: wh_main_couronne_et_languille_couronne3wh2_main_wef_bowmen_of_oreon   : [14, 04 2020 11:48:44]
+Adding subculture unit: wh_main_grn_inf_goblin_archers   : [14, 04 2020 11:48:44]
+Adding subculture unit: wh_main_grn_inf_goblin_spearmen   : [14, 04 2020 11:48:44]
+Force size is 1   : [14, 04 2020 11:48:44]

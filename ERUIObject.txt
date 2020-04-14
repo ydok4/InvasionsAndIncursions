@@ -1,11 +1,22 @@
-ERROR: Missing UIMF   : [15, 02 2020 21:49:08]
+ERROR: Missing UIMF   : [13, 04 2020 10:38:46]
 FINISHED
 
-ERROR: Missing UIMF   : [15, 02 2020 21:49:08]
+ERROR: Missing UIMF   : [13, 04 2020 10:38:46]
 FINISHED
 
-UpdateButtons   : [15, 02 2020 21:49:08]
-Selected faction is: wh2_dlc11_def_the_blessed_dread   : [15, 02 2020 21:49:08]
-Human faction is: wh2_dlc11_def_the_blessed_dread   : [15, 02 2020 21:49:08]
+UpdateButtons   : [13, 04 2020 10:38:46]
+Selected faction is: wh2_dlc11_def_the_blessed_dread   : [13, 04 2020 10:38:46]
+Human faction is: wh2_dlc11_def_the_blessed_dread   : [13, 04 2020 10:38:46]
+FINISHED
+
+ERROR: Missing UIMF   : [13, 04 2020 10:38:46]
+FINISHED
+
+ERROR: Missing UIMF   : [13, 04 2020 10:38:46]
+FINISHED
+
+UpdateButtons   : [13, 04 2020 10:38:46]
+Selected faction is: wh2_dlc11_def_the_blessed_dread   : [13, 04 2020 10:38:46]
+Human faction is: wh2_dlc11_def_the_blessed_dread   : [13, 04 2020 10:38:46]
 FINISHED
 

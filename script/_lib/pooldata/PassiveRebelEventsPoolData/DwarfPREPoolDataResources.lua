@@ -1,7 +1,6 @@
 function GetDwarfPREPoolDataResources()
     return {
         ReemergeanceArchetypeKarazAKarak = {
-            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh_main_sc_dwf_dwarfs",
             ArmyArchetypes = {"ThorgrimReemerge", },
             CleanUpRebelForce = false,

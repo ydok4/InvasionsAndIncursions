@@ -1,7 +1,6 @@
 function GetGreenskinPREPoolDataResources()
     return {
         ReemergeanceArchetypeBlackCrag = {
-            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh_main_sc_grn_greenskins",
             ArmyArchetypes = {"GrimgorReemerge", },
             CleanUpRebelForce = false,

@@ -1,7 +1,6 @@
 function GetEmpirePREPoolDataResources()
     return {
         ReemergeanceArchetypeAltdorf = {
-            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh_main_sc_emp_empire",
             ArmyArchetypes = {"KarlFranzReemerge", },
             CleanUpRebelForce = false,

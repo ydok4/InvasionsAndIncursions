@@ -90,6 +90,8 @@ function ER_LoadRebelForces(er)
             ArmyArchetypeKey = rebelForceData[5],
             SpawnedOnSea = rebelForceData[6],
             SpawnCoordinates = rebelForceData[7],
+            CleanUpForce = rebelForceData[8],
+            AssociatedPRE = rebelForceData[9],
         };
     end
 
@@ -180,7 +182,7 @@ function ER_LoadActivePREs(er)
             PREDuration = activePREData[5],
             TargetRegion = activePREData[6],
             IsRebelSpawnLocked = activePREData[7],
-            CleanUpForce = activePREData[8],
+            RemainingNumberOfRandomSpawns = activePREData[8],
         };
     end
 

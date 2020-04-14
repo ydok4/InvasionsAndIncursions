@@ -15,6 +15,9 @@ function Roll100(passValue)
 end
 
 function TableHasAnyValue(table)
+    if table == nil then
+        return false;
+    end
     for key, value in pairs(table) do
         return true;
     end

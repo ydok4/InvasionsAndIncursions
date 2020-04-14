@@ -57,7 +57,7 @@ function zz_enhanced_rebellions()
     else
         ER.Logger:Log("No MCM");
         ER_SetupPostUIListeners(ER, core);
-        ER_SetupPostUIInterfaceListeners(ER, core, enableLogging);
+        --ER_SetupPostUIInterfaceListeners(ER, core, enableLogging);
     end
     ER.Logger:Log_Finished();
     _G.ER = ER;

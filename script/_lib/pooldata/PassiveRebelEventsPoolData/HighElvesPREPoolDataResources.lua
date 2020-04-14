@@ -1,7 +1,6 @@
 function GetHighElvesPREPoolDataResources()
     return {
         ReemergeanceArchetypeLothern = {
-            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh2_main_sc_hef_high_elves",
             ArmyArchetypes = {"TyrionReemerge", },
             CleanUpRebelForce = false,

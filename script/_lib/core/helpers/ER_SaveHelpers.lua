@@ -60,6 +60,7 @@ function ER_SaveActiveRebelForces(er)
             rebelData.SpawnedOnSea,
             rebelData.SpawnCoordinates,
             rebelData.CleanUpForce,
+            rebelData.AssociatedPRE,
         };
         numberOfRebelForces = numberOfRebelForces + 1;
 
@@ -133,6 +134,7 @@ function ER_SaveActivePREs(er)
                 activePREData.PREDuration,
                 activePREData.TargetRegion,
                 activePREData.IsRebelSpawnLocked,
+                activePREData.RemainingNumberOfRandomSpawns,
             };
             numberOfActivePREsRebellions = numberOfActivePREsRebellions + 1;
 

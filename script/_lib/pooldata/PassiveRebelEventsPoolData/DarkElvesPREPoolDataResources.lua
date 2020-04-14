@@ -1,7 +1,6 @@
 function GetDarkElvesPREPoolDataResources()
     return {
         ReemergeanceArchetypeNaggarond = {
-            MinimumRequriedPublicOrder = 50,
             PRESubculture = "wh2_main_sc_def_dark_elves",
             ArmyArchetypes = {"MalekithReemerge", },
             CleanUpRebelForce = false,

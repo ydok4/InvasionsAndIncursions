@@ -567,6 +567,9 @@ local ER_AgentDeployDilemmaChoiceMade = {
 mock_listeners:trigger_listener(ER_AgentDeployDilemmaChoiceMade);
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
+turn_number = 15;
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
+
 local ER_SettlementPanelOpened = {
     Key = "ER_SettlementPanelOpened",
     Context = {
