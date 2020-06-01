@@ -80,6 +80,7 @@ function CreateValidLuaTableKey(value)
     value = value:gsub("ó", "o");
     value = value:gsub("‘", "_");
     value = value:gsub(",", "_");
+    value = value:gsub("&", "and");
     return value;
 end
 

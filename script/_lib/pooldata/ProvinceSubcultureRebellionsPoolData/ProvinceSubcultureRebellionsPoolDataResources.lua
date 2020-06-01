@@ -636,6 +636,28 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_marshes_of_madness = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 2,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 3,
+                    ArmyArchetypes = {
+                        StrigoiGhoulKing = {
+                            Weighting = 3,
+                        },
+                        MasterNecromancer = {
+                            Weighting = 1,
+                        },
+                    },
+                },
+            },
+        },
         wh2_main_misty_hills = {
             IsAdjacentToSea = false,
             RebelSubcultures = {

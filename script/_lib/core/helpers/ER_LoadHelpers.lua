@@ -176,7 +176,7 @@ function ER_LoadActivePREs(er)
         local activeProvincePREs = er.ActivePREs[provinceKey];
         activeProvincePREs[#activeProvincePREs + 1] = {
             PREKey = activePREData[1],
-            PRESubculture = activePREData[2],
+            PRESubcultureKey = activePREData[2],
             PREFaction = activePREData[3],
             SpawnTurnNumber = activePREData[4],
             PREDuration = activePREData[5],
@@ -224,7 +224,7 @@ function ER_LoadPastPREs(er)
             PREKey = pastPREData[1],
             SpawnTurnNumber = pastPREData[2],
             PREFaction = pastPREData[3],
-            PRESubculture = pastPREData[4],
+            PRESubcultureKey = pastPREData[4],
             TargetRegion = pastPREData[5],
             TargetFaction = pastPREData[6],
             CompletedTurn = pastPREData[7],

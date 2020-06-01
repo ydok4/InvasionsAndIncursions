@@ -3,7 +3,7 @@ function GetVampireCountsRebelArmyArchetypesPoolDataResources()
         MasterNecromancer = {
             AgentSubtypes = {"vmp_master_necromancer", },
             UnitTags = {"Chaff", "Beasts", "Spirits",},
-            Weighting = 3,
+            Weighting = 4,
         },
         StrigoiGhoulKing = {
             AgentSubtypes = {"dlc04_vmp_strigoi_ghoul_king", },
@@ -34,6 +34,11 @@ function GetVampireCountsRebelArmyArchetypesPoolDataResources()
                 main_warhammer = {"wh_main_eastern_sylvania_castle_drakenhof", },
                 wh2_main_great_vortex = nil,
             },
+        },
+        VampireNecrarch = {
+            AgentSubtypes = {"wh2_dlc11_vmp_bloodline_necrarch", },
+            UnitTags = {"Chaff", "GraveGuard", "VampiricBeasts"},
+            Weighting = 0,
         },
     };
 end

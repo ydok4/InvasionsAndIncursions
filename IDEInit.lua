@@ -91,7 +91,7 @@ testFaction = {
         return "wh_main_grn_greenskins";
     end,
     subculture = function()
-        return "wh_main_sc_grn_greenskins";
+        return "wh_main_sc_emp_empire";
     end,
     is_dead = function() return true; end,
     character_list = function()
@@ -280,13 +280,13 @@ function get_cm()
         get_region = function()
             return {
                 cqi = function() return 123; end,
-                province_name = function() return "wh2_main_southern_jungle_of_pahualaxa"; end,
+                province_name = function() return "wh_main_reikland"; end,
                 faction_province_growth = function() return 3; end,
                 religion_proportion = function() return 0; end,
                 public_order = function() return -99; end,
                 owning_faction = function() return testFaction; end,
                 name = function() return "wh_main_couronne_et_languille_couronne"; end,
-                is_province_capital = function() return false; end,
+                is_province_capital = function() return true; end,
                 is_abandoned = function() return false; end,
                 command_queue_index = function() return 10; end,
                 adjacent_region_list = function()
@@ -587,6 +587,9 @@ local ER_MilitaryCrackDownDilemmaChoiceMade = {
     },
 }
 mock_listeners:trigger_listener(ER_MilitaryCrackDownDilemmaChoiceMade);
+mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
+
+turn_number = 6;
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
 ER_InitialiseSaveHelpers(cm, context);

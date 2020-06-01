@@ -69,7 +69,11 @@ function ArmyGenerator:GetArmySize(minimumArmySize)
     local minSize = 0;
     local maxSize = 0;
     local periodEnd = 0;
-    if gamePeriod == "Early" then
+    if turnNumber < 15 then
+        minSize = 5;
+        maxSize = 6;
+        periodEnd = 10;
+    elseif gamePeriod == "Early" then
         minSize = 6;
         maxSize = 9;
         periodEnd = 50;

@@ -8,7 +8,7 @@ function GetBretonniaRebelArmyArchetypesPoolDataResources()
                 },
             },
             UnitTags = {"Peasants", "MenAtArms", "Knights", },
-            Weighting = 3,
+            Weighting = 4,
         },
         LouenReemerge = {
             RebellionFaction = "wh_main_brt_bretonnia",
@@ -30,6 +30,19 @@ function GetBretonniaRebelArmyArchetypesPoolDataResources()
                 main_warhammer = { "wh_main_couronne_et_languille_couronne", },
                 wh2_main_great_vortex = nil,
             },
+        },
+        BretLordSiege = {
+            AgentSubtypes = {
+                brt_lord = {
+                    AgentSubtypeKey = "brt_lord",
+                    AgentSubTypeMount = "wh_main_anc_mount_brt_general_barded_warhorse",
+                },
+            },
+            MandatoryUnits = {
+                wh_main_brt_art_field_trebuchet = 3,
+            },
+            UnitTags = {"MenAtArms", "Knights", },
+            Weighting = 1,
         },
     };
 end

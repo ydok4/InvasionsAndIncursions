@@ -1088,11 +1088,9 @@ function GetSubcultureArmyPoolDataResources()
             },
             Spirits = {
                 Early = {
-                    wh_main_vmp_inf_cairn_wraiths = 1,
                 },
                 Mid = {
                     wh_main_vmp_inf_cairn_wraiths = 1,
-                    wh_main_vmp_cav_hexwraiths = 1,
                 },
                 Late = {
                     wh_main_vmp_inf_cairn_wraiths = 2,
@@ -1234,24 +1232,20 @@ function GetSubcultureArmyPoolDataResources()
             Warriors = {
                 Early = {
                     wh_main_dwf_inf_dwarf_warrior_0 = 2,
-                    wh_main_dwf_inf_dwarf_warrior_1 = 1,
                 },
                 Mid = {
                     wh_main_dwf_inf_dwarf_warrior_0 = 2,
-                    wh_main_dwf_inf_dwarf_warrior_1 = 2,
-                    wh_main_dwf_inf_longbeards = 1,
+                    wh_main_dwf_inf_dwarf_warrior_1 = 1,
                 },
                 Late = {
                     wh_main_dwf_inf_dwarf_warrior_0 = 2,
                     wh_main_dwf_inf_dwarf_warrior_1 = 1,
-                    wh_main_dwf_inf_longbeards = 2,
-                    wh_main_dwf_inf_longbeards_1 = 1,
+                    wh_main_dwf_inf_longbeards = 1,
                 },
             },
             RangedInfantry = {
                 Early = {
-                    wh_main_dwf_inf_quarrellers_0 = 2,
-                    wh_main_dwf_inf_quarrellers_1 = 1,
+                    wh_main_dwf_inf_quarrellers_0 = 1,
                 },
                 Mid = {
                     wh_main_dwf_inf_quarrellers_0 = 1,
@@ -1260,8 +1254,7 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Late = {
                     wh_main_dwf_inf_quarrellers_1 = 1,
-                    wh_main_dwf_inf_thunderers_0 = 2,
-                    { wh_main_dwf_inf_irondrakes_0 = 1, wh_main_dwf_inf_irondrakes_2 = 1, },
+                    { wh_main_dwf_inf_irondrakes_0 = 1, wh_main_dwf_inf_irondrakes_2 = 1, wh_main_dwf_inf_thunderers_0 = 2, },
                 },
             },
             Slayers = {
@@ -1791,6 +1784,17 @@ function GetSubcultureArmyPoolDataResources()
                 Late = {
                     wh_main_brt_cav_grail_knights = 1,
                     wh_dlc07_brt_cav_grail_guardians_0 = 1,
+                },
+            },
+            Artillery = {
+                Early = {
+                    wh_main_brt_art_field_trebuchet = 1,
+                },
+                Mid = {
+                    wh_main_brt_art_field_trebuchet = 2,
+                },
+                Late = {
+                    wh_dlc07_brt_art_blessed_field_trebuchet_0 = 1,
                 },
             },
         },

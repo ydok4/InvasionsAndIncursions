@@ -8,7 +8,7 @@ function GetEmpireRebelArmyArchetypesPoolDataResources()
                 },
             },
             UnitTags = {"StateTroops", "MidStateTroops", "GenericCavalry", },
-            Weighting = 4,
+            Weighting = 3,
         },
         ArchLector = {
             AgentSubtypes = {"dlc04_emp_arch_lector", },
@@ -37,6 +37,19 @@ function GetEmpireRebelArmyArchetypesPoolDataResources()
                 main_warhammer = { "wh_main_reikland_altdorf", },
                 wh2_main_great_vortex = nil,
             },
+        },
+        EmpireBandits = {
+            AgentSubtypes = {
+                emp_lord = {
+                    AgentSubtypeKey = "emp_lord",
+                },
+            },
+            MandatoryUnits = {
+                wh_main_emp_art_great_cannon = 2,
+                wh_main_emp_art_mortar = 1,
+            },
+            UnitTags = {"StateTroops", },
+            Weighting = 5,
         },
     };
 end

@@ -2,7 +2,7 @@ function GetDwarfRebelArmyArchetypesPoolDataResources()
     return {
         DwarfLord = {
             AgentSubtypes = {"dwf_lord", },
-            UnitTags = {"Warriors", "RangedInfantry", "Rangers", },
+            UnitTags = { "Miners", "Warriors", "RangedInfantry", },
             Weighting = 3,
         },
         Slayers = {

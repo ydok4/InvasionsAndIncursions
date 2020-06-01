@@ -1,37 +1,55 @@
-Initialised   : [14, 04 2020 11:48:44]
-No MCM   : [14, 04 2020 11:48:44]
-Overriding Norscan listeners   : [14, 04 2020 11:48:44]
+Initialised   : [19, 05 2020 21:20:26]
+No MCM   : [19, 05 2020 21:20:26]
+Overriding Norscan listeners   : [19, 05 2020 21:20:26]
 FINISHED
 
 FINISHED
 
-Checking rebels in province: wh2_main_southern_jungle_of_pahualaxa   : [14, 04 2020 11:48:44]
-Checking military force: 10   : [14, 04 2020 11:48:44]
-Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [14, 04 2020 11:48:44]
+Spawning rebellion in province: wh_main_reikland for faction: wh2_main_wef_bowmen_of_oreon   : [19, 05 2020 21:20:26]
+Rebellion will trigger in region: wh_main_couronne_et_languille_couronne   : [19, 05 2020 21:20:26]
+Starting Rebellion/Incurions   : [19, 05 2020 21:20:26]
+Chosen rebellionSubculture: wh_dlc03_sc_bst_beastmen   : [19, 05 2020 21:20:26]
+Checked spawn region: wh_main_couronne_et_languille_couronne   : [19, 05 2020 21:20:26]
+Checked target region: wh_main_couronne_et_languille_couronne   : [19, 05 2020 21:20:26]
+Getting character name   : [19, 05 2020 21:20:26]
+Generated general:dlc03_bst_beastlord and archetype: BeastLord   : [19, 05 2020 21:20:26]
+Spawn region is: wh_main_couronne_et_languille_couronne   : [19, 05 2020 21:20:26]
+Spawning at X: 1 Y: 1   : [19, 05 2020 21:20:26]
+Rebellion spawned. Military force cqi is: 10   : [19, 05 2020 21:20:26]
+Adding to active rebellions   : [19, 05 2020 21:20:26]
+Added force to active rebellions   : [19, 05 2020 21:20:26]
 FINISHED
 
-Checking rebels in province: wh2_main_southern_jungle_of_pahualaxa   : [14, 04 2020 11:48:44]
-Checking military force: 10   : [14, 04 2020 11:48:44]
-Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [14, 04 2020 11:48:44]
+Spawned rebellion in province: wh_main_reikland   : [19, 05 2020 21:20:26]
 FINISHED
 
-Deploy agents choice made: 1   : [14, 04 2020 11:48:44]
-Adding agent deploy dilemma: poe_deploy_agents_   : [14, 04 2020 11:48:44]
+Checking rebels in province: wh_main_reikland   : [19, 05 2020 21:20:26]
+Checking military force: 10   : [19, 05 2020 21:20:26]
+Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [19, 05 2020 21:20:26]
 FINISHED
 
-Checking rebels in province: wh2_main_southern_jungle_of_pahualaxa   : [14, 04 2020 11:48:44]
-Checking military force: 10   : [14, 04 2020 11:48:44]
+Deploy agents choice made: 1   : [19, 05 2020 21:20:26]
+Adding agent deploy dilemma: poe_deploy_agents_   : [19, 05 2020 21:20:26]
 FINISHED
 
-Checking rebels in province: wh2_main_southern_jungle_of_pahualaxa   : [14, 04 2020 11:48:45]
-Checking military force: 10   : [14, 04 2020 11:48:45]
+Checking rebels in province: wh_main_reikland   : [19, 05 2020 21:20:26]
+Checking military force: 10   : [19, 05 2020 21:20:26]
+Granting units to rebellion in region: wh_main_couronne_et_languille_couronne   : [19, 05 2020 21:20:26]
 FINISHED
 
-Military crackdown choice made: 1   : [14, 04 2020 11:48:45]
-Adding crackdown for region:    : [14, 04 2020 11:48:45]
+Checking rebels in province: wh_main_reikland   : [19, 05 2020 21:20:26]
+Checking military force: 10   : [19, 05 2020 21:20:26]
 FINISHED
 
-Checking rebels in province: wh2_main_southern_jungle_of_pahualaxa   : [14, 04 2020 11:48:45]
-Checking military force: 10   : [14, 04 2020 11:48:45]
+Military crackdown choice made: 1   : [19, 05 2020 21:20:26]
+Adding crackdown for region:    : [19, 05 2020 21:20:26]
+FINISHED
+
+Checking rebels in province: wh_main_reikland   : [19, 05 2020 21:20:26]
+Checking military force: 10   : [19, 05 2020 21:20:26]
+FINISHED
+
+Checking rebels in province: wh_main_reikland   : [19, 05 2020 21:20:26]
+Checking military force: 10   : [19, 05 2020 21:20:26]
 FINISHED
 

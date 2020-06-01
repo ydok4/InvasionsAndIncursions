@@ -1,9 +1,17 @@
 function GetTombKingsRebelArmyArchetypesPoolDataResources()
     return {
+        NewlyAwakenedTombKing = {
+            AgentSubtypes = {"wh2_dlc09_tmb_tomb_king", },
+            UnitTags = {"SkeletonWarriors", },
+            Weighting = 4,
+        },
         TombKing = {
             AgentSubtypes = {"wh2_dlc09_tmb_tomb_king", },
+            MandatoryUnits = {
+                wh2_dlc09_tmb_inf_tomb_guard_0 = 1,
+            },
             UnitTags = {"SkeletonWarriors", "SkeletonCavalry", },
-            Weighting = 3,
+            Weighting = 1,
         },
         SettraReemerge = {
             RebellionFaction = "wh2_dlc09_tmb_khemri",

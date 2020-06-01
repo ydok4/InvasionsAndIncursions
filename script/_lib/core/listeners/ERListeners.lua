@@ -168,6 +168,8 @@ function ER_SetupPostUIListeners(er, core)
                         if spawnedRebellion == true then
                             numberOfRebellions = numberOfRebellions + 1;
                         end
+                    else
+                        er:UpdatePREs(region);
                     end
                 end
                 checkedProvinces[provinceKey] = true;
@@ -229,7 +231,7 @@ function ER_SetupPostUIListeners(er, core)
                             cm:cai_enable_movement_for_character(characterLookupString);
                             local rebelForceTargetRegionKey = rebelForceTarget:name();
                             er.Logger:Log("Attacking region: "..rebelForceTargetRegionKey);
-                            cm:attack_region(characterLookupString, rebelForceTargetRegionKey, true);
+                            cm:attack_region(characterLookupString, rebelForceTargetRegionKey, false);
                             if er.ReemergedFactions[factionName] == true then
                                 er.Logger:Log("Remerged faction will be untracked");
                                 er:AddPastRebellion(rebelForceData);
@@ -428,6 +430,85 @@ function ER_SetupPostUIListeners(er, core)
 		end,
 		true
     );
+    -- Just like Norsca, these listeners override the vanilla equivalents. This needs to happen because otherwise
+    -- the Greenskin factions will keep confederating the Greenskin Proxy Rebels
+    er.Logger:Log("Overriding Greenskin listeners");
+    local GREENSKIN_CONFEDERATION_DILEMMA = "wh2_main_grn_confederate_";
+    local GREENSKIN_CONFEDERATION_PLAYER = er.HumanFaction:name();
+    local greenskin = "wh_main_sc_grn_greenskins";
+    -- Confederation via Defeat Leader
+    core:remove_listener("Greenskin_Confed_DilemmaChoiceMadeEvent");
+	core:add_listener(
+		"Greenskin_Confed_DilemmaChoiceMadeEvent",
+		"DilemmaChoiceMadeEvent",
+		function(context)
+			return context:dilemma():starts_with(GREENSKIN_CONFEDERATION_DILEMMA);
+		end,
+		function(context)
+            local faction = string.gsub(context:dilemma(), GREENSKIN_CONFEDERATION_DILEMMA, "");
+            local choice = context:choice();
+            if choice == 0 then
+                -- Confederate
+                cm:force_confederation(GREENSKIN_CONFEDERATION_PLAYER, faction);
+            elseif choice == 1 then
+                -- Kill leader
+                local enemy = cm:model():world():faction_by_key(faction);
+                if enemy:has_faction_leader() == true then
+                    local leader = enemy:faction_leader();
+                    if leader:character_subtype("dlc06_grn_skarsnik") == false and leader:character_subtype("dlc06_grn_wurrzag_da_great_prophet") == false and leader:character_subtype("grn_grimgor_ironhide") == false and leader:character_subtype("wh2_dlc15_grn_grom_the_paunch") == false and leader:character_subtype("grn_azhag_the_slaughterer") == false then
+                        local cqi = leader:command_queue_index();
+                        cm:set_character_immortality("character_cqi:"..cqi, false);
+                        cm:kill_character(cqi, false, true);
+                    end
+                end
+            end
+            -- autosave on legendary
+            if cm:model():difficulty_level() == -3 and not cm:is_multiplayer() then
+                cm:callback(function() cm:autosave_at_next_opportunity() end, 0.5);
+            end;
+		end,
+		true
+    );
+    core:remove_listener("character_completed_battle_greenskin_confederation_dilemma");
+	core:add_listener(
+		"character_completed_battle_greenskin_confederation_dilemma",
+		"CharacterCompletedBattle",
+		true,
+		function(context)
+			local character = context:character();
+			if character:won_battle() == true and character:faction():subculture() == greenskin then
+				local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
+				local enemy_count = #enemies;
+				if context:pending_battle():night_battle() == true or context:pending_battle():ambush_battle() == true then
+					enemy_count = 1;
+				end
+
+				local character_cqi = character:command_queue_index();
+				local attacker_cqi, attacker_force_cqi, attacker_name = cm:pending_battle_cache_get_attacker(1);
+				local defender_cqi, defender_force_cqi, defender_name = cm:pending_battle_cache_get_defender(1);
+				if character_cqi == attacker_cqi or character_cqi == defender_cqi then
+					for i = 1, enemy_count do
+						local enemy = enemies[i];
+						if enemy ~= nil and enemy:is_null_interface() == false and enemy:is_faction_leader() == true and enemy:faction():subculture() == greenskin and enemy:faction():is_quest_battle_faction() == false then
+							if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
+								if character:faction():is_human() == true and enemy:faction():is_human() == false and enemy:faction():is_dead() == false then
+									-- Trigger dilemma to offer confederation
+									GREENSKIN_CONFEDERATION_PLAYER = character:faction():name();
+									cm:trigger_dilemma(GREENSKIN_CONFEDERATION_PLAYER, GREENSKIN_CONFEDERATION_DILEMMA..enemy:faction():name());
+								elseif character:faction():is_human() == false and enemy:faction():is_human() == false then
+									-- AI confederation
+									cm:force_confederation(character:faction():name(), enemy:faction():name());
+									out.design("###### AI GREENSKIN CONFEDERATION");
+									out.design("Faction: "..character:faction():name().." is confederating "..enemy:faction():name());
+								end
+							end
+						end
+					end
+				end
+			end
+		end,
+		true
+	);
     er.Logger:Log_Finished();
 end
 

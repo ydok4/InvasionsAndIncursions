@@ -128,7 +128,7 @@ function ER_SaveActivePREs(er)
         for index, activePREData in pairs(pastProvinceData) do
             nthTable[provinceKey.."/"..activePREData.SpawnTurnNumber.."/"..activePREData.TargetRegion] = {
                 activePREData.PREKey,
-                activePREData.PRESubculture,
+                activePREData.PRESubcultureKey,
                 activePREData.PREFaction,
                 activePREData.SpawnTurnNumber,
                 activePREData.PREDuration,
@@ -168,7 +168,7 @@ function ER_SavePastPREs(er)
                 pastPREData.PREKey,
                 pastPREData.SpawnTurnNumber,
                 pastPREData.PREFaction,
-                pastPREData.PRESubculture,
+                pastPREData.PRESubcultureKey,
                 pastPREData.TargetRegion,
                 pastPREData.TargetFaction,
                 pastPREData.CompletedTurn,
