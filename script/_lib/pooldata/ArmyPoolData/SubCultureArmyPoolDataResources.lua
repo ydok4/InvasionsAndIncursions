@@ -248,13 +248,12 @@ function GetSubcultureArmyPoolDataResources()
             },
             Minotaurs = {
                 Early = {
-                    wh_dlc03_bst_inf_minotaurs_0 = 1,
+
                 },
                 Mid = {
-                    { wh_dlc03_bst_inf_minotaurs_0 = 2, wh_dlc03_bst_inf_minotaurs_1 = 1, },
+                    { wh_dlc03_bst_inf_minotaurs_0 = 1, wh_dlc03_bst_inf_minotaurs_1 = 1, },
                 },
                 Late = {
-                    wh_dlc03_bst_inf_minotaurs_0 = 1,
                     { wh_dlc03_bst_inf_minotaurs_1 = 1, wh_dlc03_bst_inf_minotaurs_2 = 1, },
                 },
             },

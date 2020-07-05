@@ -40,20 +40,23 @@ function zz_enhanced_rebellions()
             cm:set_saved_value("mcm_tweaker_public_order_expanded_toggle_corruption_armies_value", "enable_corruption_armies");
             local poe = mcm:register_mod("public_order_expanded", "Public Order: Expanded", "Rebellion spawning settings");
             -- Setup toggle rebellion fields
-            local toggleRebellions = poe:add_tweaker("toggle_rebellions", "Toggle rebellions", "Enable or disable the new rebellions");
-            toggleRebellions:add_option("enable_rebellions", "Enable", "Enable extra rebellions based on negative public order");
-            toggleRebellions:add_option("disable_rebellions", "Disable", "Disable extra rebellions based on negative public order");
+            local toggleRebellions = poe:add_tweaker("toggle_rebellions", "Incursions", "Enable or disable the new rebellions");
+            toggleRebellions:add_option("enable_rebellions", "Enable", "Enable extra incursions based on negative public order");
+            toggleRebellions:add_option("disable_rebellions", "Disable", "Disable extra incursions based on negative public order");
             -- Setup toggle corruption army fields
-            local toggleCorruptionArmies = poe:add_tweaker("toggle_corruption_armies", "Toggle corruption armies", "Enable or disable corruption army archetypes which can spawn in regions with corruption. Corruption armies may make the AI struggle a bit more and may make it easy for races which spread corruption. Requires the rebellions to be enabled.");
+            local toggleCorruptionArmies = poe:add_tweaker("toggle_corruption_armies", "Corruption incursion armies", "Enable or disable corruption army archetypes which can spawn in regions with corruption. Corruption armies may make the AI struggle a bit more and may make it easy for races which spread corruption. Requires the rebellions to be enabled.");
             toggleCorruptionArmies:add_option("enable_corruption_armies", "Enable", "Enable corruption army archetypes which can spawn in regions with corruption.");
             toggleCorruptionArmies:add_option("disable_corruption_armies", "Disable", "Disable corruption army archetypes which can spawn in regions with corruption. Requires the rebellions to be enabled.");
             -- Setup listeners for new game. Every load afterwards this is handled below.
             mcm:add_new_game_only_callback(function()
-                ER:CheckMCMOptions(core);
+                ER:CheckMCTOptions(core);
             end);
         else
-            ER:CheckMCMOptions(core);
+            ER:CheckMCTOptions(core);
         end
+    elseif mct then
+        ER.Logger:Log("Found MCT reborn");
+        ER:CheckMCTRebornOptions(core, mct);
     else
         ER.Logger:Log("No MCM");
         ER_SetupPostUIListeners(ER, core);

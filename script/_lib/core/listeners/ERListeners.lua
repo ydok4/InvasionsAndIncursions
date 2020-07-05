@@ -1,5 +1,4 @@
 function ER_SetupPostUIListeners(er, core)
-
     -- The following listeners exist to try and reduce the amount of
     -- event feed spam from rebel factions dying
     local isQBFactionInvolvedInBattle = false;
@@ -370,7 +369,7 @@ function ER_SetupPostUIListeners(er, core)
 	true,
     function(context)
         local character = context:character();
-        if character:won_battle() == true and character:faction():subculture() == NORSCA_SUBCULTURE then
+        if character:won_battle() == true and character:faction():subculture() == NORSCA_SUBCULTURE and character:faction():is_quest_battle_faction() == false then
             local norsca_info_text_confederation = {"war.camp.prelude.nor.confederation.info_001", "war.camp.prelude.nor.confederation.info_002", "war.camp.prelude.nor.confederation.info_003"};
             local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
 			local enemy_count = #enemies;
@@ -380,7 +379,8 @@ function ER_SetupPostUIListeners(er, core)
 			for i = 1, enemy_count do
 				local enemy = enemies[i];
 				if enemy ~= nil and enemy:is_null_interface() == false and enemy:is_faction_leader() == true and enemy:faction():subculture() == NORSCA_SUBCULTURE and enemy:faction():is_quest_battle_faction() == false then
-					if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
+                    er.Logger:Log("Enemy is valid norscan");
+                    if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
 						if character:faction():is_human() == true and enemy:faction():is_human() == false and enemy:faction():is_dead() == false then
 							-- Trigger dilemma to offer confederation
 							NORSCA_CONFEDERATION_PLAYER = character:faction():name();
@@ -392,9 +392,9 @@ function ER_SetupPostUIListeners(er, core)
 							cm:force_confederation(character:faction():name(), enemy:faction():name());
 						end
 					end
-				end
+                end
 			end
-		end
+        end
 	end,
     true);
     core:remove_listener("Norsca_Confed_DilemmaChoiceMadeEvent");
@@ -476,7 +476,7 @@ function ER_SetupPostUIListeners(er, core)
 		true,
 		function(context)
 			local character = context:character();
-			if character:won_battle() == true and character:faction():subculture() == greenskin then
+			if character:won_battle() == true and character:faction():subculture() == greenskin and character:faction():is_quest_battle_faction() == false then
 				local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
 				local enemy_count = #enemies;
 				if context:pending_battle():night_battle() == true or context:pending_battle():ambush_battle() == true then

@@ -48,7 +48,7 @@ function ERController:Initialise(random_army_manager, enableLogging)
     end
 end
 
-function ERController:CheckMCMOptions(core)
+function ERController:CheckMCTOptions(core)
     if not mcm then
         self.Logger:Log("Can't find MCM in class scope");
         return;
@@ -67,6 +67,32 @@ function ERController:CheckMCMOptions(core)
     end
     local enableCorruptionArmies = cm:get_saved_value("mcm_tweaker_public_order_expanded_toggle_corruption_armies_value");
     if enableCorruptionArmies == nil or enableCorruptionArmies == "enable_corruption_armies" then
+        self.EnableCorruptionArmies = true;
+    else
+        self.EnableCorruptionArmies = false;
+    end
+end
+
+function ERController:CheckMCTRebornOptions(core, mct)
+    self.Logger:Log("Initialising MCT");
+    local erMCT = mct:get_mod_by_key("er_public_order_expanded");
+    local enableRebellionsOption = erMCT:get_option_by_key("enable_rebellions");
+    local enableRebellions = enableRebellionsOption:get_finalized_setting();
+    if not ER_SetupPostUIListeners then
+        self.Logger:Log("Can't find listener function in class scope");
+        return;
+    end
+    if enableRebellions == nil or enableRebellions == "enable_rebellions" then
+        self.Logger:Log("Incursions are enabled in MCTR");
+        ER_SetupPostUIListeners(self, core);
+        --ER_SetupPostUIInterfaceListeners(self, core, true);
+    else
+        self.Logger:Log("Rebellions are disabled in MCTR");
+    end
+    local enableCorruptionArmiesOption = erMCT:get_option_by_key("enable_corruption_armies");
+    local enableCorruptionArmies = enableCorruptionArmiesOption:get_finalized_setting();
+    if enableCorruptionArmies == nil or enableCorruptionArmies == true then
+        self.Logger:Log("Corruption armies are enabled in MCTR");
         self.EnableCorruptionArmies = true;
     else
         self.EnableCorruptionArmies = false;

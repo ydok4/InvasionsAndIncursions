@@ -400,6 +400,9 @@ function get_cm()
         add_first_tick_callback = function() end,
         appoint_character_to_most_expensive_force = function() end,
         change_localised_faction_name = function() end,
+        random_number = function(self, limit, start)
+            return math.random(start, limit);
+        end,
     };
 end
 
