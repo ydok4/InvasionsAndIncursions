@@ -29,6 +29,16 @@ function GetDarkElfRebelArmyArchetypesPoolDataResources()
             Weighting = 0,
             CanSpawnOnSea = true,
         },
+        BlackArk = {
+            AgentSubtypes = {"wh2_main_def_dreadlord", "wh2_main_def_dreadlord_fem", },
+            MandatoryUnits = {
+                wh2_main_def_inf_black_ark_corsairs_0 = 2,
+                wh2_main_def_inf_black_ark_corsairs_1 = 1,
+            },
+            UnitTags = {"Corsairs", "Warriors", "Beasts", },
+            Weighting = 0,
+            CanSpawnOnSea = true,
+        },
         MalekithReemerge = {
             RebellionFaction = "wh2_main_def_naggarond",
             SpawnWithExistingCharacter = true,

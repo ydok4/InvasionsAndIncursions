@@ -25,8 +25,9 @@ function GetTombKingsRebelArmyArchetypesPoolDataResources()
                 wh2_dlc09_tmb_mon_ushabti_0 = 2,
                 wh2_dlc09_tmb_mon_ushabti_1 = 1,
                 wh2_dlc09_tmb_art_screaming_skull_catapult_0 = 2,
+                wh2_dlc09_tmb_veh_khemrian_warsphinx_0 = 1,
             },
-            UnitTags = { "SkeletonWarriors", "TombGuard", "SkeletonCavalry", "ConstructMonsters", },
+            UnitTags = { "TombGuard", "SkeletonCavalry", "ConstructMonsters", },
             ArmySize = 18,
             Weighting = 0,
             OverrideSpawnRegion = {

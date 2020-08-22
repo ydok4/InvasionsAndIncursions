@@ -20,7 +20,7 @@ function GetGreenskinRebelArmyArchetypesPoolDataResources()
         },
         NightGoblinWarboss = {
             AgentSubtypes = {"dlc06_grn_night_goblin_warboss", },
-            UnitTags = {"Goblins", "NightGoblins", "Squigs", },
+            UnitTags = {"NightGoblins", "Squigs", },
             Weighting = 2,
         },
         GoblinWolfRiderz = {

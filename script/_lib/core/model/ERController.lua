@@ -82,12 +82,13 @@ function ERController:CheckMCTRebornOptions(core, mct)
         self.Logger:Log("Can't find listener function in class scope");
         return;
     end
-    if enableRebellions == nil or enableRebellions == "enable_rebellions" then
+    if enableRebellions == nil or enableRebellions == true then
         self.Logger:Log("Incursions are enabled in MCTR");
         ER_SetupPostUIListeners(self, core);
         --ER_SetupPostUIInterfaceListeners(self, core, true);
     else
         self.Logger:Log("Rebellions are disabled in MCTR");
+        self.Logger:Log("Value is: "..tostring(enableRebellions));
     end
     local enableCorruptionArmiesOption = erMCT:get_option_by_key("enable_corruption_armies");
     local enableCorruptionArmies = enableCorruptionArmiesOption:get_finalized_setting();
@@ -608,35 +609,63 @@ function ERController:SpawnArmy(rebellionData, preKey)
     local spawnX, spawnY = -1, -1;
     local regionKey = spawnRegion:name();
     self.Logger:Log("Spawn region is: "..regionKey);
-    if rebellionData.SpawnOnSea == true then
-        self.Logger:Log("Attempting to spawn army on sea...");
-        local spawnDistance = 10;
-        repeat
+    local spawnDistance = 9;
+    -- The find_valid_spawn_location_for_character_from_settlement requires
+    -- the faction key supplied to match the region owner (I think), so
+    -- we need a different command if it is abandoned.
+    if spawnRegion:is_abandoned() == false then
+        -- If this should spawn on the sea we try to find a sea location
+        if rebellionData.SpawnOnSea == true then
+            self.Logger:Log("Attempting to spawn army on sea...");
+            repeat
+                spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
+                    spawnRegionOwnerFactionKey,
+                    rebellionData.SpawnRegion,
+                    -- Spawn on sea
+                    true,
+                    -- Rebellion spawn
+                    true,
+                    spawnDistance
+                );
+                spawnDistance = spawnDistance + 5;
+            until((spawnX ~= -1 and spawnY ~= -1) or spawnDistance == 100);
+        end
+        -- We have this as a fallback if the sea is invalid or for non sea spawns
+        if spawnX == -1 or spawnY == -1 then
             spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
                 spawnRegionOwnerFactionKey,
                 rebellionData.SpawnRegion,
                 -- Spawn on sea
-                true,
+                false,
                 -- Rebellion spawn
                 true,
+                -- Spawn distance (optional).
+                -- Note: 9 is the distance which is also used for Skaven
+                -- under city incursions
+                9
+            );
+        end
+    else
+        spawnDistance = 2;
+        repeat
+            spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_position(
+                self.HumanFaction:name(),
+                spawnRegion:settlement():logical_position_x() + 1,
+                spawnRegion:settlement():logical_position_y() + 1,
+                -- In same region
+                false,
                 spawnDistance
             );
-            spawnDistance = spawnDistance + 10;
-        until((spawnX ~= -1 and spawnY ~= -1) or spawnDistance == 150);
-    end
-    if spawnX == -1 or spawnY == -1 then
-        spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_settlement(
-            spawnRegionOwnerFactionKey,
-            rebellionData.SpawnRegion,
-            -- Spawn on sea
-            false,
-            -- Rebellion spawn
-            true,
-            -- Spawn distance (optional).
-            -- Note: 9 is the distance which is also used for Skaven
-            -- under city incursions
-            9
-        );
+            --[[if spawnX ~= nil
+            and spawnY ~= nil then
+                self.Logger:Log("spawnX: "..spawnX.." spawnY: "..spawnY);
+            else
+                self.Logger:Log("Spawn coordinates are nil");
+            end
+            self.Logger:Log("settlementX: "..spawnRegion:settlement():logical_position_x().." settlementY: "..spawnRegion:settlement():logical_position_y());
+            self.Logger:Log("Spawn distance is: "..spawnDistance);--]]
+            spawnDistance = spawnDistance + 5;
+        until((spawnX ~= -1 and spawnY ~= -1) or spawnDistance == 100);
     end
     if spawnX == -1 or spawnY == -1 then
         self.Logger:Log("ERROR: Not able to find a spawn coordinate.");
@@ -861,8 +890,8 @@ function ERController:SpawnArmy(rebellionData, preKey)
                 else
                     bonusXpLevels = math.ceil(turnNumber / 10) + Random(3);
                 end
-                if bonusXpLevels > 15 then
-                    bonusXpLevels = 15;
+                if bonusXpLevels > 12 then
+                    bonusXpLevels = 12;
                 end
                 cm:add_agent_experience(characterLookupString, bonusXpLevels, true);
                 if agentSubTypeSpawnData ~= nil and agentSubTypeSpawnData.AgentSubTypeMount ~= nil then
@@ -1452,7 +1481,7 @@ function ERController:UpdatePREs(region)
                 else
                     self.Logger:Log("Adding past PRE");
                     self:AddPastPRE(region, activePREData);
-                    self.Logger:Log("PRE: "..activePREData.PREFaction.." has finished in province: "..provinceKey);
+                    self.Logger:Log("PRE spawn faction: "..activePREData.PREFaction.." has finished in province: "..provinceKey);
                     self.Logger:Log_Finished();
                 end
             else

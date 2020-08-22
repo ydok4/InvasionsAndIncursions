@@ -366,14 +366,17 @@ function GetSubcultureArmyPoolDataResources()
                 Early = {
                     wh_main_grn_inf_goblin_archers = 2,
                     wh_main_grn_inf_goblin_spearmen = 3,
+                    wh2_dlc15_grn_veh_snotling_pump_wagon_0 = 1,
                 },
                 Mid = {
                     wh_main_grn_inf_goblin_archers = 1,
                     wh_main_grn_inf_goblin_spearmen = 2,
+                    wh2_dlc15_grn_veh_snotling_pump_wagon_flappas_0 = 1,
                 },
                 Late = {
                     wh_main_grn_inf_goblin_archers = 2,
                     wh_main_grn_inf_goblin_spearmen = 2,
+                    wh2_dlc15_grn_veh_snotling_pump_wagon_roller_0 = 1,
                 },
             },
             GoblinWolfRiders = {
@@ -425,12 +428,12 @@ function GetSubcultureArmyPoolDataResources()
                     wh_dlc06_grn_inf_squig_herd_0 = 1,
                 },
                 Mid = {
-                    wh_dlc06_grn_inf_squig_herd_0 = 2,
+                    wh_dlc06_grn_inf_squig_herd_0 = 1,
                     wh_dlc06_grn_cav_squig_hoppers_0 = 1,
                 },
                 Late = {
                     wh_dlc06_grn_inf_squig_herd_0 = 1,
-                    wh_dlc06_grn_cav_squig_hoppers_0 = 2,
+                    wh_dlc06_grn_cav_squig_hoppers_0 = 1,
                 },
             },
             Monsters = {
@@ -438,10 +441,10 @@ function GetSubcultureArmyPoolDataResources()
                     wh_main_grn_mon_trolls = 1,
                 },
                 Mid = {
-                    wh_main_grn_mon_trolls = 2,
+                    { wh_main_grn_mon_trolls = 2, wh2_dlc15_grn_mon_river_trolls_0 = 1, wh2_dlc15_grn_mon_stone_trolls_0 = 1 },
                 },
                 Late = {
-                    wh_main_grn_mon_trolls = 1,
+                    { wh2_dlc15_grn_mon_river_trolls_0 = 1, wh2_dlc15_grn_mon_stone_trolls_0 = 1 },
                     wh_main_grn_mon_giant = 1,
                 },
             },
@@ -699,26 +702,28 @@ function GetSubcultureArmyPoolDataResources()
             Chracian = {
                 Early = {
                     wh2_main_hef_inf_white_lions_of_chrace_0 = 1,
-                    wh2_main_hef_mon_great_eagle = 1,
+                    wh2_dlc15_hef_mon_war_lions_of_chrace_0 = 1,
                 },
                 Mid = {
                     wh2_main_hef_inf_white_lions_of_chrace_0 = 1,
-                    wh2_main_hef_mon_great_eagle = 2,
+                    wh2_dlc15_hef_mon_war_lions_of_chrace_0 = 2,
                 },
                 Late = {
                     wh2_main_hef_inf_white_lions_of_chrace_0 = 2,
-                    wh2_main_hef_mon_great_eagle = 1,
+                    wh2_dlc15_hef_mon_war_lions_of_chrace_0 = 1,
+                    wh2_dlc15_hef_veh_lion_chariot_of_chrace_0 = 1,
                 },
             },
             Beasts = {
                 Early = {
-                    wh2_main_hef_mon_great_eagle = 1,
+                    { wh2_main_hef_mon_great_eagle = 1, wh2_dlc15_hef_mon_war_lions_of_chrace_0 = 1 },
                 },
                 Mid = {
+                    { wh2_main_hef_mon_great_eagle = 1, wh2_dlc15_hef_mon_war_lions_of_chrace_0 = 1 },
                     { wh2_main_hef_mon_sun_dragon = 1, wh2_main_hef_mon_moon_dragon = 1, },
                 },
                 Late = {
-                    wh2_main_hef_mon_great_eagle = 1,
+                    { wh2_main_hef_mon_great_eagle = 1, wh2_dlc15_hef_mon_war_lions_of_chrace_0 = 1 },
                     { wh2_main_hef_mon_moon_dragon = 1, wh2_main_hef_mon_star_dragon = 1, },
                 },
             },
@@ -1135,20 +1140,15 @@ function GetSubcultureArmyPoolDataResources()
             },
             SkeletonCavalry = {
                 Early = {
-                    wh2_dlc09_tmb_cav_skeleton_horsemen_0 = 2,
-                    wh2_dlc09_tmb_cav_skeleton_horsemen_archers_0 = 1,
-                    wh2_dlc09_tmb_cav_nehekhara_horsemen_0 = 1,
+                    { wh2_dlc09_tmb_cav_skeleton_horsemen_0 = 2, wh2_dlc09_tmb_cav_skeleton_horsemen_archers_0 = 1, },
                     wh2_dlc09_tmb_veh_skeleton_chariot_0 = 1,
                 },
                 Mid = {
-                    wh2_dlc09_tmb_cav_skeleton_horsemen_archers_0 = 1,
+                    { wh2_dlc09_tmb_cav_skeleton_horsemen_archers_0 = 1, wh2_dlc09_tmb_veh_skeleton_archer_chariot_0 = 1, },
                     wh2_dlc09_tmb_cav_nehekhara_horsemen_0 = 1,
-                    wh2_dlc09_tmb_veh_skeleton_chariot_0 = 2,
-                    wh2_dlc09_tmb_veh_skeleton_archer_chariot_0 = 1,
                 },
                 Late = {
-                    wh2_dlc09_tmb_veh_skeleton_chariot_0 = 2,
-                    wh2_dlc09_tmb_veh_skeleton_archer_chariot_0 = 2,
+                    wh2_dlc09_tmb_veh_skeleton_archer_chariot_0 = 1,
                 },
             },
             TombGuard = {
@@ -1726,7 +1726,7 @@ function GetSubcultureArmyPoolDataResources()
                     til_encarmine = 1,
                     til_ducale = 1,
                 },
-            }, 
+            },
         },
         -- Bretonnia
         wh_main_sc_brt_bretonnia = {

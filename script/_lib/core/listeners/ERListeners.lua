@@ -146,7 +146,6 @@ function ER_SetupPostUIListeners(er, core)
         end,
         function(context)
             local faction = context:faction();
-            local factionKey = faction:name();
             local regionList = faction:region_list();
             -- Keeps track of the provinces we check
             -- we have 1 roll per province per turn
@@ -173,6 +172,20 @@ function ER_SetupPostUIListeners(er, core)
                 end
                 checkedProvinces[provinceKey] = true;
             end
+        end,
+        true
+    );
+    -- This is specifically for PREs which are attached to regions which are abandoned
+    core:add_listener(
+        "ER_CheckRegionRebellions",
+        "RegionTurnEnd",
+        function(context)
+            local region = context:region();
+            return region:is_abandoned() == true;
+        end,
+        function(context)
+            local region = context:region();
+            er:UpdatePREs(region);
         end,
         true
     );
