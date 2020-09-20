@@ -4,7 +4,7 @@ function GetMixuDataResources()
 		emp_wizard_metal = {
 			AgentType = "wizard",
 			ArtSetIds = {
-					"wh2_main_art_set_emp_wizard_metal_1", "wh2_main_art_set_emp_wizard_metal_2",
+					"wh2_main_art_set_emp_wizard_metal_1", "wh2_main_art_set_emp_wizard_metal_2", "mixu_art_set_emp_wizard_metal_3",
 			},
 			IsFemale = "false",
 		},
@@ -166,6 +166,27 @@ function GetMixuDataResources()
 			AgentType = "general",
 			ArtSetIds = {
 					"mixu_art_set_tmb_liche_high_priest_shadow_1", "mixu_art_set_tmb_liche_high_priest_shadow_2", "mixu_art_set_tmb_liche_high_priest_shadow_3", "mixu_art_set_tmb_liche_high_priest_shadow_4",
+			},
+			IsFemale = "false",
+		},
+		emp_wizard_lord_metal = {
+			AgentType = "general",
+			ArtSetIds = {
+					"mixu_art_set_emp_wizard_lord_metal_1", "mixu_art_set_emp_wizard_lord_metal_2", "mixu_art_set_emp_wizard_lord_metal_3",
+			},
+			IsFemale = "false",
+		},
+		emp_wizard_lord_death = {
+			AgentType = "general",
+			ArtSetIds = {
+					"mixu_art_set_emp_wizard_lord_death_1", "mixu_art_set_emp_wizard_lord_death_2", "mixu_art_set_emp_wizard_lord_death_3",
+			},
+			IsFemale = "false",
+		},
+		emp_wizard_lord_life = {
+			AgentType = "general",
+			ArtSetIds = {
+					"mixu_art_set_emp_wizard_lord_life_1", "mixu_art_set_emp_wizard_lord_life_2",
 			},
 			IsFemale = "false",
 		},

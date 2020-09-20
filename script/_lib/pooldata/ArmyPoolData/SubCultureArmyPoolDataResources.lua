@@ -909,8 +909,7 @@ function GetSubcultureArmyPoolDataResources()
                 Mid = {
                     wh2_main_lzd_inf_skink_cohort_1 = 2,
                     wh2_main_lzd_inf_skink_skirmishers_0 = 2,
-                    wh2_main_lzd_inf_chameleon_skinks_0 = 1,
-                    wh2_dlc12_lzd_inf_skink_red_crested_0 = 1,
+                    { wh2_main_lzd_inf_chameleon_skinks_0 = 1, wh2_dlc12_lzd_inf_skink_red_crested_0 = 1, },
                 },
                 Late = {
                     wh2_dlc12_lzd_inf_skink_red_crested_0 = 2,
@@ -918,38 +917,20 @@ function GetSubcultureArmyPoolDataResources()
                     wh2_main_lzd_inf_chameleon_skinks_blessed_0 = 1,
                 },
             },
-            FlyingUnits = {
-                Early = {
-                    wh2_main_lzd_cav_terradon_riders_0 = 2,
-                },
-                Mid = {
-                    wh2_main_lzd_cav_terradon_riders_0 = 1,
-                    { wh2_main_lzd_cav_terradon_riders_1 = 1, wh2_dlc12_lzd_cav_ripperdactyl_riders_0 = 1, },
-                },
-                Late = {
-                    wh2_main_lzd_cav_terradon_riders_1 = 1,
-                    wh2_dlc12_lzd_cav_ripperdactyl_riders_1 = 1,
-                },
-            },
             Saurus = {
                 Early = {
-                    wh2_main_lzd_inf_saurus_spearmen_0 = 3,
-                    wh2_main_lzd_inf_saurus_spearmen_1 = 1,
-                    wh2_main_lzd_inf_saurus_warriors_0 = 3,
-                    wh2_main_lzd_inf_saurus_warriors_1 = 1,
+                    wh2_main_lzd_inf_saurus_spearmen_0 = 2,
+                    wh2_main_lzd_inf_saurus_warriors_0 = 2,
                 },
                 Mid = {
-                    wh2_main_lzd_inf_saurus_spearmen_0 = 2,
                     wh2_main_lzd_inf_saurus_spearmen_1 = 2,
-                    wh2_main_lzd_inf_saurus_warriors_0 = 2,
+                    wh2_main_lzd_inf_saurus_warriors_0 = 1,
                     wh2_main_lzd_inf_saurus_warriors_1 = 2,
-                    wh2_main_lzd_inf_temple_guards = 1,
                 },
                 Late = {
-                    wh2_main_lzd_inf_saurus_spearmen_1 = 3,
-                    wh2_main_lzd_inf_saurus_warriors_1 = 3,
-                    wh2_main_lzd_inf_temple_guards = 2,
-                    wh2_main_lzd_inf_saurus_warriors_blessed_1 = 1,
+                    wh2_main_lzd_inf_saurus_spearmen_1 = 2,
+                    wh2_main_lzd_inf_saurus_warriors_1 = 2,
+                    { wh2_main_lzd_inf_temple_guards = 1, wh2_main_lzd_inf_saurus_warriors_blessed_1 = 1, },
                 },
             },
             Kroxigors = {
@@ -960,8 +941,7 @@ function GetSubcultureArmyPoolDataResources()
                     wh2_main_lzd_mon_kroxigors = 2,
                 },
                 Late = {
-                    wh2_main_lzd_mon_kroxigors = 2,
-                    wh2_main_lzd_mon_kroxigors_blessed = 1,
+                    { wh2_main_lzd_mon_kroxigors = 2, wh2_main_lzd_mon_kroxigors_blessed = 1, },
                 },
             },
             ColdOnes = {
@@ -969,11 +949,22 @@ function GetSubcultureArmyPoolDataResources()
                     wh2_main_lzd_cav_cold_ones_1 = 1,
                 },
                 Mid = {
-                    wh2_main_lzd_cav_cold_ones_1 = 1,
-                    wh2_main_lzd_cav_cold_one_spearmen_1 = 1,
+                    { wh2_main_lzd_cav_cold_ones_1 = 1, wh2_main_lzd_cav_cold_one_spearmen_1 = 1, },
                 },
                 Late = {
                     wh2_main_lzd_cav_horned_ones_0 = 1,
+                },
+            },
+            AerialBeasts = {
+                Early = {
+                    wh2_main_lzd_cav_terradon_riders_0 = 1,
+                },
+                Mid = {
+                    { wh2_main_lzd_cav_terradon_riders_0 = 1, wh2_main_lzd_cav_terradon_riders_1 = 1, },
+                },
+                Late = {
+                    { wh2_main_lzd_cav_terradon_riders_0 = 2, wh2_main_lzd_cav_terradon_riders_1 = 1, },
+                    wh2_dlc12_lzd_cav_ripperdactyl_riders_0 = 1,
                 },
             },
             FeralBeasts = {
@@ -994,7 +985,7 @@ function GetSubcultureArmyPoolDataResources()
                     { wh2_dlc12_lzd_mon_salamander_pack_0 = 1, wh2_main_lzd_mon_bastiladon_1 = 1, wh2_main_lzd_mon_stegadon_1 = 1, },
                 },
                 Mid = {
-                    { wh2_dlc12_lzd_mon_salamander_pack_0 = 2, wh2_main_lzd_mon_bastiladon_1 = 2, wh2_main_lzd_mon_stegadon_1 = 2, },
+                    { wh2_dlc12_lzd_mon_salamander_pack_0 = 1, wh2_main_lzd_mon_bastiladon_1 = 1, wh2_main_lzd_mon_stegadon_1 = 1, },
                     { wh2_main_lzd_mon_bastiladon_2 = 1, wh2_main_lzd_mon_ancient_stegadon = 1, },
                 },
                 Late = {

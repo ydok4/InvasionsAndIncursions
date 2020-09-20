@@ -890,8 +890,8 @@ function ERController:SpawnArmy(rebellionData, preKey)
                 else
                     bonusXpLevels = math.ceil(turnNumber / 10) + Random(3);
                 end
-                if bonusXpLevels > 12 then
-                    bonusXpLevels = 12;
+                if bonusXpLevels > 10 then
+                    bonusXpLevels = 10;
                 end
                 cm:add_agent_experience(characterLookupString, bonusXpLevels, true);
                 if agentSubTypeSpawnData ~= nil and agentSubTypeSpawnData.AgentSubTypeMount ~= nil then
