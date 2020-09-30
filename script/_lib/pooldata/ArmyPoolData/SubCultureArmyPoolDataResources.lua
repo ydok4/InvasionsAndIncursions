@@ -366,17 +366,16 @@ function GetSubcultureArmyPoolDataResources()
                 Early = {
                     wh_main_grn_inf_goblin_archers = 2,
                     wh_main_grn_inf_goblin_spearmen = 3,
-                    wh2_dlc15_grn_veh_snotling_pump_wagon_0 = 1,
                 },
                 Mid = {
-                    wh_main_grn_inf_goblin_archers = 1,
+                    wh_main_grn_inf_goblin_archers = 2,
                     wh_main_grn_inf_goblin_spearmen = 2,
-                    wh2_dlc15_grn_veh_snotling_pump_wagon_flappas_0 = 1,
+                    { wh2_dlc15_grn_veh_snotling_pump_wagon_0 = 1, wh2_dlc15_grn_veh_snotling_pump_wagon_flappas_0 = 1, },
                 },
                 Late = {
                     wh_main_grn_inf_goblin_archers = 2,
                     wh_main_grn_inf_goblin_spearmen = 2,
-                    wh2_dlc15_grn_veh_snotling_pump_wagon_roller_0 = 1,
+                    { wh2_dlc15_grn_veh_snotling_pump_wagon_roller_0 = 1, wh2_dlc15_grn_veh_snotling_pump_wagon_flappas_0 = 1, },
                 },
             },
             GoblinWolfRiders = {
