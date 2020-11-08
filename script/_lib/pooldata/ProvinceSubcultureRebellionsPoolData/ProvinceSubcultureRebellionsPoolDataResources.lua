@@ -2564,6 +2564,9 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
         wh_main_eastern_oblast = {
             IsAdjacentToSea = false,
             RebelSubcultures = {
+                wh_main_sc_ksl_kislev = {
+                    Weighting = 2,
+                },
                 wh_dlc03_sc_bst_beastmen = {
                     Weighting = 2,
                 },
@@ -2900,6 +2903,9 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
         wh_main_northern_oblast = {
             IsAdjacentToSea = false,
             RebelSubcultures = {
+                wh_main_sc_ksl_kislev = {
+                    Weighting = 2,
+                },
                 wh_dlc03_sc_bst_beastmen = {
                     Weighting = 2,
                 },
@@ -3135,6 +3141,9 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
         wh_main_southern_oblast = {
             IsAdjacentToSea = false,
             RebelSubcultures = {
+                wh_main_sc_ksl_kislev = {
+                    Weighting = 2,
+                },
                 wh_dlc03_sc_bst_beastmen = {
                     Weighting = 2,
                 },
@@ -3297,6 +3306,9 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
         wh_main_troll_country = {
             IsAdjacentToSea = false,
             RebelSubcultures = {
+                wh_main_sc_ksl_kislev = {
+                    Weighting = 2,
+                },
                 wh_dlc03_sc_bst_beastmen = {
                     Weighting = 2,
                 },

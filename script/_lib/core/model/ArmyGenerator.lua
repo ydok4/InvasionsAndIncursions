@@ -1,5 +1,4 @@
 ArmyGenerator = {
-    SubCultureArmyPoolData = {},
     Logger = {},
     -- vanilla object references
     random_army_manager = {},
@@ -13,8 +12,6 @@ function ArmyGenerator:new (o)
 end
 
 function ArmyGenerator:Initialise(random_army_manager, enableLogging)
-    require 'script/_lib/pooldata/ArmyPoolData/SubCultureArmyPoolDataResources'
-    self.SubCultureArmyPoolData = GetSubcultureArmyPoolDataResources();
     self.Logger = Logger:new({});
     self.Logger:Initialise("ArmyGenerator.txt", enableLogging);
     self.Logger:Log_Start();
@@ -146,7 +143,7 @@ function ArmyGenerator:GetOtherUnits(ramData)
 end
 
 function ArmyGenerator:GetSubcultureArmyData(subcultureKey)
-    return self.SubCultureArmyPoolData[subcultureKey];
+    return _G.ArmyPoolResources.SubCultureArmyPoolResources[subcultureKey];
 end
 
 function ArmyGenerator:GetGamePeriod(turnNumber)

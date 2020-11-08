@@ -44,5 +44,19 @@ function GetBretonniaRebelArmyArchetypesPoolDataResources()
             UnitTags = {"MenAtArms", "Knights", },
             Weighting = 1,
         },
+        BretNavy = {
+            AgentSubtypes = {
+                brt_lord = {
+                    AgentSubtypeKey = "brt_lord",
+                    AgentSubTypeMount = "wh_main_anc_mount_brt_general_royal_pegasus",
+                },
+            },
+            MandatoryUnits = {
+                wh_main_brt_cav_pegasus_knights = 2,
+            },
+            UnitTags = {"Peasants", "MenAtArms", },
+            Weighting = 0,
+            CanSpawnOnSea = true,
+        },
     };
 end

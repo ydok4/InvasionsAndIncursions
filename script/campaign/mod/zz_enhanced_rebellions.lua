@@ -32,7 +32,8 @@ function zz_enhanced_rebellions()
     ER:Initialise(random_army_manager, enableLogging);
     ER.Logger:Log("Initialised");
 
-    if core:is_mod_loaded("mct_campaign_init") then
+    if core:is_mod_loaded("mct_campaign_init")
+    and get_mct then
         local mct = get_mct();
         ER.Logger:Log("Found MCT reborn");
         ER:CheckMCTRebornOptions(core, mct);

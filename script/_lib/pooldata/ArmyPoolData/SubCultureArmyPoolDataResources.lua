@@ -427,8 +427,7 @@ function GetSubcultureArmyPoolDataResources()
                     wh_dlc06_grn_inf_squig_herd_0 = 1,
                 },
                 Mid = {
-                    wh_dlc06_grn_inf_squig_herd_0 = 1,
-                    wh_dlc06_grn_cav_squig_hoppers_0 = 1,
+                    { wh_dlc06_grn_inf_squig_herd_0 = 1, wh_dlc06_grn_cav_squig_hoppers_0 = 1, },
                 },
                 Late = {
                     wh_dlc06_grn_inf_squig_herd_0 = 1,
@@ -452,8 +451,7 @@ function GetSubcultureArmyPoolDataResources()
                     wh_main_grn_art_goblin_rock_lobber = 1,
                 },
                 Mid = {
-                    wh_main_grn_art_goblin_rock_lobber = 1,
-                    wh_main_grn_art_doom_diver_catapult = 1,
+                    { wh_main_grn_art_goblin_rock_lobber = 1, wh_main_grn_art_doom_diver_catapult = 1, },
                 },
                 Late = {
                     wh_main_grn_art_doom_diver_catapult = 2,
@@ -1540,6 +1538,74 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Late = {
                     { wh_main_emp_art_mortar = 2, wh_main_emp_art_great_cannon = 2, },
+                },
+            },
+            DecoKossarInfantry = {
+                Early = {
+                    wh_main_ksl_inf_gwarrior = 4,
+                    wh_main_ksl_inf_kossar = 2,
+                },
+                Mid = {
+                    wh_main_ksl_inf_kossar = 2,
+                    wh_main_ksl_inf_kossar_axe = 2,
+                    { wh_main_ksl_inf_streltsi_pole = 1, wh_main_ksv_veh_war_wagon = 1, },
+                    wh_main_ksl_inf_streltsi = 1,
+                },
+                Late = {
+                    wh_main_ksl_inf_streltsi_pole = 2,
+                    { wh_main_ksl_inf_streltsi = 2, wh_main_ksv_veh_war_wagon = 2 },
+                    wh_main_ksl_inf_kreml = 1,
+                },
+            },
+            DecoCheckists = {
+                Early = {
+                    wh_main_ksl_inf_chekist_foot = 1,
+                },
+                Mid = {
+                    { wh_main_ksl_inf_chekist_foot = 2, wh_main_ksl_cav_chekist = 1, },
+                },
+                Late = {
+                    wh_main_ksl_cav_chekist = 2,
+                },
+            },
+            DecoCavalry = {
+                Early = {
+                    wh_main_ksl_cav_druz = 1,
+                },
+                Mid = {
+                    wh_main_ksl_cav_druz = 2,
+                    wh_main_ksl_cav_lancer = 1,
+                },
+                Late = {
+                    {wh_main_ksl_cav_lancer = 2, wh_main_ksl_cav_legion = 1, },
+                    wh_main_ksl_cav_bear = 1,
+                },
+            },
+            DecoUngol = {
+                Early = {
+                    wh_main_ksl_inf_uwarrior = 4,
+                    wh_main_ksl_cav_scout = 2,
+                },
+                Mid = {
+                    wh_main_ksl_inf_uwarrior = 3,
+                    { wh_main_ksl_inf_keeper = 1, wh_main_ksv_veh_ungol_wagon = 1, },
+                    wh_main_ksl_cav_harcher = 1,
+                },
+                Late = {
+                    wh_main_ksl_cav_harcher = 2,
+                    { wh_main_ksl_inf_keeper = 2, wh_main_ksv_veh_ungol_wagon = 2 },
+                    wh_main_ksl_cav_master = 1,
+                },
+            },
+            DecoArtillery = {
+                Early = {
+
+                },
+                Mid = {
+                    wh_main_ksv_art_light_cannon = 1,
+                },
+                Late = {
+                    {wh_main_ksv_art_light_cannon = 2, wh_main_ksv_art_urugan = 1, },
                 },
             },
         },

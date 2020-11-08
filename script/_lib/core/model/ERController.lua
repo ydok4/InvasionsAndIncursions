@@ -583,12 +583,29 @@ function ERController:GetSubcultureArmyArchetypes(region, rebellionSubculture)
     end
     -- If the province doesn't specify any archetypes for this subculture
     -- then we grab a random weighted one from the default pool
-    local defaultSubcultureArchetypes = self:GetRebelArmyArchetypesForSubculture(rebellionSubculture);
+    local minWeighting = nil;
+    local turnNumber = cm:model():turn_number();
+    -- We exclude some of the special/rarer spawns for the first 40 turns
+    -- This should stop some rare instances where the AI gets some bad luck
+    if turnNumber < 40 then
+        minWeighting = 3;
+    end
+    local defaultSubcultureArchetypes = self:GetRebelArmyArchetypesForSubculture(rebellionSubculture, minWeighting);
     return defaultSubcultureArchetypes;
 end
 
-function ERController:GetRebelArmyArchetypesForSubculture(subculture)
-    return _G.ERResources.RebelArmyArchetypesPoolData[subculture];
+function ERController:GetRebelArmyArchetypesForSubculture(subculture, minWeighting)
+    local defaultsForSubculture = _G.ERResources.RebelArmyArchetypesPoolData[subculture];
+    if not minWeighting then
+        return defaultsForSubculture;
+    end
+    local filteredArchetypes = {};
+    for archetypeKey, archetypeData in pairs(defaultsForSubculture) do
+        if archetypeData.Weighting >= minWeighting then
+            filteredArchetypes[archetypeKey] = archetypeData;
+        end
+    end
+    return filteredArchetypes;
 end
 
 function ERController:GetResourcesForRebelArmyArchetypes(subculture, archetype)

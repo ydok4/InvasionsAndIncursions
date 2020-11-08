@@ -1,5 +1,14 @@
 function GetChaosRebelArmyArchetypesPoolDataResources()
     return {
+        ChaosLordSea = {
+            AgentSubtypes = {"chs_lord", },
+            MandatoryUnits = {
+                wh_dlc06_chs_feral_manticore = 2,
+            },
+            UnitTags = {"Marauders", "ChaosWarriors", "Beasts", },
+            Weighting = 0,
+            CanSpawnOnSea = true,
+        },
         ChaosLord = {
             AgentSubtypes = {"chs_lord", },
             UnitTags = {"Marauders", "MarauderHorsemen", "ChaosWarriors", "Beasts", },

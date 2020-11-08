@@ -487,7 +487,12 @@ core = {
     end,
     get_ui_root = function() end,
     get_screen_resolution = function() return 0, 1 end;
-    is_mod_loaded = function() return true; end,
+    is_mod_loaded = function(self, string)
+        if string == "mct_campaign_init" then
+            return false;
+        end
+        return true;
+    end,
 }
 
 random_army_manager = {
@@ -520,13 +525,17 @@ out = function(text)
 end
 
 require 'script/campaign/mod/a_er_core_resource_loader'
+require 'script/campaign/mod/a_subculture_army_resource_loader'
 require 'script/campaign/mod/z_er_cataph_patch'
+require 'script/campaign/mod/z_er_deco_kislev_patch'
 require 'script/campaign/mod/z_er_mixu_patch'
+require 'script/campaign/mod/a_er_cr_patch'
 require 'script/campaign/mod/zz_enhanced_rebellions'
 
 math.randomseed(os.time())
 
 -- This is used in game by Warhammer but we have it hear so it won't throw errors when running
+a_er_cr_patch();
 zz_enhanced_rebellions();
 
 local ER = _G.ER;

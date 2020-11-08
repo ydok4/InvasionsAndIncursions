@@ -5,6 +5,15 @@ function GetGreenskinRebelArmyArchetypesPoolDataResources()
             UnitTags = {"Goblins", "Orcs", "Monsters", },
             Weighting = 3,
         },
+        OrcWarbossNavy = {
+            AgentSubtypes = {"grn_orc_warboss", },
+            MandatoryUnits = {
+                wh2_dlc15_grn_mon_wyvern_waaagh_0 = 1,
+            },
+            UnitTags = {"Goblins", "Orcs", "Artillery", },
+            Weighting = 0,
+            CanSpawnOnSea = true,
+        },
         DrakwaldGoblins = {
             AgentSubtypes = {
                 grn_goblin_great_shaman = {

@@ -50,6 +50,7 @@ function GetEmpireRebelArmyArchetypesPoolDataResources()
             },
             UnitTags = {"StateTroops", },
             Weighting = 5,
+            CanSpawnOnSea = true,
         },
     };
 end

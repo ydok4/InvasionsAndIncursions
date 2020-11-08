@@ -1,6 +1,6 @@
 function GetKislevRebelArmyArchetypesPoolDataResources()
     return {
-        EmpireGeneral = {
+        KislevGeneral = {
             AgentSubtypes = {"emp_lord", },
             UnitTags = {"StateTroops", "GenericCavalry", },
             Weighting = 3,
