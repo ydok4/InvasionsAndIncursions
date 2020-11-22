@@ -1183,10 +1183,14 @@ function ERController:GetRebellionRegionForNewRebellion(region)
     else
         self.Logger:Log("Has past rebellion data");
     end
-    -- If we got a past rebellion in the province we must be able to exclude
-    -- it.
-    validRegionsInProvince[pastRebellionData.Target] = nil;
-    return GetRandomObjectKeyFromList(validRegionsInProvince);
+    if validRegionsInProvince ~= nil
+    and pastRebellionData.Target ~= nil then
+        -- If we got a past rebellion in the province we must be able to exclude
+        -- it.
+        validRegionsInProvince[pastRebellionData.Target] = nil;
+        return GetRandomObjectKeyFromList(validRegionsInProvince);
+    end
+    return nil;
 end
 
 function ERController:DoesProvinceHaveRebelForces(provinceKey)

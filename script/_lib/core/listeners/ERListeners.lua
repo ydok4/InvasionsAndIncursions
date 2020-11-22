@@ -539,7 +539,9 @@ function IsQuestBattleFactionInvolvedInBattle(er)
 		local current_char_cqi, current_mf_cqi, current_faction_name = cm:pending_battle_cache_get_attacker(i);
         local faction = cm:get_faction(current_faction_name);
         --er.Logger:Log("Battle participant: "..current_faction_name);
-        if faction:is_null_interface() or faction:is_quest_battle_faction() == true then
+        if faction
+        and (faction:is_null_interface()
+        or faction:is_quest_battle_faction() == true) then
 			return true;
 		end;
 	end;
