@@ -78,6 +78,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_badlands_glade = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc05_sc_wef_wood_elves = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_blackspine_mountains = {
             IsAdjacentToSea = false,
             RebelSubcultures = {
@@ -636,6 +650,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_lustria_glade = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc05_sc_wef_wood_elves = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_marshes_of_madness = {
             IsAdjacentToSea = false,
             RebelSubcultures = {
@@ -691,6 +719,34 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_naggaroth_glade = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc05_sc_wef_wood_elves = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
+        wh2_main_northern_dark_lands = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_northern_great_jungle = {
             IsAdjacentToSea = false,
             RebelSubcultures = {
@@ -721,6 +777,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
                 wh2_main_sc_def_dark_elves = {
                     Weighting = 1,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
+        wh2_main_old_world_glade = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc05_sc_wef_wood_elves = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
                 },
                 wh_main_sc_grn_greenskins = {
                     Weighting = 1,
@@ -825,6 +895,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     Weighting = 3,
                 },
                 wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 1,
+                },
+            },
+        },
+        wh2_main_southern_dark_lands = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
                     Weighting = 1,
                 },
             },
@@ -1664,8 +1748,33 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                 },
             },
         },
+        wh2_main_vor_lustria_glade = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc05_sc_wef_wood_elves = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
+                },
+            },
+        },
         wh2_main_vor_mosquito_swamps = {
-
+            IsAdjacentToSea = true,
+            RebelSubcultures = {
+                wh_main_sc_grn_savage_orcs = {
+                    Weighting = 1,
+                },
+                wh2_dlc11_sc_cst_vampire_coast = {
+                    Weighting = 1,
+                },
+                wh_main_sc_vmp_vampire_counts = {
+                    Weighting = 2,
+                },
+            },
         },
         wh2_main_vor_nagarythe = {
             IsAdjacentToSea = true,
@@ -1699,6 +1808,20 @@ function GetProvinceSubcultureRebellionsPoolDataResources()
                     ReemergeanceArchetypeNaggarond = {
                         Weighting = 0,
                     },
+                },
+            },
+        },
+        wh2_main_vor_naggaroth_glade = {
+            IsAdjacentToSea = false,
+            RebelSubcultures = {
+                wh_dlc05_sc_wef_wood_elves = {
+                    Weighting = 3,
+                },
+                wh_dlc03_sc_bst_beastmen = {
+                    Weighting = 2,
+                },
+                wh_main_sc_grn_greenskins = {
+                    Weighting = 1,
                 },
             },
         },

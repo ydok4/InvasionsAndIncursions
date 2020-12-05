@@ -270,8 +270,7 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Late = {
                     wh_dlc03_bst_inf_razorgor_herd_0 = 2,
-                    wh_dlc03_bst_feral_manticore = 2,
-                    wh_dlc03_bst_mon_giant_0 = 1,
+                    { wh_dlc03_bst_cav_razorgor_chariot_0 = 1, wh_dlc03_bst_feral_manticore = 2, },
                 },
             },
             Centigors = {
@@ -825,9 +824,7 @@ function GetSubcultureArmyPoolDataResources()
                     wh2_main_skv_inf_stormvermin_1 = 1,
                 },
                 Late = {
-                    wh2_main_skv_inf_clanrats_0 = 1,
                     wh2_main_skv_inf_clanrats_1 = 2,
-                    wh2_main_skv_inf_clanrat_spearmen_0 = 1,
                     wh2_main_skv_inf_clanrat_spearmen_1 = 2,
                     wh2_main_skv_inf_stormvermin_0 = 2,
                     wh2_main_skv_inf_stormvermin_1 = 2,
@@ -850,13 +847,15 @@ function GetSubcultureArmyPoolDataResources()
             },
             ClanMoulder = {
                 Early = {
-                    wh2_main_skv_mon_rat_ogres = 1,
+                    wh2_dlc16_skv_mon_wolf_rats_0 = 1,
                 },
                 Mid = {
-                    wh2_main_skv_mon_rat_ogres = 2,
+                    wh2_dlc16_skv_mon_wolf_rats_0 = 1,
+                    { wh2_main_skv_mon_rat_ogres = 1, wh2_dlc16_skv_mon_brood_horror_0 = 1 },
                 },
                 Late = {
-                    wh2_main_skv_mon_rat_ogres = 2,
+                    wh2_dlc16_skv_mon_wolf_rats_0 = 1,
+                    { wh2_main_skv_mon_rat_ogres = 2, wh2_dlc16_skv_mon_rat_ogre_mutant = 1 },
                     wh2_main_skv_mon_hell_pit_abomination = 1,
                 },
             },
@@ -1398,12 +1397,23 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Mid = {
                     wh_main_chs_mon_chaos_warhounds_1 = 1,
-                    { wh_main_chs_mon_trolls = 1, wh_main_chs_mon_chaos_spawn = 1 },
+                    wh_main_chs_mon_trolls = 1,
                 },
                 Late = {
                     { wh_main_chs_mon_trolls = 1, wh_main_chs_mon_chaos_warhounds_1 = 1 },
-                    { wh_main_chs_mon_chaos_spawn = 2, wh_dlc01_chs_mon_trolls_1 = 1, },
-                    { wh_dlc01_chs_mon_dragon_ogre = 1, wh_main_chs_mon_giant = 1 },
+                    wh_dlc01_chs_mon_trolls_1 = 1,
+                },
+                Monsters = {
+                    Early = {
+
+                    },
+                    Mid = {
+                        wh_main_chs_mon_chaos_spawn = 1,
+                    },
+                    Late = {
+                        wh_main_chs_mon_chaos_spawn = 1,
+                        { wh_dlc01_chs_mon_dragon_ogre = 1, wh_main_chs_mon_giant = 1 },
+                    },
                 },
             },
         },
@@ -1883,13 +1893,14 @@ function GetSubcultureArmyPoolDataResources()
             },
             GladeRiders = {
                 Early = {
-                    wh_dlc05_wef_cav_glade_riders_0 = 1,
+                    wh2_dlc16_wef_cav_glade_riders_2 = 1,
                 },
                 Mid = {
                     wh_dlc05_wef_cav_glade_riders_0 = 1,
-                    wh_dlc05_wef_cav_glade_riders_1 = 1,
+                    { wh_dlc05_wef_cav_glade_riders_1 = 1, wh2_dlc16_wef_cav_glade_riders_2 = 1 },
                 },
                 Late = {
+                    wh2_dlc16_wef_cav_glade_riders_2 = 1,
                     wh_dlc05_wef_cav_glade_riders_1 = 2,
                 },
             },

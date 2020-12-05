@@ -1443,6 +1443,153 @@ function GetAgentDataResources()
 			},
 			IsFemale = "false",
 		},
+		wh2_dlc16_skv_chieftain = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_skv_chieftain_01", "wh2_dlc16_art_set_skv_chieftain_02", "wh2_dlc16_art_set_skv_chieftain_03", "wh2_dlc16_art_set_skv_chieftain_04", "wh2_dlc16_art_set_skv_chieftain_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_skv_ghoritch = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_skv_ghoritch",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_skv_ghoritch_boss = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_skv_ghoritch_boss",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_skv_packmaster = {
+			AgentType = "runesmith",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_skv_packmaster_01", "wh2_dlc16_art_set_skv_packmaster_02", "wh2_dlc16_art_set_skv_packmaster_03", "wh2_dlc16_art_set_skv_packmaster_04", "wh2_dlc16_art_set_skv_packmaster_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_skv_throt_the_unclean = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_skv_throt",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_ariel = {
+			AgentType = "wizard",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_ariel",
+			},
+			IsFemale = "true",
+		},
+		wh2_dlc16_wef_coeddil = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc16_art_sef_wef_coeddil",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_coeddil_qb = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_sef_wef_coeddil_qb",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_drycha = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_drycha",
+			},
+			IsFemale = "true",
+		},
+		wh2_dlc16_wef_malicious_ancient_treeman_beasts = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_malicious_ancient_treeman_beasts",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_malicious_ancient_treeman_life = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_malicious_ancient_treeman_life",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_malicious_ancient_treeman_shadows = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_malicious_ancient_treeman_shadows",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_malicious_branchwraith_beasts = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_malicious_branchwraith_beasts",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_malicious_branchwraith_life = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_malicious_branchwraith_life",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_malicious_branchwraith_shadows = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_malicious_branchwraith_shadows",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_sisters_of_twilight = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_sisters_of_twilight",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc16_wef_spellweaver_beasts = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_spellweaver_01",
+			},
+			IsFemale = "true",
+		},
+		wh2_dlc16_wef_spellweaver_dark = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_spellweaver_02",
+			},
+			IsFemale = "true",
+		},
+		wh2_dlc16_wef_spellweaver_high = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_spellweaver_03",
+			},
+			IsFemale = "true",
+		},
+		wh2_dlc16_wef_spellweaver_life = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_spellweaver_04",
+			},
+			IsFemale = "true",
+		},
+		wh2_dlc16_wef_spellweaver_shadows = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc16_art_set_wef_spellweaver_05",
+			},
+			IsFemale = "true",
+		},
 		wh2_main_def_black_ark = {
 			AgentType = "general",
 			ArtSetIds = {
@@ -1757,6 +1904,20 @@ function GetAgentDataResources()
 				 "wh2_pro08_art_set_neu_gotrek",
 			},
 			IsFemale = "false",
+		},
+		wh2_pro09_grn_black_orc_big_boss = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_pro09_art_set_grn_black_orc_big_boss_01", "wh2_pro09_art_set_grn_black_orc_big_boss_02", "wh2_pro09_art_set_grn_black_orc_big_boss_03", "wh2_pro09_art_set_grn_black_orc_big_boss_04", "wh2_pro09_art_set_grn_black_orc_big_boss_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_twa02_wef_glade_captain = {
+			AgentType = "dignitary",
+			ArtSetIds = {
+				 "wh2_twa02_art_set_wef_glade_captain_01", "wh2_twa02_art_set_wef_glade_captain_02", "wh2_twa02_art_set_wef_glade_captain_03", "wh2_twa02_art_set_wef_glade_captain_04", "wh2_twa02_art_set_wef_glade_captain_05",
+			},
+			IsFemale = "true",
 		},
 		wh_dlc05_vmp_red_duke = {
 			AgentType = "general",

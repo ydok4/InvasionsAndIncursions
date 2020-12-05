@@ -287,7 +287,7 @@ function ER_SetupPostUIListeners(er, core)
     );
 
     -- Faction reemergeance listener to add the right PRE
-    core:add_listener(
+    --[[core:add_listener(
         "ER_IsFactionDestroyed",
         "FactionTurnStart",
         function(context)
@@ -296,6 +296,33 @@ function ER_SetupPostUIListeners(er, core)
         end,
         function(context)
 
+        end,
+        true
+    );--]]
+    core:add_listener(
+        "ER_HordeDeclareWar",
+        "FactionTurnStart",
+        function(context)
+            local faction = context:faction();
+            return (faction:subculture() == "wh_dlc03_sc_bst_beastmen"
+            or faction:subculture() == "wh_main_sc_chs_chaos"
+            or faction:subculture() == "wh_main_sc_nor_norsca"
+            or _G.IsIDE == true)
+            and not faction:is_human();
+        end,
+        function(context)
+            local faction = context:faction();
+            local rebelFactions = _G.ERResources.RebelFactionPoolDataResources;
+            for rebelFactionSubculture, rebelFactionData in pairs(rebelFactions) do
+                --er.Logger:Log("Checking: "..rebelFactionData.Default);
+                local rebelFaction = cm:get_faction(rebelFactionData.Default);
+                if not rebelFaction:is_dead()
+                and not faction:at_war_with(rebelFaction) then
+                    er.Logger:Log("Faction: "..faction:name().." is declaring war on: "..rebelFactionData.Default);
+                    cm:force_declare_war(rebelFactionData.Default, faction:name(), false, false);
+                end
+            end
+            er.Logger:Log_Finished();
         end,
         true
     );

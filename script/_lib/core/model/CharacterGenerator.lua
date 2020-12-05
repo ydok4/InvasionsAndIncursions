@@ -1,5 +1,4 @@
 CharacterGenerator = {
-    CrpLordsInPools = {},
     Logger = {},
 }
 
@@ -10,17 +9,13 @@ function CharacterGenerator:new (o)
     return o;
 end
 
-function CharacterGenerator:Initialise(enableLogging, crpLords)
+function CharacterGenerator:Initialise(enableLogging)
     self.Logger = Logger:new({});
     self.Logger:Initialise("CharacterGenerator.txt", enableLogging);
     self.Logger:Log_Start();
-    -- If crplords is nil it wipes the key
-    if crpLords ~= nil then
-        self.CrpLordsInPools = crpLords;
-    end
     -- Load add ons
-    -- Load Gunking's elf names
-    local newElfNameKey = effect.get_localised_string("names_name_1550000001");
+    -- Load Gunking's elf names (deprecated)
+    --[[local newElfNameKey = effect.get_localised_string("names_name_1550000001");
     if newElfNameKey ~= nil
     and newElfNameKey ~= "" then
         require 'script/_lib/dbexports/NameGenerator/GunkingElfNameGroupResources'
@@ -29,7 +24,7 @@ function CharacterGenerator:Initialise(enableLogging, crpLords)
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.name_groups_to_names, GetGunkingElfNameResources());
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.faction_to_name_groups, GetGunkingElfNameGroupResources());
     end
-    -- Load Gunking's skaven/lizardmen names
+    -- Load Gunking's skaven/lizardmen names (deprecated)
     local newSkavenLizardmenNameKey = effect.get_localised_string("names_name_1313000111");
     if newSkavenLizardmenNameKey ~= nil
     and newSkavenLizardmenNameKey ~= "" then
@@ -38,7 +33,7 @@ function CharacterGenerator:Initialise(enableLogging, crpLords)
         --self.Logger:Log("NameGenerator: Loading Gunking Skaven/Lizardmen Names");
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.name_groups_to_names, GetGunkingSkavenLizardmenNameResources());
         _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.faction_to_name_groups, GetGunkingSkavenLizardmenNameGroupResources());
-    end
+    end--]]
 end
 
 function CharacterGenerator:GetArtSetForSubType(subType)
@@ -57,6 +52,7 @@ function CharacterGenerator:GetArtSetForSubType(subType)
         return nil;
     end
     local artSetId = GetRandomObjectFromList(subTypeData.ArtSetIds);
+    self.Logger:Log_Finished();
     return artSetId;
 end
 
@@ -144,31 +140,29 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
 
     local doOnce = false;
     local nameKey = "";
-    local clan_name_object = "";
     local forename_object = "";
-    local forename_chance = self:GetForeNameChance(factionSubculture);
+    local family_name_object = "";
+    local family_name_chance = self:GetFamilyNameChance(factionSubculture);
 
     local factionLords = {};
-    if self.CrpLordsInPools ~= nil then
-        factionLords = self.CrpLordsInPools[factionName];
-    end
-
     local failSafe = 0;
     if namePool == nil then
         self.Logger:Log("ERROR: Missing name pool");
         return nil;
     end
     while doOnce == false or factionLords == nil or factionLords[nameKey] ~= nil or nameKey == "" do
-        clan_name_object = self:GetValidNameForType(namePool, canUseFemaleNames, "clan_name");
-        if Roll100(forename_chance) then
-            forename_object = self:GetValidNameForType(namePool, canUseFemaleNames, "forename");
+        --self.Logger:Log("Before get forename");
+        forename_object = self:GetValidNameForType(namePool, canUseFemaleNames, "forename");
+        if Roll100(family_name_chance) then
+            --self.Logger:Log("Before get family_name");
+            family_name_object = self:GetValidNameForType(namePool, canUseFemaleNames, "family_name");
         else
-            forename_object = {};
-            forename_object.Text = "";
-            forename_object.Id = "";
+            family_name_object = {};
+            family_name_object.Text = "";
+            family_name_object.Id = "";
         end
-
-        nameKey = clan_name_object.Text..forename_object.Text;
+        --self.Logger:Log("Before get namekey");
+        nameKey = forename_object.Text..family_name_object.Text;
         nameKey = CreateValidLuaTableKey(nameKey);
         self.Logger:Log("Generated name key is "..nameKey);
         doOnce = true;
@@ -182,16 +176,17 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
             failSafe = failSafe + 1;
         end
     end
-
+    -- Yeah...these swapped.
     local generatedName = {
-        clan_name = clan_name_object.Id,
-        forename = forename_object.Id,
+        clan_name = forename_object.Id,
+        forename = family_name_object.Id,
     };
+    self.Logger:Log_Finished();
     --self.Logger:Log("Got generated name");
     return generatedName;
 end
 
-function CharacterGenerator:GetForeNameChance(factionSubculture)
+function CharacterGenerator:GetFamilyNameChance(factionSubculture)
     if factionSubculture == "wh_main_sc_chs_chaos" then
         return 100 - 60;
     elseif factionSubculture == "wh2_main_sc_skv_skaven" then
@@ -209,23 +204,23 @@ end
 function CharacterGenerator:GetValidNameForType(namePool, canUseFemaleNames, nameType)
     local nameTypes = nil;
     if canUseFemaleNames and nameType == "clan_name" then
-        nameTypes = namePool.Gender["Female"][nameType];
+        nameTypes = namePool.Gender["f"][nameType];
     else
-        if namePool.Gender["Male"] ~= nil and namePool.Gender["Special"]  ~= nil then
-            if namePool.Gender["Male"][nameType] ~= nil then
+        if namePool.Gender["m"] ~= nil and namePool.Gender["b"]  ~= nil then
+            if namePool.Gender["m"][nameType] ~= nil then
                 nameTypes = {};
-                ConcatTableWithKeys(nameTypes, namePool.Gender["Male"][nameType]);
+                ConcatTableWithKeys(nameTypes, namePool.Gender["m"][nameType]);
             end
-            if namePool.Gender["Special"][nameType] ~= nil then
+            if namePool.Gender["b"][nameType] ~= nil then
                 if nameTypes == nil then
                     nameTypes = {};
                 end
-                ConcatTableWithKeys(nameTypes, namePool.Gender["Special"][nameType]);
+                ConcatTableWithKeys(nameTypes, namePool.Gender["b"][nameType]);
             end
-        elseif namePool.Gender["Male"] ~= nil then
-            nameTypes = namePool.Gender["Male"][nameType];
-        elseif namePool.Gender["Special"]  ~= nil then
-            nameTypes = namePool.Gender["Special"][nameType];
+        elseif namePool.Gender["m"] ~= nil then
+            nameTypes = namePool.Gender["m"][nameType];
+        elseif namePool.Gender["b"]  ~= nil then
+            nameTypes = namePool.Gender["b"][nameType];
         end
     end
 

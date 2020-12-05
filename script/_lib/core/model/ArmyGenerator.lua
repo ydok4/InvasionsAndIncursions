@@ -56,6 +56,8 @@ function ArmyGenerator:GenerateForceForTurn(ramData, numberOfUnitsOverride)
     end
     self.Logger:Log("Force size is "..armySize);
     local forceString = self.random_army_manager:generate_force(ramData.ForceKey, armySize, false);
+    self.Logger:Log("String is "..forceString);
+    self.Logger:Log_Finished();
     return forceString;
 end
 

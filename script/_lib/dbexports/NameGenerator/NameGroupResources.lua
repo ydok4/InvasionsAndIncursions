@@ -283,6 +283,63 @@ function GetNameGroupResources()
 		wh2_dlc15_skv_clan_volkn = {
 			NameGroup = "124",
 		},
+		wh2_dlc16_chs_acolytes_of_the_keeper = {
+			NameGroup = "98",
+		},
+		wh2_dlc16_emp_colonist_invasion = {
+			NameGroup = "89",
+		},
+		wh2_dlc16_emp_empire_invasion = {
+			NameGroup = "89",
+		},
+		wh2_dlc16_emp_empire_qb8 = {
+			NameGroup = "89",
+		},
+		wh2_dlc16_grn_creeping_death = {
+			NameGroup = "88",
+		},
+		wh2_dlc16_grn_naggaroth_orcs = {
+			NameGroup = "88",
+		},
+		wh2_dlc16_grn_savage_invasion = {
+			NameGroup = "88",
+		},
+		wh2_dlc16_lzd_wardens_of_the_living_pools = {
+			NameGroup = "117",
+		},
+		wh2_dlc16_skv_clan_gritus = {
+			NameGroup = "124",
+		},
+		wh2_dlc16_vmp_lahmian_sisterhood = {
+			NameGroup = "172",
+		},
+		wh2_dlc16_wef_drycha = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_sisters_of_twilight = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_waystone_faction_1 = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_waystone_faction_2 = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_waystone_faction_3 = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_wood_elves_qb4 = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_wood_elves_qb5 = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_wood_elves_qb6 = {
+			NameGroup = "143",
+		},
+		wh2_dlc16_wef_wood_elves_qb7 = {
+			NameGroup = "143",
+		},
 		wh2_main_brt_knights_of_origo = {
 			NameGroup = "162",
 		},
@@ -698,6 +755,9 @@ function GetNameGroupResources()
 			NameGroup = "124",
 		},
 		wh2_main_skv_clan_moulder = {
+			NameGroup = "124",
+		},
+		wh2_main_skv_clan_moulder_separatists = {
 			NameGroup = "124",
 		},
 		wh2_main_skv_clan_pestilens = {

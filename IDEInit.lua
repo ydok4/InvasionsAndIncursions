@@ -91,7 +91,7 @@ testFaction = {
         return "wh_main_grn_greenskins";
     end,
     subculture = function()
-        return "wh_main_sc_emp_empire";
+        return "wh_main_sc_chs_chaos";
     end,
     is_dead = function() return true; end,
     character_list = function()
@@ -525,21 +525,22 @@ out = function(text)
 end
 
 require 'script/campaign/mod/a_er_core_resource_loader'
+require 'script/campaign/mod/a_er_cr_patch'
+require 'script/campaign/mod/a_er_deco_patch'
 require 'script/campaign/mod/a_subculture_army_resource_loader'
 require 'script/campaign/mod/z_er_cataph_patch'
-require 'script/campaign/mod/z_er_deco_kislev_patch'
 require 'script/campaign/mod/z_er_mixu_patch'
-require 'script/campaign/mod/a_er_cr_patch'
 require 'script/campaign/mod/zz_enhanced_rebellions'
 
 math.randomseed(os.time())
 
 -- This is used in game by Warhammer but we have it hear so it won't throw errors when running
 a_er_cr_patch();
+a_er_deco_patch();
 zz_enhanced_rebellions();
 
 local ER = _G.ER;
-
+turn_number = 200;
 local MockContext_ER_CheckFactionRebellions = {
     Key = "ER_CheckFactionRebellions",
     Context = {
@@ -548,9 +549,11 @@ local MockContext_ER_CheckFactionRebellions = {
 }
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
+a_er_cr_patch();
+a_er_deco_patch();
 zz_enhanced_rebellions();
 
-turn_number = 2;
+turn_number = 200;
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
 local ER_SettlementSelected = {
@@ -564,6 +567,15 @@ local ER_SettlementSelected = {
     },
 }
 mock_listeners:trigger_listener(ER_SettlementSelected);
+
+
+local ER_HordeDeclareWar = {
+    Key = "ER_HordeDeclareWar",
+    Context = {
+        faction = function() return testFaction; end,
+    },
+};
+mock_listeners:trigger_listener(ER_HordeDeclareWar);
 
 turn_number = 3;
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
@@ -601,7 +613,7 @@ local ER_MilitaryCrackDownDilemmaChoiceMade = {
 mock_listeners:trigger_listener(ER_MilitaryCrackDownDilemmaChoiceMade);
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
-turn_number = 6;
+turn_number = 100;
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
 ER_InitialiseSaveHelpers(cm, context);
