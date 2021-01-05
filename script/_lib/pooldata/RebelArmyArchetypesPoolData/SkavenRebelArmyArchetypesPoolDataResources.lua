@@ -48,13 +48,24 @@ function GetSkavenRebelArmyArchetypesPoolDataResources()
             UnitTags = {"SkavenSlaves", "Warriors", "ClanPestilens"},
             Weighting = 1,
         },
-        ClanPestilensChaosInvasionStage2 = {
+        ClanPestilensChaosInvasionStage1 = {
             AgentSubtypes = {"wh2_main_skv_warlord", },
             MandatoryUnits = {
+                wh2_main_skv_inf_plague_monks = 5,
                 wh2_main_skv_inf_plague_monk_censer_bearer = 2,
                 wh2_main_skv_art_plagueclaw_catapult = 1,
             },
-            UnitTags = {"SkavenSlaves", "Warriors", "ClanPestilens"},
+            UnitTags = {"Warriors", "ClanPestilens"},
+            Weighting = 0,
+        },
+        ClanPestilensChaosInvasionStage2 = {
+            AgentSubtypes = {"wh2_main_skv_warlord", },
+            MandatoryUnits = {
+                wh2_main_skv_inf_plague_monks = 6,
+                wh2_main_skv_inf_plague_monk_censer_bearer = 4,
+                wh2_main_skv_art_plagueclaw_catapult = 3,
+            },
+            UnitTags = {"Warriors", "ClanPestilens"},
             Weighting = 0,
         },
         IkitClawReemerge = {

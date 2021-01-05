@@ -126,13 +126,13 @@ function GetCRDaemonSubcultureArmyPoolDataResources()
         wh_main_sc_chs_chaos = {
             Daemons = {
                 Early = {
-                    { bacr_chs_inf_daemonette = 1, kho_bloodletter = 1,  rbt_nurgle_daemon = 1, },
-                },
-                Mid = {
                     { bacr_chs_inf_daemonette = 2, kho_bloodletter = 2,  rbt_nurgle_daemon = 2, },
                 },
-                Late = {
+                Mid = {
                     { bacr_chs_inf_daemonette = 3, kho_bloodletter = 3,  rbt_nurgle_daemon = 3, },
+                },
+                Late = {
+                    { bacr_chs_inf_daemonette = 4, kho_bloodletter = 4,  rbt_nurgle_daemon = 4, },
                 },
             },
         },

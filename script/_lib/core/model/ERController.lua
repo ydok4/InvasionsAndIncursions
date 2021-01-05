@@ -667,15 +667,15 @@ function ERController:SpawnArmy(rebellionData, preKey)
             );
         end
     else
-        self.Logger:Log("Attempting to spawn from point");
-        spawnDistance = 2;
+        self.Logger:Log("Region is abandoned. Attempting to spawn from point");
+        spawnDistance = 5;
         repeat
             spawnX, spawnY = cm:find_valid_spawn_location_for_character_from_position(
                 self.HumanFaction:name(),
                 spawnRegion:settlement():logical_position_x() + 1,
                 spawnRegion:settlement():logical_position_y() + 1,
                 -- In same region
-                false,
+                true,
                 spawnDistance
             );
             --[[if spawnX ~= nil
@@ -1231,7 +1231,7 @@ function ERController:UpdateExistingRebels(region)
         local turnNumber = cm:model():turn_number();
         local rebelData = self.ActiveRebellions[provinceKey];
         for index, militaryForceCqi in pairs(rebelData.Forces) do
-            local militaryForce = cm:model():military_force_for_command_queue_index(tonumber(militaryForceCqi));
+            local militaryForce = cm:get_military_force_by_cqi(tonumber(militaryForceCqi));
             local rebelForceData = self.RebelForces[tostring(militaryForceCqi)];
             if rebelForceData == nil then
                 rebelData.Forces[index] = nil;
@@ -1246,7 +1246,7 @@ function ERController:UpdateExistingRebels(region)
                     rebelData.Forces[index] = nil;
                     self:AddPastRebellion(rebelForceData);
                     self.RebelForces[tostring(militaryForceCqi)] = nil;
-                    if militaryForce ~= nil
+                    if militaryForce
                     and not militaryForce:is_null_interface() then
                         local character = militaryForce:general_character();
                         local characterLookupString = "character_cqi:"..character:command_queue_index();
@@ -1262,7 +1262,7 @@ function ERController:UpdateExistingRebels(region)
                     local rebelForceTargetRegionKey = rebelForceTarget:name();
                     -- We need to first check for cases where we need to remove any rebels in the province
                     -- This happens when the rebels have been killed.
-                    if militaryForce == nil
+                    if not militaryForce
                     or militaryForce:is_null_interface() then
                         if militaryForce == nil then
                             self.Logger:Log("Military force is missing");

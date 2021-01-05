@@ -84,6 +84,19 @@ function ER_SetupPostUIListeners(er, core)
         end,
         function(context)
             cm:disable_event_feed_events(false, "", "", "diplomacy_war_declared");
+            local cleaningMf = false;
+            for mfCqi, mfData in pairs(er.RebelForces) do
+                local militaryForce = cm:get_military_force_by_cqi(tonumber(mfCqi));
+                if not militaryForce
+                or militaryForce:is_null_interface() then
+                    er.Logger:Log("Clearing military force "..mfCqi);
+                    er.RebelForces[mfCqi] = nil;
+                    cleaningMf = true;
+                end
+            end
+            if cleaningMf == true then
+                er.Logger:Log_Finished();
+            end
         end,
     true);
 
@@ -275,6 +288,9 @@ function ER_SetupPostUIListeners(er, core)
                             er:AddPastRebellion(rebelForceData);
                             er.RebelForces[tostring(militaryForceCqi)] = nil;
                             cm:cai_enable_movement_for_character(characterLookupString);
+                        else
+                            er.Logger:Log("No action to take");
+                            er.Logger:Log_Finished();
                         end
                     else
                         er.Logger:Log("Missing RebelForces data. CQI: "..militaryForceCqi);
@@ -403,7 +419,7 @@ function ER_SetupPostUIListeners(er, core)
     -- We remove these vanilla listeners because we need to tweak the condition to exclude the quest battle factions
     -- which are used by the rebels we spawn
     core:remove_listener("character_completed_battle_norsca_confederation_dilemma");
-    core:add_listener(
+    --[[core:add_listener(
 	"character_completed_battle_norsca_confederation_dilemma",
 	"CharacterCompletedBattle",
 	true,
@@ -436,8 +452,61 @@ function ER_SetupPostUIListeners(er, core)
 			end
         end
 	end,
-    true);
-    core:remove_listener("Norsca_Confed_DilemmaChoiceMadeEvent");
+    true);--]]
+    core:remove_listener("character_completed_battle_norsca_confederation_dilemma");
+    core:add_listener(
+        "character_completed_battle_norsca_confederation_dilemma_updated",
+        "CharacterCompletedBattle",
+        true,
+        function(context)
+            local character = context:character();
+            if character:won_battle() == true and character:faction():subculture() == NORSCA_SUBCULTURE and not character:faction():name():find("rebel") 
+            and not character:faction():name():find("invasion") and not character:faction():name():find("separatists") and not character:faction():name():find("incursion") and character:faction():is_quest_battle_faction() == false then
+                local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
+                local enemy_count = #enemies;
+
+                if context:pending_battle():night_battle() == true or context:pending_battle():ambush_battle() == true then
+                    enemy_count = 1;
+                end
+
+                local character_cqi = character:command_queue_index();
+                local attacker_cqi, attacker_force_cqi, attacker_name = cm:pending_battle_cache_get_attacker(1);
+                local defender_cqi, defender_force_cqi, defender_name = cm:pending_battle_cache_get_defender(1);
+                out("ER: Custom norscan battle completed");
+                if character_cqi == attacker_cqi or character_cqi == defender_cqi then
+                    for i = 1, enemy_count do
+                        local enemy = enemies[i];
+
+                        if enemy ~= nil
+                        and enemy:is_null_interface() == false
+                        and enemy:is_faction_leader() == true
+                        and enemy:faction():subculture() == NORSCA_SUBCULTURE
+                        and not enemy:faction():name():find("rebel")
+                        and not enemy:faction():name():find("invasion")
+                        and not enemy:faction():name():find("separatists")
+                        and not enemy:faction():name():find("incursion")
+                        and enemy:faction():is_quest_battle_faction() == false then
+                            if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
+                                out("ER: Confederating faction: "..enemy:faction():name());
+                                if character:faction():is_human() == true and enemy:faction():is_human() == false and enemy:faction():is_dead() == false then
+                                    -- Trigger dilemma to offer confederation
+                                    NORSCA_CONFEDERATION_PLAYER = character:faction():name();
+                                    cm:trigger_dilemma(NORSCA_CONFEDERATION_PLAYER, NORSCA_CONFEDERATION_DILEMMA..enemy:faction():name());
+                                    Play_Norsca_Advice("dlc08.camp.advice.nor.confederation.001", norsca_info_text_confederation);
+                                elseif not character:faction():name():find("rebel") and character:faction():is_human() == false and enemy:faction():is_human() == false then
+                                    -- AI confederation
+                                    cm:force_confederation(character:faction():name(), enemy:faction():name());
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end,
+        true
+    );
+
+    --[[core:remove_listener("Norsca_Confed_DilemmaChoiceMadeEvent");
     core:add_listener(
 		"Norsca_Confed_DilemmaChoiceMadeEvent",
 		"DilemmaChoiceMadeEvent",
@@ -469,7 +538,7 @@ function ER_SetupPostUIListeners(er, core)
             end;
 		end,
 		true
-    );
+    );--]]
     -- Just like Norsca, these listeners override the vanilla equivalents. This needs to happen because otherwise
     -- the Greenskin factions will keep confederating the Greenskin Proxy Rebels
     er.Logger:Log("Overriding Greenskin listeners");
@@ -477,7 +546,7 @@ function ER_SetupPostUIListeners(er, core)
     local GREENSKIN_CONFEDERATION_PLAYER = er.HumanFaction:name();
     local greenskin = "wh_main_sc_grn_greenskins";
     -- Confederation via Defeat Leader
-    core:remove_listener("Greenskin_Confed_DilemmaChoiceMadeEvent");
+    --[[core:remove_listener("Greenskin_Confed_DilemmaChoiceMadeEvent");
 	core:add_listener(
 		"Greenskin_Confed_DilemmaChoiceMadeEvent",
 		"DilemmaChoiceMadeEvent",
@@ -508,7 +577,7 @@ function ER_SetupPostUIListeners(er, core)
             end;
 		end,
 		true
-    );
+    );--]]
     core:remove_listener("character_completed_battle_greenskin_confederation_dilemma");
 	core:add_listener(
 		"character_completed_battle_greenskin_confederation_dilemma",

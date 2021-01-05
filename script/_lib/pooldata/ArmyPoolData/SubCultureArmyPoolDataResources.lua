@@ -190,7 +190,7 @@ function GetSubcultureArmyPoolDataResources()
                 },
                 Late = {
                     { wh_main_nor_mon_chaos_warhounds_1 = 2, wh_dlc08_nor_mon_warwolves_0 = 1,},
-                    { wh_dlc08_nor_mon_war_mammoth_0 = 2, wh_dlc08_nor_mon_war_mammoth_1 = 1, wh_dlc08_nor_mon_frost_wyrm_0 = 1, wh_dlc08_nor_mon_norscan_giant_0 = 1 },
+                    { wh_dlc08_nor_mon_war_mammoth_0 = 2, wh_dlc08_nor_mon_war_mammoth_1 = 1, wh_dlc08_nor_mon_norscan_giant_0 = 1 },
                 },
             },
             SkinWolves = {
