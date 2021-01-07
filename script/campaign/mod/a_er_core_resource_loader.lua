@@ -143,14 +143,27 @@ _G.ERResources = {
                 existingSubcultureArchetypes[armyArchetypeKey] = nil;
             else
                 local existingArchetype = existingSubcultureArchetypes[armyArchetypeKey];
-                if data.AgentSubtypes ~= nil then
-                    existingArchetype.AgentSubtypes = data.AgentSubtypes;
+                if armyArchetypeData.AgentSubtypes ~= nil then
+                    existingArchetype.AgentSubtypes = armyArchetypeData.AgentSubtypes;
                 end
-                if data.UnitTags ~= nil then
-                    existingArchetype.UnitTags = data.UnitTags;
+                if armyArchetypeData.UnitTags ~= nil then
+                    existingArchetype.UnitTags = armyArchetypeData.UnitTags;
                 end
-                if data.Weighting ~= nil then
-                    existingArchetype.Weighting = data.Weighting;
+                if armyArchetypeData.Weighting ~= nil then
+                    existingArchetype.Weighting = armyArchetypeData.Weighting;
+                end
+                if armyArchetypeData.MandatoryUnits ~= nil then
+                    for unitKey, mandatoryUnit in pairs(armyArchetypeData.MandatoryUnits) do
+                        -- Note: Groups of mandatory units are a flat replace
+                        if mandatoryUnit == false then
+                            existingArchetype.MandatoryUnits[unitKey] = nil;
+                        elseif type(mandatoryUnit) == "table" then
+                            table.insert(existingArchetype.MandatoryUnits, mandatoryUnit);
+                        else
+                            -- Set the amount of the mandatory unit
+                            existingArchetype.MandatoryUnits[unitKey] = mandatoryUnit;
+                        end
+                    end
                 end
             end
         end

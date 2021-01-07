@@ -2,7 +2,7 @@ function GetGreenskinRebelArmyArchetypesPoolDataResources()
     return {
         OrcWarboss = {
             AgentSubtypes = {"grn_orc_warboss", },
-            UnitTags = {"Goblins", "Orcs", "Monsters", },
+            UnitTags = {"Goblins", "Orcs", "Monsters", "Artillery", },
             Weighting = 3,
         },
         OrcWarbossNavy = {

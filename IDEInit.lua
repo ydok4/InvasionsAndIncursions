@@ -525,6 +525,7 @@ out = function(text)
 end
 
 require 'script/campaign/mod/a_er_core_resource_loader'
+require 'script/campaign/mod/a_er_aov_patch'
 require 'script/campaign/mod/a_er_cr_patch'
 require 'script/campaign/mod/a_er_deco_patch'
 require 'script/campaign/mod/a_subculture_army_resource_loader'
@@ -535,6 +536,7 @@ require 'script/campaign/mod/zz_enhanced_rebellions'
 math.randomseed(os.time())
 
 -- This is used in game by Warhammer but we have it hear so it won't throw errors when running
+a_er_aov_patch();
 a_er_cr_patch();
 a_er_deco_patch();
 zz_enhanced_rebellions();

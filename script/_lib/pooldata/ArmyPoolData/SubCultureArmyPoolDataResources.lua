@@ -447,10 +447,10 @@ function GetSubcultureArmyPoolDataResources()
             },
             Artillery = {
                 Early = {
-                    wh_main_grn_art_goblin_rock_lobber = 1,
+
                 },
                 Mid = {
-                    { wh_main_grn_art_goblin_rock_lobber = 1, wh_main_grn_art_doom_diver_catapult = 1, },
+                    wh_main_grn_art_goblin_rock_lobber = 1,
                 },
                 Late = {
                     wh_main_grn_art_doom_diver_catapult = 2,
