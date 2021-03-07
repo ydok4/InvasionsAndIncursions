@@ -35,7 +35,6 @@ function GetCRSpearChukkaSubcultureArmyPoolDataResources()
             Artillery = {
                 Early = {
                     cr_grn_art_spear_chukka = 1,
-                    wh_main_grn_art_goblin_rock_lobber = false,
                 },
             },
         },
@@ -80,45 +79,6 @@ function GetCRChimaeratSubcultureArmyPoolDataResources()
         },
     };
 end
-
---[[function GetCRDaemonettesSubcultureArmyPoolDataResources()
-    return {
-        -- Chaos
-        wh_main_sc_chs_chaos = {
-            Daemons = {
-                Early = {
-                    bacr_chs_inf_daemonette = 1,
-                },
-            },
-        },
-    };
-end
-
-function GetCRBloodletterSubcultureArmyPoolDataResources()
-    return {
-        -- Chaos
-        wh_main_sc_chs_chaos = {
-            Daemons = {
-                Early = {
-                    kho_bloodletter = 1,
-                },
-            },
-        },
-    };
-end
-
-function GetCRPlaguebearerSubcultureArmyPoolDataResources()
-    return {
-        -- Chaos
-        wh_main_sc_chs_chaos = {
-            Daemons = {
-                Early = {
-                    rbt_nurgle_daemon = 1,
-                },
-            },
-        },
-    };
-end--]]
 
 function GetCRDaemonSubcultureArmyPoolDataResources()
     return {

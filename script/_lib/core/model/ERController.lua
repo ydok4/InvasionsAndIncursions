@@ -1,8 +1,6 @@
 ERController = {
     CampaignName = "",
     HumanFaction = {},
-    ArmyGenerator = {},
-    CharacterGenerator = {},
     Logger = {},
     ActiveRebellions = {},
     RebelForces = {},
@@ -30,13 +28,6 @@ end
 function ERController:Initialise(random_army_manager, enableLogging)
     self.CampaignName = cm:get_campaign_name();
     self.HumanFaction = self:GetHumanFaction();
-    self.ArmyGenerator = ArmyGenerator:new({
-
-    });
-    self.ArmyGenerator:Initialise(random_army_manager, enableLogging);
-    self.CharacterGenerator = CharacterGenerator:new({
-    });
-    self.CharacterGenerator:Initialise(enableLogging);
     self.Logger = Logger:new({});
     self.Logger:Initialise("EnhancedRebellions.txt", enableLogging);
     self.Logger:Log_Start();
@@ -408,12 +399,11 @@ function ERController:GetForceDataForRegionAndSubculture(region, rebellionProvin
         forename = "",
     };
     if archetypeData.NameOverride == nil then
-        generatedName = self.CharacterGenerator:GetCharacterNameForSubculture(rebelFaction, archetypeData.AgentSubTypeKey);
+        generatedName = _G.CG:GetCharacterNameForSubculture(rebelFaction, archetypeData.AgentSubTypeKey);
     else
         generatedName.clan_name = archetypeData.NameOverride.clan_name;
         generatedName.forename = archetypeData.NameOverride.forename;
     end
-    --local artSetId = self.CharacterGenerator:GetArtSetForSubType(archetypeData.AgentSubTypeKey);
     agentSubTypeData = {
         AgentSubTypeKey = archetypeData.AgentSubTypeKey,
         --AgentArtSetId = artSetId,
@@ -456,7 +446,7 @@ function ERController:GetForceDataForRegionAndSubculture(region, rebellionProvin
         ramData.ForceData.SubcultureKey = ramData.ForceData.SubcultureKey:match("(.-)_corruption");
     end
     self.Logger:Log("Generated general:"..archetypeData.AgentSubTypeKey.." and archetype: "..archetypeData.ArmyArchetypeKey);
-    local forceString = self.ArmyGenerator:GenerateForceForTurn(ramData);
+    local forceString = _G.AG:GenerateForceForTurn(ramData);
     if forceString == nil then
         self.Logger:Log("ERROR: Force string is nil");
         return;
@@ -1025,7 +1015,7 @@ function ERController:GrantUnitsForForce(rebelForceData, militaryForce)
         },
     };
 
-    local additionalUnits = self.ArmyGenerator:GenerateForceForTurn(ramData, ramData.ArmySize);
+    local additionalUnits = _G.AG:GenerateForceForTurn(ramData, ramData.ArmySize);
     for additionalUnit in string.gmatch(additionalUnits, "[^,]+") do
         self.Logger:Log("Adding unit: "..additionalUnit);
         cm:grant_unit_to_character(generalLookupString, additionalUnit);

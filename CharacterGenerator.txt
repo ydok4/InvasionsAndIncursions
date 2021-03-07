@@ -1,4 +1,0 @@
-Getting name for name_group_888   : [19, 05 2020 21:20:26]
-Generated name key is Cirenivel   : [19, 05 2020 21:20:26]
-No tracked lords. Using first generated name.   : [19, 05 2020 21:20:26]
-Getting art set for sub type: dlc03_bst_beastlord   : [19, 05 2020 21:20:26]

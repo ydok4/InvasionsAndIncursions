@@ -9,14 +9,5 @@ function GetMixuChaosRebelArmyArchetypesPoolDataResources()
             },
             Weighting = 1,
         },
-        DragonOgreInvasionStage2 = {
-            AgentSubtypes = {"chs_shaggoth_champion", },
-            MandatoryUnits = {
-                wh_dlc01_chs_mon_dragon_ogre = 1,
-                wh_dlc01_chs_mon_dragon_ogre_shaggoth = 1,
-            },
-            UnitTags = {"Beasts", "Monsters", "ChaosCavalry"},
-            Weighting = 0,
-        },
     };
 end

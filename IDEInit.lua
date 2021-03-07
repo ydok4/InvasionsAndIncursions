@@ -403,6 +403,9 @@ function get_cm()
         random_number = function(self, limit, start)
             return math.random(start, limit);
         end,
+        get_military_force_by_cqi = function()
+            return nil;
+        end,
     };
 end
 

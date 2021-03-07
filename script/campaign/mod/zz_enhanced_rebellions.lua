@@ -1,6 +1,12 @@
 ER = {};
 _G.ER = ER;
 
+AG = {};
+_G.AG = AG;
+
+CG = {};
+_G.CG = CG;
+
 -- Helpers
 require 'script/_lib/core/helpers/ER_DataHelpers';
 require 'script/_lib/core/helpers/ER_LoadHelpers';
@@ -31,6 +37,11 @@ function zz_enhanced_rebellions()
     });
     ER:Initialise(random_army_manager, enableLogging);
     ER.Logger:Log("Initialised");
+
+    AG = ArmyGenerator:new({});
+    AG:Initialise(random_army_manager, enableLogging);
+    CG = CharacterGenerator:new({});
+    CG:Initialise(enableLogging);
 
     if core:is_mod_loaded("mct_campaign_init")
     and get_mct then

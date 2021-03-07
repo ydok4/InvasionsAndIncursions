@@ -103,6 +103,19 @@ function GetSubcultureArmyPoolDataResources()
                     { wh2_dlc11_cst_mon_rotting_leviathan_0 = 1, wh2_dlc11_cst_mon_necrofex_colossus_0 = 1, },
                 },
             },
+            GhostKnights = {
+                Early = {
+                    wh2_dlc11_cst_cav_knights_errant_recruited = 1,
+                },
+                Mid = {
+                    wh2_dlc11_cst_cav_knights_errant_recruited = 1,
+                    wh2_dlc11_cst_cav_knights_of_the_realm_recruited = 1,
+                },
+                Late = {
+                    wh2_dlc11_cst_cav_knights_of_the_realm_recruited = 1,
+                    wh2_dlc11_cst_cav_questing_knights_recruited = 1,
+                },
+            },
         },
 
         -- Norsca
@@ -1414,6 +1427,18 @@ function GetSubcultureArmyPoolDataResources()
                         wh_main_chs_mon_chaos_spawn = 1,
                         { wh_dlc01_chs_mon_dragon_ogre = 1, wh_main_chs_mon_giant = 1 },
                     },
+                },
+            },
+            -- Mods
+            Daemons = {
+                Early = {
+                    { bacr_chs_inf_daemonette = 2, kho_bloodletter = 2,  rbt_nurgle_daemon = 2, },
+                },
+                Mid = {
+                    { bacr_chs_inf_daemonette = 3, kho_bloodletter = 3,  rbt_nurgle_daemon = 3, },
+                },
+                Late = {
+                    { bacr_chs_inf_daemonette = 4, kho_bloodletter = 4,  rbt_nurgle_daemon = 4, },
                 },
             },
         },
