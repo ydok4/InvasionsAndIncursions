@@ -274,7 +274,8 @@ function ER_SetupPostUIListeners(er, core)
                                 local adjacentRegion = adjacentRegionList:item_at(i);
                                 if adjacentRegion:is_null_interface() == false
                                 and adjacentRegion:is_abandoned() == false
-                                and atWarWithFactions[adjacentRegion:owning_faction():name()] == nil 
+                                and adjacentRegion:owning_faction():name() ~= nil
+                                and atWarWithFactions[adjacentRegion:owning_faction():name()] == nil
                                 and rebelForceData.FactionKey ~= nil then
                                     atWarWithFactions[adjacentRegion:owning_faction():name()] = true;
                                     cm:force_declare_war(rebelForceData.FactionKey, adjacentRegion:owning_faction():name(), false, false);

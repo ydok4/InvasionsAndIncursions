@@ -115,6 +115,7 @@ function CharacterGenerator:GetRegionForFaction(faction)
 end
 
 function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
+    self.Logger:Log("GetCharacterNameForSubculture: ");
     local factionName = faction:name();
     if factionName == "wh_main_grn_skull-takerz" then
         factionName = "wh_main_grn_skull_takerz";

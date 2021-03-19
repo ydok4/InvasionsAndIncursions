@@ -399,7 +399,8 @@ function GetNameResources()
 						Kiori = "2147360284",
 						Nji = "2147360293",
 						Xlti = "2147360735",
-						Uaxti = "2147360736",
+						-- Mixu LL2 overrides
+						--Uaxti = "2147360736",
 						Gorti = "2147360739",
 						Inglatu = "218637075",
 						Defiq_erin = "229041625",
@@ -605,6 +606,7 @@ function GetNameResources()
 						Fabrigear = "1585671363",
 						Obscife = "1598887347",
 						Sciensurge = "1601665744",
+						Conritch = "1606972995",
 						Arcstorm = "1621301403",
 						Blistitt = "1632979410",
 						Shab = "1681752719",
@@ -643,7 +645,8 @@ function GetNameResources()
 						Compule = "2147360613",
 						Seeprislik = "2147360621",
 						Vermitch = "2147360625",
-						Vomeek = "2147360630",
+						-- Mixu LL2 overrides
+						--Vomeek = "2147360630",
 						Festitt = "2147360638",
 						Pestilikch = "2147360639",
 						Metastorm = "2147360641",
@@ -666,6 +669,7 @@ function GetNameResources()
 						Nurglost = "462154234",
 						Enginbolt = "529233934",
 						Garer = "530516891",
+						Aldritch = "545938986",
 						Ikbolt = "575647836",
 						Pustin = "631989057",
 						Mutin = "637137718",
@@ -704,7 +708,8 @@ function GetNameResources()
 						Blood_Bringer = "2147358622",
 						Gore_Seeker = "2147358631",
 						Heart_Ripper = "2147358633",
-						Death_Maker = "2147358635",
+						-- Mixu LL2 overrides
+						--Death_Maker = "2147358635",
 						Blood_Horn = "2147358637",
 						Rat_Eater = "2147358640",
 						Ruin_Maker = "2147358648",
@@ -722,7 +727,8 @@ function GetNameResources()
 						Bloodbreath = "2147358712",
 						Rageheart = "2147358720",
 						World_Eater = "2147358730",
-						War_Maker = "2147358734",
+						-- Mixu LL2 overrides
+						--War_Maker = "2147358734",
 						Blight_Bringer = "2147358736",
 						Darkheart = "2147358745",
 						Blightheart = "2147358748",
@@ -764,7 +770,8 @@ function GetNameResources()
 						Kha_Rak = "2147357916",
 						Kloven = "2147357923",
 						Skarr = "2147357926",
-						Ghorroz = "2147357930",
+						-- Mixu LL1 overrides
+						--Ghorroz = "2147357930",
 						Khorok = "2147357932",
 						Ragush = "2147357937",
 						Magok = "2147357943",
@@ -910,7 +917,8 @@ function GetNameResources()
 						Assagiere = "2147359978",
 						Illenyadara = "2147359986",
 						Einnilize = "2147359987",
-						Haerrieth = "2147359994",
+						-- Mixu LL2 overrides
+						--Haerrieth = "2147359994",
 						Licumoitta = "2147359998",
 						Agiella = "2147360007",
 						Sophiridrin = "2147360012",
@@ -1078,7 +1086,8 @@ function GetNameResources()
 						Yrtle = "2147360496",
 						Malmir = "2147360497",
 						Valahuir = "2147360865",
-						Valin = "2147360866",
+						-- Mixu LL2 overrides
+						--Valin = "2147360866",
 						Hordahn = "337880775",
 						Laurum = "375052472",
 						Cavill = "377556648",
@@ -1108,6 +1117,7 @@ function GetNameResources()
 			Gender = {
 				f = {
 					forename = {
+						Keyleth = "1723434530",
 						Morlanna = "2147352837",
 						Tevaril = "2147352877",
 						Delynna = "2147352885",
@@ -1156,6 +1166,12 @@ function GetNameResources()
 						Dhalsyth = "2147359231",
 						Sesteshal = "2147359233",
 						Valnal = "2147360861",
+					},
+				},
+				m = {
+					forename = {
+						Arden = "564781540",
+						Ilfrun = "874158205",
 					},
 				},
 	
@@ -1319,6 +1335,7 @@ function GetNameResources()
 						Baine = "1549964633",
 						Darfayan = "1574055340",
 						Nadraxes = "1599624757",
+						Byre_chull = "1602715018",
 						Krogh = "1613104460",
 						Parthok = "1619003680",
 						Lucius = "1631911126",
@@ -2187,7 +2204,8 @@ function GetNameResources()
 						Ulf = "2147345678",
 						Vali = "2147345679",
 						Viggo = "2147345680",
-						Welch = "2147345684",
+						-- Mixu LL2 overrides
+						--Welch = "2147345684",
 						Olaf = "2147345685",
 						Rangvald = "2147345692",
 						Lamont = "2147345693",
@@ -2294,7 +2312,8 @@ function GetNameResources()
 						Diovig = "2147356224",
 						oftheKul = "2147356226",
 						Sarlslayer = "2147356232",
-						Shiptaker = "2147356233",
+						-- Mixu LL2 overrides
+						--Shiptaker = "2147356233",
 						BlackRaider = "2147356240",
 						Henrenson = "2147356250",
 						Dreadcrew = "2147356251",
@@ -2890,12 +2909,14 @@ function GetNameResources()
 						Muckraka = "2147355502",
 						Mudera = "2147355505",
 						Blackbog = "2147355506",
-						Bootlicka = "2147355514",
+						-- Wez speshul overrides
+						--Bootlicka = "2147355514",
 						Spearchukka = "2147355520",
 						Pigkissa = "2147355522",
 						Gork_sChosen = "2147355529",
 						Mork_sChosen = "2147355530",
 						Bonecrusha = "2147355538",
+						DaCrusha = "281486649",
 						Koor_Lobber = "373055594",
 					},
 					forename = {
@@ -2931,6 +2952,7 @@ function GetNameResources()
 						Urk = "2147344803",
 						Grimfang = "2147344811",
 						Ugrok = "2147344814",
+						Crusher = "2147344827",
 						Zogoth = "2147344831",
 						Gorkil = "2147344835",
 						Boggrub = "2147344841",
@@ -2951,10 +2973,12 @@ function GetNameResources()
 						Morglor = "2147344985",
 						Zhok = "2147344995",
 						Grognok = "2147345006",
-						Greebitz = "2147345011",
+						-- Wez spehsul overrides
+						--Greebitz = "2147345011",
 						Ugg = "2147345014",
 						Nagbad = "2147345019",
-						Grotslik = "2147345022",
+						-- Wez spehsul overrides
+						--Grotslik = "2147345022",
 						Grutshod = "2147345026",
 						Nobnails = "2147345032",
 						Gogrut = "2147345040",
@@ -3335,7 +3359,8 @@ function GetNameResources()
 						Slave_Maker = "2147353488",
 						Torturous = "2147353490",
 						Maggoth = "2147353499",
-						Spawnseeker = "2147353509",
+						-- Mixu LL2 overrides
+						--Spawnseeker = "2147353509",
 						Bloodreaper = "2147353514",
 						Chimerax = "2147353518",
 						Roagulnas = "2147353524",
@@ -3369,7 +3394,8 @@ function GetNameResources()
 						Hackbile = "2147357436",
 						theBeslimed = "2147357442",
 						Mortkin = "2147357455",
-						theBlack = "2147357465",
+						-- Mixu LL2 overrides
+						--theBlack = "2147357465",
 					},
 					forename = {
 						Aekold = "2147345937",
@@ -3428,7 +3454,8 @@ function GetNameResources()
 						Vashnaar = "2147353782",
 						Gulghast = "2147353785",
 						Barbouros = "2147353791",
-						Fraltrass = "2147353800",
+						-- Mixu LL2 overrides
+						--Fraltrass = "2147353800",
 						Vilitreska = "2147353803",
 						Fregnus = "2147353813",
 						Eglixus = "2147353818",

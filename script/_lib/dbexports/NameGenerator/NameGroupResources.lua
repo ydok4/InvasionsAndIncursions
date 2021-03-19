@@ -829,6 +829,12 @@ function GetNameGroupResources()
 		wh2_main_wef_bowmen_of_oreon = {
 			NameGroup = "143",
 		},
+		wh2_twa03_def_rakarth = {
+			NameGroup = "153",
+		},
+		wh2_twa03_def_rakarth_separatists = {
+			NameGroup = "153",
+		},
 		wh_dlc03_bst_beastmen = {
 			NameGroup = "131",
 		},

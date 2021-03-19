@@ -393,7 +393,7 @@ function ERController:GetForceDataForRegionAndSubculture(region, rebellionProvin
     end
     local rebelFaction = cm:get_faction(rebellionFaction);
     local agentSubTypeData = {};
-    self.Logger:Log("Getting character name");
+    self.Logger:Log("Getting character name for faction: "..rebellionFaction);
     local generatedName = {
         clan_name = "",
         forename = "",
@@ -1027,7 +1027,7 @@ function ERController:AddPastRebellion(rebelForce)
     local regionObject = cm:get_region(rebelForce.Target);
     local provinceKey = regionObject:province_name();
     local owningFactionKey = "";
-    if not region:is_abandoned() then
+    if not regionObject:is_abandoned() then
         owningFactionKey = regionObject:owning_faction():name();
     end
 

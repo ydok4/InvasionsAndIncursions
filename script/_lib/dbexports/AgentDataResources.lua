@@ -1593,7 +1593,14 @@ function GetAgentDataResources()
 		wh2_main_def_black_ark = {
 			AgentType = "general",
 			ArtSetIds = {
-				 "wh2_main_art_set_def_black_ark", "wh2_main_art_set_def_black_ark_lokhir_1", "wh2_main_art_set_def_black_ark_lokhir_2", "wh2_main_art_set_def_black_ark_lokhir_3",
+				 "wh2_main_art_set_def_black_ark",
+			},
+			IsFemale = "false",
+		},
+		wh2_main_def_black_ark_blessed_dread = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_main_art_set_def_black_ark_lokhir_1", "wh2_main_art_set_def_black_ark_lokhir_2", "wh2_main_art_set_def_black_ark_lokhir_3",
 			},
 			IsFemale = "false",
 		},
@@ -1918,6 +1925,13 @@ function GetAgentDataResources()
 				 "wh2_twa02_art_set_wef_glade_captain_01", "wh2_twa02_art_set_wef_glade_captain_02", "wh2_twa02_art_set_wef_glade_captain_03", "wh2_twa02_art_set_wef_glade_captain_04", "wh2_twa02_art_set_wef_glade_captain_05",
 			},
 			IsFemale = "true",
+		},
+		wh2_twa03_def_rakarth = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_twa03_art_set_def_rakarth",
+			},
+			IsFemale = "false",
 		},
 		wh_dlc05_vmp_red_duke = {
 			AgentType = "general",
