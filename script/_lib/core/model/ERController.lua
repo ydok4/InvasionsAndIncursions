@@ -1308,6 +1308,12 @@ function ERController:UpdateExistingRebels(region)
                                 if turnNumber > 15 then
                                     self:GrantUnitsForForce(rebelForceData, militaryForce);
                                 end
+                            elseif rebelForceTarget:owning_faction():name() == militaryForce:faction():name() then
+                                self.Logger:Log("Rebel faction owns territory. Cleaning up.");
+                                rebelData.Forces[index] = nil;
+                                local character = militaryForce:general_character();
+                                local characterLookupString = "character_cqi:"..character:command_queue_index();
+                                cm:cai_enable_movement_for_character(characterLookupString);
                             else
                                 local positionString = character:logical_position_x().."/"..character:logical_position_y();
                                 -- The character should move on the turn after we tell them to attack
@@ -1328,6 +1334,29 @@ function ERController:UpdateExistingRebels(region)
                             self.Logger:Log_Finished();
                         end
                     end
+                elseif rebelForceTarget:owning_faction():name() == militaryForce:faction():name()
+                or region:owning_faction():is_quest_battle_faction() == true then
+                    self.Logger:Log("Rebel faction owns territory");
+                    -- If the region does belong to the QB/Proxy Rebel faction declare war on the
+                    -- surrounding factions
+                    local adjacentRegionList = rebelForceTarget:adjacent_region_list();
+                    local atWarWithFactions = {};
+                    cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
+                    for i = 0, adjacentRegionList:num_items() - 1 do
+                        local adjacentRegion = adjacentRegionList:item_at(i);
+                        if adjacentRegion:is_null_interface() == false
+                        and adjacentRegion:is_abandoned() == false
+                        and adjacentRegion:owning_faction()
+                        and adjacentRegion:owning_faction():name() ~= nil
+                        and adjacentRegion:owning_faction():name() ~= region:owning_faction():name()
+                        and adjacentRegion:owning_faction():at_war_with(region:owning_faction()) == false
+                        and atWarWithFactions[adjacentRegion:owning_faction():name()] == nil then
+                            atWarWithFactions[adjacentRegion:owning_faction():name()] = true;
+                            self.Logger:Log("Declaring war on adjacent faction: "..adjacentRegion:owning_faction():name());
+                            cm:force_declare_war(region:owning_faction():name(), adjacentRegion:owning_faction():name(), false, false);
+                        end
+                    end
+                    self.Logger:Log_Finished();
                 else
                     self.Logger:Log("Rebel force is in province but is not targeting the current owning faction: "..factionKey);
                     self.Logger:Log("Target region is: "..rebelForceTarget:name());

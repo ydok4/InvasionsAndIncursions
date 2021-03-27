@@ -129,7 +129,7 @@ function GetLizardmenPREPoolDataResources()
                         NumberOfTurns = 1,
                         Weighting = 1,
                     },
-                    er_louen_reemerging_faction_incident_2_vampire_counts = {
+                    er_mazdamundi_reemerging_faction_incident_2_vampire_counts = {
                         NumberOfTurns = 4,
                         Weighting = 1,
                     },
@@ -146,23 +146,10 @@ function GetLizardmenPREPoolDataResources()
                 },
             },
             AutoDilemmas = {
-                --[[default = {
-                    wh2_main_dilemma_treasure_hunt_spider_nest = {
-                        NumberOfTurns = 10,
-                    },
-                },
-                wh_main_sc_emp_empire = {
-                    wh2_main_dilemma_treasure_hunt_the_underworld_sea = {
-                        NumberOfTurns = 1,
-                    },
-                },--]]
+
             },
             AgentDeployDilemmas = {
-                --[[default = {
-                    wh2_main_dilemma_treasure_hunt_skaven_ambush = {
-                        NumberOfTurns = 4,
-                    },
-                },--]]
+
             },
             Weighting = 0,
         },
