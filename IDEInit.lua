@@ -283,7 +283,7 @@ function get_cm()
                 province_name = function() return "wh_main_reikland"; end,
                 faction_province_growth = function() return 3; end,
                 religion_proportion = function() return 0; end,
-                public_order = function() return -99; end,
+                public_order = function() return 99; end,
                 owning_faction = function() return testFaction; end,
                 name = function() return "wh_main_couronne_et_languille_couronne"; end,
                 is_province_capital = function() return true; end,
@@ -541,7 +541,7 @@ math.randomseed(os.time())
 -- This is used in game by Warhammer but we have it hear so it won't throw errors when running
 a_er_aov_patch();
 a_er_cr_patch();
-a_er_deco_patch();
+--a_er_deco_patch();
 zz_enhanced_rebellions();
 
 local ER = _G.ER;
@@ -555,7 +555,7 @@ local MockContext_ER_CheckFactionRebellions = {
 mock_listeners:trigger_listener(MockContext_ER_CheckFactionRebellions);
 
 a_er_cr_patch();
-a_er_deco_patch();
+--a_er_deco_patch();
 zz_enhanced_rebellions();
 
 turn_number = 200;

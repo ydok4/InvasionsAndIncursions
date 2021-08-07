@@ -64,7 +64,7 @@ function GetMixuDataResources()
 			},
 			IsFemale = "false",
 		},
-		bst_doombull = {
+		--[[bst_doombull = {
 			AgentType = "general",
 			ArtSetIds = {
 					"wh2_main_art_set_bst_doombull_1", "wh2_main_art_set_bst_doombull_2", "wh2_main_art_set_bst_doombull_3",
@@ -91,7 +91,7 @@ function GetMixuDataResources()
 					"wh2_main_art_set_wef_spellweaver_1", "wh2_main_art_set_wef_spellweaver_2", "wh2_main_art_set_wef_spellweaver_3", "wh2_main_art_set_wef_spellweaver_4", "wh2_main_art_set_wef_spellweaver_5",
 			},
 			IsFemale = "true",
-		},
+		},--]]
 		chs_shaggoth_champion = {
 			AgentType = "general",
 			ArtSetIds = {

@@ -19,7 +19,7 @@ function ArmyGenerator:Initialise(random_army_manager, enableLogging)
     self.random_army_manager = random_army_manager;
 end
 
-function ArmyGenerator:GenerateForceForTurn(ramData, numberOfUnitsOverride)
+function ArmyGenerator:GenerateForceForTurn(ramData, numberOfUnitsOverride, periodOverride)
     self.Logger:Log("GenerateForceForTurn: "..ramData.ForceKey);
     if not self.random_army_manager then
         self.Logger:Log("Can't find random_army_manager");
@@ -41,7 +41,7 @@ function ArmyGenerator:GenerateForceForTurn(ramData, numberOfUnitsOverride)
         end
     end
 
-    local subcultureUnits = self:GetOtherUnits(ramData);
+    local subcultureUnits = self:GetOtherUnits(ramData, periodOverride);
     if subcultureUnits ~= nil then
         for unitKey, unitData in pairs(subcultureUnits) do
             self.Logger:Log("Adding subculture unit: "..unitKey);
@@ -105,9 +105,14 @@ function ArmyGenerator:GetArmySize(minimumArmySize)
     return armySize;
 end
 
-function ArmyGenerator:GetOtherUnits(ramData)
+function ArmyGenerator:GetOtherUnits(ramData, periodOverride)
     local turnNumber = cm:model():turn_number();
-    local gamePeriod = self:GetGamePeriod(turnNumber);
+    local gamePeriod = "";
+    if periodOverride == nil then
+        gamePeriod = self:GetGamePeriod(turnNumber);
+    else
+        gamePeriod = periodOverride;
+    end
 
     local otherUnits = {};
     local subCultureArmyData = self:GetSubcultureArmyData(ramData.ForceData.SubcultureKey);

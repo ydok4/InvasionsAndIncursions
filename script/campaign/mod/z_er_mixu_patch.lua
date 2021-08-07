@@ -1,5 +1,5 @@
 if core:is_mod_loaded("mixu_ttl") then
-    require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuBeastmenRebelArmyArchetypesPoolDataResources'
+    --require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuBeastmenRebelArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuChaosRebelArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuEmpireRebelArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuGreenskinRebelArmyArchetypesPoolDataResources'
@@ -7,7 +7,7 @@ if core:is_mod_loaded("mixu_ttl") then
     require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuSavageOrcRebelArmyArchetypesPoolDataResources'
     --require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/MixuWoodElfRebelArmyArchetypesPoolDataResources'
 
-    _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc03_sc_bst_beastmen", GetMixuBeastmenRebelArmyArchetypesPoolDataResources(), false);
+    --_G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc03_sc_bst_beastmen", GetMixuBeastmenRebelArmyArchetypesPoolDataResources(), false);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_chs_chaos", GetMixuChaosRebelArmyArchetypesPoolDataResources(), false);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_emp_empire", GetMixuEmpireRebelArmyArchetypesPoolDataResources(), false);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_grn_greenskins", GetMixuGreenskinRebelArmyArchetypesPoolDataResources(), false);
@@ -15,10 +15,10 @@ if core:is_mod_loaded("mixu_ttl") then
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_grn_savage_orcs", GetMixuSavageOrcRebelArmyArchetypesPoolDataResources(), false);
     --_G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc05_sc_wef_wood_elves", GetMixuWoodElfRebelArmyArchetypesPoolDataResources(), false);
 
-    require 'script/_lib/pooldata/RebelCorruptionArmyArchetypesPoolData/MixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources'
+    --require 'script/_lib/pooldata/RebelCorruptionArmyArchetypesPoolData/MixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources'
     require 'script/_lib/pooldata/RebelCorruptionArmyArchetypesPoolData/MixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources'
 
-    _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc03_sc_bst_beastmen_corruption", GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources(), true);
+    --_G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_dlc03_sc_bst_beastmen_corruption", GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources(), true);
     _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_chs_chaos_corruption", GetMixuChaosWarriorsRebelCorruptionArmyArchetypesPoolDataResources(), true);
 
     require 'script/_lib/pooldata/ProvinceSubcultureRebellionsPoolData/MixuProvinceSubcultureRebellionsPoolDataResources'

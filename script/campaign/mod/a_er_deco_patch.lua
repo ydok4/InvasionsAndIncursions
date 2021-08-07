@@ -1,11 +1,5 @@
-function a_er_deco_patch()
+--[[function a_er_deco_patch()
     local anyLoaded = false;
-    --[[if effect.get_localised_string("land_units_onscreen_name_wh_main_ksl_cav_chekist") ~= "" then
-        out("EnR: Loading Deco Kislev Data");
-        require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/DecoKislevRebelArmyArchetypesPoolDataResources'
-        _G.ERResources.AddAdditionalRebelArmyArchetypesResources("wh_main_sc_ksl_kislev", GetDecoKislevRebelArmyArchetypesPoolDataResources(), false);
-        anyLoaded = true;
-    end--]]
     if effect.get_localised_string("agent_subtypes_description_text_override_bst_bray_shaman_wild") ~= "" then
         out("EnR: Loading Deco Beastmen data");
         require 'script/_lib/pooldata/RebelArmyArchetypesPoolData/DecoBeastmenRebelArmyArchetypesPoolDataResources'
@@ -22,4 +16,4 @@ function a_er_deco_patch()
             _G.CG_NameResources:ConcatTableWithKeys(_G.CG_NameResources.campaign_character_data, GetDecoAgentDataResources());
         end
     end
-end
+end--]]

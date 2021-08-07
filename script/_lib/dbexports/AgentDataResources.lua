@@ -123,7 +123,7 @@ function GetAgentDataResources()
 		dlc03_bst_beastlord = {
 			AgentType = "general",
 			ArtSetIds = {
-				 "wh_dlc03_art_set_bst_beastlord_01", "wh_dlc03_art_set_bst_beastlord_02", "wh_dlc03_art_set_bst_beastlord_03", "wh_dlc03_art_set_bst_beastlord_04",
+				 "wh_dlc03_art_set_bst_beastlord_01", "wh_dlc03_art_set_bst_beastlord_02", "wh_dlc03_art_set_bst_beastlord_03", "wh_dlc03_art_set_bst_beastlord_04", "wh_dlc03_art_set_bst_beastlord_05",
 			},
 			IsFemale = "false",
 		},
@@ -1590,10 +1590,73 @@ function GetAgentDataResources()
 			},
 			IsFemale = "true",
 		},
+		wh2_dlc17_bst_doombull = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_bst_doombull_01", "wh2_dlc17_art_set_bst_doombull_02", "wh2_dlc17_art_set_bst_doombull_03", "wh2_dlc17_art_set_bst_doombull_04", "wh2_dlc17_art_set_bst_doombull_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_bst_taurox = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_bst_taurox",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_bst_wargor = {
+			AgentType = "spy",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_bst_wargor_01", "wh2_dlc17_art_set_bst_wargor_02", "wh2_dlc17_art_set_bst_wargor_03", "wh2_dlc17_art_set_bst_wargor_04", "wh2_dlc17_art_set_bst_wargor_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_dwf_thane_ghost_artifact = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_dwf_thane_ghost_artifact",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_dwf_thorek = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_dwf_thorek_ironbrow_0",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_lzd_mon_dread_saurian_qb_boss = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_lzd_dread_saurian_qb_boss",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_lzd_oxyotl = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_dlc17_lzd_oxyotl",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_lzd_skink_oracle_troglodon = {
+			AgentType = "runesmith",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_lzd_skink_oracle_troglodon_01", "wh2_dlc17_art_set_lzd_skink_oracle_troglodon_02", "wh2_dlc17_art_set_lzd_skink_oracle_troglodon_03",
+			},
+			IsFemale = "false",
+		},
+		wh2_dlc17_vmp_kevon_lloydstein = {
+			AgentType = "champion",
+			ArtSetIds = {
+				 "wh2_dlc17_art_set_vmp_kevon_lloydstein",
+			},
+			IsFemale = "false",
+		},
 		wh2_main_def_black_ark = {
 			AgentType = "general",
 			ArtSetIds = {
-				 "wh2_main_art_set_def_black_ark",
+				 "wh2_main_art_set_def_black_ark", "wh2_main_art_set_def_black_ark_lokhir_1", "wh2_main_art_set_def_black_ark_lokhir_2", "wh2_main_art_set_def_black_ark_lokhir_3",
 			},
 			IsFemale = "false",
 		},
@@ -1930,6 +1993,34 @@ function GetAgentDataResources()
 			AgentType = "general",
 			ArtSetIds = {
 				 "wh2_twa03_art_set_def_rakarth",
+			},
+			IsFemale = "false",
+		},
+		wh2_twa04_bst_great_bray_shaman_beasts = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_twa04_art_set_bst_great_bray_shaman_beasts_01", "wh2_twa04_art_set_bst_great_bray_shaman_beasts_02", "wh2_twa04_art_set_bst_great_bray_shaman_beasts_03", "wh2_twa04_art_set_bst_great_bray_shaman_beasts_04", "wh2_twa04_art_set_bst_great_bray_shaman_beasts_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_twa04_bst_great_bray_shaman_death = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_twa04_art_set_bst_great_bray_shaman_death_01", "wh2_twa04_art_set_bst_great_bray_shaman_death_02", "wh2_twa04_art_set_bst_great_bray_shaman_death_03", "wh2_twa04_art_set_bst_great_bray_shaman_death_04", "wh2_twa04_art_set_bst_great_bray_shaman_death_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_twa04_bst_great_bray_shaman_shadows = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_twa04_art_set_bst_great_bray_shaman_shadows_01", "wh2_twa04_art_set_bst_great_bray_shaman_shadows_02", "wh2_twa04_art_set_bst_great_bray_shaman_shadows_03", "wh2_twa04_art_set_bst_great_bray_shaman_shadows_04", "wh2_twa04_art_set_bst_great_bray_shaman_shadows_05",
+			},
+			IsFemale = "false",
+		},
+		wh2_twa04_bst_great_bray_shaman_wild = {
+			AgentType = "general",
+			ArtSetIds = {
+				 "wh2_twa04_art_set_bst_great_bray_shaman_wild_01", "wh2_twa04_art_set_bst_great_bray_shaman_wild_02", "wh2_twa04_art_set_bst_great_bray_shaman_wild_03", "wh2_twa04_art_set_bst_great_bray_shaman_wild_04", "wh2_twa04_art_set_bst_great_bray_shaman_wild_05",
 			},
 			IsFemale = "false",
 		},

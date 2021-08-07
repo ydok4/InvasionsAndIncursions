@@ -280,7 +280,7 @@ function ERController:GetRebellionSubcultureForRegion(region, owningFaction)
             end
         end
 
-        -- Vampire counts aren't impacting by their own corruption rebellions
+        -- Vampire counts aren't impacted by their own corruption rebellions
         if ownerSubculture ~= "wh_main_sc_vmp_vampire_counts"
         and ownerSubculture ~= "wh2_dlc11_sc_cst_vampire_coast"
         and ownerFaction:name() ~= "wh2_dlc09_tmb_followers_of_nagash"
@@ -461,6 +461,7 @@ function ERController:GetArmyArchetypeForRegionProvinceAndSubculture(region, reb
     if string.match(rebellionSubculture, "corruption") then
         armyArchetypeData = self:GetCorruptionArmyArchetype(region, rebellionSubculture);
     elseif armyArchetypeOverrideKey == nil then
+        self.Logger:Log("Generating army archetype"); 
         local subcultureArmyArchetypes = self:GetSubcultureArmyArchetypes(region, rebellionSubculture);
         local armyArchetypeKey = GetRandomItemFromWeightedList(subcultureArmyArchetypes, true);
         local armyArchetypeResources = self:GetResourcesForRebelArmyArchetypes(rebellionSubculture, armyArchetypeKey);
@@ -486,6 +487,7 @@ function ERController:GetArmyArchetypeForRegionProvinceAndSubculture(region, reb
             OverrideTargetRegion = armyArchetypeResources.OverrideTargetRegion,
         };
     else
+        self.Logger:Log("Overriding archetype key with: "..armyArchetypeOverrideKey);
         local armyArchetypeResources = self:GetResourcesForRebelArmyArchetypes(rebellionSubculture, armyArchetypeOverrideKey);
         local agentSubTypeKey = "";
         for key, value in pairs(armyArchetypeResources.AgentSubtypes) do
@@ -579,6 +581,8 @@ function ERController:GetSubcultureArmyArchetypes(region, rebellionSubculture)
     -- This should stop some rare instances where the AI gets some bad luck
     if turnNumber < 40 then
         minWeighting = 3;
+    else
+        minWeighting = 1;
     end
     local defaultSubcultureArchetypes = self:GetRebelArmyArchetypesForSubculture(rebellionSubculture, minWeighting);
     return defaultSubcultureArchetypes;
@@ -732,7 +736,7 @@ function ERController:SpawnArmy(rebellionData, preKey)
                 -- Apply the specified art set id
                 --cm:add_unit_model_overrides(cm:char_lookup_str(cqi), rebellionData.AgentSubTypeData.AgentArtSetId);
                 -- Disable movement so they won't run away
-                cm:cai_disable_movement_for_character(characterLookupString);
+                cm:apply_effect_bundle_to_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi, -1);                
                 -- Force them into raiding stance so they take some money from the faction but only on land
                 if rebellionData.SpawnOnSea == false then
                     cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
@@ -868,7 +872,7 @@ function ERController:SpawnArmy(rebellionData, preKey)
                                 local existingMilitaryForceCqi = existingMilitaryForce:command_queue_index();
                                 self.Logger:Log("Old military force cqi is: "..militaryForceCqi.." New military force cqi is: "..existingMilitaryForceCqi);
                                 -- Disable movement so they won't run away
-                                cm:cai_disable_movement_for_character(existingCharacterLookupString);
+                                cm:apply_effect_bundle_to_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi, -1); 
                                 -- Force them into raiding stance so they take some money from the faction but only on land
                                 if rebellionData.SpawnOnSea == false then
                                     if rebellionData.SubcultureKey == "wh2_main_sc_lzd_lizardmen" then
@@ -1240,7 +1244,7 @@ function ERController:UpdateExistingRebels(region)
                     and not militaryForce:is_null_interface() then
                         local character = militaryForce:general_character();
                         local characterLookupString = "character_cqi:"..character:command_queue_index();
-                        cm:cai_enable_movement_for_character(characterLookupString);
+                        cm:remove_effect_bundle_from_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi); 
                         -- Finally, we kill them and their force
                         if rebelForceData.CleanUpRebelForce == true then
                             cm:kill_character(character:command_queue_index(), true, true);
@@ -1294,7 +1298,7 @@ function ERController:UpdateExistingRebels(region)
                                     9
                                 );
                                 cm:teleport_to(characterLookupString, interimX, interimY, true);
-                                cm:cai_disable_movement_for_character(characterLookupString);
+                                cm:apply_effect_bundle_to_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi, -1); 
                                 if rebelForceData.SpawnedOnSea == false then
                                     cm:force_character_force_into_stance(characterLookupString, "MILITARY_FORCE_ACTIVE_STANCE_TYPE_LAND_RAID");
                                 end
@@ -1313,7 +1317,7 @@ function ERController:UpdateExistingRebels(region)
                                 rebelData.Forces[index] = nil;
                                 local character = militaryForce:general_character();
                                 local characterLookupString = "character_cqi:"..character:command_queue_index();
-                                cm:cai_enable_movement_for_character(characterLookupString);
+                                cm:remove_effect_bundle_from_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi); 
                             else
                                 local positionString = character:logical_position_x().."/"..character:logical_position_y();
                                 -- The character should move on the turn after we tell them to attack
@@ -1341,7 +1345,7 @@ function ERController:UpdateExistingRebels(region)
                     -- surrounding factions
                     local adjacentRegionList = rebelForceTarget:adjacent_region_list();
                     local atWarWithFactions = {};
-                    cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
+                    --cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
                     for i = 0, adjacentRegionList:num_items() - 1 do
                         local adjacentRegion = adjacentRegionList:item_at(i);
                         if adjacentRegion:is_null_interface() == false
@@ -1356,6 +1360,7 @@ function ERController:UpdateExistingRebels(region)
                             cm:force_declare_war(region:owning_faction():name(), adjacentRegion:owning_faction():name(), false, false);
                         end
                     end
+                    --cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_war_declared"); end, 0.2);
                     self.Logger:Log_Finished();
                 else
                     self.Logger:Log("Rebel force is in province but is not targeting the current owning faction: "..factionKey);

@@ -1,6 +1,8 @@
+require 'script/_lib/core/model/Logger';
+
 CharacterGenerator = {
     Logger = {},
-}
+};
 
 function CharacterGenerator:new (o)
     o = o or {};
@@ -13,6 +15,25 @@ function CharacterGenerator:Initialise(enableLogging)
     self.Logger = Logger:new({});
     self.Logger:Initialise("CharacterGenerator.txt", enableLogging);
     self.Logger:Log_Start();
+    require 'script/_lib/dbexports/AgentDataResources'
+    require 'script/_lib/dbexports/NameGenerator/SubCultureNameGroupResources'
+    require 'script/_lib/dbexports/NameGenerator/NameGroupResources'
+    require 'script/_lib/dbexports/NameGenerator/NameResources'
+    -- Load the name resources
+    -- This is separate so I can use this in other mods
+    if not _G.CG_NameResources then
+        _G.CG_NameResources = {
+            ConcatTableWithKeys = function(self, destinationTable, sourceTable)
+                for key, value in pairs(sourceTable) do
+                    destinationTable[key] = value;
+                end
+            end,
+            subculture_to_name_groups = GetSubCultureNameGroupResources(),
+            faction_to_name_groups = GetNameGroupResources(),
+            name_groups_to_names = GetNameResources(),
+            campaign_character_data = GetAgentDataResources(),
+        };
+    end
     -- Load add ons
     -- Load Gunking's elf names (deprecated)
     --[[local newElfNameKey = effect.get_localised_string("names_name_1550000001");
@@ -115,7 +136,6 @@ function CharacterGenerator:GetRegionForFaction(faction)
 end
 
 function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
-    self.Logger:Log("GetCharacterNameForSubculture: ");
     local factionName = faction:name();
     if factionName == "wh_main_grn_skull-takerz" then
         factionName = "wh_main_grn_skull_takerz";
@@ -138,13 +158,13 @@ function CharacterGenerator:GetCharacterNameForSubculture(faction, agentSubType)
     self.Logger:Log("Getting name for "..nameGroup);
     local namePool = _G.CG_NameResources.name_groups_to_names[nameGroup];
     local canUseFemaleNames = self:GetGenderForAgentSubType(agentSubType);
-
+    --self.Logger:Log("Got agent subtype gender for: "..agentSubType);
     local doOnce = false;
     local nameKey = "";
     local forename_object = "";
     local family_name_object = "";
     local family_name_chance = self:GetFamilyNameChance(factionSubculture);
-
+    --self.Logger:Log("Family name chance: "..family_name_chance);
     local factionLords = {};
     local failSafe = 0;
     if namePool == nil then
@@ -226,6 +246,7 @@ function CharacterGenerator:GetValidNameForType(namePool, canUseFemaleNames, nam
     end
 
     if nameTypes ~= nil then
+        --self.Logger:Log("Before");
         local randomName = GetRandomObjectKeyFromList(nameTypes);
         --self.Logger:Log("Generating name "..randomName);
         local nameId = nameTypes[randomName];
@@ -248,7 +269,7 @@ function CharacterGenerator:GetGenderForAgentSubType(agentSubType)
     if agentResources ~= nil then
         return agentResources.IsFemale == "true";
     end
-    self.Logger:Log("Error: Could not find agent resources");
+    self.Logger:Log("Error: Could not find agent resources for subtype: "..agentSubType);
 end
 
 function CharacterGenerator:GetRandomCharacterTrait(faction, generalSubType)

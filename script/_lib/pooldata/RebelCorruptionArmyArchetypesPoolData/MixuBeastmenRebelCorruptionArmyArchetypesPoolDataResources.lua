@@ -1,6 +1,6 @@
 function GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
     return {
-        DoomBullMedium = {
+        --[[DoomBullMedium = {
             CorruptionThreshold = 50,
             AgentSubtypes = {"bst_doombull", },
             MandatoryUnits = {
@@ -19,6 +19,6 @@ function GetMixuBeastmenRebelCorruptionArmyArchetypesPoolDataResources()
             UnitTags = {"Gors", "WarBeasts", "Minotaurs", },
             ArmySize = 20,
             Weighting = 1,
-        },
+        },--]]
     };
 end

@@ -340,6 +340,33 @@ function GetNameGroupResources()
 		wh2_dlc16_wef_wood_elves_qb7 = {
 			NameGroup = "143",
 		},
+		wh2_dlc17_bst_beastmen_qb4 = {
+			NameGroup = "131",
+		},
+		wh2_dlc17_bst_beastmen_qb5 = {
+			NameGroup = "131",
+		},
+		wh2_dlc17_bst_beastmen_qb6 = {
+			NameGroup = "131",
+		},
+		wh2_dlc17_bst_beastmen_qb7 = {
+			NameGroup = "131",
+		},
+		wh2_dlc17_bst_malagor = {
+			NameGroup = "131",
+		},
+		wh2_dlc17_bst_taurox = {
+			NameGroup = "131",
+		},
+		wh2_dlc17_dwf_thorek_ironbrow = {
+			NameGroup = "106",
+		},
+		wh2_dlc17_lzd_oxyotl = {
+			NameGroup = "117",
+		},
+		wh2_dlc17_nor_deadwood_ravagers = {
+			NameGroup = "198",
+		},
 		wh2_main_brt_knights_of_origo = {
 			NameGroup = "162",
 		},
@@ -848,6 +875,9 @@ function GetNameGroupResources()
 			NameGroup = "131",
 		},
 		wh_dlc03_bst_beastmen_chaos_brayherd = {
+			NameGroup = "131",
+		},
+		wh_dlc03_bst_beastmen_custom_battles_only = {
 			NameGroup = "131",
 		},
 		wh_dlc03_bst_beastmen_qb1 = {

@@ -253,7 +253,7 @@ function ER_SetupPostUIListeners(er, core)
                         if turnNumber > rebelForceData.SpawnTurn + 2
                         and rebelForceTarget:owning_faction():name() ~= factionName then
                             er.Logger:Log("Character has matching force data and is ready to attack");
-                            cm:cai_enable_movement_for_character(characterLookupString);
+                            cm:remove_effect_bundle_from_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi); 
                             local rebelForceTargetRegionKey = rebelForceTarget:name();
                             er.Logger:Log("Attacking region: "..rebelForceTargetRegionKey);
                             cm:attack_region(characterLookupString, rebelForceTargetRegionKey, false);
@@ -270,7 +270,7 @@ function ER_SetupPostUIListeners(er, core)
                             -- surrounding factions
                             local adjacentRegionList = rebelForceTarget:adjacent_region_list();
                             local atWarWithFactions = {};
-                            cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
+                            --cm:disable_event_feed_events(true, "", "", "diplomacy_war_declared");
                             for i = 0, adjacentRegionList:num_items() - 1 do
                                 local adjacentRegion = adjacentRegionList:item_at(i);
                                 if adjacentRegion:is_null_interface() == false
@@ -286,15 +286,16 @@ function ER_SetupPostUIListeners(er, core)
                                     cm:force_declare_war(rebelForceData.FactionKey, adjacentRegion:owning_faction():name(), false, false);
                                 end
                             end
+                            --cm:callback(function() cm:disable_event_feed_events(false, "", "", "diplomacy_war_declared"); end, 0.2);
                             er:AddPastRebellion(rebelForceData);
                             er.RebelForces[tostring(militaryForceCqi)] = nil;
-                            cm:cai_enable_movement_for_character(characterLookupString);
+                            cm:remove_effect_bundle_from_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi); 
                         -- Non QB factions should be untracked and added as a past rebellion
                         elseif rebelForceTarget:owning_faction():name() == factionName then
                             er.Logger:Log("Non qb faction controls their target, untracking.");
                             er:AddPastRebellion(rebelForceData);
                             er.RebelForces[tostring(militaryForceCqi)] = nil;
-                            cm:cai_enable_movement_for_character(characterLookupString);
+                            cm:remove_effect_bundle_from_force("wh2_dlc17_effect_campaign_movement_immobile", militaryForceCqi); 
                         else
                             er.Logger:Log("No action to take");
                             er.Logger:Log_Finished();
@@ -417,115 +418,6 @@ function ER_SetupPostUIListeners(er, core)
         true
     );
 
-    -- These listeners override the vanilla equivalents. This needs to happen because otherwise
-    -- the Norscan factions will keep confederating the Norscan Proxy Rebels
-    er.Logger:Log("Overriding Norscan listeners");
-    local NORSCA_SUBCULTURE = "wh_main_sc_nor_norsca";
-    local NORSCA_CONFEDERATION_DILEMMA = "wh2_dlc08_confederate_";
-    local NORSCA_CONFEDERATION_PLAYER = er.HumanFaction:name();
-    -- We remove these vanilla listeners because we need to tweak the condition to exclude the quest battle factions
-    -- which are used by the rebels we spawn
-    core:remove_listener("character_completed_battle_norsca_confederation_dilemma");
-    core:add_listener(
-        "character_completed_battle_norsca_confederation_dilemma_updated",
-        "CharacterCompletedBattle",
-        true,
-        function(context)
-            local character = context:character();
-            if character:won_battle() == true and character:faction():subculture() == NORSCA_SUBCULTURE and not character:faction():name():find("rebel") 
-            and not character:faction():name():find("invasion") and not character:faction():name():find("separatists") and not character:faction():name():find("incursion") and character:faction():is_quest_battle_faction() == false then
-                local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
-                local enemy_count = #enemies;
-
-                if context:pending_battle():night_battle() == true or context:pending_battle():ambush_battle() == true then
-                    enemy_count = 1;
-                end
-
-                local character_cqi = character:command_queue_index();
-                local attacker_cqi, attacker_force_cqi, attacker_name = cm:pending_battle_cache_get_attacker(1);
-                local defender_cqi, defender_force_cqi, defender_name = cm:pending_battle_cache_get_defender(1);
-                out("ER: Custom norscan battle completed");
-                if character_cqi == attacker_cqi or character_cqi == defender_cqi then
-                    for i = 1, enemy_count do
-                        local enemy = enemies[i];
-
-                        if enemy ~= nil
-                        and enemy:is_null_interface() == false
-                        and enemy:is_faction_leader() == true
-                        and enemy:faction():subculture() == NORSCA_SUBCULTURE
-                        and not enemy:faction():name():find("rebel")
-                        and not enemy:faction():name():find("invasion")
-                        and not enemy:faction():name():find("separatists")
-                        and not enemy:faction():name():find("incursion")
-                        and enemy:faction():is_quest_battle_faction() == false then
-                            if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
-                                out("ER: Confederating faction: "..enemy:faction():name());
-                                if character:faction():is_human() == true and enemy:faction():is_human() == false and enemy:faction():is_dead() == false then
-                                    -- Trigger dilemma to offer confederation
-                                    NORSCA_CONFEDERATION_PLAYER = character:faction():name();
-                                    cm:trigger_dilemma(NORSCA_CONFEDERATION_PLAYER, NORSCA_CONFEDERATION_DILEMMA..enemy:faction():name());
-                                    Play_Norsca_Advice("dlc08.camp.advice.nor.confederation.001", norsca_info_text_confederation);
-                                elseif not character:faction():name():find("rebel") and character:faction():is_human() == false and enemy:faction():is_human() == false then
-                                    -- AI confederation
-                                    cm:force_confederation(character:faction():name(), enemy:faction():name());
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end,
-        true
-    );
-    -- Just like Norsca, these listeners override the vanilla equivalents. This needs to happen because otherwise
-    -- the Greenskin factions will keep confederating the Greenskin Proxy Rebels
-    er.Logger:Log("Overriding Greenskin listeners");
-    local GREENSKIN_CONFEDERATION_DILEMMA = "wh2_main_grn_confederate_";
-    local GREENSKIN_CONFEDERATION_PLAYER = er.HumanFaction:name();
-    local greenskin = "wh_main_sc_grn_greenskins";
-    -- Confederation via Defeat Leader
-    core:remove_listener("character_completed_battle_greenskin_confederation_dilemma");
-	core:add_listener(
-		"character_completed_battle_greenskin_confederation_dilemma",
-		"CharacterCompletedBattle",
-		true,
-        function(context)
-            local character = context:character();
-            if character:won_battle() == true and character:faction():subculture() == greenskin and not character:faction():name():find("rebel") 
-            and not character:faction():name():find("invasion") and not character:faction():name():find("waaagh") and character:faction():is_quest_battle_faction() == false then
-                local enemies = cm:pending_battle_cache_get_enemies_of_char(character);
-                local enemy_count = #enemies;
-                if context:pending_battle():night_battle() == true or context:pending_battle():ambush_battle() == true then
-                    enemy_count = 1;
-                end
-
-                local character_cqi = character:command_queue_index();
-                local attacker_cqi, attacker_force_cqi, attacker_name = cm:pending_battle_cache_get_attacker(1);
-                local defender_cqi, defender_force_cqi, defender_name = cm:pending_battle_cache_get_defender(1);
-                if character_cqi == attacker_cqi or character_cqi == defender_cqi then
-                    for i = 1, enemy_count do
-                        local enemy = enemies[i];
-                        if enemy ~= nil and enemy:is_null_interface() == false and enemy:is_faction_leader() == true and enemy:faction():subculture() == greenskin and enemy:faction():is_quest_battle_faction() == false then
-                            if enemy:has_military_force() == true and enemy:military_force():is_armed_citizenry() == false then
-                                if character:faction():is_human() == true and enemy:faction():is_human() == false and enemy:faction():is_dead() == false then
-                                    -- Trigger dilemma to offer confederation
-                                    GREENSKIN_CONFEDERATION_PLAYER = character:faction():name();
-                                    cm:trigger_dilemma(GREENSKIN_CONFEDERATION_PLAYER, GREENSKIN_CONFEDERATION_DILEMMA..enemy:faction():name());
-                                elseif not character:faction():name():find("rebel") and character:faction():is_human() == false and enemy:faction():is_human() == false then
-                                    out.design("###### Modified greenskin CONFEDERATION");
-                                    -- AI confederation
-                                    cm:force_confederation(character:faction():name(), enemy:faction():name());
-                                    out.design("###### AI GREENSKIN CONFEDERATION");
-                                    out.design("Faction: "..character:faction():name().." is confederating "..enemy:faction():name());
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-		end,
-		true
-	);
     er.Logger:Log_Finished();
 end
 
